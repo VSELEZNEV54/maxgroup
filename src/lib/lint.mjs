@@ -13,6 +13,7 @@ export function lint(ctx, rendered, outDir) {
   const urls = new Set(rendered.map((r) => r.page.url));
   const stats = { pages: rendered.length, words: 0, internalLinks: 0, images: 0, thin: 0 };
   const inbound = new Map();
+  const base = ctx.build.base || '';
 
   for (const { page, html, rel } of rendered) {
     const where = page.url;
@@ -60,12 +61,17 @@ export function lint(ctx, rendered, outDir) {
 
     // внутренние ссылки и файлы
     if (ctx.build.local) continue;
-    for (const m of html.matchAll(/\s(?:href|src|poster|data-src|data-src-mobile)="([^"]+)"/g)) {
+    for (const m of html.matchAll(/\s(?:href|src|poster|action|data-src|data-src-mobile|data-calc-url)="([^"]+)"/g)) {
       let href = m[1].replace(/&amp;/g, '&');
       if (/^(https?:|mailto:|tel:|data:|#|\/\/|javascript:)/.test(href)) continue;
       href = href.split('#')[0].split('?')[0];
       if (!href) continue;
       if (!href.startsWith('/')) href = posix.join(posix.dirname('/' + rel), href);
+      // сайт в подпапке: ссылка обязана начинаться с базового пути; дальше проверяем её как обычную
+      else if (base) {
+        if (href !== base && !href.startsWith(base + '/')) { errors.push(`${where}: ссылка мимо базового пути ${base} — ${href}`); continue; }
+        href = href.slice(base.length) || '/';
+      }
       if (href.startsWith('/assets/') || /\.(xml|txt|webmanifest|ico|png|json)$/.test(href)) {
         if (!existsSync(join(outDir, href)) && !/main\.css|\/js\//.test(href) && !/sitemap\.xml|robots\.txt|site\.webmanifest/.test(href)) errors.push(`${where}: нет файла ${href}`);
         continue;

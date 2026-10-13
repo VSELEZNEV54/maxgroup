@@ -7,8 +7,11 @@ import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 
 // node serve.mjs [порт] [папка]  — по умолчанию порт 4317 (или $PORT), папка dist
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), process.argv[3] || 'dist');
-const PORT = Number(process.argv[2] || process.env.PORT || 4317);
+// node serve.mjs 4318 dist-pages --base=/maxgroup  — сборка для подпапки (демо на GitHub Pages) отдаётся по адресу /maxgroup/
+const argv = process.argv.slice(2).filter((x) => !x.startsWith('--'));
+const BASE = (process.argv.slice(2).find((x) => x.startsWith('--base=')) || '').slice(7).replace(/\/+$/, '');
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), argv[1] || 'dist');
+const PORT = Number(argv[0] || process.env.PORT || 4317);
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8',
   '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png',
@@ -30,10 +33,19 @@ async function resolve(pathname) {
 
 createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
-  let file = await resolve(url.pathname);
+  const full = url.pathname;
+  if (BASE) {
+    // всё, что вне подпапки, ведёт на главную — как на хостинге, где сайт занимает только свой путь
+    if (full !== BASE && !full.startsWith(BASE + '/')) {
+      res.writeHead(302, { Location: BASE + '/' });
+      return res.end();
+    }
+    url.pathname = full.slice(BASE.length) || '';
+  }
+  let file = url.pathname ? await resolve(url.pathname) : null;
   let status = 200;
-  if (!file && !extname(url.pathname) && !url.pathname.endsWith('/')) {
-    res.writeHead(301, { Location: url.pathname + '/' + url.search });
+  if (!file && !extname(full) && !full.endsWith('/')) {
+    res.writeHead(301, { Location: full + '/' + url.search });
     return res.end();
   }
   if (!file) { file = join(ROOT, '404.html'); status = 404; }
@@ -55,4 +67,4 @@ createServer(async (req, res) => {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('404');
   }
-}).listen(PORT, () => console.log(`Макс Групп: http://localhost:${PORT}`));
+}).listen(PORT, () => console.log(`Макс Групп: http://localhost:${PORT}${BASE}/`));

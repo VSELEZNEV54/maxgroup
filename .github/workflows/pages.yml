@@ -1,0 +1,63 @@
+# Демонстрационная копия сайта на GitHub Pages: https://<владелец>.github.io/<репозиторий>/
+# Сайт собирается из исходников при каждом изменении ветки main; собранные файлы в репозиторий не кладутся.
+# Копия закрыта от поисковиков (--noindex): боевой сайт публикуется обычной сборкой node build.mjs на своём домене.
+#
+# Рекомендуется один раз переключить Settings → Pages → Build and deployment → Source на «GitHub Actions»:
+# тогда GitHub перестанет дополнительно публиковать саму ветку с исходниками.
+name: Демо на GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Сборка
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Собрать сайт под адрес GitHub Pages
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          repo="${GITHUB_REPOSITORY#*/}"
+          node build.mjs --base="/$repo" --site="https://$owner.github.io/$repo" --noindex --strict
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist.nosync
+
+  deploy:
+    name: Публикация
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # Пока источник Pages — ветка, GitHub на каждый push сам публикует её корень (исходники, без index.html).
+      # Ждём окончания этой публикации, чтобы собранный сайт лёг поверх неё, а не наоборот.
+      - name: Дождаться штатной публикации ветки
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 36); do
+            n=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$GITHUB_SHA&per_page=50" \
+              --jq '[.workflow_runs[] | select(.path | startswith("dynamic/pages")) | select(.status != "completed")] | length' || echo 0)
+            [ "$n" = "0" ] && break
+            sleep 5
+          done
+      - id: deployment
+        uses: actions/deploy-pages@v4

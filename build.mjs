@@ -4,10 +4,15 @@
 //   node build.mjs --local    → dist-local/  относительные ссылки, открывается двойным кликом по index.html
 //   node build.mjs --out=dir  → в другую папку (для параллельной работы)
 //   node build.mjs --quiet    → без подробного отчёта; --verbose → все предупреждения; --only=/uslugi/ → отчёт только по адресам с этим префиксом
+// Показ сайта не на своём домене (демо на GitHub Pages — см. .github/workflows/pages.yml):
+//   --base=/maxgroup          → сайт лежит в подпапке: все внутренние ссылки и файлы получают этот префикс
+//   --site=https://…          → адрес для canonical, Open Graph, sitemap.xml и разметки вместо боевого домена
+//   --noindex                 → закрыть копию от поисковиков (meta robots и robots.txt), чтобы демо не попало в выдачу
 import { mkdirSync, writeFileSync, readFileSync, readdirSync, rmSync, existsSync, statSync, lstatSync, renameSync, symlinkSync, copyFileSync, utimesSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
-import { ROOT, setMode, setCurrent, abs, u } from './src/lib/core.mjs';
+import { ROOT, setMode, setBase, setCurrent, abs, u } from './src/lib/core.mjs';
+import { site } from './src/data/site.mjs';
 import { loadContext } from './src/data/index.mjs';
 import { base } from './src/layout/base.mjs';
 import { collectPages } from './src/pages/index.mjs';
@@ -17,7 +22,12 @@ import { lint } from './src/lib/lint.mjs';
 const args = new Set(process.argv.slice(2));
 const local = args.has('--local');
 const quiet = args.has('--quiet');
+const argValue = (name) => (process.argv.slice(2).find((x) => x.startsWith(`--${name}=`)) || '').slice(name.length + 3);
 const outArg = process.argv.slice(2).find((x) => x.startsWith('--out='));
+const noindex = args.has('--noindex');
+// базовый путь: «/maxgroup», без завершающей косой; в локальной сборке ссылки относительные, и он не нужен
+const basePath = local ? '' : argValue('base').replace(/\/+$/, '').replace(/^(?=[^/])/, '/');
+const siteArg = argValue('site').replace(/\/+$/, '');
 const outName = outArg ? outArg.slice(6) : local ? 'dist-local' : 'dist';
 // Папка проекта может лежать в iCloud Drive (Рабочий стол, Документы). Чтобы тысячи собранных файлов не уходили
 // в синхронизацию и не плодили дубликаты «имя 2.webp», сборка пишется в «<имя>.nosync» (iCloud такие папки не трогает),
@@ -36,6 +46,8 @@ try { lstatSync(outLink); } catch { symlinkSync(`${outName}.nosync`, outLink); }
 const t0 = Date.now();
 
 setMode(local ? 'local' : 'prod');
+setBase(basePath);
+if (siteArg) site.url = siteArg;
 
 // --- стили и скрипты -----------------------------------------------------------------
 
@@ -74,7 +86,7 @@ function latestMtime(dir) {
 }
 const contentMs = Math.max(...['data', 'content', 'src'].map((d) => latestMtime(join(ROOT, d))));
 const contentDate = contentMs ? dayVl(new Date(contentMs)) : today;
-const ctx = loadContext({ version, date: today, contentDate, year: Number(today.slice(0, 4)), local });
+const ctx = loadContext({ version, date: today, contentDate, year: Number(today.slice(0, 4)), local, base: basePath, noindex });
 const { pages, problems } = await collectPages(ctx);
 
 // --- запись ---------------------------------------------------------------------------------
@@ -127,8 +139,10 @@ for (const page of pages) {
     continue;
   }
   let doc = base(ctx, page, body);
-  // локальный режим: любые оставшиеся абсолютные пути (например, из текстов и Markdown) делаем относительными
-  if (local) doc = doc.replace(/\s(href|src|poster|data-src|data-src-mobile)="(\/[^"/][^"]*|\/)"/g, (m, attr, path) => ` ${attr}="${u(path)}"`);
+  // локальный режим и сайт в подпапке: оставшиеся корневые пути (например, из текстов и Markdown) приводим к нужному виду
+  if (local || basePath) doc = doc.replace(/\s(href|src|poster|action|data-src|data-src-mobile|data-calc-url)="(\/[^"/][^"]*|\/)"/g, (m, attr, path) => ` ${attr}="${u(path)}"`);
+  // демо-копия не должна попасть в поиск и конкурировать с боевым доменом
+  if (noindex) doc = doc.replace(/<meta name="robots" content="[^"]*">/, '<meta name="robots" content="noindex, nofollow">');
   const rel = page.url.endsWith('/') ? page.url.slice(1) + 'index.html' : page.url.slice(1);
   write(rel, doc);
   rendered.push({ page, rel, html: doc });
@@ -162,28 +176,30 @@ write('sitemap.xml', sitemap);
 
 write(
   'robots.txt',
-  [
-    // рекламные метки (utm, yclid, gclid) не закрываем: на таких адресах робот должен увидеть canonical;
-    // для Яндекса они склеиваются через Clean-param
-    'User-agent: *',
-    'Allow: /',
-    'Disallow: /*?sort=',
-    'Disallow: /*&sort=',
-    '',
-    'User-agent: Yandex',
-    'Allow: /',
-    'Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&from',
-    // параметры клиентских фильтров каталога и калькулятора не создают новых страниц
-    'Clean-param: country&brand&model&price-max&price-min&year-min&year-max&mileage-max&hp-max&body&fuel&drive&sort /catalog/',
-    'Clean-param: country&brand&model&price-max&year-min&body&fuel&drive&hp-max&sort /podborki/',
-    'Clean-param: brand&model&price-max&year-min&body&fuel&drive&hp-max&sort /avto-iz-yaponii/',
-    'Clean-param: brand&model&price-max&year-min&body&fuel&drive&hp-max&sort /avto-iz-korei/',
-    'Clean-param: brand&model&price-max&year-min&body&fuel&drive&hp-max&sort /avto-iz-kitaya/',
-    'Clean-param: country&price&year&month&fuel&cc&hp&ehp&e30&city&body&personal&markup&view&ref /kalkulyator/',
-    '',
-    `Sitemap: ${abs(ctx.site, '/sitemap.xml')}`,
-    '',
-  ].join('\n')
+  noindex
+    ? ['# Демонстрационная копия сайта: закрыта от индексации. Боевой robots.txt создаёт обычная сборка — node build.mjs', 'User-agent: *', 'Disallow: /', ''].join('\n')
+    : [
+        // рекламные метки (utm, yclid, gclid) не закрываем: на таких адресах робот должен увидеть canonical;
+        // для Яндекса они склеиваются через Clean-param
+        'User-agent: *',
+        'Allow: /',
+        'Disallow: /*?sort=',
+        'Disallow: /*&sort=',
+        '',
+        'User-agent: Yandex',
+        'Allow: /',
+        'Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&from',
+        // параметры клиентских фильтров каталога и калькулятора не создают новых страниц
+        'Clean-param: country&brand&model&price-max&price-min&year-min&year-max&mileage-max&hp-max&body&fuel&drive&sort /catalog/',
+        'Clean-param: country&brand&model&price-max&year-min&body&fuel&drive&hp-max&sort /podborki/',
+        'Clean-param: brand&model&price-max&year-min&body&fuel&drive&hp-max&sort /avto-iz-yaponii/',
+        'Clean-param: brand&model&price-max&year-min&body&fuel&drive&hp-max&sort /avto-iz-korei/',
+        'Clean-param: brand&model&price-max&year-min&body&fuel&drive&hp-max&sort /avto-iz-kitaya/',
+        'Clean-param: country&price&year&month&fuel&cc&hp&ehp&e30&city&body&personal&markup&view&ref /kalkulyator/',
+        '',
+        `Sitemap: ${abs(ctx.site, '/sitemap.xml')}`,
+        '',
+      ].join('\n')
 );
 
 write(
@@ -193,13 +209,13 @@ write(
       name: `${ctx.site.name} — авто из Азии`,
       short_name: ctx.site.name,
       lang: 'ru',
-      start_url: '/',
+      start_url: basePath + '/',
       display: 'browser',
       background_color: '#0a0c0f',
       theme_color: '#0a0c0f',
       icons: [
-        { src: '/assets/img/brand/icon-192.png', sizes: '192x192', type: 'image/png' },
-        { src: '/assets/img/brand/icon-512.png', sizes: '512x512', type: 'image/png' },
+        { src: basePath + '/assets/img/brand/icon-192.png', sizes: '192x192', type: 'image/png' },
+        { src: basePath + '/assets/img/brand/icon-512.png', sizes: '512x512', type: 'image/png' },
       ],
     },
     null,
@@ -250,6 +266,7 @@ write('build-report.json', JSON.stringify(report, null, 2));
 
 const ms = Date.now() - t0;
 console.log(`✓ ${rendered.length} страниц → ${outName}/  (${ms} мс, ассетов скопировано: ${copied}, версия ${version})`);
+if (basePath || siteArg || noindex) console.log(`  демо-сборка: ${[basePath && `базовый путь ${basePath}`, siteArg && `адрес ${siteArg}`, noindex && 'закрыта от индексации'].filter(Boolean).join(', ')}`);
 if (swept) console.log(`  убрано дубликатов синхронизации из папки сборки: ${swept}`);
 const onlyArg = process.argv.slice(2).find((x) => x.startsWith('--only='));
 if (onlyArg) {

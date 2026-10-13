@@ -8,9 +8,12 @@ export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 // --- режим сборки -----------------------------------------------------------
 // prod  — чистые ЧПУ от корня домена (/avto-iz-yaponii/), для сервера и продакшена
 // local — относительные ссылки с index.html, сайт открывается двойным кликом
-const state = { mode: 'prod', current: '/' };
+const state = { mode: 'prod', current: '/', base: '' };
 export const setMode = (m) => { state.mode = m; };
 export const getMode = () => state.mode;
+// Базовый путь, если сайт лежит не в корне домена (демо на GitHub Pages: /maxgroup). Пустая строка — сайт в корне.
+export const setBase = (b) => { state.base = String(b || '').replace(/\/+$/, ''); };
+export const getBase = () => state.base;
 export const setCurrent = (url) => { state.current = url; };
 export const getCurrent = () => state.current;
 
@@ -51,7 +54,11 @@ export const cx = (...parts) => parts.flat().filter(Boolean).join(' ');
 export function u(path) {
   if (!path) return '#';
   if (/^(https?:|mailto:|tel:|#|data:|\/\/)/.test(path)) return path;
-  if (state.mode !== 'local') return path;
+  if (state.mode !== 'local') {
+    // сайт в подпапке: корневой адрес получает базовый путь; уже дополненный адрес второй раз не меняется
+    if (!state.base || !path.startsWith('/') || path === state.base || path.startsWith(state.base + '/')) return path;
+    return state.base + path;
+  }
   const [p, hash = ''] = path.split('#');
   const from = state.current.endsWith('/') ? state.current : posix.dirname(state.current) + '/';
   let target = p;
