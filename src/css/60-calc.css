@@ -1,0 +1,1872 @@
+/* ==========================================================================
+   Калькулятор «под ключ»: форма, закреплённый итог, диаграмма долей, расшифровка,
+   методика, таблицы ставок, разборы примеров, мини-блок для главной и стран.
+   Собрано только из токенов 00-tokens.css.
+   ========================================================================== */
+
+/* цвета четырёх групп расчёта: монохром + акцент на таможенных платежах */
+.calc,
+.mcalc,
+.calc-ex {
+  --c-car: var(--ink);
+  --c-customs: var(--accent);
+  --c-vl: var(--text-3);
+  --c-delivery: var(--line-2);
+}
+
+.calc .on-dark,
+.mcalc .on-dark,
+.calc-ex__foot {
+  --c-car: #fff;
+  --c-customs: var(--accent-hover);
+  --c-vl: rgba(255, 255, 255, 0.46);
+  --c-delivery: rgba(255, 255, 255, 0.22);
+}
+
+.calc-dot {
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--c-car);
+}
+
+.calc-dot--customs { background: var(--c-customs); }
+.calc-dot--vl { background: var(--c-vl); }
+.calc-dot--delivery { background: var(--c-delivery); }
+
+.calc-accent {
+  color: var(--accent);
+}
+
+/* одноколоночные сетки: колонка не шире контейнера (иначе длинная строка без переноса распирает страницу на мобильных) */
+.calc,
+.calc__form,
+.calc-card__body,
+.calc-notes,
+.calc-tips,
+.calc-check,
+.calc-res,
+.calc-legend,
+.calc-res__actions,
+.calc-rows,
+.calc-insights,
+.calc-insights ul,
+.calc-toc,
+.calc-sheets,
+.calc-sheet__copy,
+.calc-sheet__body,
+.calc-ex__head,
+.calc-ex__body,
+.calc-ex__foot,
+.calc-ex__total,
+.calc-month__copy,
+.calc-out__list,
+.calc-out__list li,
+.calc-how,
+.mcalc__form,
+.mcalc__head,
+.mcalc__result,
+.mcalc__actions {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* --- Каркас ----------------------------------------------------------------- */
+
+.calc {
+  display: grid;
+  gap: var(--gap);
+}
+
+.calc__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--gap);
+  align-items: start;
+}
+
+.calc__form {
+  display: grid;
+  gap: var(--gap);
+  min-width: 0;
+}
+
+.calc__side {
+  position: sticky;
+  top: calc(var(--header-h) + 12px);
+  min-width: 0;
+}
+
+.calc__nojs {
+  display: none;
+}
+
+.no-js .calc__nojs {
+  display: flex;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: var(--r-sm);
+  background: var(--warn-soft);
+  font-size: var(--fs-sm);
+}
+
+.calc__nojs svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--warn);
+}
+
+/* --- Пресеты ---------------------------------------------------------------- */
+
+.calc-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  padding: 12px clamp(16px, 1.9vw, 28px);
+  background: var(--card);
+  border-radius: var(--r-sm);
+}
+
+.calc-presets__list {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+
+.calc-presets .chip {
+  flex: none;
+  background: var(--paper);
+  white-space: nowrap; /* лента примеров листается вбок, названия не переносятся */
+  cursor: pointer;
+}
+
+.calc-presets .chip:hover,
+.calc-presets .chip[aria-pressed='true'] {
+  background: var(--ink);
+}
+
+.calc-presets__note {
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+}
+
+/* врезка «параметры перенесены из карточки автомобиля» (адрес с ref=car) */
+.calc-ref {
+  border-radius: var(--r-sm);
+}
+
+.calc-ref b {
+  font-weight: var(--w-medium);
+}
+
+/* --- Карточки формы --------------------------------------------------------- */
+
+.calc-card {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(18px, 1.9vw, 28px);
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--card);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+.calc-card__head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: clamp(16px, 1.7vw, 24px);
+}
+
+.calc-card__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+
+.calc-card__title {
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.calc-card__body {
+  display: grid;
+  gap: 16px;
+}
+
+.calc-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+.calc-field {
+  min-width: 0;
+}
+
+.calc-field__box {
+  position: relative;
+  display: block;
+}
+
+.calc-field__box .field__control {
+  padding-right: 64px;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-field__suffix {
+  position: absolute;
+  right: 18px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  pointer-events: none;
+}
+
+.calc-card input[name='price'],
+.mcalc input[name='price'] {
+  font-size: 1.25rem;
+  font-weight: var(--w-medium);
+  letter-spacing: -0.015em;
+}
+
+.calc-hint {
+  display: block;
+  margin-top: 8px;
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.calc-hint.is-accent {
+  color: var(--accent);
+}
+
+.calc-line {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.calc-line b {
+  font-weight: var(--w-medium);
+  color: var(--text);
+}
+
+/* поле, без которого расчёта нет (мощность не пришла с карточки авто, не указан электромотор гибрида) */
+.calc-field.is-need .field__control {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.calc-line.is-need,
+.calc-line.is-need b {
+  color: var(--accent);
+}
+
+.calc-notes {
+  display: grid;
+  gap: 8px;
+}
+
+.calc-notes:empty {
+  display: none;
+}
+
+/* страна: три плитки-переключателя */
+.calc-countries {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.calc-country {
+  position: relative;
+  cursor: pointer;
+}
+
+.calc-country input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.calc-country > span {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 104px;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.calc-country b {
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  font-weight: var(--w-medium);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.calc-country small {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.calc-country:hover > span {
+  background: var(--paper-2);
+}
+
+.calc-country input:checked + span {
+  background: var(--ink);
+  color: #fff;
+}
+
+.calc-country input:checked + span small {
+  color: var(--on-dark-2);
+}
+
+.calc-country input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* пилюли с пояснением (тип двигателя, кузов) */
+.calc-opts .opt span small {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.calc-opts .opt input:checked + span small {
+  color: var(--on-dark-2);
+}
+
+/* подсказки «что это» */
+.calc-tips {
+  display: grid;
+  justify-items: start;
+}
+
+.calc-tip {
+  max-width: 100%;
+}
+
+.calc-tip summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  cursor: pointer;
+  list-style: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.calc-tip summary::-webkit-details-marker {
+  display: none;
+}
+
+.calc-tip summary svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--text-3);
+}
+
+.calc-tip summary span {
+  text-decoration: underline dotted;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 0.28em;
+}
+
+.calc-tip summary:hover,
+.calc-tip[open] summary {
+  color: var(--text);
+}
+
+.calc-tip p {
+  max-width: 76ch;
+  margin: 6px 0 10px;
+  padding: 14px 18px;
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.calc-check {
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.calc-check .check {
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.calc-check .calc-tip {
+  padding-left: 28px;
+}
+
+/* --- Итог (закреплённая тёмная панель) -------------------------------------- */
+
+.calc-res {
+  container-type: inline-size;
+  display: grid;
+  gap: 14px;
+  max-height: calc(100vh - var(--header-h) - 24px);
+  padding: clamp(20px, 2.2vw, 32px);
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--on-dark);
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-margin-top: calc(var(--header-h) + 12px);
+}
+
+.calc-res::-webkit-scrollbar {
+  display: none;
+}
+
+.calc-res__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.calc-switch {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 3px;
+  gap: 2px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.calc-switch button {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: var(--r-full);
+  font-size: var(--fs-xs);
+  font-weight: var(--w-medium);
+  color: var(--on-dark-2);
+  white-space: nowrap;
+  transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+}
+
+.calc-switch button:hover {
+  color: #fff;
+}
+
+.calc-switch button[aria-pressed='true'] {
+  background: #fff;
+  color: var(--ink);
+}
+
+/* итог и подпись под ним — одна «живая» область: программа чтения с экрана произносит сумму вместе с пояснением
+   (или с просьбой заполнить поле); на раскладку обёртка не влияет — шаг сетки наследуется от панели */
+.calc-live {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: inherit;
+}
+
+.calc-res__total,
+.mcalc__total {
+  font-size: clamp(2.25rem, 13cqi, 4.5rem);
+  font-weight: var(--w-medium);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.calc-res__total {
+  margin-top: clamp(6px, 1.2vw, 18px);
+}
+
+.calc.is-empty .calc-res__total {
+  color: var(--on-dark-3);
+}
+
+.calc-res__caption {
+  margin-top: -4px;
+  font-size: 0.9375rem;
+  color: var(--on-dark-2);
+}
+
+/* расчёта нет: подпись говорит, какое поле заполнить, — она здесь главная */
+.calc.is-empty .calc-res__caption {
+  color: var(--on-dark);
+}
+
+.calc-res__status,
+.calc-ex__status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.calc-res__status:empty {
+  display: none;
+}
+
+.calc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 12px 0 10px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--on-dark);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+a.calc-chip:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.calc-chip::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+.calc-chip--ok::before {
+  background: var(--ok);
+  opacity: 1;
+}
+
+.calc-chip--warn::before {
+  background: #e8a214;
+  opacity: 1;
+}
+
+.calc-ex .calc-chip {
+  background: var(--paper);
+  color: var(--text);
+}
+
+/* полоса-диаграмма долей */
+.calc-bar {
+  display: flex;
+  gap: 2px;
+  height: 10px;
+}
+
+.calc-bar__seg {
+  flex: 0 1 0;
+  min-width: 4px;
+  border-radius: 2px;
+  background: var(--c-car);
+  transition: flex-grow var(--dur-slow) var(--ease-out);
+}
+
+.calc-bar__seg--customs { background: var(--c-customs); }
+.calc-bar__seg--vl { background: var(--c-vl); }
+.calc-bar__seg--delivery { background: var(--c-delivery); }
+.calc-bar__seg--empty { background: var(--c-delivery); }
+
+.calc-legend {
+  display: grid;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calc-legend__item {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--ink-line);
+  font-size: 0.9375rem;
+  line-height: 1.25;
+}
+
+.calc-legend__item:last-child {
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.calc-legend__pct {
+  min-width: 4ch;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  text-align: right;
+  color: var(--on-dark-2);
+}
+
+.calc-legend__sum {
+  min-width: 8ch;
+  font-weight: var(--w-medium);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.calc-legend__item.is-off {
+  color: var(--on-dark-3);
+}
+
+.calc-legend__item.is-off .calc-legend__sum {
+  font-weight: var(--w-regular);
+}
+
+.calc-res__actions,
+.mcalc__actions {
+  display: grid;
+  gap: 8px;
+}
+
+.calc-res__foot,
+.mcalc__disc {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--on-dark-2);
+}
+
+.calc-res__foot .link {
+  color: var(--on-dark);
+}
+
+/* --- Расшифровка по строкам ---------------------------------------------------- */
+
+.calc__detail {
+  margin-top: clamp(40px, 5vw, 88px);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+.calc__detail-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 32px;
+  margin-bottom: clamp(20px, 2.4vw, 36px);
+}
+
+.calc-groups {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.calc-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(18px, 1.7vw, 26px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.calc-group__head,
+.calc-ex__ghead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.calc-group__head {
+  min-height: 2.7em;
+}
+
+.calc-group__name,
+.calc-ex__ghead span:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.calc-group__pct {
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.calc-group__sum {
+  margin: clamp(28px, 3.6vw, 60px) 0 18px;
+  font-size: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.calc-rows {
+  display: grid;
+  margin: 0;
+}
+
+.calc-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.calc-row dt {
+  font-size: 0.9375rem;
+  line-height: 1.3;
+}
+
+.calc-row dt small {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.calc-row dd {
+  font-weight: var(--w-medium);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.calc-group.is-off {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+
+.calc-group.is-off .calc-group__sum {
+  color: var(--mute);
+}
+
+.calc-group__foot {
+  margin-top: auto;
+  padding-top: 12px;
+  font-size: 0.75rem;
+  color: var(--text-2);
+}
+
+.calc__after {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap);
+  margin-top: var(--gap);
+}
+
+.calc__after > .note {
+  border-radius: var(--r-sm);
+}
+
+/* «что изменило бы сумму»: на высоких экранах — в панели итога рядом с числом,
+   на обычных ноутбуках панель должна помещаться целиком, поэтому блок уходит под расшифровку */
+.calc-insights {
+  display: grid;
+  gap: 4px;
+}
+
+.calc-insights ul {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calc-insight {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ink-line);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--on-dark-2);
+}
+
+.calc-insight .link {
+  color: #fff;
+  white-space: nowrap;
+}
+
+.calc-insights--panel {
+  display: none;
+}
+
+.calc-insights--below {
+  gap: 10px;
+  padding: clamp(18px, 1.7vw, 26px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.calc-insights--below .calc-insight {
+  gap: 4px 16px;
+  padding: 12px 0;
+  border-bottom: 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.calc-insights--below .calc-insight .link {
+  color: var(--accent);
+}
+
+@media (min-width: 901px) and (min-height: 940px), (max-width: 900px) {
+  .calc-insights--panel {
+    display: grid;
+  }
+
+  .calc-insights--below {
+    display: none;
+  }
+}
+
+/* низкие экраны: панель итога компактнее, чтобы кнопка заявки оставалась на виду */
+@media (min-width: 901px) and (max-height: 760px) {
+  .calc-res {
+    gap: 10px;
+    padding-block: 20px;
+  }
+
+  .calc-res__total {
+    margin-top: 0;
+    font-size: clamp(2rem, 11cqi, 3.5rem);
+  }
+
+  .calc-legend__item {
+    padding: 7px 0;
+  }
+
+  .calc-res__foot {
+    display: none;
+  }
+}
+
+/* пока калькулятор на экране, общая нижняя пилюля сайта убирается (класс ставит js/calc.js) */
+.calc-in-view .dock {
+  transform: translate(-50%, calc(100% + 32px));
+}
+
+/* --- Нижняя плашка с итогом (мобильные) ------------------------------------------ */
+
+.calc-dock {
+  display: none;
+}
+
+/* --- Методика: «Как мы считаем» ---------------------------------------------------- */
+
+.calc-formula {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.calc-formula span {
+  padding: 6px 10px;
+  border-radius: var(--r-xs);
+  background: var(--ink-3);
+  color: var(--on-dark);
+}
+
+.calc-formula span:first-child {
+  background: var(--accent);
+  color: #fff;
+}
+
+.calc-formula i {
+  font-style: normal;
+  color: var(--on-dark-3);
+}
+
+.calc-how {
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calc-how__item {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) minmax(0, 250px);
+  gap: 14px clamp(16px, 2vw, 32px);
+  padding: clamp(20px, 2.3vw, 34px) 0;
+  border-top: 1px solid var(--ink-line);
+}
+
+.calc-how__item:last-child {
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.calc-how__num {
+  padding-top: 0.55em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  color: var(--on-dark-3);
+}
+
+.calc-how__title {
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.calc-how__main p {
+  max-width: 58ch;
+  margin-top: 12px;
+  color: var(--on-dark-2);
+  line-height: 1.55;
+}
+
+.calc-how__formula {
+  align-self: start;
+  justify-self: end;
+  margin-top: 0.45em;
+  padding: 6px 10px;
+  border-radius: var(--r-xs);
+  box-shadow: inset 0 0 0 1px var(--ink-line-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-align: right;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+
+/* --- Таблицы ставок: «листы» с пояснением слева ------------------------------------ */
+
+.calc-toc {
+  display: grid;
+  gap: 2px;
+}
+
+.calc-toc a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 0.9375rem;
+  color: var(--text-2);
+  transition: color var(--dur-fast) var(--ease-out), padding-left var(--dur-base) var(--ease-out);
+}
+
+.calc-toc a::before {
+  content: '↓';
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--text-3);
+}
+
+.calc-toc a:hover {
+  padding-left: 6px;
+  color: var(--accent);
+}
+
+.calc-sheets {
+  display: grid;
+}
+
+.calc-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 20px clamp(20px, 3vw, 56px);
+  padding: clamp(28px, 3.4vw, 56px) 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: calc(var(--header-h) + 8px);
+}
+
+.calc-sheet:first-child {
+  border-top-color: var(--text);
+}
+
+.calc-sheet:last-child {
+  padding-bottom: 0;
+}
+
+.calc-sheet__copy {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  max-width: 46ch;
+}
+
+.calc-sheet__copy p {
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+.calc-sheet__copy .calc-sheet__src,
+.calc-sheet__cap {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.calc-sheet__body {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.calc-sheet__cap {
+  margin-top: 12px;
+  color: var(--text-2);
+}
+
+.calc-sheet__cap:first-child {
+  margin-top: 0;
+}
+
+.calc-sheet .table {
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-sheet .table td:first-child {
+  white-space: nowrap;
+}
+
+.calc-sheet__pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: var(--gap);
+  align-items: stretch;
+}
+
+.calc-sheet__pair .table {
+  min-width: 0;
+}
+
+.calc-sheet__pair .fact {
+  min-height: 0;
+}
+
+.calc-sheet .table td small {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.75rem;
+  color: var(--text-2);
+}
+
+.calc-swipe {
+  display: none;
+}
+
+/* широкий лист (утильсбор): заголовок и текст в строку, таблица на всю ширину */
+.calc-sheet--wide .calc-sheet__copy {
+  display: contents;
+}
+
+.calc-sheet--wide .calc-sheet__copy h3 {
+  grid-row: span 2;
+}
+
+.calc-sheet--wide .calc-sheet__copy p {
+  grid-column: 2;
+  max-width: 76ch;
+}
+
+.calc-sheet--wide .calc-sheet__body {
+  grid-column: 1 / -1;
+}
+
+.calc-sheet--wide .table {
+  min-width: 980px;
+}
+
+/* ноутбуки и планшеты: первая колонка переносится, поля ячеек уже — таблица утильсбора помещается в контейнер
+   (раньше на 1180–1280 px последняя колонка «свыше 3 500 см³» была обрезана) */
+@media (max-width: 1366px) {
+  .calc-sheet--wide .table th,
+  .calc-sheet--wide .table td {
+    padding-inline: 10px;
+  }
+
+  .calc-sheet--wide .table td:first-child {
+    min-width: 150px;
+    white-space: normal;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1366px) {
+  .calc-sheet--wide .table {
+    min-width: 0;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .calc-sheet--wide .table {
+    font-size: 0.8125rem;
+  }
+}
+
+/* заголовки колонок переносятся — узким таблицам (акциз по годам) не нужна прокрутка на ноутбуке и планшете */
+@media (max-width: 1280px) {
+  .calc-sheet .table thead th {
+    white-space: normal;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1000px) {
+  .calc-sheet--wide .table th,
+  .calc-sheet--wide .table td {
+    padding-inline: 7px;
+  }
+}
+
+/* --- Разборы примеров ---------------------------------------------------------------- */
+
+.calc-exs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.calc-ex {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.calc-ex__head {
+  display: grid;
+  gap: 12px;
+  padding: clamp(18px, 1.7vw, 26px);
+}
+
+.calc-ex__title {
+  margin-top: clamp(20px, 2.6vw, 44px);
+  font-size: var(--fs-h3);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.calc-ex__meta {
+  font-size: 0.9375rem;
+  color: var(--text-2);
+}
+
+.calc-ex__body {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  gap: 22px;
+  padding: 8px clamp(18px, 1.7vw, 26px) clamp(18px, 1.7vw, 26px);
+}
+
+.calc-ex__ghead {
+  padding-bottom: 10px;
+}
+
+.calc-ex__foot {
+  display: grid;
+  gap: 18px;
+  padding: clamp(18px, 1.7vw, 26px);
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  background: var(--ink);
+  color: #fff;
+}
+
+.calc-ex__total {
+  display: grid;
+  gap: 8px;
+}
+
+.calc-ex__total span {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+
+.calc-ex__total b {
+  font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.calc-ex__foot .more {
+  justify-self: start;
+}
+
+.calc-ex__foot .more:hover {
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* тёмная полоса «месяц выпуска» */
+.calc-month {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 28px clamp(24px, 4vw, 72px);
+  align-items: end;
+  margin-top: var(--gap);
+  padding: clamp(22px, 2.6vw, 40px);
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--on-dark);
+  overflow: hidden;
+}
+
+.calc-month__bg,
+.calc-limits__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.calc-month__bg img,
+.calc-limits__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.calc-month__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 15, 0.82);
+}
+
+.calc-month__copy {
+  display: grid;
+  align-content: space-between;
+  justify-items: start;
+  gap: 24px;
+  min-height: clamp(160px, 15vw, 220px);
+}
+
+.calc-month__lead {
+  max-width: 42ch;
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  letter-spacing: -0.008em;
+}
+
+.calc-month__nums {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.calc-month__num {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: clamp(160px, 15vw, 220px);
+  padding: clamp(16px, 1.6vw, 22px);
+  border-radius: var(--r-sm);
+  background: var(--ink-2);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+a.calc-month__num:hover {
+  background: var(--ink-3);
+}
+
+.calc-month__num span {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+
+.calc-month__num b {
+  margin-top: auto;
+  font-size: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.calc-month__num small {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-xs);
+  color: var(--on-dark-2);
+}
+
+.calc-month__num small svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+a.calc-month__num:hover small svg {
+  transform: translateX(4px);
+}
+
+.calc-month__num--diff {
+  background: var(--accent);
+}
+
+.calc-month__num--diff span,
+.calc-month__num--diff small {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+/* --- «Что не входит» и ограничения ------------------------------------------------------ */
+
+.calc-limits {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.calc-limits__bg img {
+  opacity: 0.55;
+}
+
+.calc-limits__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--ink) 0%, rgba(10, 12, 15, 0.7) 34%, rgba(10, 12, 15, 0.82) 70%, var(--ink) 100%);
+}
+
+.calc-limits__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--sp-7) clamp(12px, 1.4vw, 20px);
+  align-items: start;
+}
+
+.calc-out {
+  padding-right: clamp(0px, 3vw, 56px);
+}
+
+.calc-out__list {
+  display: grid;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calc-out__list li {
+  display: grid;
+  gap: 6px;
+  padding: 16px 0;
+  border-top: 1px solid var(--ink-line-2);
+}
+
+.calc-out__list li:last-child {
+  border-bottom: 1px solid var(--ink-line-2);
+}
+
+.calc-out__list b {
+  font-size: 1.0625rem;
+  font-weight: var(--w-medium);
+  letter-spacing: -0.01em;
+}
+
+.calc-out__list span {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--on-dark-2);
+}
+
+.calc-rules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.calc-rule {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: clamp(260px, 23vw, 340px);
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--ink-2);
+}
+
+.calc-rule__title {
+  font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.calc-rule p {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--on-dark-2);
+}
+
+/* --- Мини-калькулятор (главная, страницы стран) ------------------------------------------ */
+
+.mcalc {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--gap);
+}
+
+.mcalc__form {
+  display: grid;
+  align-content: space-between;
+  gap: clamp(20px, 2.4vw, 32px);
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 36px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.section--white .mcalc__form {
+  background: var(--paper);
+}
+
+/* в тёмной секции обе половины тёмные: форма на приподнятой поверхности, итог — на следующей ступени */
+.section--dark .mcalc__form,
+.on-dark .mcalc__form {
+  background: var(--ink-2);
+}
+
+.section--dark .mcalc__result {
+  background: var(--ink-3);
+}
+
+.section--dark .mcalc__lead,
+.on-dark .mcalc__lead {
+  color: var(--on-dark-2);
+}
+
+.section--dark .mcalc__assume,
+.section--dark .mcalc .calc-hint,
+.section--dark .mcalc .calc-field__suffix {
+  color: var(--on-dark-2);
+}
+
+.mcalc__head {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+
+.mcalc__title {
+  font-size: clamp(1.75rem, 1.15rem + 2.3vw, 3.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.mcalc__lead {
+  max-width: 54ch;
+  color: var(--text-2);
+}
+
+.mcalc__fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+
+.mcalc__assume {
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.mcalc__result {
+  container-type: inline-size;
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 36px);
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.mcalc__total {
+  margin-top: clamp(12px, 2vw, 28px);
+  font-size: clamp(2.125rem, 12cqi, 4rem);
+}
+
+.mcalc__note {
+  margin-top: -6px;
+  font-size: 0.9375rem;
+  color: var(--on-dark-2);
+}
+
+.mcalc__note.is-warn {
+  color: #e8a214;
+}
+
+.mcalc .calc-legend__item.is-off {
+  display: none;
+}
+
+.mcalc .calc-legend__item:nth-last-child(2) {
+  border-bottom: 1px solid var(--ink-line);
+}
+
+/* --- Адаптив ------------------------------------------------------------------------------- */
+
+@media (max-width: 1280px) {
+  .calc-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calc-how__item {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .calc-how__formula {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 0;
+    text-align: left;
+  }
+
+  .calc-month,
+  .calc-limits__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .calc-month__copy {
+    min-height: 0;
+  }
+
+  .calc-out {
+    padding-right: 0;
+  }
+
+  .mcalc__fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1100px) {
+  /* три «чека» листаются по горизонтали */
+  .calc-exs {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(300px, 86%);
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .calc-exs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .calc-ex {
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 900px) {
+  .calc__grid,
+  .calc-sheet,
+  .mcalc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .calc__side {
+    position: static;
+  }
+
+  .calc-res {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .calc-sheet--wide .calc-sheet__copy {
+    display: grid;
+  }
+
+  .calc-sheet--wide .calc-sheet__copy h3 {
+    grid-row: auto;
+  }
+
+  .calc-sheet--wide .calc-sheet__copy p {
+    grid-column: 1;
+  }
+
+  .calc-sheet__copy {
+    max-width: none;
+  }
+
+  .calc-presets {
+    padding-right: 0;
+  }
+
+  .calc-presets__list {
+    flex: 1 1 100%;
+    flex-wrap: nowrap;
+    padding-right: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .calc-presets__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .calc-presets__note {
+    display: none;
+  }
+
+  .calc-swipe {
+    display: inline;
+  }
+
+  /* плашка с итогом заменяет общую нижнюю пилюлю сайта, пока пользователь заполняет форму */
+  .calc-dock {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    z-index: var(--z-bar);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 8px 8px 18px;
+    border: 1px solid var(--ink-line);
+    border-radius: var(--r-lg);
+    background: var(--ink);
+    color: #fff;
+    box-shadow: var(--shadow-float);
+    transform: translateY(calc(100% + 24px));
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .calc-dock.is-visible {
+    transform: none;
+  }
+
+  .calc-dock__sum {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .calc-dock__sum span {
+    overflow: hidden;
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--on-dark-2);
+  }
+
+  .calc-dock__sum b {
+    font-size: 1.25rem;
+    font-weight: var(--w-medium);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .calc-dock .btn {
+    flex: none;
+  }
+
+}
+
+/* таблицы ставок на телефоне (плотность и перенос заголовков задаёт общий .table в 30-components.css):
+   узкие помещаются целиком — первая колонка и «свыше 15 892 000 ₽» переносятся; в широких название строки
+   закреплено слева — рядом всегда видна полная колонка значений */
+@media (max-width: 600px) {
+  .calc-sheet .table td:first-child,
+  #stavki-do-3-let .table td:nth-child(2) {
+    white-space: normal;
+  }
+
+  .calc-sheet--wide .table th:first-child,
+  .calc-sheet--wide .table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    min-width: 128px;
+    max-width: 148px;
+    background: var(--paper);
+    box-shadow: 1px 0 0 var(--line);
+  }
+}
+
+/* зоны касания: подсказки и переключатель итога */
+@media (pointer: coarse), (max-width: 900px) {
+  .calc-tip summary,
+  .calc-toc a {
+    min-height: 44px;
+  }
+
+  .calc-switch button {
+    height: 44px;
+  }
+}
+
+/* печать и сохранение в PDF (общие правила — в 10-base.css): форма и итог в одну колонку, служебные элементы скрыты */
+@media print {
+  .calc-dock,
+  .calc-presets,
+  .calc-res__actions,
+  .calc-switch,
+  .calc-tip,
+  .calc-toc,
+  .calc-ex__foot .more {
+    display: none !important;
+  }
+
+  .calc__grid,
+  .calc-sheet,
+  .mcalc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .calc__side {
+    position: static;
+  }
+
+  .calc-res {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .calc-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calc-group,
+  .calc-ex,
+  .calc-card,
+  .calc-sheet {
+    break-inside: avoid;
+  }
+
+  .calc-sheet--wide .table {
+    min-width: 0;
+    font-size: 0.75rem;
+  }
+
+  .calc-sheet--wide .table th,
+  .calc-sheet--wide .table td {
+    padding-inline: 6px;
+  }
+}
+
+@media (max-width: 640px) {
+  .calc-groups,
+  .calc-rules-grid,
+  .calc-month__nums,
+  .calc-sheet__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .calc-cols--stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .calc-opts .opt span small {
+    display: none;
+  }
+
+  .mcalc__fields > :nth-child(-n + 2) {
+    grid-column: 1 / -1;
+  }
+
+  .calc-opts .opt span {
+    padding: 0 16px;
+  }
+
+  .calc-country > span {
+    min-height: 84px;
+    padding: 12px;
+  }
+
+  .calc-month__num,
+  .calc-rule {
+    min-height: 0;
+  }
+
+  .calc-month__num b {
+    margin-top: 12px;
+  }
+
+  .calc-switch {
+    width: 100%;
+  }
+
+  .calc-switch button {
+    flex: 1;
+    min-width: 0;
+    padding: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -1,0 +1,595 @@
+[
+ {
+  "name": "Новосибирск",
+  "slug": "novosibirsk",
+  "nameAcc": "Новосибирск",
+  "namePrep": "Новосибирске",
+  "nameGen": "Новосибирска",
+  "region": "Новосибирская область",
+  "macro": "Сибирь",
+  "distanceKm": 5937,
+  "days": [
+   10,
+   15
+  ],
+  "daysLabel": "10–15 дн.",
+  "priceFrom": 90000,
+  "truck": {
+   "sedan": 135000,
+   "crossover": 145000,
+   "suv": 155000
+  },
+  "estimated": false,
+  "note": null,
+  "rail": {
+   "sedan": 185000,
+   "crossover": 185000,
+   "suv": 195000,
+   "days": [
+    25,
+    30
+   ]
+  }
+ },
+ {
+  "name": "Красноярск",
+  "slug": "krasnoyarsk",
+  "nameAcc": "Красноярск",
+  "namePrep": "Красноярске",
+  "nameGen": "Красноярска",
+  "region": "Красноярский край",
+  "macro": "Сибирь",
+  "distanceKm": 5153,
+  "days": [
+   8,
+   13
+  ],
+  "daysLabel": "8–13 дн.",
+  "priceFrom": 90000,
+  "truck": {
+   "sedan": 115000,
+   "crossover": 125000,
+   "suv": 135000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Иркутск",
+  "slug": "irkutsk",
+  "nameAcc": "Иркутск",
+  "namePrep": "Иркутске",
+  "nameGen": "Иркутска",
+  "region": "Иркутская область",
+  "macro": "Сибирь",
+  "distanceKm": 4114,
+  "days": [
+   7,
+   12
+  ],
+  "daysLabel": "7–12 дн.",
+  "priceFrom": 70000,
+  "truck": {
+   "sedan": 95000,
+   "crossover": 105000,
+   "suv": 115000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Хабаровск",
+  "slug": "khabarovsk",
+  "nameAcc": "Хабаровск",
+  "namePrep": "Хабаровске",
+  "nameGen": "Хабаровска",
+  "region": "Хабаровский край",
+  "macro": "Дальний Восток",
+  "distanceKm": 761,
+  "days": [
+   1,
+   2
+  ],
+  "daysLabel": "1–2 дн.",
+  "priceFrom": 13000,
+  "truck": {
+   "sedan": 18000,
+   "crossover": 20000,
+   "suv": 25000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Екатеринбург",
+  "slug": "ekaterinburg",
+  "nameAcc": "Екатеринбург",
+  "namePrep": "Екатеринбурге",
+  "nameGen": "Екатеринбурга",
+  "region": "Свердловская область",
+  "macro": "Урал",
+  "distanceKm": 7531,
+  "days": [
+   15,
+   17
+  ],
+  "daysLabel": "15–17 дн.",
+  "priceFrom": 110000,
+  "truck": {
+   "sedan": 165000,
+   "crossover": 175000,
+   "suv": 185000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Москва",
+  "slug": "moskva",
+  "nameAcc": "Москву",
+  "namePrep": "Москве",
+  "nameGen": "Москвы",
+  "region": "Москва и Московская область",
+  "macro": "Центр",
+  "distanceKm": 9100,
+  "days": [
+   18,
+   25
+  ],
+  "daysLabel": "18–25 дн.",
+  "priceFrom": 130000,
+  "truck": {
+   "sedan": 200000,
+   "crossover": 210000,
+   "suv": 220000
+  },
+  "estimated": false,
+  "note": null,
+  "rail": {
+   "sedan": 225000,
+   "crossover": 240000,
+   "suv": 255000,
+   "days": [
+    25,
+    50
+   ]
+  }
+ },
+ {
+  "name": "Санкт-Петербург",
+  "slug": "sankt-peterburg",
+  "nameAcc": "Санкт-Петербург",
+  "namePrep": "Санкт-Петербурге",
+  "nameGen": "Санкт-Петербурга",
+  "region": "Санкт-Петербург и Ленинградская область",
+  "macro": "Северо-Запад",
+  "distanceKm": 9722,
+  "days": [
+   21,
+   25
+  ],
+  "daysLabel": "21–25 дн.",
+  "priceFrom": 140000,
+  "truck": {
+   "sedan": 220000,
+   "crossover": 230000,
+   "suv": 240000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Благовещенск",
+  "slug": "blagoveshchensk",
+  "nameAcc": "Благовещенск",
+  "namePrep": "Благовещенске",
+  "nameGen": "Благовещенска",
+  "region": "Амурская область",
+  "macro": "Дальний Восток",
+  "distanceKm": 1460,
+  "days": [
+   3,
+   3
+  ],
+  "daysLabel": "3 дн.",
+  "priceFrom": 25000,
+  "truck": {
+   "sedan": 30000,
+   "crossover": 35000,
+   "suv": 40000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Чита",
+  "slug": "chita",
+  "nameAcc": "Читу",
+  "namePrep": "Чите",
+  "nameGen": "Читы",
+  "region": "Забайкальский край",
+  "macro": "Дальний Восток",
+  "distanceKm": 3015,
+  "days": [
+   5,
+   6
+  ],
+  "daysLabel": "5–6 дн.",
+  "priceFrom": 60000,
+  "truck": {
+   "sedan": 75000,
+   "crossover": 85000,
+   "suv": 95000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Улан-Удэ",
+  "slug": "ulan-ude",
+  "nameAcc": "Улан-Удэ",
+  "namePrep": "Улан-Удэ",
+  "nameGen": "Улан-Удэ",
+  "region": "Республика Бурятия",
+  "macro": "Дальний Восток",
+  "distanceKm": 3670,
+  "days": [
+   6,
+   10
+  ],
+  "daysLabel": "6–10 дн.",
+  "priceFrom": 70000,
+  "truck": {
+   "sedan": 85000,
+   "crossover": 95000,
+   "suv": 105000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Томск",
+  "slug": "tomsk",
+  "nameAcc": "Томск",
+  "namePrep": "Томске",
+  "nameGen": "Томска",
+  "region": "Томская область",
+  "macro": "Сибирь",
+  "distanceKm": 5893,
+  "days": [
+   8,
+   16
+  ],
+  "daysLabel": "8–16 дн.",
+  "priceFrom": 90000,
+  "truck": {
+   "sedan": 135000,
+   "crossover": 145000,
+   "suv": 155000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Кемерово",
+  "slug": "kemerovo",
+  "nameAcc": "Кемерово",
+  "namePrep": "Кемерове",
+  "nameGen": "Кемерова",
+  "region": "Кемеровская область — Кузбасс",
+  "macro": "Сибирь",
+  "distanceKm": 5681,
+  "days": [
+   8,
+   14
+  ],
+  "daysLabel": "8–14 дн.",
+  "priceFrom": 90000,
+  "truck": {
+   "sedan": 135000,
+   "crossover": 145000,
+   "suv": 155000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Барнаул",
+  "slug": "barnaul",
+  "nameAcc": "Барнаул",
+  "namePrep": "Барнауле",
+  "nameGen": "Барнаула",
+  "region": "Алтайский край",
+  "macro": "Сибирь",
+  "distanceKm": 6130,
+  "days": [
+   11,
+   17
+  ],
+  "daysLabel": "11–17 дн.",
+  "priceFrom": 100000,
+  "truck": {
+   "sedan": 145000,
+   "crossover": 155000,
+   "suv": 165000
+  },
+  "estimated": true,
+  "note": "в прайсе «Системы» нет; Новосибирск + ~10 000 ₽ (по разнице в обзоре stolica2000)"
+ },
+ {
+  "name": "Омск",
+  "slug": "omsk",
+  "nameAcc": "Омск",
+  "namePrep": "Омске",
+  "nameGen": "Омска",
+  "region": "Омская область",
+  "macro": "Сибирь",
+  "distanceKm": 6582,
+  "days": [
+   12,
+   16
+  ],
+  "daysLabel": "12–16 дн.",
+  "priceFrom": 100000,
+  "truck": {
+   "sedan": 145000,
+   "crossover": 155000,
+   "suv": 165000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Тюмень",
+  "slug": "tyumen",
+  "nameAcc": "Тюмень",
+  "namePrep": "Тюмени",
+  "nameGen": "Тюмени",
+  "region": "Тюменская область",
+  "macro": "Урал",
+  "distanceKm": 7210,
+  "days": [
+   15,
+   17
+  ],
+  "daysLabel": "15–17 дн.",
+  "priceFrom": 110000,
+  "truck": {
+   "sedan": 165000,
+   "crossover": 175000,
+   "suv": 185000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Сургут",
+  "slug": "surgut",
+  "nameAcc": "Сургут",
+  "namePrep": "Сургуте",
+  "nameGen": "Сургута",
+  "region": "Ханты-Мансийский автономный округ — Югра",
+  "macro": "Урал",
+  "distanceKm": 7990,
+  "days": [
+   16,
+   18
+  ],
+  "daysLabel": "16–18 дн.",
+  "priceFrom": 130000,
+  "truck": {
+   "sedan": 185000,
+   "crossover": 195000,
+   "suv": 205000
+  },
+  "estimated": true,
+  "note": "в прайсе «Системы» нет; Тюмень + ~20 000 ₽ (по разнице в обзоре stolica2000)"
+ },
+ {
+  "name": "Челябинск",
+  "slug": "chelyabinsk",
+  "nameAcc": "Челябинск",
+  "namePrep": "Челябинске",
+  "nameGen": "Челябинска",
+  "region": "Челябинская область",
+  "macro": "Урал",
+  "distanceKm": 7579,
+  "days": [
+   15,
+   17
+  ],
+  "daysLabel": "15–17 дн.",
+  "priceFrom": 110000,
+  "truck": {
+   "sedan": 165000,
+   "crossover": 175000,
+   "suv": 185000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Уфа",
+  "slug": "ufa",
+  "nameAcc": "Уфу",
+  "namePrep": "Уфе",
+  "nameGen": "Уфы",
+  "region": "Республика Башкортостан",
+  "macro": "Поволжье",
+  "distanceKm": 8007,
+  "days": [
+   15,
+   18
+  ],
+  "daysLabel": "15–18 дн.",
+  "priceFrom": 110000,
+  "truck": {
+   "sedan": 175000,
+   "crossover": 185000,
+   "suv": 195000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Пермь",
+  "slug": "perm",
+  "nameAcc": "Пермь",
+  "namePrep": "Перми",
+  "nameGen": "Перми",
+  "region": "Пермский край",
+  "macro": "Поволжье",
+  "distanceKm": 7890,
+  "days": [
+   17,
+   19
+  ],
+  "daysLabel": "17–19 дн.",
+  "priceFrom": 130000,
+  "truck": {
+   "sedan": 185000,
+   "crossover": 195000,
+   "suv": 205000
+  },
+  "estimated": true,
+  "note": "в прайсе «Системы» нет; Екатеринбург + ~20 000 ₽ (по разнице у «Восток Лайн ДВ»)"
+ },
+ {
+  "name": "Казань",
+  "slug": "kazan",
+  "nameAcc": "Казань",
+  "namePrep": "Казани",
+  "nameGen": "Казани",
+  "region": "Республика Татарстан",
+  "macro": "Поволжье",
+  "distanceKm": 8547,
+  "days": [
+   17,
+   25
+  ],
+  "daysLabel": "17–25 дн.",
+  "priceFrom": 130000,
+  "truck": {
+   "sedan": 200000,
+   "crossover": 210000,
+   "suv": 220000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Самара",
+  "slug": "samara",
+  "nameAcc": "Самару",
+  "namePrep": "Самаре",
+  "nameGen": "Самары",
+  "region": "Самарская область",
+  "macro": "Поволжье",
+  "distanceKm": 8457,
+  "days": [
+   17,
+   25
+  ],
+  "daysLabel": "17–25 дн.",
+  "priceFrom": 110000,
+  "truck": {
+   "sedan": 200000,
+   "crossover": 210000,
+   "suv": 220000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Нижний Новгород",
+  "slug": "nizhniy-novgorod",
+  "nameAcc": "Нижний Новгород",
+  "namePrep": "Нижнем Новгороде",
+  "nameGen": "Нижнего Новгорода",
+  "region": "Нижегородская область",
+  "macro": "Поволжье",
+  "distanceKm": 8950,
+  "days": [
+   18,
+   25
+  ],
+  "daysLabel": "18–25 дн.",
+  "priceFrom": 130000,
+  "truck": {
+   "sedan": 200000,
+   "crossover": 210000,
+   "suv": 220000
+  },
+  "estimated": true,
+  "note": "по тарифу «Системы» до Арзамаса (Нижегородская обл.)"
+ },
+ {
+  "name": "Краснодар",
+  "slug": "krasnodar",
+  "nameAcc": "Краснодар",
+  "namePrep": "Краснодаре",
+  "nameGen": "Краснодара",
+  "region": "Краснодарский край",
+  "macro": "Юг",
+  "distanceKm": 10016,
+  "days": [
+   21,
+   25
+  ],
+  "daysLabel": "21–25 дн.",
+  "priceFrom": 140000,
+  "truck": {
+   "sedan": 220000,
+   "crossover": 230000,
+   "suv": 240000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Ростов-на-Дону",
+  "slug": "rostov-na-donu",
+  "nameAcc": "Ростов-на-Дону",
+  "namePrep": "Ростове-на-Дону",
+  "nameGen": "Ростова-на-Дону",
+  "region": "Ростовская область",
+  "macro": "Юг",
+  "distanceKm": 9743,
+  "days": [
+   21,
+   25
+  ],
+  "daysLabel": "21–25 дн.",
+  "priceFrom": 140000,
+  "truck": {
+   "sedan": 220000,
+   "crossover": 230000,
+   "suv": 240000
+  },
+  "estimated": false,
+  "note": null
+ },
+ {
+  "name": "Воронеж",
+  "slug": "voronezh",
+  "nameAcc": "Воронеж",
+  "namePrep": "Воронеже",
+  "nameGen": "Воронежа",
+  "region": "Воронежская область",
+  "macro": "Центр",
+  "distanceKm": 9327,
+  "days": [
+   21,
+   25
+  ],
+  "daysLabel": "21–25 дн.",
+  "priceFrom": 140000,
+  "truck": {
+   "sedan": 220000,
+   "crossover": 230000,
+   "suv": 240000
+  },
+  "estimated": false,
+  "note": null
+ }
+]

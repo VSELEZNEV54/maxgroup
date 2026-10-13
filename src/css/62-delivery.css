@@ -1,0 +1,1371 @@
+/* ==========================================================================
+   Доставка по России: хаб /dostavka/ и страницы городов.
+   Только токены из 00-tokens.css. Префикс классов — d*.
+   ========================================================================== */
+
+/* неразрывная группа слов в заголовке (см. nw() в src/pages/delivery.mjs) */
+.nw {
+  white-space: nowrap;
+}
+
+/* --- Шапка: кадр затемняем ещё и слева, под заголовок; название города в маршруте не рвётся --- */
+
+/* справа под маршрутом и цифрами в кадре бывает светлый автомобиль — правую половину затемняем почти так же, как левую */
+.p-delivery .page-head--photo .page-head__bg::after {
+  background: linear-gradient(90deg, rgba(10, 12, 15, 0.8) 0%, rgba(10, 12, 15, 0.62) 52%, rgba(10, 12, 15, 0.6) 100%),
+    linear-gradient(180deg, rgba(10, 12, 15, 0.7) 0%, rgba(10, 12, 15, 0.18) 32%, rgba(10, 12, 15, 0.62) 62%, rgba(10, 12, 15, 0.9) 100%);
+}
+
+.p-delivery .page-head--photo .kv__item dt {
+  color: var(--on-dark-2);
+}
+
+/* длинная строка H1 («…и Китая в Хабаровск») не должна упираться в правую колонку с маршрутом и цифрами */
+@media (min-width: 901px) {
+  .p-delivery .page-head__main {
+    padding-right: clamp(12px, 1.6vw, 24px);
+  }
+}
+
+.page-head__side .route b {
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .page-head__side .route {
+    flex-wrap: wrap;
+    row-gap: 6px;
+    max-width: 100%;
+  }
+
+  /* длинные названия регионов («Ханты-Мансийский автономный округ — Югра») на телефоне переносятся, а не обрезаются краем экрана */
+  .p-delivery .page-head__main .label,
+  .p-delivery .split__sticky > .label {
+    display: inline;
+    white-space: normal;
+    line-height: 1.6;
+  }
+
+  .p-delivery .page-head__main .label::before,
+  .p-delivery .split__sticky > .label::before {
+    margin-right: 0.5em;
+  }
+
+  .p-delivery .page-head__main .label::after,
+  .p-delivery .split__sticky > .label::after {
+    margin-left: 0.5em;
+  }
+}
+
+/* --- Город: вводный текст и карта маршрута --------------------------------- */
+
+.dintro {
+  gap: clamp(32px, 5vw, 96px);
+}
+
+.dintro__text > * + * {
+  margin-top: var(--sp-5);
+}
+
+.dintro__text h2 {
+  max-width: 14em;
+}
+
+.dintro__text .prose {
+  margin-top: var(--sp-6);
+}
+
+.dintro__note {
+  max-width: 62ch;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.droute-card {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.4vw, 36px);
+  padding: clamp(20px, 2.2vw, 36px);
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--on-dark);
+  min-width: 0;
+}
+
+.droute-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.droute-card__sum {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.droute {
+  display: grid;
+}
+
+.droute__stop {
+  --km: 5.6em;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--km) 9px minmax(0, 1fr) auto;
+  column-gap: 16px;
+  align-items: center;
+  min-height: 50px;
+}
+
+/* вертикальная линия маршрута проходит через точки */
+.droute__stop::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--km) + 16px + 4px);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--ink-line-2);
+}
+
+.droute__stop--start::before {
+  top: 50%;
+}
+
+.droute__stop--end::before {
+  bottom: 50%;
+}
+
+.droute__km,
+.droute__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.droute__km {
+  text-align: right;
+  color: var(--on-dark-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.droute__meta {
+  color: var(--on-dark-2);
+}
+
+.droute__stop i {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.droute__name {
+  font-size: 1.0625rem;
+  font-weight: var(--w-medium);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+a.droute__name:hover {
+  color: var(--accent-on-dark);
+}
+
+.droute__stop--minor {
+  min-height: 38px;
+}
+
+.droute__stop--minor i {
+  width: 5px;
+  height: 5px;
+  background: var(--on-dark-3);
+  box-shadow: none;
+}
+
+.droute__stop--minor .droute__name {
+  font-size: 0.9375rem;
+  font-weight: var(--w-regular);
+  color: var(--on-dark-2);
+}
+
+.droute__stop--start i {
+  background: #fff;
+  box-shadow: none;
+}
+
+.droute__stop--end {
+  min-height: 72px;
+}
+
+.droute__stop--end i {
+  background: var(--accent-on-dark);
+  box-shadow: 0 0 0 5px rgba(92, 155, 255, 0.2);
+}
+
+.droute__stop--end .droute__name {
+  font-size: var(--fs-h3);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.droute__stop--end .droute__km,
+.droute__stop--end .droute__meta {
+  color: var(--on-dark);
+}
+
+.droute-card__foot {
+  display: grid;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ink-line);
+}
+
+.droute-card__roads {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--on-dark-3);
+}
+
+.droute-card__season {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 12px;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--on-dark-2);
+}
+
+.droute-card__season svg {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+@media (max-width: 900px) {
+  .droute-card {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .droute__stop {
+    --km: 4.7em;
+    grid-template-columns: var(--km) 9px minmax(0, 1fr);
+    column-gap: 12px;
+    padding-block: 9px;
+    min-height: 0;
+  }
+
+  .droute__stop::before {
+    left: calc(var(--km) + 12px + 4px);
+  }
+
+  .droute__meta {
+    grid-column: 3;
+    margin-top: 3px;
+  }
+
+  .droute__meta:empty {
+    display: none;
+  }
+
+  .droute__stop--end {
+    min-height: 0;
+    padding-top: 14px;
+  }
+}
+
+/* --- Город: тарифы ------------------------------------------------------------ */
+
+.dtariff {
+  gap: var(--sp-6);
+}
+
+.dfactors {
+  display: grid;
+  gap: 14px;
+}
+
+.dfactors h3 {
+  font-weight: 400;
+}
+
+.dfactors__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+.dfactors__list > div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--text);
+}
+
+.dfactors__list dt {
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+.dfactors__list dd {
+  font-size: var(--fs-h4);
+  font-weight: var(--w-medium);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 1180px) {
+  .dfactors__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--sp-5);
+  }
+}
+
+.tariff {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tariff th,
+.tariff td {
+  padding: clamp(16px, 1.7vw, 26px) 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: baseline;
+  font-weight: var(--w-regular);
+}
+
+.tariff th + th,
+.tariff th + td,
+.tariff td + td {
+  padding-left: 16px;
+  text-align: right;
+}
+
+.tariff thead th {
+  padding-top: 0;
+  padding-bottom: 12px;
+  border-bottom-color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.tariff tbody th {
+  font-size: var(--fs-h4);
+  font-weight: var(--w-medium);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.tariff tbody th small {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.tariff tbody td {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.tariff .tariff__alt {
+  color: var(--text-2);
+}
+
+.tariff tfoot th,
+.tariff tfoot td {
+  padding-bottom: 0;
+  border-bottom: 0;
+  color: var(--text-2);
+}
+
+.tariff tfoot td {
+  font-weight: var(--w-medium);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.tariff tfoot .tariff__alt {
+  color: var(--text-2);
+}
+
+.dminis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.dmini {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: clamp(220px, 19vw, 280px);
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  min-width: 0;
+}
+
+.dmini--dark {
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.dmini__value {
+  margin-top: clamp(8px, 1.4vw, 20px);
+  font-size: clamp(2rem, 1.3rem + 2.2vw, 3.5rem);
+  font-weight: var(--w-medium);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.dmini__title {
+  margin-top: clamp(8px, 1.4vw, 20px);
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.dmini__text {
+  margin-top: auto;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 44ch;
+}
+
+.dmini--dark .dmini__text {
+  color: var(--on-dark-2);
+}
+
+.dmini .more {
+  margin-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .dminis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dmini {
+    min-height: 0;
+  }
+
+  .dmini__text {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 520px) {
+  .tariff--rail tbody td {
+    font-size: 1.125rem;
+    letter-spacing: -0.02em;
+  }
+
+  .tariff--rail tbody th {
+    font-size: 1rem;
+  }
+
+  .tariff--rail th + th,
+  .tariff--rail th + td,
+  .tariff--rail td + td {
+    padding-left: 10px;
+  }
+}
+
+/* --- Город: примеры «авто + доставка» ------------------------------------------- */
+
+.dcars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.dcar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.dcar__media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+
+.dcar__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-scene) var(--ease-out);
+}
+
+.dcar:hover .dcar__media img {
+  transform: scale(1.04);
+}
+
+.dcar__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+  padding: 18px clamp(18px, 1.6vw, 24px) clamp(18px, 1.6vw, 24px);
+}
+
+.dcar__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.dcar__title {
+  font-size: var(--fs-h4);
+  font-weight: var(--w-medium);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.dcar__title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.dcar:hover .dcar__title {
+  color: var(--accent);
+}
+
+.dcar__sum {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.dcar__sum > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.9375rem;
+}
+
+.dcar__sum dt {
+  color: var(--text-2);
+}
+
+.dcar__sum dd {
+  font-weight: var(--w-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.dcar__sum > .dcar__total {
+  padding: 14px 0 0;
+  border-top-color: var(--text);
+}
+
+.dcar__total dt {
+  color: var(--text);
+  font-weight: var(--w-medium);
+}
+
+.dcar__total dd {
+  font-size: var(--fs-h3);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+/* тёмная плитка-заявка в сетке примеров */
+.dpromo {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sp-6);
+  min-height: 320px;
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--on-dark);
+  min-width: 0;
+}
+
+.dpromo__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.dpromo__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+}
+
+.dpromo__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 12, 15, 0.86) 0%, rgba(10, 12, 15, 0.5) 55%, rgba(10, 12, 15, 0.9) 100%);
+}
+
+.dpromo__title {
+  margin-top: 14px;
+  max-width: 13em;
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.dpromo__text {
+  margin-top: 12px;
+  max-width: 38ch;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--on-dark-2);
+}
+
+.dpromo .btn {
+  align-self: flex-start;
+}
+
+.dcars__note {
+  max-width: 80ch;
+  margin-top: var(--sp-5);
+}
+
+@media (max-width: 900px) {
+  .dcars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dcars--few .dcars__promo {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  /* на телефоне — горизонтальная лента, чтобы шесть плиток не растягивали страницу */
+  .dcars {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(272px, 82%);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    padding-inline: var(--gutter);
+    margin-inline: calc(var(--gutter) * -1);
+    scrollbar-width: none;
+  }
+
+  .dcars::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dcars > * {
+    scroll-snap-align: start;
+  }
+
+  .dcars--few .dcars__promo {
+    grid-column: auto;
+  }
+}
+
+/* --- Город: рекомендации-строки -------------------------------------------------- */
+
+.dpicks {
+  gap: 0;
+  border-top: 1px solid var(--text);
+}
+
+.dpick {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 20px;
+  gap: clamp(16px, 2vw, 28px);
+  align-items: start;
+  padding: clamp(20px, 2.3vw, 34px) 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding var(--dur-base) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.dpick__icon {
+  width: 28px;
+  height: 28px;
+  margin-top: 2px;
+}
+
+.dpick__body {
+  display: grid;
+  gap: 10px;
+}
+
+.dpick__title {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.dpick__text {
+  max-width: 54ch;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.dpick__go svg {
+  width: 18px;
+  height: 18px;
+  margin-top: 8px;
+  opacity: 0.35;
+  transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+.dpick:hover {
+  padding-left: 10px;
+  color: var(--accent);
+}
+
+.dpick:hover .dpick__go svg {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* --- Хаб: навигация по регионам + таблица городов --------------------------------- */
+
+.dhub {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+}
+
+.dhub__aside {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  display: grid;
+  gap: var(--sp-6);
+  min-width: 0;
+}
+
+.dhub__main {
+  min-width: 0;
+}
+
+/* врезка под таблицей: плашка — по ширине таблицы, а строка текста не длиннее ~96 знаков */
+.dhub__main .note,
+.dtariff .note {
+  max-width: none;
+}
+
+.dhub__main .note > div,
+.dtariff .note > div {
+  max-width: 96ch;
+}
+
+.dhub__nav {
+  display: grid;
+  border-top: 1px solid var(--text);
+}
+
+.dhub__nav a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.0625rem;
+  font-weight: var(--w-medium);
+  letter-spacing: -0.012em;
+  transition: padding var(--dur-base) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.dhub__nav small {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 400;
+  color: var(--text-3);
+}
+
+.dhub__nav a:hover {
+  padding-left: 8px;
+  color: var(--accent);
+}
+
+.dhub__vl {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  padding: clamp(18px, 1.6vw, 24px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.dhub__vl-title {
+  margin-top: 6px;
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+
+.dhub__vl .more {
+  margin-top: 6px;
+  color: var(--text);
+  white-space: normal;
+  text-align: left;
+}
+
+.dtable {
+  display: block;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dtable thead,
+.dtable tbody {
+  display: block;
+}
+
+.dtable tbody {
+  scroll-margin-top: calc(var(--header-h) + 8px);
+}
+
+.dtable tr {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) repeat(5, minmax(0, 1fr)) 20px;
+  column-gap: 16px;
+  align-items: center;
+}
+
+.dtable th,
+.dtable td {
+  display: block;
+  min-width: 0;
+  padding: 0;
+  text-align: left;
+  font-weight: var(--w-regular);
+}
+
+.dtable thead tr {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--text);
+}
+
+.dtable thead th {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.dtable .dtable__group {
+  padding: clamp(28px, 3.2vw, 48px) 0 14px;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.dtable tbody:first-of-type .dtable__group {
+  padding-top: clamp(20px, 2vw, 28px);
+}
+
+.dtable__group th {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+}
+
+.dtable__gname {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.dtable__gmeta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.dtable__row {
+  position: relative;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding var(--dur-base) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.dtable .dtable__city {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.dtable__city a {
+  font-size: 1.125rem;
+  font-weight: var(--w-medium);
+  letter-spacing: -0.015em;
+}
+
+/* вся строка — ссылка на страницу города */
+.dtable__city a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.dtable__city .badge {
+  height: 22px;
+  padding: 0 8px;
+}
+
+.dtable__m {
+  display: none;
+}
+
+.dtable__row td {
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--text-2);
+}
+
+.dtable__go svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.35;
+  transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+.dtable__row:hover {
+  padding-left: 10px;
+  color: var(--accent);
+}
+
+.dtable__row:hover .dtable__go svg {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+@media (max-width: 1000px) {
+  .dhub {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+  }
+
+  /* на узком экране: регионы-чипы → таблица → блок про Владивосток */
+  .dhub__aside {
+    display: contents;
+  }
+
+  .dhub__nav {
+    order: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-top: 0;
+  }
+
+  .dhub__nav a {
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border-bottom: 0;
+    border-radius: var(--r-full);
+    background: var(--card);
+    font-size: 0.9375rem;
+    font-weight: var(--w-regular);
+    letter-spacing: 0;
+  }
+
+  .dhub__nav a:hover {
+    padding-left: 16px;
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .dhub__main {
+    order: 2;
+  }
+
+  .dhub__vl {
+    order: 3;
+  }
+}
+
+@media (max-width: 720px) {
+  .dtable tr {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.05fr) 16px;
+    column-gap: 10px;
+  }
+
+  .dtable .dtable__km,
+  .dtable .dtable__x {
+    display: none;
+  }
+
+  .dtable__m {
+    display: inline;
+  }
+
+  .dtable__city a {
+    font-size: 1rem;
+  }
+
+  .dtable__row td {
+    font-size: 0.875rem;
+  }
+
+  .dtable__row:hover {
+    padding-left: 0;
+  }
+}
+
+/* --- Хаб: способы доставки ----------------------------------------------------------- */
+
+.dways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.dway {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.8vw, 44px);
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  min-width: 0;
+}
+
+.dway--dark {
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.dway__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dway__icon {
+  width: 28px;
+  height: 28px;
+}
+
+.dway__title {
+  font-size: clamp(1.875rem, 1.3rem + 1.7vw, 2.875rem);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.dway__text {
+  margin-top: 14px;
+  max-width: 42ch;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.dway--dark .dway__text {
+  color: var(--on-dark-2);
+}
+
+.dway__list {
+  display: grid;
+  margin-top: auto;
+}
+
+.dway__list > div {
+  display: grid;
+  grid-template-columns: 7.2em minmax(0, 1fr);
+  gap: 14px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line-2);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.dway--dark .dway__list > div {
+  border-top-color: var(--ink-line-2);
+}
+
+.dway__list dt {
+  padding-top: 0.25em;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.dway--dark .dway__list dt {
+  color: var(--on-dark-3);
+}
+
+.dway__links {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.dway__links .more {
+  white-space: normal;
+  text-align: left;
+}
+
+@media (max-width: 1000px) {
+  .dways {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .dway__list > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+}
+
+/* --- Хаб: что влияет на цену ------------------------------------------------------------ */
+
+.dfacts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.dfacts .fact__value {
+  white-space: nowrap;
+  font-size: clamp(2.25rem, 1.5rem + 2.2vw, 3.75rem);
+}
+
+@media (max-width: 1100px) {
+  .dfacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .dfacts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dfacts .fact {
+    min-height: 0;
+  }
+}
+
+/* --- Хаб: передача перевозчику и документы (тёмная секция) --------------------------- */
+
+.dhand {
+  gap: var(--sp-7);
+}
+
+.dhand__media {
+  width: 100%;
+  margin-top: var(--sp-5);
+  aspect-ratio: 16 / 10;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--ink-2);
+}
+
+.dhand__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 76% center;
+}
+
+.dsteps {
+  display: grid;
+  border-top: 1px solid var(--ink-line-2);
+}
+
+.dsteps__item {
+  display: grid;
+  grid-template-columns: 3.4em minmax(0, 1fr) auto;
+  gap: clamp(12px, 2vw, 28px);
+  align-items: start;
+  padding: clamp(20px, 2.3vw, 34px) 0;
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.dsteps__num,
+.dsteps__time {
+  padding-top: 0.55em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dsteps__num {
+  color: var(--on-dark-3);
+}
+
+.dsteps__time {
+  color: var(--on-dark-2);
+}
+
+.dsteps__title {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.dsteps__text {
+  margin-top: 12px;
+  max-width: 58ch;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--on-dark-2);
+}
+
+.ddocs {
+  display: grid;
+  gap: var(--sp-5);
+  padding: clamp(20px, 2.2vw, 36px);
+  border-radius: var(--r-sm);
+  background: var(--ink-2);
+}
+
+.ddocs__title {
+  margin-top: 14px;
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  max-width: 16em;
+}
+
+.ddocs__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--sp-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ddocs__list li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 13px 0;
+  border-top: 1px solid var(--ink-line);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.ddocs__list svg {
+  width: 20px;
+  height: 20px;
+  color: var(--on-dark-2);
+}
+
+.ddocs__note {
+  max-width: 66ch;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--on-dark-2);
+}
+
+@media (max-width: 900px) {
+  .dhand__media {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .dsteps__item {
+    grid-template-columns: 2.2em minmax(0, 1fr);
+  }
+
+  .dsteps__time {
+    grid-column: 2;
+    padding-top: 0;
+  }
+
+  .ddocs__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

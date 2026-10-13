@@ -1,0 +1,1803 @@
+/* ==========================================================================
+   Услуги: хаб /uslugi/ и посадочные страницы услуг
+   Строится только из токенов 00-tokens.css. Префикс классов — svc-.
+   ========================================================================== */
+
+/* --- Шапка услуги ------------------------------------------------------------------- */
+/* Одна композиция на всех страницах раздела: текст слева, объект (3D-рендер или кадр из видео) справа. */
+
+.svc-head .page-head--photo {
+  min-height: clamp(520px, 72vh, 780px);
+}
+
+.svc-head h1 {
+  font-size: clamp(2.125rem, 1.1rem + 3vw, 4.125rem); /* длинные SEO-заголовки: чуть мельче общего h1 */
+}
+
+.svc-head .page-head__main {
+  max-width: 860px;
+}
+
+.svc-head .page-head__main .lead {
+  max-width: 48ch !important; /* в pageHead ширина лида задана инлайн-стилем */
+}
+
+/* длинный H1 «Подбор и покупка автомобиля под заказ…»: держим в три строки, чтобы серая часть не ложилась на автомобиль рендера */
+@media (min-width: 901px) {
+  .svc-head--avto-pod-zakaz h1 {
+    max-width: 10.6em;
+  }
+}
+
+.svc-head .kv {
+  padding-top: var(--sp-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 3D-рендер: кадр во всю шапку, слева затемнение под текст */
+.svc-head--render .page-head__bg img {
+  object-position: 84% 46%;
+}
+
+.svc-head--render .page-head__bg::after {
+  background:
+    linear-gradient(90deg, rgba(10, 12, 15, 0.92) 0%, rgba(10, 12, 15, 0.66) 40%, rgba(10, 12, 15, 0) 72%),
+    linear-gradient(180deg, rgba(10, 12, 15, 0.66) 0%, rgba(10, 12, 15, 0) 26%, rgba(10, 12, 15, 0) 72%, rgba(10, 12, 15, 0.6) 100%);
+}
+
+/* кадр из видео: занимает правую часть шапки и уходит в тёмный фон слева */
+.svc-head--frame .page-head__bg {
+  left: 36%;
+}
+
+.svc-head--frame .page-head__bg::after {
+  background:
+    linear-gradient(90deg, var(--ink) 0%, rgba(10, 12, 15, 0.6) 26%, rgba(10, 12, 15, 0) 58%),
+    linear-gradient(180deg, rgba(10, 12, 15, 0.7) 0%, rgba(10, 12, 15, 0) 30%, rgba(10, 12, 15, 0) 66%, rgba(10, 12, 15, 0.72) 100%);
+}
+
+/* положение объекта в кадре — у каждого кадра своё */
+.svc-head--aukciony-yaponii .page-head__bg img {
+  object-position: 14% center;
+}
+
+.svc-head--avtokredit .page-head__bg img {
+  object-position: 100% center;
+}
+
+/* в левой части этого кадра — подсвеченное здание: под заголовком держим фон почти чёрным, автомобиль остаётся в свету */
+.svc-head--avtokredit .page-head__bg::after {
+  background:
+    linear-gradient(90deg, var(--ink) 0%, rgba(10, 12, 15, 0.92) 18%, rgba(10, 12, 15, 0.5) 34%, rgba(10, 12, 15, 0) 60%),
+    linear-gradient(180deg, rgba(10, 12, 15, 0.7) 0%, rgba(10, 12, 15, 0) 30%, rgba(10, 12, 15, 0) 66%, rgba(10, 12, 15, 0.72) 100%);
+}
+
+.svc-head--hub .page-head__bg img {
+  object-position: 34% center;
+}
+
+/* мобильные: объект показываем в «окне» над текстом, ниже — ровный тёмный фон */
+@media (max-width: 900px) {
+  .svc-head .page-head--photo {
+    min-height: 0;
+  }
+
+  .svc-head .page-head__grid {
+    margin-top: clamp(148px, 42vw, 260px);
+  }
+
+  .svc-head--render .page-head__bg,
+  .svc-head--frame .page-head__bg {
+    left: 0;
+    bottom: auto;
+    height: clamp(320px, 88vw, 500px);
+  }
+
+  .svc-head--render .page-head__bg::after,
+  .svc-head--frame .page-head__bg::after {
+    background: linear-gradient(180deg, rgba(10, 12, 15, 0.78) 0%, rgba(10, 12, 15, 0.16) 36%, rgba(10, 12, 15, 0) 58%, var(--ink) 100%);
+  }
+
+  /* кадры из видео: под шапкой сайта и крошками — огни города, поэтому верх кадра темнее, чем у студийных рендеров */
+  .svc-head--frame .page-head__bg::after {
+    background: linear-gradient(180deg, rgba(10, 12, 15, 0.86) 0%, rgba(10, 12, 15, 0.62) 26%, rgba(10, 12, 15, 0.14) 44%, rgba(10, 12, 15, 0) 60%, var(--ink) 100%);
+  }
+
+  .svc-head--render .page-head__bg img {
+    object-position: 82% 50%;
+  }
+
+  .svc-head--aukciony-yaponii .page-head__bg img {
+    object-position: 38% center;
+  }
+
+  .svc-head--avtokredit .page-head__bg img {
+    object-position: 84% center;
+  }
+
+  .svc-head--hub .page-head__bg img {
+    object-position: 52% center;
+  }
+
+  .svc-head .page-head__actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* --- Общие мелочи ---------------------------------------------------------------------- */
+
+.svc-stack {
+  gap: clamp(40px, 4.4vw, 72px);
+}
+
+.svc-gap {
+  column-gap: clamp(24px, 4vw, 72px);
+}
+
+.svc-sub {
+  margin-bottom: var(--sp-4);
+}
+
+.svc-after {
+  margin-top: clamp(40px, 4.4vw, 72px);
+}
+
+.svc-dim {
+  color: var(--on-dark-3);
+  max-width: 46ch;
+}
+
+/* длинные тексты услуг: строка около 85 знаков — читается легче, чем во всю ширину колонки */
+.svc-stack > .prose,
+.svc-cols > .prose {
+  max-width: 66ch;
+}
+
+.svc-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--sp-7) clamp(12px, 1.4vw, 20px);
+  align-items: start;
+}
+
+.svc-cols--rev {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  column-gap: clamp(24px, 4vw, 72px);
+}
+
+@media (max-width: 900px) {
+  .svc-cols,
+  .svc-cols--rev {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* тёмная плитка-призыв в конце сетки карточек */
+.svc-promo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sp-7);
+  min-height: 320px;
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.svc-promo__title {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.svc-promo p {
+  margin-top: 12px;
+  margin-bottom: var(--sp-5);
+  color: var(--on-dark-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* высокие карточки на мобильных не тянем: пустой низ там не нужен */
+@media (max-width: 600px) {
+  .svc-cards > .card--tall {
+    min-height: 0;
+  }
+}
+
+/* --- Нумерованные строки («документальная» таблица) ----------------------------------------- */
+
+.svc-rows {
+  display: grid;
+  border-top: 1px solid var(--text);
+}
+
+.svc-row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 5fr) minmax(0, 7fr);
+  gap: 6px clamp(12px, 1.4vw, 20px);
+  align-items: baseline;
+  padding: clamp(16px, 1.6vw, 24px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.svc-row__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+
+.svc-row__title {
+  font-size: var(--fs-h4);
+  font-weight: var(--w-medium);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.svc-row__text {
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+/* широкий вариант: на всю ширину контейнера, заголовок крупнее */
+.svc-rows--wide .svc-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 4fr) minmax(0, 7fr);
+  padding: clamp(20px, 2.2vw, 34px) 0;
+  transition: padding var(--dur-base) var(--ease-out);
+}
+
+.svc-rows--wide .svc-row__title {
+  font-size: var(--fs-h3);
+  letter-spacing: -0.022em;
+  line-height: 1.1;
+}
+
+.svc-rows--wide .svc-row__text {
+  font-size: 1.0625rem;
+}
+
+/* сложенный вариант: заголовок над текстом */
+.svc-rows--stack .svc-row {
+  grid-template-columns: 48px minmax(0, 1fr);
+}
+
+.svc-rows--stack .svc-row__text {
+  grid-column: 2;
+}
+
+.section--dark .svc-rows,
+.on-dark .svc-rows {
+  border-top-color: var(--ink-line-2);
+}
+
+.section--dark .svc-row,
+.on-dark .svc-row {
+  border-bottom-color: var(--ink-line);
+}
+
+.section--dark .svc-row__num,
+.on-dark .svc-row__num {
+  color: var(--on-dark-3);
+}
+
+.section--dark .svc-row__text,
+.on-dark .svc-row__text {
+  color: var(--on-dark-2);
+}
+
+@media (max-width: 720px) {
+  .svc-row,
+  .svc-rows--wide .svc-row {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .svc-row__text {
+    grid-column: 2;
+  }
+
+  .svc-rows--wide .svc-row__text {
+    font-size: 0.9375rem;
+  }
+}
+
+/* --- Полоса коротких фактов ---------------------------------------------------------------- */
+
+.svc-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(28px, 3.4vw, 56px);
+  border-top: 1px solid var(--text);
+}
+
+.svc-strip__item {
+  padding: 18px 20px 0 0;
+  min-width: 0;
+}
+
+.svc-strip__item + .svc-strip__item {
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+
+.svc-strip dt {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.svc-strip dd {
+  margin-top: 8px;
+  max-width: 36ch;
+  color: var(--text-2);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.svc-strip--tight {
+  margin-top: var(--sp-6);
+}
+
+@media (max-width: 720px) {
+  .svc-strip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .svc-strip__item {
+    padding: 16px 0;
+  }
+
+  .svc-strip__item + .svc-strip__item {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* --- «Что входит»: тёмная плитка с рендером + сетка карточек ---------------------------------- */
+
+.svc-bento {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--gap);
+}
+
+.svc-bento .card {
+  min-height: clamp(168px, 14vw, 216px);
+}
+
+.svc-feature {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sp-8);
+  min-height: clamp(380px, 36vw, 560px);
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--ink-2);
+  color: #fff;
+}
+
+.svc-feature__bg,
+.svc-docs__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+/* рендер занимает верх плитки, низ под текстом — ровный тёмный фон */
+.svc-feature__bg {
+  bottom: 26%;
+}
+
+.svc-feature__bg img,
+.svc-docs__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 86% 50%;
+}
+
+.svc-feature__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(18, 21, 26, 0.55) 0%, rgba(18, 21, 26, 0) 28%, rgba(18, 21, 26, 0) 62%, var(--ink-2) 100%);
+}
+
+.svc-feature__title {
+  max-width: 13em;
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+
+.svc-feature__body p {
+  margin-top: 12px;
+  max-width: 44ch;
+  color: var(--on-dark-2);
+  font-size: 0.9375rem;
+}
+
+.svc-feature .ticks {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ink-line-2);
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 1000px) {
+  .svc-bento {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* рендер — в «окне» над текстом */
+  .svc-feature {
+    min-height: 0;
+    gap: clamp(150px, 42vw, 300px);
+  }
+
+  .svc-feature__bg {
+    bottom: auto;
+    height: calc(clamp(150px, 42vw, 300px) + 110px);
+  }
+
+  .svc-feature__bg img {
+    object-position: 84% 50%;
+  }
+}
+
+/* --- Три рынка (тёмные плитки стран) ------------------------------------------------------------ */
+
+.svc-market {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  min-height: clamp(380px, 31vw, 480px);
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--ink-2);
+  color: var(--on-dark);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.svc-market:hover {
+  background: var(--ink-3);
+}
+
+.svc-market__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.svc-market__steer {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--on-dark-3);
+}
+
+.svc-market__title {
+  margin-top: clamp(16px, 2.4vw, 40px);
+  font-size: clamp(2rem, 1.4rem + 2vw, 3.25rem);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.svc-market__title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.svc-market__list {
+  display: grid;
+  color: var(--on-dark-2);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.svc-market__list li {
+  padding: 11px 0;
+  border-top: 1px solid var(--ink-line);
+}
+
+.svc-market__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.svc-market__foot b {
+  display: block;
+  font-size: 1.375rem;
+  font-weight: var(--w-medium);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.svc-market__foot small {
+  display: block;
+  margin-top: 5px;
+  color: var(--on-dark-3);
+  font-size: 0.75rem;
+}
+
+.svc-market__go {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+
+.svc-market__go svg {
+  width: 14px;
+  height: 14px;
+}
+
+.svc-market:hover .svc-market__go {
+  background: #fff;
+  border-color: #fff;
+  color: var(--ink);
+  transform: rotate(-45deg);
+}
+
+/* --- Аукционы: коды листа, правила торгов, таблица оценок, лоты --------------------------------------- */
+
+.svc-codes {
+  display: grid;
+  gap: var(--gap);
+  align-content: start;
+}
+
+.svc-codes .svc-sub {
+  margin-bottom: calc(var(--sp-4) - var(--gap));
+}
+
+.svc-code {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: end;
+  gap: 12px 20px;
+  min-height: clamp(128px, 11vw, 168px);
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.svc-code b {
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 1.2rem + 1.9vw, 3rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+}
+
+.svc-code span {
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.svc-code--dark {
+  background: var(--ink);
+  color: #fff;
+}
+
+.svc-code--dark span {
+  color: var(--on-dark-2);
+}
+
+.svc-allow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+  margin-top: var(--gap);
+}
+
+.svc-allow__col {
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--ink-2);
+}
+
+.svc-allow__col h3 {
+  margin-bottom: var(--sp-5);
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.svc-allow__col ul {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.svc-allow__col li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 11px 0;
+  border-top: 1px solid var(--ink-line);
+  color: var(--on-dark-2);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.svc-allow__col li svg {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+}
+
+.svc-allow__col--yes li svg {
+  color: var(--accent-on-dark);
+}
+
+.svc-allow__col--no li svg {
+  color: var(--on-dark-3);
+}
+
+@media (max-width: 720px) {
+  .svc-allow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.svc-grades {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.svc-grade {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.svc-grade__range {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.svc-grade__head h3 {
+  margin-top: clamp(20px, 2.4vw, 36px);
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.svc-grade__head p {
+  margin-top: 8px;
+  min-height: 4.2em;
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.svc-grade__list {
+  display: grid;
+  margin-top: var(--sp-5);
+}
+
+.svc-grade__list > div {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-top: 1px solid var(--line);
+}
+
+.svc-grade__list dt {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.svc-grade__list dd {
+  color: var(--text-2);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.svc-grade--risk {
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.svc-grade--risk .svc-grade__head p,
+.svc-grade--risk .svc-grade__list dd {
+  color: var(--on-dark-2);
+}
+
+.svc-grade--risk .svc-grade__list > div {
+  border-top-color: var(--ink-line);
+}
+
+.svc-salon {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(5, minmax(0, 1fr));
+  gap: var(--gap);
+  margin-top: var(--gap);
+}
+
+.svc-salon__head,
+.svc-salon__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 168px;
+  padding: clamp(16px, 1.5vw, 22px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.svc-salon__head {
+  background: transparent;
+  padding-left: 0;
+}
+
+.svc-salon__head p {
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.svc-salon__cell b {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.svc-salon__cell span {
+  margin-top: auto;
+  color: var(--text-2);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+@media (max-width: 1100px) {
+  .svc-grades {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .svc-grade__head p {
+    min-height: 0;
+  }
+
+  .svc-salon {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .svc-salon__head {
+    min-height: 0;
+    padding-left: clamp(16px, 1.5vw, 22px);
+    background: var(--card);
+  }
+}
+
+@media (max-width: 600px) {
+  .svc-salon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .svc-salon__head {
+    grid-column: 1 / -1;
+    padding: 12px 0 4px;
+    background: transparent;
+  }
+
+  .svc-salon__cell {
+    min-height: 132px;
+  }
+
+  .svc-salon__cell:last-child {
+    grid-column: 1 / -1;
+    min-height: 0;
+  }
+}
+
+.lot__grade {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--r-xs);
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.lot__grade b {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+/* --- Таможня: работа брокера и документы, таблицы ставок, шаги ---------------------------------------- */
+
+.svc-docs {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--gap);
+}
+
+.svc-docs__card {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(20px, 2.6vw, 40px);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.svc-docs__card--dark {
+  background: var(--ink-2);
+  color: var(--on-dark);
+}
+
+.svc-docs__bg img {
+  object-position: 92% 100%;
+  opacity: 0.5;
+}
+
+.svc-docs__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(18, 21, 26, 0.96) 0%, rgba(18, 21, 26, 0.9) 48%, rgba(18, 21, 26, 0.4) 100%);
+}
+
+.svc-docs__card--dark {
+  padding-bottom: clamp(120px, 14vw, 220px);
+}
+
+.svc-docs__title {
+  margin-bottom: var(--sp-6);
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+}
+
+.svc-docs .ticks {
+  gap: 14px;
+}
+
+@media (max-width: 1000px) {
+  .svc-docs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .svc-docs__card--dark {
+    padding-bottom: clamp(96px, 26vw, 180px);
+  }
+}
+
+.svc-tables {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-6) var(--gap);
+  align-items: start;
+}
+
+.svc-tables--aside {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+
+.svc-table {
+  min-width: 0;
+}
+
+.svc-table__cap {
+  min-height: 5.6em;
+  margin-bottom: var(--sp-4);
+  max-width: 58ch;
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.svc-table__cap h3 {
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.svc-table .table {
+  min-width: 0;
+}
+
+.svc-aside {
+  padding-top: calc(5.6em * 0.9375 + var(--sp-4));
+}
+
+.section--dark .svc-table__cap {
+  min-height: 0;
+  color: var(--on-dark-2);
+}
+
+.section--dark .svc-table__cap h3 {
+  color: #fff;
+}
+
+.section--dark .svc-table .table-wrap {
+  background: var(--ink-2);
+}
+
+.section--dark .svc-table .table th,
+.section--dark .svc-table .table td {
+  border-bottom-color: var(--ink-line);
+}
+
+.section--dark .svc-table .table thead th {
+  color: var(--on-dark-3);
+}
+
+@media (max-width: 1000px) {
+  .svc-tables,
+  .svc-tables--aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .svc-table__cap {
+    min-height: 0;
+  }
+
+  .svc-aside {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .svc-table .table th,
+  .svc-table .table td {
+    padding: 12px;
+    font-size: 0.875rem;
+  }
+
+  .svc-table .table thead th {
+    white-space: normal;
+    font-size: 0.6875rem;
+  }
+
+  .svc-table .table td.num,
+  .svc-table .table th.num {
+    white-space: nowrap;
+  }
+}
+
+/* пять шагов в один ряд */
+.svc-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.svc-steps .step {
+  min-height: clamp(280px, 23vw, 340px);
+}
+
+.svc-steps .step__title {
+  margin-top: clamp(28px, 3.2vw, 52px);
+  font-size: var(--fs-h4);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+}
+
+.svc-steps .step__time {
+  white-space: nowrap;
+}
+
+@media (max-width: 1180px) {
+  .svc-steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .svc-steps .step {
+    grid-column: span 2;
+    min-height: 240px;
+  }
+
+  .svc-steps .step:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 720px) {
+  .svc-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .svc-steps .step,
+  .svc-steps .step:nth-child(n + 4) {
+    grid-column: auto;
+    min-height: 0;
+  }
+}
+
+/* на мобильных шаги в сетке не тянем по высоте */
+@media (max-width: 600px) {
+  .svc-stepgrid > .step {
+    min-height: 0;
+  }
+
+  .svc-stepgrid > .step .step__title {
+    margin-top: var(--sp-6);
+  }
+}
+
+/* --- Платёжный агент: тезисы, маршрут платежа, курсы, цитата ---------------------------------------- */
+
+.svc-points {
+  display: grid;
+  gap: var(--gap);
+}
+
+.svc-point {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 6px 16px;
+  padding: clamp(18px, 1.7vw, 26px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.svc-point svg {
+  grid-row: span 2;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.svc-point h3 {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.svc-point p {
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.svc-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.svc-flow__node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(300px, 26vw, 380px);
+  padding: clamp(20px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--ink-2);
+}
+
+/* стрелка-связка между звеньями */
+.svc-flow__node:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: calc(var(--gap) / -2 - 16px);
+  top: clamp(14px, 1.5vw, 22px);
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='1.5'%3E%3Cpath d='M2.5 8h11M9 3.5 13.5 8 9 12.5'/%3E%3C/svg%3E")
+    center / 14px no-repeat;
+  box-shadow: 0 0 0 4px var(--ink);
+}
+
+.svc-flow__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--on-dark-3);
+}
+
+.svc-flow__title {
+  margin-top: clamp(40px, 4.6vw, 72px);
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.svc-flow__text {
+  margin-top: 14px;
+  margin-bottom: 20px;
+  color: var(--on-dark-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.svc-flow__doc {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--ink-line);
+  font-size: 0.875rem;
+}
+
+.svc-flow__doc svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--accent-on-dark);
+}
+
+.svc-flow__doc span {
+  display: block;
+  margin-bottom: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--on-dark-3);
+}
+
+@media (max-width: 1000px) {
+  .svc-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .svc-flow__node {
+    min-height: 260px;
+  }
+
+  .svc-flow__node:nth-child(2n)::after {
+    content: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .svc-flow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .svc-flow__node {
+    min-height: 0;
+  }
+
+  .svc-flow__title {
+    margin-top: var(--sp-6);
+  }
+
+  .svc-flow__node:not(:last-child)::after,
+  .svc-flow__node:nth-child(2n):not(:last-child)::after {
+    content: '';
+    right: 20px;
+    top: auto;
+    bottom: calc(var(--gap) / -2 - 16px);
+    transform: rotate(90deg);
+  }
+}
+
+.svc-fx {
+  display: grid;
+  padding: 6px clamp(18px, 1.9vw, 28px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.svc-fx__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.svc-fx__row:last-child {
+  border-bottom: 0;
+}
+
+.svc-fx dt {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  color: var(--text-2);
+}
+
+.svc-fx__code {
+  width: 3.2em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+
+.svc-fx dd {
+  font-size: var(--fs-h4);
+  font-weight: var(--w-medium);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+.svc-quote {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--sp-6) clamp(12px, 1.4vw, 20px);
+  align-items: start;
+}
+
+.svc-quote__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-6);
+}
+
+.svc-quote blockquote {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-regular);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.svc-quote__by {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 14px;
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line-2);
+  line-height: 1.3;
+}
+
+.svc-quote__by b {
+  font-weight: var(--w-medium);
+}
+
+.svc-quote__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  margin-left: auto;
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 900px) {
+  .svc-quote {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .svc-quote__links {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
+
+/* --- Дилерам: контакты менеджеров ---------------------------------------------------------------------- */
+
+.svc-people {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.svc-person {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 2px 14px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+  background: var(--card);
+}
+
+.svc-person img {
+  grid-row: span 2;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 18%;
+  filter: grayscale(1) contrast(1.04);
+}
+
+.svc-person b {
+  align-self: end;
+  font-weight: var(--w-medium);
+  line-height: 1.2;
+}
+
+.svc-person a {
+  align-self: start;
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.svc-person a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 560px) {
+  .svc-people {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --- Автокредит: баннер и банки -------------------------------------------------------------------------- */
+
+.svc-credit .credit__copy h2 {
+  max-width: 12em;
+}
+
+.svc-credit .credit__copy p + p {
+  margin-top: calc(var(--sp-4) * -0.25);
+}
+
+.svc-credit .credit__foot {
+  gap: 12px 28px;
+}
+
+/* мобильные: автомобиль — отдельной полосой под текстом, а не под ним */
+@media (max-width: 900px) {
+  .svc-credit {
+    padding-bottom: clamp(200px, 58vw, 440px);
+  }
+
+  .svc-credit .credit__bg {
+    top: auto;
+    height: clamp(200px, 58vw, 440px);
+  }
+
+  .svc-credit .credit__bg img {
+    object-position: 92% 100%;
+  }
+
+  .svc-credit .credit__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #e9eef5 0%, rgba(233, 238, 245, 0) 34%);
+  }
+}
+
+.svc-banks {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.bank {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--paper);
+  min-width: 0;
+}
+
+.bank__media {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #e9eef5;
+}
+
+.bank__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-scene) var(--ease-out);
+}
+
+.bank:hover .bank__media img {
+  transform: scale(1.05);
+}
+
+.bank__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+  padding: 16px 18px 18px;
+}
+
+.bank__logo {
+  display: grid;
+  place-items: center;
+  align-self: flex-start;
+  height: 40px;
+  padding: 0 6px;
+  border-radius: var(--r-xs);
+  background: #fff;
+  overflow: hidden;
+}
+
+.bank__logo img {
+  height: 34px;
+  width: auto;
+}
+
+.bank__name {
+  font-size: var(--fs-h4);
+  font-weight: var(--w-medium);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.bank__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 0.9375rem;
+  font-weight: var(--w-medium);
+  transition: color var(--dur-fast) var(--ease-out), gap var(--dur-base) var(--ease-out);
+}
+
+.bank__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.bank__link svg {
+  width: 14px;
+  height: 14px;
+}
+
+.bank:hover .bank__link {
+  color: var(--accent);
+  gap: 12px;
+}
+
+@media (max-width: 1100px) {
+  .svc-banks {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .bank {
+    grid-column: span 2;
+  }
+
+  .bank:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+
+  .bank:nth-child(n + 4) .bank__media {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .svc-banks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bank,
+  .bank:nth-child(n + 4) {
+    grid-column: auto;
+  }
+
+  .bank:nth-child(n + 4) .bank__media {
+    aspect-ratio: 1;
+  }
+
+  .bank:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .bank:last-child .bank__media {
+    aspect-ratio: 2 / 1;
+  }
+
+  .bank__body {
+    padding: 14px;
+  }
+}
+
+/* --- Хаб: сетка услуг, этапы сделки ------------------------------------------------------------------------ */
+
+.svc-grid--hub {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.svc-grid--hub .svc {
+  grid-column: span 6;
+  min-height: clamp(320px, 30vw, 460px);
+}
+
+.svc-grid--hub .svc--7 {
+  grid-column: span 7;
+}
+
+.svc-grid--hub .svc--5 {
+  grid-column: span 5;
+}
+
+.svc-grid--hub .svc--5 .svc__bg img {
+  object-position: 82% center;
+}
+
+/* кадр из видео: фон выше плитки и прижат к низу, чтобы автомобиль оказался над заголовком */
+.svc--frame .svc__bg {
+  top: -28%;
+}
+
+.svc--frame .svc__bg img,
+.svc-grid--hub .svc--frame .svc__bg img {
+  object-position: 40% center;
+}
+
+.svc--frame .svc__bg::after {
+  background: linear-gradient(180deg, rgba(10, 12, 15, 0.7) 0%, rgba(10, 12, 15, 0.3) 30%, rgba(10, 12, 15, 0) 48%, rgba(10, 12, 15, 0.4) 66%, rgba(10, 12, 15, 0.95) 100%);
+}
+
+.svc__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--on-dark-3);
+}
+
+.svc__tags li:not(:last-child)::after {
+  content: '·';
+  margin-inline: 8px;
+}
+
+.svc--light {
+  background: #e9eef5;
+  color: var(--text);
+}
+
+.svc--light .svc__bg img,
+.svc-grid--hub .svc--light .svc__bg img {
+  object-position: 100% center;
+  opacity: 1;
+}
+
+.svc--light .svc__bg::after {
+  background: linear-gradient(90deg, rgba(233, 238, 245, 0.96) 0%, rgba(233, 238, 245, 0.7) 34%, rgba(233, 238, 245, 0) 62%);
+}
+
+.svc--light .svc__text {
+  color: var(--text-2);
+  max-width: 30ch;
+}
+
+.svc--light .svc__tags {
+  color: var(--text-3);
+}
+
+.svc--light .svc__arrow {
+  border-color: rgba(10, 12, 15, 0.26);
+}
+
+.svc--light:hover .svc__arrow {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .svc-grid--hub .svc,
+  .svc-grid--hub .svc--7,
+  .svc-grid--hub .svc--5 {
+    grid-column: 1 / -1;
+    min-height: clamp(340px, 92vw, 460px);
+  }
+
+  /* объект рендера — в верхней части плитки, текст ниже на ровном фоне */
+  .svc-grid--hub .svc:not(.svc--frame):not(.svc--light) .svc__bg {
+    bottom: 34%;
+  }
+
+  .svc-grid--hub .svc:not(.svc--frame):not(.svc--light) .svc__bg::after {
+    background: linear-gradient(180deg, rgba(18, 21, 26, 0.6) 0%, rgba(18, 21, 26, 0) 34%, rgba(18, 21, 26, 0) 70%, var(--ink-2) 100%);
+  }
+
+  .svc-grid--hub .svc:not(.svc--frame):not(.svc--light) .svc__bg img {
+    object-position: 78% center;
+  }
+
+  /* светлая плитка кредита: текст сверху, автомобиль внизу */
+  .svc-grid--hub .svc--light {
+    justify-content: flex-start;
+    gap: var(--sp-5);
+    min-height: clamp(440px, 116vw, 520px);
+  }
+
+  .svc-grid--hub .svc--light .svc__bg {
+    top: 54%;
+  }
+
+  .svc--light .svc__bg img,
+  .svc-grid--hub .svc--light .svc__bg img {
+    object-position: 86% 70%;
+  }
+
+  .svc--light .svc__bg::after {
+    background: linear-gradient(180deg, #e9eef5 0%, rgba(233, 238, 245, 0) 36%);
+  }
+}
+
+.svc-stages {
+  border-top: 1px solid var(--text);
+}
+
+.svc-stages__head,
+.svc-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 3fr) minmax(0, 2fr);
+  gap: 10px clamp(16px, 2.2vw, 40px);
+}
+
+.svc-stages__head {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.svc-stage {
+  align-items: start;
+  padding: clamp(18px, 1.9vw, 28px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.svc-stage__name {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(12px, 1.4vw, 20px);
+}
+
+.svc-stage__name span {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+
+.svc-stage__name h3 {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.svc-stage p {
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.svc-stage p:nth-of-type(1) {
+  color: var(--text);
+}
+
+.svc-stage__link {
+  justify-self: end;
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 1000px) {
+  .svc-stages__head {
+    display: none;
+  }
+
+  .svc-stage {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .svc-stage__name {
+    grid-column: 1 / -1;
+  }
+
+  .svc-stage p::before {
+    content: attr(data-k);
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .svc-stage__link {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .svc-stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* плитка калькулятора в блоке «Другие услуги» */
+.svc-tile-calc,
+.section--white .svc-tile-calc {
+  background: var(--ink);
+  color: #fff;
+}
+
+.svc-tile-calc .tile__meta {
+  color: var(--on-dark-2);
+}
+
+.svc-tile-calc:hover,
+.section--white .svc-tile-calc:hover {
+  background: var(--accent);
+}
+
+/* на телефоне плитки «Другие услуги» идут в одну колонку: убираем пустую середину, чтобы шесть ссылок не занимали два экрана */
+@media (max-width: 600px) {
+  .svc-others .tile {
+    min-height: 0;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+}

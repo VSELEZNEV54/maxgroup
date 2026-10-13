@@ -1,0 +1,342 @@
+/* ==========================================================================
+   Квиз подбора автомобиля
+   ========================================================================== */
+
+.quiz-head {
+  display: grid;
+  gap: var(--sp-5);
+  justify-items: center;
+  max-width: 1040px;
+  margin: 0 auto clamp(32px, 4.4vw, 72px);
+  text-align: center;
+}
+
+.quiz {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: var(--gap);
+  max-width: 1320px;
+  margin-inline: auto;
+}
+
+.quiz__expert {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-content: start;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(20px, 2vw, 32px);
+  border-radius: var(--r-sm);
+  background: var(--ink-2);
+}
+
+.quiz__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--ink-3);
+}
+
+/* портреты сняты по пояс — увеличиваем, чтобы в аватаре было лицо */
+.quiz__avatar img {
+  width: 190%;
+  max-width: none;
+  height: auto;
+  margin: -26% 0 0 -45%;
+}
+
+.quiz__name {
+  font-size: 1.125rem;
+  font-weight: var(--w-medium);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.quiz__role {
+  margin-top: 4px;
+  color: var(--on-dark-3);
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+.quiz__bubble {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  padding: 16px 18px;
+  border-radius: 2px var(--r-lg) var(--r-lg) var(--r-lg);
+  background: var(--ink-3);
+  color: var(--on-dark);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  min-height: 5.5em;
+}
+
+.quiz__perks {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--ink-line);
+  list-style: none;
+  color: var(--on-dark-2);
+  font-size: 0.875rem;
+}
+
+.quiz__perks li {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+.quiz__perks svg {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: var(--accent-on-dark);
+}
+
+/* панель с вопросами — светлая, как лист анкеты на тёмном столе */
+.quiz__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 460px;
+  padding: clamp(20px, 2.6vw, 40px);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  color: var(--text);
+}
+
+.quiz__panel .label,
+.quiz__panel .label::before,
+.quiz__panel .label::after {
+  color: var(--text-3);
+}
+
+.quiz__top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: clamp(20px, 2.4vw, 36px);
+}
+
+.quiz__progress {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.quiz__progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+
+.quiz__step {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  animation: quiz-in var(--dur-slow) var(--ease-out);
+}
+
+@keyframes quiz-in {
+  from { opacity: 0; transform: translate3d(16px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.quiz__q {
+  padding: 0;
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.quiz__hint {
+  margin: 10px 0 22px;
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  min-height: 1.4em;
+}
+
+/* варианты в квизе — на светлой панели, даже внутри тёмной секции */
+.section--dark .quiz__panel .opt span {
+  background: var(--paper);
+  box-shadow: none;
+  color: var(--text);
+  min-height: 48px;
+  padding: 0 20px;
+}
+
+.section--dark .quiz__panel .opt:hover span {
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+
+.section--dark .quiz__panel .opt input:checked + span {
+  background: var(--ink);
+  color: #fff;
+  box-shadow: none;
+}
+
+.section--dark .quiz__panel .field__label { color: var(--text-2); }
+
+.section--dark .quiz__panel .field__control {
+  background-color: var(--card);
+  border-color: var(--line-2);
+  color: var(--text);
+}
+
+.section--dark .quiz__panel .field__error { color: var(--danger); }
+.section--dark .quiz__panel .field.is-invalid .field__control { border-color: var(--danger); }
+.section--dark .quiz__panel .check input:focus-visible { outline-color: var(--accent); }
+
+.section--dark .quiz__panel .field__control::placeholder { color: var(--text-3); }
+.section--dark .quiz__panel .field__control:hover { border-color: var(--text-3); }
+
+.section--dark .quiz__panel .field__control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.section--dark .quiz__panel .check { color: var(--text-2); }
+
+.section--dark .quiz__panel .check input:not(:checked) {
+  background: var(--card);
+  border-color: var(--line-2);
+}
+
+/* панель квиза и так белая: блок «Заявка принята» — без своей плашки и полей */
+.section--dark .quiz__panel .form__success {
+  background: transparent;
+  color: var(--text);
+}
+
+.section--dark .quiz__panel .form__note { color: var(--text-3); }
+
+.section--dark .quiz__panel .btn--ghost {
+  color: var(--text);
+}
+
+.section--dark .quiz__panel .btn--ghost:hover {
+  --btn-bg: var(--ink);
+  --btn-fg: #fff;
+  --btn-bd: var(--ink);
+  color: #fff;
+}
+
+.quiz__free {
+  margin-top: 20px;
+  max-width: 520px;
+}
+
+/* шаг контактов: способ связи — отдельной группой с подписью, не вплотную к полю телефона */
+.quiz__contact {
+  margin: 16px 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.quiz__contact legend {
+  padding: 0;
+}
+
+.quiz__step .check.is-invalid + .field__error {
+  margin-top: 6px;
+}
+
+.quiz__nav {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: clamp(24px, 3vw, 40px);
+}
+
+.quiz__back {
+  width: 52px;
+  padding: 0;
+}
+
+.quiz__back svg {
+  transform: rotate(180deg);
+}
+
+.quiz__panel.is-sent {
+  justify-content: center;
+}
+
+.quiz__panel .form__success {
+  gap: 16px;
+  background: transparent;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .quiz {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .quiz__perks {
+    display: none;
+  }
+
+  .quiz__bubble {
+    min-height: 0;
+  }
+
+  .quiz__panel {
+    min-height: 420px;
+  }
+
+  .quiz-head {
+    justify-items: start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 560px) {
+  .quiz__nav .btn:not(.quiz__back) {
+    flex: 1;
+  }
+
+  .quiz__panel .opt {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .quiz__panel .opt span {
+    display: flex;
+    justify-content: center;
+    padding-block: 8px;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.15;
+  }
+
+  /* длинные варианты (страна и руль, возраст) — по одному в строке, без переноса в три строки */
+  .quiz__step[data-quiz-step='country'] .opt,
+  .quiz__step[data-quiz-step='age'] .opt {
+    flex: 1 1 100%;
+  }
+}
+
+/* без JavaScript квиз — обычная форма: все шаги раскрыты, кнопка отправки видна */
+.no-js .quiz__step[hidden] {
+  display: block !important;
+  margin-top: 28px;
+}
+
+.no-js .quiz__top,
+.no-js [data-quiz-next],
+.no-js [data-quiz-back] {
+  display: none !important;
+}
+
+.no-js [data-quiz-submit][hidden] {
+  display: inline-flex !important;
+}

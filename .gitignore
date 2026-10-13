@@ -1,0 +1,11 @@
+# собранный сайт (создаётся командой node build.mjs)
+dist
+dist-*
+*.nosync
+
+# служебное
+.DS_Store
+node_modules/
+
+# дубликаты синхронизации iCloud («имя 2.webp»)
+* [0-9].*

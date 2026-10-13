@@ -1,0 +1,209 @@
+/* ==========================================================================
+   Главная страница: правки композиции поверх общих секций (40-sections.css).
+   Только токены 00-tokens.css. Всё, что здесь, привязано к блокам главной
+   (.credit--home, .m-rail, #katalog, #komanda, .hero, .cities__head--dup).
+   ========================================================================== */
+
+/* --- Баннер автокредита ----------------------------------------------------------------- */
+
+.credit--home .credit__bg picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* бейджи — на непрозрачной плашке: читаются и на фото, и на светлом фоне */
+.credit__badges {
+  gap: 6px;
+}
+
+.credit__badges .badge {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--r-full);
+  background: var(--card);
+  color: var(--text-2);
+}
+
+/* логотипы банков — одной строкой, а не 4 + 1 */
+.credit--home .banks {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: 100%;
+  max-width: 640px;
+}
+
+.credit--home .banks span {
+  padding: 0 4px;
+}
+
+.credit--home .banks img {
+  max-width: 100%;
+  height: auto;
+  max-height: 36px;
+}
+
+/* планшет и телефон: текст на светлой плашке, автомобиль — отдельным блоком ниже */
+@media (max-width: 900px) {
+  .credit--home {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .credit--home .credit__copy {
+    padding: clamp(20px, 5vw, 40px);
+    padding-bottom: 0;
+  }
+
+  .credit--home .credit__foot {
+    margin-top: 0;
+    padding-top: var(--sp-4);
+  }
+
+  .credit--home .credit__bg {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    order: 2;
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+  }
+
+  /* кадр выше блока: показываем его нижнюю часть с автомобилем */
+  .credit--home .credit__bg picture {
+    position: absolute;
+    inset: 0;
+  }
+
+  .credit--home .credit__bg img {
+    object-position: right bottom;
+  }
+
+  /* верх кадра растворяется в плашке — шва между текстом и фото нет */
+  .credit--home .credit__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #e9eef5 0%, rgba(233, 238, 245, 0) 38%);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .credit--home .credit__bg {
+    aspect-ratio: 4 / 3;
+  }
+
+  .credit--home .credit__bg img {
+    object-position: center bottom;
+  }
+
+  .credit--home .credit__foot {
+    width: 100%;
+  }
+
+  .credit--home .credit__foot .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* 3 + 2, вторая строка растягивается на всю ширину */
+  .credit--home .banks {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: none;
+  }
+
+  .credit--home .banks span {
+    flex: 1 1 28%;
+  }
+}
+
+/* --- Ленты вместо столбцов на телефоне ------------------------------------------------------ */
+/* Каталог, отзывы и статьи на ≤600px листаются по горизонтали: страница короче на несколько экранов. */
+
+@media (max-width: 600px) {
+  .m-rail {
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--m-rail-col, minmax(260px, 84%));
+    gap: var(--gap);
+    columns: auto;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    padding-inline: var(--gutter);
+    margin-inline: calc(var(--gutter) * -1);
+    scrollbar-width: none;
+  }
+
+  .m-rail[hidden] {
+    display: none;
+  }
+
+  .m-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .m-rail > * {
+    scroll-snap-align: start;
+    margin-bottom: 0;
+  }
+}
+
+/* --- Каталог на главной -------------------------------------------------------------------- */
+
+/* 901–1180px: сетка в три колонки — показываем шесть карточек (3 + 3), а не 3 + 3 + 2 */
+@media (min-width: 901px) and (max-width: 1180px) {
+  #katalog [data-tab-panel] > :nth-child(n + 7) {
+    display: none;
+  }
+}
+
+/* узкие телефоны: четыре вкладки помещаются в пилюлю без обрезки */
+@media (max-width: 420px) {
+  #katalog .tabs__btn {
+    padding: 0 12px;
+    gap: 6px;
+  }
+}
+
+/* --- Команда ------------------------------------------------------------------------------ */
+
+/* 901–1180px: четверо в один ряд, без одинокой карточки во втором */
+@media (min-width: 901px) and (max-width: 1180px) {
+  #komanda .grid--4 {
+    --cols: 4;
+  }
+}
+
+/* --- Первый экран -------------------------------------------------------------------------- */
+
+/* третий факт начинает вторую строку — без левого отступа, по одной вертикали с первым */
+@media (max-width: 560px) {
+  .hero__strip .hero__fact:nth-child(3) {
+    padding-left: 0;
+  }
+}
+
+/* --- Доставка ------------------------------------------------------------------------------ */
+
+/* список в одну колонку: шапка второй половины не повторяется посреди списка */
+@media (max-width: 900px) {
+  .cities__head--dup {
+    display: none;
+  }
+}
+
+/* --- Гид «Как заказать» -------------------------------------------------------------------- */
+
+/* единственная подпись шага занимает всю строку, а не половину двухколоночной сетки */
+.flow__meta > :only-child {
+  grid-column: 1 / -1;
+}
