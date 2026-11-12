@@ -92,7 +92,7 @@ export function priceShort(n) {
   return `${Math.round(n / 1000)}${NBSP}тыс.${NBSP}₽`;
 }
 
-/** Объём двигателя: 1496 → «1.5 л» */
+/** Объем двигателя: 1496 → «1.5 л» */
 export const liters = (cc) => (cc ? `${(Math.round(cc / 100) / 10).toFixed(1)}${NBSP}л` : null);
 
 /** Склонение: plural(5, ['автомобиль','автомобиля','автомобилей']) */
@@ -120,7 +120,7 @@ const outsideTags = (fn) => (s) => {
 const glueText = (s) =>
   s
     .replace(/([а-яё])\/(?=[а-яё])/gi, `$1/${WJ}`) // только кириллица («ж/д», «л/с»): адреса ссылок не затрагиваются
-    .replace(/(\d)–(?=\d)/g, `$1–${WJ}`)
+    .replace(/(?<![\d-])(\d{1,4})-(?=\d{1,4}(?![\d-]))/g, `$1-${WJ}`) // диапазоны «3-5», «2022-2023»; телефоны и даты с несколькими дефисами не трогаем
     .replace(/(\d)-(?=[а-яё])/gi, `$1-${WJ}`)
     .replace(/(\d) (?=\d{3}(?!\d))/g, `$1${NNBSP}`)
     .replace(/(\d)[ \u00a0]?(₽|€|\$|¥|₩|%)/g, `$1${NBSP}$2`)
@@ -128,7 +128,7 @@ const glueText = (s) =>
     .replace(/(тыс\.|млн|млрд) (₽|€|\$|¥|₩|руб)/g, `$1${NBSP}$2`)
     .replace(/№ (?=\d)/g, `№${NBSP}`);
 
-/** Склейка от неудачных переносов: «ж/д», диапазоны «3–5», «30-минутная», разряды «20 000», единицы после чисел. */
+/** Склейка от неудачных переносов: «ж/д», диапазоны «3-5», «30-минутная», разряды «20 000», единицы после чисел. */
 export const glue = outsideTags(glueText);
 
 /** Типографика кириллицы: неразрывные пробелы после коротких предлогов и перед тире + склейка чисел и единиц. */
@@ -307,7 +307,7 @@ export function markdown(src) {
       const cells = (r) => r.replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
       const head = cells(rows[0]);
       const body = rows.slice(/^\|[\s:|-]+\|?$/.test(rows[1] || '') ? 2 : 1).map(cells);
-      const isNum = (c) => /^[\d\s.,–—%₽€$¥≈~от до]+$/.test(c) && /\d/.test(c);
+      const isNum = (c) => /^[\d\s.,-—%₽€$¥≈~от до]+$/.test(c) && /\d/.test(c);
       out.push(
         `<div class="table-wrap"><table class="table"><thead><tr>${head.map((c) => `<th>${inlineMd(c)}</th>`).join('')}</tr></thead>` +
           `<tbody>${body.map((r) => `<tr>${r.map((c, ci) => `<td${ci > 0 && isNum(c) ? ' class="num"' : ''}>${inlineMd(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`

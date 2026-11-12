@@ -14,7 +14,7 @@ export const countries = [
     image: 'img/countries/japan.webp',
     imageAccent: 'img/countries/japan-blue-v1.webp',
     // текст заказчика с maxgroupvl.ru
-    text: 'Надёжность, качество сборки и проверенные временем модели — Toyota, Honda, Mazda, Lexus.',
+    text: 'Надежность, качество сборки и проверенные временем модели: Toyota, Honda, Mazda, Lexus.',
     // площадки, с которых взяты лоты каталога (data/source/cars.json → auction.house)
     source: 'Аукционы JU, CAA, LAA, MIRIVE и другие',
     sourceShort: 'Аукционы',
@@ -35,9 +35,9 @@ export const countries = [
     flag: 'img/brand/flag-kr.svg',
     image: 'img/countries/korea.webp',
     imageAccent: 'img/countries/korea-blue-v1.webp',
-    text: 'Стильный дизайн, передовые технологии и отличное соотношение цены и качества — Hyundai, Kia, Genesis.',
-    source: 'Площадка Encar и дилерские стоянки',
-    sourceShort: 'Encar',
+    text: 'Стильный дизайн, передовые технологии и отличное соотношение цены и качества: Hyundai, Kia, Genesis.',
+    source: 'Площадки объявлений и дилеры',
+    sourceShort: 'Площадки',
     steering: 'левый руль',
     currency: 'KRW',
     port: 'Пусан, Тонхэ',
@@ -55,12 +55,12 @@ export const countries = [
     flag: 'img/brand/flag-cn.svg',
     image: 'img/countries/china.webp',
     imageAccent: 'img/countries/china-blue-v1.webp',
-    text: 'Современные технологии, богатые комплектации и выгодные цены — Changan, Haval, Geely, Chery.',
+    text: 'Современные технологии, богатые комплектации и выгодные цены: Changan, Haval, Geely, Chery.',
     source: 'Дилеры и площадки подержанных авто',
     sourceShort: 'Дилеры',
     steering: 'левый руль',
     currency: 'CNY',
-    port: 'Суйфэньхэ — Уссурийск',
+    port: 'Суйфэньхэ, Уссурийск',
   },
 ];
 

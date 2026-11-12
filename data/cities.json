@@ -12,7 +12,7 @@
    10,
    15
   ],
-  "daysLabel": "10–15 дн.",
+  "daysLabel": "10-15 дн.",
   "priceFrom": 90000,
   "truck": {
    "sedan": 135000,
@@ -44,7 +44,7 @@
    8,
    13
   ],
-  "daysLabel": "8–13 дн.",
+  "daysLabel": "8-13 дн.",
   "priceFrom": 90000,
   "truck": {
    "sedan": 115000,
@@ -67,7 +67,7 @@
    7,
    12
   ],
-  "daysLabel": "7–12 дн.",
+  "daysLabel": "7-12 дн.",
   "priceFrom": 70000,
   "truck": {
    "sedan": 95000,
@@ -90,7 +90,7 @@
    1,
    2
   ],
-  "daysLabel": "1–2 дн.",
+  "daysLabel": "1-2 дн.",
   "priceFrom": 13000,
   "truck": {
    "sedan": 18000,
@@ -113,7 +113,7 @@
    15,
    17
   ],
-  "daysLabel": "15–17 дн.",
+  "daysLabel": "15-17 дн.",
   "priceFrom": 110000,
   "truck": {
    "sedan": 165000,
@@ -136,7 +136,7 @@
    18,
    25
   ],
-  "daysLabel": "18–25 дн.",
+  "daysLabel": "18-25 дн.",
   "priceFrom": 130000,
   "truck": {
    "sedan": 200000,
@@ -168,7 +168,7 @@
    21,
    25
   ],
-  "daysLabel": "21–25 дн.",
+  "daysLabel": "21-25 дн.",
   "priceFrom": 140000,
   "truck": {
    "sedan": 220000,
@@ -214,7 +214,7 @@
    5,
    6
   ],
-  "daysLabel": "5–6 дн.",
+  "daysLabel": "5-6 дн.",
   "priceFrom": 60000,
   "truck": {
    "sedan": 75000,
@@ -237,7 +237,7 @@
    6,
    10
   ],
-  "daysLabel": "6–10 дн.",
+  "daysLabel": "6-10 дн.",
   "priceFrom": 70000,
   "truck": {
    "sedan": 85000,
@@ -260,7 +260,7 @@
    8,
    16
   ],
-  "daysLabel": "8–16 дн.",
+  "daysLabel": "8-16 дн.",
   "priceFrom": 90000,
   "truck": {
    "sedan": 135000,
@@ -276,14 +276,14 @@
   "nameAcc": "Кемерово",
   "namePrep": "Кемерове",
   "nameGen": "Кемерова",
-  "region": "Кемеровская область — Кузбасс",
+  "region": "Кемеровская область (Кузбасс)",
   "macro": "Сибирь",
   "distanceKm": 5681,
   "days": [
    8,
    14
   ],
-  "daysLabel": "8–14 дн.",
+  "daysLabel": "8-14 дн.",
   "priceFrom": 90000,
   "truck": {
    "sedan": 135000,
@@ -306,7 +306,7 @@
    11,
    17
   ],
-  "daysLabel": "11–17 дн.",
+  "daysLabel": "11-17 дн.",
   "priceFrom": 100000,
   "truck": {
    "sedan": 145000,
@@ -329,7 +329,7 @@
    12,
    16
   ],
-  "daysLabel": "12–16 дн.",
+  "daysLabel": "12-16 дн.",
   "priceFrom": 100000,
   "truck": {
    "sedan": 145000,
@@ -352,7 +352,7 @@
    15,
    17
   ],
-  "daysLabel": "15–17 дн.",
+  "daysLabel": "15-17 дн.",
   "priceFrom": 110000,
   "truck": {
    "sedan": 165000,
@@ -368,14 +368,14 @@
   "nameAcc": "Сургут",
   "namePrep": "Сургуте",
   "nameGen": "Сургута",
-  "region": "Ханты-Мансийский автономный округ — Югра",
+  "region": "Ханты-Мансийский автономный округ (Югра)",
   "macro": "Урал",
   "distanceKm": 7990,
   "days": [
    16,
    18
   ],
-  "daysLabel": "16–18 дн.",
+  "daysLabel": "16-18 дн.",
   "priceFrom": 130000,
   "truck": {
    "sedan": 185000,
@@ -398,7 +398,7 @@
    15,
    17
   ],
-  "daysLabel": "15–17 дн.",
+  "daysLabel": "15-17 дн.",
   "priceFrom": 110000,
   "truck": {
    "sedan": 165000,
@@ -421,7 +421,7 @@
    15,
    18
   ],
-  "daysLabel": "15–18 дн.",
+  "daysLabel": "15-18 дн.",
   "priceFrom": 110000,
   "truck": {
    "sedan": 175000,
@@ -444,7 +444,7 @@
    17,
    19
   ],
-  "daysLabel": "17–19 дн.",
+  "daysLabel": "17-19 дн.",
   "priceFrom": 130000,
   "truck": {
    "sedan": 185000,
@@ -467,7 +467,7 @@
    17,
    25
   ],
-  "daysLabel": "17–25 дн.",
+  "daysLabel": "17-25 дн.",
   "priceFrom": 130000,
   "truck": {
    "sedan": 200000,
@@ -490,7 +490,7 @@
    17,
    25
   ],
-  "daysLabel": "17–25 дн.",
+  "daysLabel": "17-25 дн.",
   "priceFrom": 110000,
   "truck": {
    "sedan": 200000,
@@ -513,7 +513,7 @@
    18,
    25
   ],
-  "daysLabel": "18–25 дн.",
+  "daysLabel": "18-25 дн.",
   "priceFrom": 130000,
   "truck": {
    "sedan": 200000,
@@ -536,7 +536,7 @@
    21,
    25
   ],
-  "daysLabel": "21–25 дн.",
+  "daysLabel": "21-25 дн.",
   "priceFrom": 140000,
   "truck": {
    "sedan": 220000,
@@ -559,7 +559,7 @@
    21,
    25
   ],
-  "daysLabel": "21–25 дн.",
+  "daysLabel": "21-25 дн.",
   "priceFrom": 140000,
   "truck": {
    "sedan": 220000,
@@ -582,7 +582,7 @@
    21,
    25
   ],
-  "daysLabel": "21–25 дн.",
+  "daysLabel": "21-25 дн.",
   "priceFrom": 140000,
   "truck": {
    "sedan": 220000,

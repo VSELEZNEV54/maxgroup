@@ -5,7 +5,7 @@ import { logo } from './logo.mjs';
 
 const isCurrent = (page, url) => (page.url === url || (url !== '/' && page.url.startsWith(url)) ? ' aria-current="page"' : '');
 
-// Telegram: личного адреса менеджера в данных заказчика нет — ссылка ведёт на канал, и подписана она как канал.
+// Telegram: личного адреса менеджера в данных заказчика нет — ссылка ведет на канал, и подписана она как канал.
 // Появится site.socials.telegramManager — подпись и ссылка сменятся сами.
 const telegram = (site) => {
   const manager = site.socials.telegramManager;
@@ -104,7 +104,7 @@ export function header(ctx, page) {
             <a href="tel:${phone.tel}">${esc(phone.label)}</a>
             <span>${esc(site.contacts.hoursShort)}</span>
           </div>
-          <a class="btn btn--primary btn--sm header__cta" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчёт стоимости авто"><span>Рассчитать<span class="header__cta-rest"> стоимость</span></span></a>
+          <a class="btn btn--primary btn--sm header__cta" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчет стоимости авто"><span>Рассчитать<span class="header__cta-rest"> стоимость</span></span></a>
           <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer" data-burger><span></span><span></span></button>
         </div>
       </div>
@@ -125,7 +125,7 @@ export function drawer(ctx) {
           <details>
             <summary>${esc(c.navTitle)} ${plus}</summary>
             <div class="drawer__sub">
-              <a class="is-strong" href="${u(c.url)}">Все авто ${esc(c.from)} — ${c.count}</a>
+              <a class="is-strong" href="${u(c.url)}">Все авто ${esc(c.from)} (${c.count})</a>
               ${c.brands.map((b) => `<a href="${u(b.url)}">${esc(b.name)}</a>`)}
             </div>
           </details>
@@ -159,7 +159,7 @@ export function drawer(ctx) {
         </li>
       </ul>
       <div class="drawer__foot">
-        <a class="btn btn--primary btn--block" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчёт стоимости авто">Рассчитать стоимость ${icon('arrow', 'i-arrow')}</a>
+        <a class="btn btn--primary btn--block" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчет стоимости авто">Рассчитать стоимость ${icon('arrow', 'i-arrow')}</a>
         <div class="form__row">
           ${site.socials.whatsapp ? `<a class="btn btn--wa btn--block" href="${esc(site.socials.whatsapp.url)}" target="_blank" rel="noopener">${icon('whatsapp')} WhatsApp</a>` : ''}
           ${tg ? `<a class="btn btn--tg btn--block" href="${esc(tg.url)}" target="_blank" rel="noopener">${icon('telegram')} ${tg.short}</a>` : ''}
@@ -176,10 +176,10 @@ export function drawer(ctx) {
 export function dock(ctx) {
   const { site } = ctx;
   const tg = telegram(site);
-  // на телефоне в «пилюле» четыре элемента по 44px: кнопка, WhatsApp, звонок, меню — Telegram остаётся в меню и футере
+  // на телефоне в «пилюле» четыре элемента по 44px: кнопка, WhatsApp, звонок, меню — Telegram остается в меню и футере
   return html`
     <div class="dock" data-dock>
-      <a class="dock__cta" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчёт стоимости авто"><span>Рассчитать<span class="dock__cta-rest"> стоимость</span></span></a>
+      <a class="dock__cta" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчет стоимости авто"><span>Рассчитать<span class="dock__cta-rest"> стоимость</span></span></a>
       ${site.socials.whatsapp ? `<a class="dock__btn" href="${esc(site.socials.whatsapp.url)}" target="_blank" rel="noopener" aria-label="Написать в WhatsApp">${icon('whatsapp')}</a>` : ''}
       ${tg ? `<a class="dock__btn u-hide-mobile" href="${esc(tg.url)}" target="_blank" rel="noopener" aria-label="${tg.label}">${icon('telegram')}</a>` : ''}
       <a class="dock__btn u-only-mobile" href="tel:${site.contacts.phones[0].tel}" aria-label="Позвонить">${icon('phone')}</a>

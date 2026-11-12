@@ -16,8 +16,8 @@ const opt = (name, value, text, { type = 'radio', checked = false, data = {} } =
  */
 export function quizSection(ctx, { country = '', subject = 'Квиз: подбор автомобиля', title, white = false } = {}) {
   const manager = ctx.team[0];
-  // лёгкий индекс каталога для подсчёта подходящих автомобилей на последнем шаге
-  // возраст — таможенная категория: 0 — до 3 лет, 1 — 3–5 лет, 2 — старше 5
+  // легкий индекс каталога для подсчета подходящих автомобилей на последнем шаге
+  // возраст — таможенная категория: 0 — до 3 лет, 1 — 3-5 лет, 2 — старше 5
   const AGE = { le3: 0, '3to5': 1, gt5: 2 };
   const index = ctx.cars.map((c) => [c.country, c.body || '', c.priceRub || 0, AGE[c.ageCat] ?? -1]);
   const bodies = [
@@ -33,19 +33,19 @@ export function quizSection(ctx, { country = '', subject = 'Квиз: подбо
       <div class="container">
         <div class="quiz-head"${reveal()}>
           ${label('Подбор за 1 минуту')}
-          <h2 data-split>${title || duo('Расскажите, какой автомобиль ищете, —', 'подберём варианты и посчитаем под ключ')}</h2>
+          <h2 data-split>${title || duo('Расскажите, какой автомобиль ищете,', 'а мы подберем варианты и посчитаем под ключ')}</h2>
         </div>
         <div class="quiz"${reveal(1)}>
           <aside class="quiz__expert">
-            <div class="quiz__avatar">${img({ src: manager.photo, alt: `${manager.name}, ${manager.role}`, sizes: '72px' })}</div>
+            <div class="quiz__avatar" aria-hidden="true">${esc(manager.initials || manager.name.trim()[0])}</div>
             <div>
               <div class="quiz__name">${esc(manager.name)}</div>
               <div class="quiz__role">${esc(manager.role)}</div>
             </div>
-            <p class="quiz__bubble" data-quiz-bubble>${typo('Здравствуйте! Ответьте на четыре коротких вопроса — подберём варианты на аукционах и площадках и пришлём расчёт под ключ.')}</p>
+            <p class="quiz__bubble" data-quiz-bubble>${typo('Здравствуйте! Ответьте на четыре коротких вопроса, и мы подберем варианты на аукционах и площадках и пришлем расчет под ключ.')}</p>
             <ul class="quiz__perks">
-              <li>${icon('check')} Варианты из трёх стран в одном бюджете</li>
-              <li>${icon('check')} Расчёт под ключ до Владивостока</li>
+              <li>${icon('check')} Варианты из трех стран в одном бюджете</li>
+              <li>${icon('check')} Расчет под ключ до Владивостока</li>
               <li>${icon('check')} По таможенным ставкам 2026 года</li>
             </ul>
           </aside>
@@ -60,7 +60,7 @@ export function quizSection(ctx, { country = '', subject = 'Квиз: подбо
               <div class="quiz__progress" aria-hidden="true"><i data-quiz-bar style="width:20%"></i></div>
             </div>
 
-            <fieldset class="quiz__step" data-quiz-step="body" data-bubble="Начнём с типа кузова. Если пока выбираете — так и отметьте.">
+            <fieldset class="quiz__step" data-quiz-step="body" data-bubble="Начнем с типа кузова. Если пока выбираете, так и отметьте.">
               <legend class="quiz__q">Какой автомобиль вы рассматриваете?</legend>
               <p class="quiz__hint">Можно выбрать несколько вариантов.</p>
               <div class="opts">${bodies.map(([v, t]) => opt('q-body', v, t, { type: 'checkbox' }))}</div>
@@ -70,18 +70,18 @@ export function quizSection(ctx, { country = '', subject = 'Квиз: подбо
               </label>
             </fieldset>
 
-            <fieldset class="quiz__step" data-quiz-step="country" data-bubble="Япония — правый руль и аукционный лист. Корея — левый руль. Китай — новые модели и электромобили." hidden>
+            <fieldset class="quiz__step" data-quiz-step="country" data-bubble="Япония: правый руль и аукционный лист. Корея: левый руль. Китай: новые модели и электромобили." hidden>
               <legend class="quiz__q">Из какой страны везти?</legend>
-              <p class="quiz__hint">Не уверены — сравним варианты из разных стран.</p>
+              <p class="quiz__hint">Не уверены? Сравним варианты из разных стран.</p>
               <div class="opts">
                 ${ctx.countries.map((c) => opt('q-country', c.slug, `${c.navTitle} · ${c.steering}`, { checked: c.slug === country }))}
                 ${opt('q-country', '', 'Где выгоднее', { checked: !country })}
               </div>
             </fieldset>
 
-            <fieldset class="quiz__step" data-quiz-step="budget" data-bubble="Бюджет — под ключ во Владивостоке: с доставкой, таможней и документами." hidden>
+            <fieldset class="quiz__step" data-quiz-step="budget" data-bubble="Бюджет считаем под ключ во Владивостоке: с доставкой, таможней и документами." hidden>
               <legend class="quiz__q">Какой бюджет под ключ?</legend>
-              <p class="quiz__hint">С учётом доставки до Владивостока и таможенных платежей.</p>
+              <p class="quiz__hint">С учетом доставки до Владивостока и таможенных платежей.</p>
               <div class="opts">
                 ${opt('q-budget', '1000000', 'до 1 млн ₽')}
                 ${opt('q-budget', '1500000', 'до 1,5 млн ₽')}
@@ -92,12 +92,12 @@ export function quizSection(ctx, { country = '', subject = 'Квиз: подбо
               </div>
             </fieldset>
 
-            <fieldset class="quiz__step" data-quiz-step="age" data-bubble="Автомобили 3–5 лет называют «проходными»: пошлина у них обычно самая низкая." hidden>
+            <fieldset class="quiz__step" data-quiz-step="age" data-bubble="Автомобили 3-5 лет называют «проходными»: пошлина у них обычно самая низкая." hidden>
               <legend class="quiz__q">Какой возраст автомобиля подходит?</legend>
               <p class="quiz__hint">От возраста зависит таможенная пошлина.</p>
               <div class="opts">
                 ${opt('q-age', 'new', 'Новый или до 3 лет')}
-                ${opt('q-age', 'pass', '3–5 лет · проходной', { checked: true })}
+                ${opt('q-age', 'pass', '3-5 лет · проходной', { checked: true })}
                 ${opt('q-age', 'old', 'Старше 5 лет')}
                 ${opt('q-age', '', 'Не важно')}
               </div>
@@ -107,8 +107,8 @@ export function quizSection(ctx, { country = '', subject = 'Квиз: подбо
               </label>
             </fieldset>
 
-            <fieldset class="quiz__step" data-quiz-step="contact" data-bubble="Последний шаг. Менеджер напишет или позвонит в рабочее время — как вам удобнее." hidden>
-              <legend class="quiz__q">Куда прислать подборку и расчёт?</legend>
+            <fieldset class="quiz__step" data-quiz-step="contact" data-bubble="Последний шаг. Менеджер напишет или позвонит в рабочее время, как вам удобнее." hidden>
+              <legend class="quiz__q">Куда прислать подборку и расчет?</legend>
               <p class="quiz__hint" data-quiz-match></p>
               <div class="form__row">
                 <label class="field">
@@ -133,7 +133,7 @@ export function quizSection(ctx, { country = '', subject = 'Квиз: подбо
                 <input type="checkbox" name="agree" required aria-describedby="quiz-agree-error">
                 <span>Соглашаюсь на обработку персональных данных согласно <a href="${u(R.privacy)}" target="_blank">политике конфиденциальности</a></span>
               </label>
-              <span class="field__error" id="quiz-agree-error" role="alert">Отметьте согласие на обработку данных — без него заявку не отправить</span>
+              <span class="field__error" id="quiz-agree-error" role="alert">Отметьте согласие на обработку данных: без него заявку не отправить</span>
             </fieldset>
 
             <div class="quiz__nav">
@@ -144,7 +144,7 @@ export function quizSection(ctx, { country = '', subject = 'Квиз: подбо
 
             <div class="form__success" role="status">
               <span class="label">Заявка принята</span>
-              <p class="h3" data-success-title>Спасибо! Подготовим подборку и расчёт в рабочее время.</p>
+              <p class="h3" data-success-title>Спасибо! Подготовим подборку и расчет в рабочее время.</p>
               <p data-quiz-result></p>
               <div class="btn-row">
                 <a class="btn btn--dark" href="${u(R.catalog)}" data-quiz-catalog><span data-quiz-catalog-text>Смотреть каталог</span> ${icon('arrow', 'i-arrow')}</a>

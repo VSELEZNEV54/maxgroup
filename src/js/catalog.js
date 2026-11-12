@@ -1,4 +1,4 @@
-/* Каталог: фильтры, сортировка и «показать ещё» поверх карточек, уже отрисованных в HTML */
+/* Каталог: фильтры, сортировка и «показать еще» поверх карточек, уже отрисованных в HTML */
 (function () {
   'use strict';
 
@@ -49,7 +49,7 @@
     return true;
   }
 
-  /* Фильтры зависят друг от друга: вариант, который с остальными выбранными фильтрами даёт пустой список, скрывается,
+  /* Фильтры зависят друг от друга: вариант, который с остальными выбранными фильтрами дает пустой список, скрывается,
      а число после « · » показывает, сколько автомобилей останется. */
   function refreshOptions() {
     selects.forEach(function (s) {
@@ -88,7 +88,7 @@
   }
 
   /* Плитка-заявка — только в нефильтрованном списке. Если в последнем ряду свободна ровно одна ячейка (или колонка одна),
-     плитка стоит после 7-й карточки и закрывает её; иначе встаёт последней и занимает остаток ряда — пустых ячеек нет.
+     плитка стоит после 7-й карточки и закрывает ее; иначе встает последней и занимает остаток ряда — пустых ячеек нет.
      На телефоне (две узкие колонки) плитка всегда во всю ширину — после шестой карточки. */
   var phone = window.matchMedia ? window.matchMedia('(max-width: 600px)') : null;
 
@@ -142,7 +142,7 @@
     });
     lastOrder = order;
     lastActive = active;
-    // на телефоне две колонки нужны, когда карточек хотя бы две: единственная идёт во всю ширину
+    // на телефоне две колонки нужны, когда карточек хотя бы две: единственная идет во всю ширину
     grid.classList.toggle('cars-grid--duo', visible > 1);
     placeExtras();
     refreshOptions();
@@ -152,14 +152,14 @@
     if (moreBtn) {
       var rest = matched - visible;
       moreBtn.parentNode.hidden = rest <= 0;
-      moreBtn.querySelector('span').textContent = 'Показать ещё ' + Math.min(rest, pageSize);
+      moreBtn.querySelector('span').textContent = 'Показать еще ' + Math.min(rest, pageSize);
     }
     if (emptyEl) emptyEl.hidden = matched > 0;
     if (resetBtn) resetBtn.hidden = active === 0;
     syncUrl();
   }
 
-  /* Адрес: меняем только свои параметры — рекламные метки (utm_*, yclid, gclid) и всё чужое остаётся на месте. */
+  /* Адрес: меняем только свои параметры — рекламные метки (utm_*, yclid, gclid) и все чужое остается на месте. */
   function syncUrl() {
     if (!window.history || !history.replaceState) return;
     var params = new URLSearchParams(location.search);
@@ -184,7 +184,7 @@
   }
 
   /* Панель фильтров закреплена, поэтому фильтр меняют, уже прокрутив список. После выбора возвращаем к началу результатов,
-     иначе человек остаётся ниже сократившегося списка и не видит ни карточек, ни пустого состояния. */
+     иначе человек остается ниже сократившегося списка и не видит ни карточек, ни пустого состояния. */
   function toResults() {
     var head = document.querySelector('.results-head') || grid;
     var top = head.getBoundingClientRect().top;
@@ -194,7 +194,7 @@
       // без плавной прокрутки: путь бывает в несколько экранов
       try { window.scrollTo({ top: y, behavior: 'instant' }); } catch (e) { window.scrollTo(0, y); }
     }
-    // на телефоне выбранные фильтры и «Сбросить» встают в начало ленты — показываем её с начала
+    // на телефоне выбранные фильтры и «Сбросить» встают в начало ленты — показываем ее с начала
     if (row && row.scrollWidth > row.clientWidth) row.scrollLeft = 0;
   }
 
@@ -228,7 +228,7 @@
     resizeTimer = setTimeout(function () { if (gridCols() !== lastCols) placeExtras(); }, 150);
   });
 
-  // тень у закреплённой панели фильтров
+  // тень у закрепленной панели фильтров
   if (bar && 'IntersectionObserver' in window) {
     var sentinel = document.createElement('div');
     sentinel.style.cssText = 'height:1px;margin-bottom:-1px';
@@ -238,7 +238,7 @@
     }, { rootMargin: '-80px 0px 0px 0px' }).observe(sentinel);
   }
 
-  // с этого момента место и ширину плитки-заявки задаёт скрипт (см. .cars-grid:not([data-ready]) в 50-catalog.css)
+  // с этого момента место и ширину плитки-заявки задает скрипт (см. .cars-grid:not([data-ready]) в 50-catalog.css)
   grid.setAttribute('data-ready', '');
   readUrl();
   apply(true);

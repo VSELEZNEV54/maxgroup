@@ -24,7 +24,7 @@ const FIELD = {
   car: (id, o) => html`
       <label class="field">
         <span class="field__label">Какой автомобиль ищете</span>
-        <input class="field__control" type="text" name="car" id="${id}-car" placeholder="Toyota Alphard 2022–2023" value="${esc(o.car || '')}">
+        <input class="field__control" type="text" name="car" id="${id}-car" placeholder="Toyota Alphard 2022-2023" value="${esc(o.car || '')}">
       </label>`,
   budget: (id) => html`
       <label class="field">
@@ -32,9 +32,9 @@ const FIELD = {
         <select class="field__control" name="budget" id="${id}-budget">
           <option value="">Не определился</option>
           <option>до 1 млн ₽</option>
-          <option>1–1,5 млн ₽</option>
-          <option>1,5–2,5 млн ₽</option>
-          <option>2,5–4 млн ₽</option>
+          <option>1-1,5 млн ₽</option>
+          <option>1,5-2,5 млн ₽</option>
+          <option>2,5-4 млн ₽</option>
           <option>от 4 млн ₽</option>
         </select>
       </label>`,
@@ -85,13 +85,13 @@ export function leadForm(o = {}) {
         <input type="checkbox" name="agree" required aria-describedby="${id}-agree-error">
         <span>Соглашаюсь на обработку персональных данных согласно <a href="${u('/politika-konfidencialnosti/')}" target="_blank">политике конфиденциальности</a></span>
       </label>
-      <span class="field__error" id="${id}-agree-error" role="alert">Отметьте согласие на обработку данных — без него заявку не отправить</span>
+      <span class="field__error" id="${id}-agree-error" role="alert">Отметьте согласие на обработку данных: без него заявку не отправить</span>
       <button class="btn ${o.btn || 'btn--primary'} btn--block" type="submit">${esc(cta)} ${icon('arrow', 'i-arrow')}</button>
       ${o.note ? `<p class="form__note">${esc(o.note)}</p>` : ''}
       <div class="form__success" role="status">
         <span class="label">Заявка принята</span>
         <p class="h4" data-success-title>Спасибо! Менеджер свяжется с вами в рабочее время.</p>
-        <p class="form__note">Это демонстрационная версия сайта: заявка никуда не отправлена. Чтобы связаться прямо сейчас — напишите нам в мессенджер.</p>
+        <p class="form__note">Это демонстрационная версия сайта: заявка никуда не отправлена. Чтобы связаться прямо сейчас, напишите нам в мессенджер.</p>
         <div class="btn-row">
           <a class="btn btn--wa btn--sm" data-wa-link href="#" target="_blank" rel="noopener">${icon('whatsapp')} WhatsApp</a>
           <a class="btn btn--tg btn--sm" data-tg-link href="#" target="_blank" rel="noopener" hidden>${icon('telegram')} Telegram</a>

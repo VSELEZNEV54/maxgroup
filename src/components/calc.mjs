@@ -1,5 +1,5 @@
 // Калькулятор «под ключ»: полный блок для страницы /kalkulyator/ и мини-блок для главной и страниц стран.
-// Расчёт — js/calc-core.js, разметка результата — js/calc.js (MGCalc.view): генератор вызывает те же функции,
+// Расчет — js/calc-core.js, разметка результата — js/calc.js (MGCalc.view): генератор вызывает те же функции,
 // что и браузер, поэтому числа и HTML в исходной странице совпадают с тем, что покажет скрипт.
 //
 // Страница, на которой стоит fullCalc() или miniCalc(), обязана подключить скрипты: scripts: ['calc-core', 'calc'].
@@ -9,7 +9,7 @@ import { R } from '../routes.mjs';
 import '../js/calc-core.js';
 import '../js/calc.js';
 
-/** Ядро расчёта (то же, что window.MGCalc в браузере) */
+/** Ядро расчета (то же, что window.MGCalc в браузере) */
 export const calcCore = globalThis.MGCalc;
 const core = calcCore;
 const { view, fmt } = core;
@@ -33,7 +33,7 @@ const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', '�
 
 const cache = new WeakMap();
 
-/** Компактная выжимка правил расчёта (≈ 10 КБ) с адресами и падежами городов сайта */
+/** Компактная выжимка правил расчета (≈ 10 КБ) с адресами и падежами городов сайта */
 export function calcRules(ctx) {
   if (!ctx.calc) throw new Error('Калькулятор: нет data/source/calc-rules.json');
   if (!cache.has(ctx.calc)) cache.set(ctx.calc, core.compactRules(ctx.calc, { cities: ctx.cities }));
@@ -104,7 +104,7 @@ const pills = (name, items, current, hint = {}, aria = '') =>
     .join('')}</div>`;
 
 /**
- * Полный калькулятор: форма слева, закреплённый итог справа, расшифровка по строкам под ними.
+ * Полный калькулятор: форма слева, закрепленный итог справа, расшифровка по строкам под ними.
  * @param {object} o
  * @param {object} [o.state] — стартовые значения (по умолчанию первый пресет)
  * @param {object} [o.tips] — тексты подсказок {passing, hp160, hybrid, e30, personal, markup} → {q, a}
@@ -112,9 +112,9 @@ const pills = (name, items, current, hint = {}, aria = '') =>
  * @param {Array} [o.budgets] — [{max, url, text}] — ссылка «автомобили в этот бюджет»
  * @param {string} [o.subject] — тема заявки
  */
-export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subject = 'Точный расчёт из калькулятора' } = {}) {
+export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subject = 'Точный расчет из калькулятора' } = {}) {
   const rules = calcRules(ctx);
-  links = Object.fromEntries(Object.entries(links).map(([k, v]) => [k, { ...v, url: u(v.url) }])); // адреса сайта → ссылки с учётом режима сборки
+  links = Object.fromEntries(Object.entries(links).map(([k, v]) => [k, { ...v, url: u(v.url) }])); // адреса сайта → ссылки с учетом режима сборки
   const s = { ...PRESETS[0], month: 0, city: '', personal: true, markup: false, ...state };
   const r = core.calc(s, rules);
   const mode = r.delivery.city ? 'city' : 'vl';
@@ -129,9 +129,9 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
   const modalAttrs = {
     'data-modal': 'request',
     'data-modal-subject': subject,
-    'data-modal-label': 'Точный расчёт',
-    'data-modal-title': 'Пришлём точный расчёт',
-    'data-modal-text': 'Параметры из калькулятора уже в заявке. Менеджер проверит их по конкретному автомобилю и пришлёт расчёт под него.',
+    'data-modal-label': 'Точный расчет',
+    'data-modal-title': 'Пришлем точный расчет',
+    'data-modal-text': 'Параметры из калькулятора уже в заявке. Менеджер проверит их по конкретному автомобилю и пришлет расчет под него.',
     'data-calc-request': true,
   };
 
@@ -142,10 +142,10 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
             <div class="calc-presets__list">
               ${PRESETS.map((p) => `<button class="chip chip--sm" type="button" data-calc-preset="${json(p)}" aria-pressed="${p.id === activePreset}">${esc(p.name)}<small>${esc(core.COUNTRIES[p.country].name)}</small></button>`)}
             </div>
-            <span class="calc-presets__note">Цены условные — подставьте свои</span>
+            <span class="calc-presets__note">Цены условные, подставьте свои</span>
           </div>
 
-          <div class="note calc-ref" data-calc-ref role="note" hidden>${icon('info')}<div>${typo(`<b>Параметры перенесены из карточки автомобиля.</b> Калькулятор считает по курсам ЦБ и ставкам на ${ratesDate} и по типовым расходам. Цена в карточке рассчитана на сайте на дату публикации, поэтому суммы могут отличаться. Если мощности в карточке не было, укажите её: от неё зависит утилизационный сбор.`)}</div></div>
+          <div class="note calc-ref" data-calc-ref role="note" hidden>${icon('info')}<div>${typo(`<b>Параметры перенесены из карточки автомобиля.</b> Калькулятор считает по курсам ЦБ и ставкам на ${ratesDate} и по типовым расходам. Цена в карточке рассчитана на сайте на дату публикации, поэтому суммы могут отличаться. Если мощности в карточке не было, укажите ее: от нее зависит утилизационный сбор.`)}</div></div>
 
           <div class="calc__grid">
             <form class="calc__form" data-calc-form novalidate autocomplete="off">
@@ -197,7 +197,7 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                   ${pills('fuel', Object.entries(core.FUELS).map(([k, v]) => [k, v.name]), r.fuel.slug, FUEL_HINT, 'Тип двигателя')}
                   <div class="calc-cols">
                     <div data-calc-show="${showIce}"${hidden(showIce)}>
-                      ${numField({ name: 'cc', labelHtml: 'Объём двигателя', value: s.cc || '', suffix: 'см³', max: 4, placeholder: '1 496' })}
+                      ${numField({ name: 'cc', labelHtml: 'Объем двигателя', value: s.cc || '', suffix: 'см³', max: 4, placeholder: '1 496' })}
                     </div>
                     <div data-calc-show="${showIce}"${hidden(showIce)}>
                       ${numField({ name: 'hp', labelHtml: 'Мощность двигателя', value: dec(s.hp), suffix: 'л.с.', max: 4, decimal: true, placeholder: '110' })}
@@ -227,24 +227,24 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                     <label class="field calc-field">
                       <span class="field__label">Город получения</span>
                       <select class="field__control" name="city">
-                        ${rules.cities.map((c) => `<option value="${c.s}"${c.s === (r.delivery.city || 'vladivostok') ? ' selected' : ''}>${esc(c.n)}${c.s === 'vladivostok' ? ' — самовывоз' : ''}</option>`)}
+                        ${rules.cities.map((c) => `<option value="${c.s}"${c.s === (r.delivery.city || 'vladivostok') ? ' selected' : ''}>${esc(c.n)}${c.s === 'vladivostok' ? ' (самовывоз)' : ''}</option>`)}
                       </select>
                     </label>
                     <div class="field calc-field">
-                      <span class="field__label">Тип кузова — для тарифа автовоза</span>
+                      <span class="field__label">Тип кузова для тарифа автовоза</span>
                       ${pills('body', Object.entries(core.BODIES).map(([k, v]) => [k, v.name]), r.input.body, {}, 'Тип кузова')}
                     </div>
                   </div>
                   <div class="calc-check">
-                    <label class="check"><input type="checkbox" name="markup"${s.markup ? ' checked' : ''}><span>Учесть наценку банка при оплате за рубеж — ориентир к курсу ЦБ: +${fmt.num(rules.markup.JPY * 100, 1)} % иена, +${fmt.num(rules.markup.KRW * 100, 1)} % вона, +${fmt.num(rules.markup.CNY * 100, 1)} % юань</span></label>
+                    <label class="check"><input type="checkbox" name="markup"${s.markup ? ' checked' : ''}><span>Учесть наценку банка при оплате за рубеж. Ориентир к курсу ЦБ: +${fmt.num(rules.markup.JPY * 100, 1)} % иена, +${fmt.num(rules.markup.KRW * 100, 1)} % вона, +${fmt.num(rules.markup.CNY * 100, 1)} % юань</span></label>
                     ${tip(tips.markup)}
                   </div>
                 </div>
               </fieldset>
-              <p class="calc__nojs">${icon('info')}Пересчёт работает при включённом JavaScript. Ниже — пример расчёта, таблицы ставок и разбор трёх автомобилей.</p>
+              <p class="calc__nojs">${icon('info')}Пересчет работает при включенном JavaScript. Ниже есть пример расчета, таблицы ставок и разбор трех автомобилей.</p>
             </form>
 
-            <aside class="calc__side" aria-label="Результат расчёта">
+            <aside class="calc__side" aria-label="Результат расчета">
               <div class="calc-res on-dark" data-calc-result id="calc-result">
                 <div class="calc-res__top">
                   <h3 class="label">Итог под ключ</h3>
@@ -264,10 +264,10 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                   <ul data-calc-out="insights">${view.insights(r, links)}</ul>
                 </div>
                 <div class="calc-res__actions">
-                  <a class="btn btn--primary btn--block" href="${u(R.contacts)}"${attrs(modalAttrs)}>Получить точный расчёт ${icon('arrow', 'i-arrow')}</a>
-                  <button class="btn btn--ghost btn--sm btn--block" type="button" data-calc-copy data-copy="${esc(ctx.site.url + R.calculator)}" data-copy-done="Ссылка на расчёт скопирована">${icon('share')}Скопировать ссылку на расчёт</button>
+                  <a class="btn btn--primary btn--block" href="${u(R.contacts)}"${attrs(modalAttrs)}>Получить точный расчет ${icon('arrow', 'i-arrow')}</a>
+                  <button class="btn btn--ghost btn--sm btn--block" type="button" data-calc-copy data-copy="${esc(ctx.site.url + R.calculator)}" data-copy-done="Ссылка на расчет скопирована">${icon('share')}Скопировать ссылку на расчет</button>
                 </div>
-                <p class="calc-res__foot">Ставки и курсы ЦБ — на ${esc(fmt.dateShort(Date.parse(rules.date)))}, возраст автомобиля — на <span data-calc-out="date">${esc(r.dateLabel)}</span>. <a class="link" href="#smeta">Расшифровка по строкам</a></p>
+                <p class="calc-res__foot">Ставки и курсы ЦБ на ${esc(fmt.dateShort(Date.parse(rules.date)))}, возраст автомобиля на <span data-calc-out="date">${esc(r.dateLabel)}</span>. <a class="link" href="#smeta">Расшифровка по строкам</a></p>
               </div>
             </aside>
           </div>
@@ -284,21 +284,21 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                 <ul data-calc-out="insights">${view.insights(r, links)}</ul>
               </div>
               ${note(
-                `<b>Расчёт предварительный.</b> Пошлина, сборы, акциз, НДС и утилизационный сбор посчитаны по ставкам, действующим на ${esc(fmt.dateRu(Date.parse(rules.date)))}, и курсам ЦБ на эту дату. Расходы за рубежом, оформление, комиссия и доставка — ориентиры, не оферта. Точную сумму под конкретный автомобиль менеджер считает до покупки; порядок оплаты и сроки фиксируются в договоре.`
+                `<b>Расчет предварительный.</b> Пошлина, сборы, акциз, НДС и утилизационный сбор посчитаны по ставкам, действующим на ${esc(fmt.dateRu(Date.parse(rules.date)))}, и курсам ЦБ на эту дату. Расходы за рубежом, оформление, комиссия и доставка указаны ориентировочно, это не оферта. Точную сумму под конкретный автомобиль менеджер считает до покупки; порядок оплаты и сроки фиксируются в договоре.`
               )}
             </div>
           </div>
 
           <div class="calc-dock" data-calc-dock>
             <a class="calc-dock__sum" href="#calc-result"><span data-calc-out="caption">${esc(view.caption(r, mode))}</span><b data-calc-out="total">${view.total(r, mode)}</b></a>
-            <a class="btn btn--primary btn--sm" href="${u(R.contacts)}"${attrs(modalAttrs)}>Точный расчёт</a>
+            <a class="btn btn--primary btn--sm" href="${u(R.contacts)}"${attrs(modalAttrs)}>Точный расчет</a>
           </div>
         </div>`;
 }
 
 /**
- * Мини-калькулятор для главной и страниц стран: страна, цена, год, объём, мощность → «≈ N ₽ под ключ во Владивостоке»
- * и кнопка «Подробный расчёт» с переносом параметров в адрес калькулятора.
+ * Мини-калькулятор для главной и страниц стран: страна, цена, год, объем, мощность → «≈ N ₽ под ключ во Владивостоке»
+ * и кнопка «Подробный расчет» с переносом параметров в адрес калькулятора.
  * Страница должна подключить scripts: ['calc-core', 'calc'].
  * @param {object} o
  * @param {string} [o.country] — japan | korea | china: страна фиксируется (для страниц стран), переключатель скрыт
@@ -321,7 +321,7 @@ export function miniCalc(ctx, { country, title, lead, tag = 'h2', rules: withRul
             <div class="mcalc__head">
               ${label('Калькулятор')}
               <${tag} class="mcalc__title">${title || duo(locked ? `Сколько стоит авто ${cn.from}` : 'Сколько стоит авто', 'под ключ')}</${tag}>
-              <p class="mcalc__lead">${typo(lead || 'Пошлина, утилизационный сбор, расходы до Владивостока и оформление — по ставкам и курсам ЦБ на ' + dateShort + '.')}</p>
+              <p class="mcalc__lead">${typo(lead || 'Пошлина, утилизационный сбор, расходы до Владивостока и оформление по ставкам и курсам ЦБ на ' + dateShort + '.')}</p>
             </div>
             ${locked
               ? `<input type="hidden" name="country" value="${c}">`
@@ -334,11 +334,11 @@ export function miniCalc(ctx, { country, title, lead, tag = 'h2', rules: withRul
                 <span class="field__label">Год выпуска</span>
                 <select class="field__control" name="year">${years(rules).map((y) => `<option value="${y}"${y === d.year ? ' selected' : ''}>${y}</option>`)}</select>
               </label>
-              ${numField({ name: 'cc', labelHtml: 'Объём двигателя', value: d.cc, suffix: 'см³', max: 4 })}
+              ${numField({ name: 'cc', labelHtml: 'Объем двигателя', value: d.cc, suffix: 'см³', max: 4 })}
               ${numField({ name: 'hp', labelHtml: 'Мощность', value: d.hp, suffix: 'л.с.', max: 4, decimal: true })}
             </div>
-            <p class="mcalc__assume">Бензин или дизель · для личного пользования · гибриды, электромобили и доставка в город — в подробном расчёте</p>
-            <button class="sr-only" type="submit" tabindex="-1">Подробный расчёт</button>
+            <p class="mcalc__assume">Бензин или дизель · для личного пользования · гибриды, электромобили и доставка в город есть в подробном расчете</p>
+            <button class="sr-only" type="submit" tabindex="-1">Подробный расчет</button>
           </form>
           <div class="mcalc__result on-dark">
             ${label('Под ключ во Владивостоке')}
@@ -348,16 +348,16 @@ export function miniCalc(ctx, { country, title, lead, tag = 'h2', rules: withRul
             </div>
             <div class="mcalc__legend" data-calc-out="legend">${view.legend(r, 'vl')}</div>
             <div class="mcalc__actions">
-              <a class="btn btn--light btn--block" href="${calcHref(params)}" data-calc-more>Подробный расчёт ${icon('arrow', 'i-arrow')}</a>
-              ${btn('Точный расчёт от менеджера', R.contacts, { variant: 'ghost', block: true, arrow: false, modal: 'request', subject: 'Точный расчёт (мини-калькулятор)', attrs: { 'data-modal-title': 'Пришлём точный расчёт', 'data-modal-label': 'Расчёт' } })}
+              <a class="btn btn--light btn--block" href="${calcHref(params)}" data-calc-more>Подробный расчет ${icon('arrow', 'i-arrow')}</a>
+              ${btn('Точный расчет от менеджера', R.contacts, { variant: 'ghost', block: true, arrow: false, modal: 'request', subject: 'Точный расчет (мини-калькулятор)', attrs: { 'data-modal-title': 'Пришлем точный расчет', 'data-modal-label': 'Расчет' } })}
             </div>
-            <p class="mcalc__disc">Расчёт предварительный: расходы, комиссия и логистика — ориентиры. Точную сумму под конкретный автомобиль считает менеджер.</p>
+            <p class="mcalc__disc">Расчет предварительный: расходы, комиссия и логистика указаны ориентировочно. Точную сумму под конкретный автомобиль считает менеджер.</p>
           </div>
           ${withRules ? calcRulesScript(ctx) : ''}
         </div>`;
 }
 
-/** Мини-калькулятор, обёрнутый в секцию: miniCalcSection(ctx, { country: 'japan', cls: 'section--white' }) */
+/** Мини-калькулятор, обернутый в секцию: miniCalcSection(ctx, { country: 'japan', cls: 'section--white' }) */
 export function miniCalcSection(ctx, { cls, id = 'kalkulyator', ...opts } = {}) {
   return html`
     <section class="${cx('section section--sm', cls)}" id="${id}">

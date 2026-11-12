@@ -1,4 +1,4 @@
-// Общие модальные окна (нативный <dialog>): заявка/расчёт.
+// Общие модальные окна (нативный <dialog>): заявка/расчет.
 import { html, typo } from '../lib/core.mjs';
 import { icon } from '../lib/icons.mjs';
 import { leadForm } from '../components/forms.mjs';
@@ -11,8 +11,8 @@ export function modals(ctx) {
         <button class="modal__close" type="button" aria-label="Закрыть" data-modal-close>${icon('close')}</button>
         <span class="label" data-modal-label>Заявка</span>
         <h2 class="modal__title u-mt-4" id="modal-request-title" data-modal-title>Рассчитаем стоимость под ключ</h2>
-        <p class="modal__text" data-modal-text>${typo('Оставьте контакты — менеджер уточнит пожелания, подберёт варианты на аукционах и площадках и пришлёт расчёт до Владивостока и вашего города.')}</p>
-        ${leadForm({ subject: 'Заявка с сайта', fields: ['name', 'phone', 'car', 'contact'], cta: 'Получить расчёт' })}
+        <p class="modal__text" data-modal-text>${typo('Оставьте контакты, и менеджер уточнит пожелания, подберет варианты на аукционах и площадках и пришлет расчет до Владивостока и вашего города.')}</p>
+        ${leadForm({ subject: 'Заявка с сайта', fields: ['name', 'phone', 'car', 'contact'], cta: 'Получить расчет' })}
       </div>
     </dialog>
 

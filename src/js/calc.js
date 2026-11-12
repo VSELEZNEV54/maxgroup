@@ -1,9 +1,9 @@
 /* Макс Групп — интерфейс калькулятора «авто под ключ» (без зависимостей, поверх js/calc-core.js).
    1. MGCalc.view — строители HTML для результата. Те же функции вызывает генератор сайта (src/components/calc.mjs),
-      поэтому разметка в исходном HTML и после пересчёта в браузере совпадает.
-   2. Полный калькулятор [data-calc]: живой пересчёт, состояние в адресе (?country=japan&price=…&year=…&cc=…&hp=…&city=…),
-      пресеты, подсказки, переключатель «во Владивостоке / с доставкой», сводка расчёта в заявке (поле name="calc").
-   3. Мини-калькулятор [data-calc-mini]: страна, цена, год, объём, мощность → итог и ссылка на подробный расчёт. */
+      поэтому разметка в исходном HTML и после пересчета в браузере совпадает.
+   2. Полный калькулятор [data-calc]: живой пересчет, состояние в адресе (?country=japan&price=…&year=…&cc=…&hp=…&city=…),
+      пресеты, подсказки, переключатель «во Владивостоке / с доставкой», сводка расчета в заявке (поле name="calc").
+   3. Мини-калькулятор [data-calc-mini]: страна, цена, год, объем, мощность → итог и ссылка на подробный расчет. */
 (function (root) {
   'use strict';
 
@@ -21,7 +21,7 @@
 
   var ORDER = ['country', 'price', 'year', 'month', 'fuel', 'cc', 'hp', 'ehp', 'e30', 'city', 'body', 'personal', 'markup', 'view'];
   var ENGINE = ['cc', 'hp', 'ehp', 'e30'];
-  var SCOPE = { 'age-month': 'age', 'age-soon': 'age', epts: 'age', 'kr-price': 'price', 'jp-price': 'price' };
+  var SCOPE = { 'age-month': 'age', 'age-soon': 'age', epts: 'age' };
 
   /** Мощность из адреса или поля: «150,5» → «150.5», не больше 9999; мусор и ноль → пустая строка */
   function decStr(v, frac) {
@@ -65,29 +65,29 @@
 
   var view = {
     total: function (r, mode) {
-      return r.ok ? F.rub(total(r, mode)) : '—';
+      return r.ok ? F.rub(total(r, mode)) : 'нет данных';
     },
 
     /** Подпись под итогом */
     caption: function (r, mode) {
       if (!r.ok) return view.need(r);
-      return (withCity(r, mode) ? 'с доставкой в ' + r.delivery.acc : 'под ключ во Владивостоке') + ' · предварительный расчёт';
+      return (withCity(r, mode) ? 'с доставкой в ' + r.delivery.acc : 'под ключ во Владивостоке') + ' · предварительный расчет';
     },
 
-    /** Чего не хватает для расчёта — одной фразой, по первому незаполненному полю */
+    /** Чего не хватает для расчета — одной фразой, по первому незаполненному полю */
     need: function (r) {
       var m = r.missing || [];
       var no = function (k) { return m.indexOf(k) >= 0; };
       if (no('price')) return 'Укажите цену автомобиля ' + r.country.inLoc;
       if (no('year')) return 'Выберите год выпуска';
-      if (no('cc') && no('hp')) return 'Укажите объём и мощность двигателя';
-      if (no('cc')) return 'Укажите объём двигателя — от него зависит пошлина';
-      if (no('hp')) return 'Укажите мощность двигателя — от неё зависит утильсбор';
-      if (no('ehp')) return 'Укажите мощность электромоторов — от неё зависят акциз и утильсбор';
-      return 'Заполните поля формы — посчитаем сразу';
+      if (no('cc') && no('hp')) return 'Укажите объем и мощность двигателя';
+      if (no('cc')) return 'Укажите объем двигателя: от него зависит пошлина';
+      if (no('hp')) return 'Укажите мощность двигателя: от нее зависит утильсбор';
+      if (no('ehp')) return 'Укажите мощность электромоторов: от нее зависят акциз и утильсбор';
+      return 'Заполните поля формы, и мы посчитаем сразу';
     },
 
-    /** Полоса-диаграмма долей + легенда по четырём группам */
+    /** Полоса-диаграмма долей + легенда по четырем группам */
     legend: function (r, mode) {
       var sh = shares(r, mode);
       var bar = '';
@@ -98,7 +98,7 @@
         var s = sh[g.id];
         if (s.on && g.rub > 0 && r.ok) {
           bar += '<i class="calc-bar__seg calc-bar__seg--' + g.id + '" style="flex-grow:' + s.raw.toFixed(2) + '"></i>';
-          aria.push(g.short.toLowerCase() + ' — ' + s.pct + '%');
+          aria.push(g.short.toLowerCase() + ' ' + s.pct + '%');
         }
         var off = g.id === 'delivery' && !s.on;
         list +=
@@ -106,7 +106,7 @@
           '<i class="calc-dot calc-dot--' + g.id + '"></i>' +
           '<span class="calc-legend__name">' + esc(g.short) + '</span>' +
           '<span class="calc-legend__pct">' + (r.ok && s.on ? s.pct + NB + '%' : '') + '</span>' +
-          '<b class="calc-legend__sum">' + (!r.ok ? '—' : off ? (r.delivery.city ? '+' + NB + F.rub(g.rub) : 'не выбрана') : F.rub(g.rub)) + '</b>' +
+          '<b class="calc-legend__sum">' + (!r.ok ? '' : off ? (r.delivery.city ? '+' + NB + F.rub(g.rub) : 'не выбрана') : F.rub(g.rub)) + '</b>' +
           '</li>';
       }
       return (
@@ -125,25 +125,25 @@
         var rows = '';
         for (var j = 0; j < g.rows.length; j++) {
           var row = g.rows[j];
-          rows += '<div class="calc-row"><dt>' + esc(row.label) + '<small>' + esc(row.note) + '</small></dt><dd>' + (r.ok ? F.rub(row.rub) : '—') + '</dd></div>';
+          rows += '<div class="calc-row"><dt>' + esc(row.label) + '<small>' + esc(row.note) + '</small></dt><dd>' + (r.ok ? F.rub(row.rub) : '') + '</dd></div>';
         }
         var foot = '';
         if (g.id === 'delivery') {
-          if (!g.rows.length) rows = '<div class="calc-row"><dt>Самовывоз во Владивостоке<small>выберите город в форме — добавим автовоз по типу кузова</small></dt><dd>' + F.rub(0) + '</dd></div>';
+          if (!g.rows.length) rows = '<div class="calc-row"><dt>Самовывоз во Владивостоке<small>выберите город в форме, и мы добавим автовоз по типу кузова</small></dt><dd>' + F.rub(0) + '</dd></div>';
           else if (!s.on) foot = '<p class="calc-group__foot">В итог «во Владивостоке» не входит</p>';
         }
         html +=
           '<article class="calc-group calc-group--' + g.id + (g.id === 'delivery' && !s.on ? ' is-off' : '') + '">' +
           '<header class="calc-group__head"><span class="calc-group__name"><i class="calc-dot calc-dot--' + g.id + '"></i>' + esc(g.title) + '</span>' +
           '<span class="calc-group__pct">' + (r.ok && s.on ? s.pct + NB + '%' : '') + '</span></header>' +
-          '<div class="calc-group__sum">' + (r.ok ? F.rub(g.rub) : '—') + '</div>' +
+          '<div class="calc-group__sum">' + (r.ok ? F.rub(g.rub) : '') + '</div>' +
           '<dl class="calc-rows">' + rows + '</dl>' + foot +
           '</article>';
       }
       return html;
     },
 
-    /** Короткие статусы под итогом: возраст, утильсбор, режим пошлины, ограничения */
+    /** Короткие статусы под итогом: возраст, утильсбор, режим пошлины */
     status: function (r) {
       var items = [];
       if (!r.ok) return '';
@@ -153,7 +153,6 @@
       if (r.util.noMotor && r.util.pref) items.push(['warn', 'Нужна мощность электромотора', '#calc-engine']);
       else items.push([r.util.pref ? 'ok' : 'warn', r.util.pref ? 'Льготный утильсбор' : 'Утильсбор по полной шкале', '#calc-engine']);
       if (r.mode === 'STP') items.push(['', 'Пошлина 15' + NB + '% + акциз + НДС', '#calc-engine']);
-      if (r.sanctioned) items.push(['warn', 'Экспортное ограничение', '#calc-engine']);
       var html = '';
       for (var i = 0; i < items.length; i++) html += '<a class="calc-chip' + (items[i][0] ? ' calc-chip--' + items[i][0] : '') + '" href="' + items[i][2] + '">' + esc(items[i][1]) + '</a>';
       return html;
@@ -188,9 +187,9 @@
       if (!a.year) return 'Выберите год выпуска.';
       if (a.forced) return a.full;
       return (
-        '<b>' + (a.cat === '3to5' ? '3–5 лет — проходной возраст' : a.cat === 'le3' ? 'До 3 лет' : 'Старше 5 лет') + '.</b> ' +
-        'Дата выпуска для расчёта — ' + a.mfgLabel + ', возраст на ' + F.dateShort(Date.parse(r.date)) + ' — ' + a.ageLabel.replace(/\.$/, '') + '.' +
-        (a.next ? ' В категорию «' + a.next.name + '» автомобиль перейдёт ' + a.next.dateLabel + '.' : '')
+        '<b>' + (a.cat === '3to5' ? '3-5 лет: проходной возраст' : a.cat === 'le3' ? 'До 3 лет' : 'Старше 5 лет') + '.</b> ' +
+        'Дата выпуска для расчета: ' + a.mfgLabel + '. Возраст на ' + F.dateShort(Date.parse(r.date)) + ': ' + a.ageLabel.replace(/\.$/, '') + '.' +
+        (a.next ? ' В категорию «' + a.next.name + '» автомобиль перейдет ' + a.next.dateLabel + '.' : '')
       );
     },
 
@@ -200,24 +199,24 @@
       var head;
       if (f === 'ev' || f === 'series') {
         if (!u.e30) return 'Укажите мощность электромоторов: по ней считаются акциз и утилизационный сбор.';
-        head = '30-минутная мощность — ' + F.num(u.e30, 2) + NB + 'кВт (' + F.num(u.powerHp, 1) + NB + 'л.с.)' + (u.e30Estimated ? ', оценка: пиковая × 0,45' : '') + '. ';
+        head = '30-минутная мощность: ' + F.num(u.e30, 2) + NB + 'кВт (' + F.num(u.powerHp, 1) + NB + 'л.с.)' + (u.e30Estimated ? ', оценка: пиковая × 0,45' : '') + '. ';
       } else if (!r.input.hp) {
-        return 'Укажите мощность двигателя: от неё зависит утилизационный сбор.';
+        return 'Укажите мощность двигателя: от нее зависит утилизационный сбор.';
       } else if (u.noMotor) {
-        return 'ДВС ' + F.num(u.powerKw, 2) + NB + 'кВт. <b>Укажите мощность электромотора: в утильсборе она прибавляется к мощности ДВС.</b> Пока сбор посчитан только по ДВС — ' + F.rub(u.rub) + '.';
+        return 'ДВС ' + F.num(u.powerKw, 2) + NB + 'кВт. <b>Укажите мощность электромотора: в утильсборе она прибавляется к мощности ДВС.</b> Пока сбор посчитан только по ДВС: ' + F.rub(u.rub) + '.';
       } else if (f === 'parallel') {
         head = 'ДВС ' + F.num(u.powerKw - u.e30, 2) + NB + 'кВт + электромотор ' + F.num(u.e30, 2) + NB + 'кВт за 30 минут = ' + F.num(u.powerKw, 2) + NB + 'кВт. ';
       } else {
         head = F.num(r.input.hp, 1) + NB + 'л.с. = ' + F.num(u.powerKw, 2) + NB + 'кВт. ';
       }
       var lim = F.num(u.thresholdKw, 2) + NB + 'кВт (' + u.thresholdHp + NB + 'л.с.)';
-      if (u.pref) return head + '<b>Ниже порога ' + lim + ' — льготный утильсбор ' + F.rub(u.rub) + '.</b>';
-      if (u.reason === 'volume') return head + '<b>Объём больше 3,0' + NB + 'л — льготы нет, утильсбор ' + F.rub(u.rub) + '.</b>';
-      if (u.reason === 'personal') return head + '<b>Без льготы для личного пользования утильсбор — ' + F.rub(u.rub) + '.</b>';
-      return head + '<b>Выше порога ' + lim + ' — утильсбор по полной шкале: ' + F.rub(u.rub) + '.</b>';
+      if (u.pref) return head + '<b>Ниже порога ' + lim + ', поэтому утильсбор льготный: ' + F.rub(u.rub) + '.</b>';
+      if (u.reason === 'volume') return head + '<b>Объем больше 3,0' + NB + 'л, поэтому льготы нет: утильсбор ' + F.rub(u.rub) + '.</b>';
+      if (u.reason === 'personal') return head + '<b>Без льготы для личного пользования утильсбор составит ' + F.rub(u.rub) + '.</b>';
+      return head + '<b>Выше порога ' + lim + ', поэтому утильсбор по полной шкале: ' + F.rub(u.rub) + '.</b>';
     },
 
-    /** Короткая сводка расчёта для заявки (поле name="calc") */
+    /** Короткая сводка расчета для заявки (поле name="calc") */
     summary: function (r, mode, name) {
       var i = r.input;
       var eng = r.fuel.slug === 'ev' || r.fuel.slug === 'series'
@@ -227,7 +226,7 @@
         '; под ключ во Владивостоке ≈ ' + F.rub(r.totalVladivostok) +
         (r.delivery.city ? '; с доставкой в ' + r.delivery.acc + ' ≈ ' + F.rub(r.totalCity) : '') +
         '; пошлина ' + F.rub(r.duty.rub) + ', утильсбор ' + F.rub(r.util.rub) +
-        ' (расчёт на ' + F.dateShort(Date.parse(r.date)) + ', курсы ЦБ на ' + F.dateShort(Date.parse(r.ratesDate)) + ')';
+        ' (расчет на ' + F.dateShort(Date.parse(r.date)) + ', курсы ЦБ на ' + F.dateShort(Date.parse(r.ratesDate)) + ')';
       return s.replace(/[  ]/g, ' ');
     },
 
@@ -253,9 +252,9 @@
      * «скопировать ссылку». q — разобранные параметры, country — страна в форме сейчас, defaults — типовой автомобиль
      * каждой страны ({japan: {price, year, cc, hp, body}, …}). Возвращает null, если параметров калькулятора нет.
      *
-     * Главное правило: если адрес описывает конкретный автомобиль (есть цена, тип двигателя, объём или мощность),
-     * всё, чего в адресе нет, очищается. Мощность стартового примера (98 л.с.) чужому автомобилю не приписываем:
-     * поле остаётся пустым, а калькулятор просит его заполнить и до этого не показывает ни итог, ни «льготный утильсбор».
+     * Главное правило: если адрес описывает конкретный автомобиль (есть цена, тип двигателя, объем или мощность),
+     * все, чего в адресе нет, очищается. Мощность стартового примера (98 л.с.) чужому автомобилю не приписываем:
+     * поле остается пустым, а калькулятор просит его заполнить и до этого не показывает ни итог, ни «льготный утильсбор».
      */
     start: function (q, country, defaults) {
       var s = {};
@@ -268,13 +267,13 @@
       var specific = s.price !== undefined || s.fuel !== undefined;
       for (i = 0; i < ENGINE.length; i++) if (s[ENGINE[i]] !== undefined) specific = true;
 
-      // старые ссылки с карточек электромобилей: мощность без объёма и типа двигателя
+      // старые ссылки с карточек электромобилей: мощность без объема и типа двигателя
       if (s.fuel === undefined && s.cc === undefined && s.ehp === undefined && s.e30 === undefined && F.toNum(s.hp) > 0) { s.fuel = 'ev'; s.ehp = s.hp; s.hp = 0; }
 
       if (specific) {
         s.fuel = core.fuelOf(s.fuel);
         if (s.fuel === 'ev' || s.fuel === 'series') {
-          // мощность электромоторов могла прийти в параметре hp; объём и мощность ДВС в расчёте не участвуют
+          // мощность электромоторов могла прийти в параметре hp; объем и мощность ДВС в расчете не участвуют
           if (s.ehp === undefined && s.e30 === undefined && F.toNum(s.hp) > 0) s.ehp = s.hp;
           s.hp = 0;
           s.cc = 0;
@@ -336,7 +335,7 @@
   }
 
   /**
-   * Целая часть введённого числа: «1496.0» → «1496», «98,6» → «98» — дробь отбрасываем, а не приклеиваем к целому
+   * Целая часть введенного числа: «1496.0» → «1496», «98,6» → «98» — дробь отбрасываем, а не приклеиваем к целому
    * (иначе 150,5 превращается в 1505). «1.100.000» и «1,100,000» — разделители разрядов, а не дробь.
    */
   function intPart(v) {
@@ -361,24 +360,24 @@
     try { el.setSelectionRange(i, i); } catch (err) { /* тип поля не поддерживает выделение */ }
   }
 
-  /** Объём, введённый в литрах («1,5», «2.0»), а не в кубических сантиметрах */
+  /** Объем, введенный в литрах («1,5», «2.0»), а не в кубических сантиметрах */
   var LITERS = /^\d[.,]\d{0,2}$/;
 
-  /** Объём двигателя в см³ из поля: литры переводим, а не склеиваем цифры (1,5 → 1500, а не 15) */
+  /** Объем двигателя в см³ из поля: литры переводим, а не склеиваем цифры (1,5 → 1500, а не 15) */
   function ccOf(value) {
     var v = String(value || '').replace(/\s/g, '');
     if (LITERS.test(v)) return Math.round(F.toNum(v) * 1000);
     return +digits(intPart(v)) || 0;
   }
 
-  /** Поле объёма при вводе: литры не трогаем до выхода из поля, остальное приводим к целому */
+  /** Поле объема при вводе: литры не трогаем до выхода из поля, остальное приводим к целому */
   function formatCc(el, done) {
     var v = el.value.replace(/\s/g, '');
     if (LITERS.test(v)) { if (done) el.value = String(ccOf(v) || ''); return; }
     formatInt(el, 4);
   }
 
-  /** Число с дробной частью через запятую: до четырёх знаков целой части и frac знаков дробной (по умолчанию два) */
+  /** Число с дробной частью через запятую: до четырех знаков целой части и frac знаков дробной (по умолчанию два) */
   function formatDec(el, frac) {
     var v = el.value.replace(/[^\d.,]/g, '').replace(/\./g, ',');
     var p = v.split(',');
@@ -433,7 +432,7 @@
     if (el && el.textContent !== text) el.textContent = text;
   }
 
-  /** Сводка расчёта уходит в каждую форму заявки на странице: main.js добавит её в сообщение строкой «Расчёт: …» */
+  /** Сводка расчета уходит в каждую форму заявки на странице: main.js добавит ее в сообщение строкой «Расчет: …» */
   function pushSummary(text) {
     $$('form[data-lead-form]').forEach(function (form) {
       var input = $('input[name="calc"]', form);
@@ -498,7 +497,7 @@
       if (s.price !== undefined) setVal(form, 'price', digits(intPart(s.price)).slice(0, 11), true);
       var sel = form.elements.year;
       if (s.year !== undefined && /^(19[89]|20[0-4])\d$/.test(String(s.year)) && +s.year <= +sel.options[0].value) {
-        // год вне списка (старше 2007-го) добавляем в конец — расчёт покажет предупреждение про ЭПТС; будущие годы не принимаем
+        // год вне списка (старше 2007-го) добавляем в конец — расчет покажет предупреждение про ЭПТС; будущие годы не принимаем
         var y = String(s.year);
         if (!$('option[value="' + y + '"]', sel)) {
           var o = doc.createElement('option');
@@ -536,12 +535,12 @@
       each('cur', function (el) { setText(el, r.currency.sign); });
       each('cur-name', function (el) { setText(el, r.country.slug === 'japan' ? 'в иенах' : r.country.slug === 'korea' ? 'в вонах' : 'в юанях'); });
       each('price-rub', function (el) {
-        setText(el, s.price ? '≈ ' + F.rub(r.carRub) + ' по курсу ЦБ: ' + r.rates.curLabel + (priceHint ? '. Цена подставлена для примера — укажите свою.' : '') : 'Введите цену автомобиля ' + r.country.inLoc + ' — в валюте страны.');
+        setText(el, s.price ? '≈ ' + F.rub(r.carRub) + ' по курсу ЦБ: ' + r.rates.curLabel + (priceHint ? '. Цена подставлена для примера, укажите свою.' : '') : 'Введите цену автомобиля ' + r.country.inLoc + ' в валюте страны.');
         el.classList.toggle('is-accent', priceHint || !s.price);
       });
       each('ehp-label', function (el) { setText(el, r.fuel.slug === 'parallel' ? 'Мощность электромотора, пиковая' : 'Мощность электромоторов, пиковая'); });
       var e30El = form.elements.e30;
-      if (e30El) e30El.placeholder = s.ehp ? '≈ ' + F.num(s.ehp * RULES.util.hpToKw * RULES.util.peakTo30, 2) + ' — оценка' : 'если известна';
+      if (e30El) e30El.placeholder = s.ehp ? '≈ ' + F.num(s.ehp * RULES.util.hpToKw * RULES.util.peakTo30, 2) + ' (оценка)' : 'если известна';
 
       // результат
       each('total', function (el) { setText(el, view.total(r, mode)); });
@@ -565,7 +564,7 @@
       });
       each('date', function (el) { setText(el, r.dateLabel); });
       rootEl.classList.toggle('is-empty', !r.ok);
-      // незаполненные поля, без которых расчёта нет (например, мощность не пришла с карточки авто)
+      // незаполненные поля, без которых расчета нет (например, мощность не пришла с карточки авто)
       ['price', 'cc', 'hp', 'ehp'].forEach(function (name) {
         var box = form.elements[name] && form.elements[name].closest('.calc-field');
         if (box) box.classList.toggle('is-need', r.missing.indexOf(name) >= 0 || (name === 'ehp' && r.util.noMotor));
@@ -637,7 +636,7 @@
       }
       if (el.name === 'city') mode = el.value && el.value !== 'vladivostok' ? 'city' : 'vl';
       if (el.name === 'fuel' && (el.value === 'ev' || el.value === 'series') && !form.elements.ehp.value && form.elements.hp.value) {
-        // переключили на электромобиль: чтобы расчёт не обнулялся, берём введённую мощность как пиковую мощность моторов
+        // переключили на электромобиль: чтобы расчет не обнулялся, берем введенную мощность как пиковую мощность моторов
         form.elements.ehp.value = form.elements.hp.value;
       }
       if (/^(year|month|fuel)$/.test(el.name)) unpreset();
@@ -674,7 +673,7 @@
       });
     });
 
-    // закреплённая плашка с итогом на мобильных: видна, пока калькулятор на экране, а блок результата — нет
+    // закрепленная плашка с итогом на мобильных: видна, пока калькулятор на экране, а блок результата — нет
     if (dockEl && 'IntersectionObserver' in window) {
       var inCalc = false;
       var inResult = false;
@@ -718,18 +717,18 @@
       var c = (form.elements.country && form.elements.country.value) || 'japan';
       var s = { country: c, price: +digits(form.elements.price.value) || 0, year: +form.elements.year.value || 0, fuel: 'ice', cc: ccOf(form.elements.cc.value), hp: F.toNum(form.elements.hp.value), date: DATE };
       var r = core.calc(s, RULES);
-      // сводка расчёта для заявки «Точный расчёт от менеджера» (см. обработчик клика ниже)
+      // сводка расчета для заявки «Точный расчет от менеджера» (см. обработчик клика ниже)
       rootEl.__calcSummary = r.ok ? view.summary(r, 'vl', '') : '';
       $$('[data-calc-out]', rootEl).forEach(function (el) {
         var k = el.dataset.calcOut;
-        if (k === 'total') setText(el, r.ok ? '≈ ' + view.total(r, 'vl') : '—');
+        if (k === 'total') setText(el, r.ok ? '≈ ' + view.total(r, 'vl') : 'нет данных');
         if (k === 'legend') setHtml(el, view.legend(r, 'vl'));
         if (k === 'cur') setText(el, r.currency.sign);
         if (k === 'cur-name') setText(el, r.country.slug === 'japan' ? 'в иенах' : r.country.slug === 'korea' ? 'в вонах' : 'в юанях');
         if (k === 'price-rub') setText(el, s.price ? '≈ ' + F.rub(r.carRub) + ' по курсу ЦБ' : 'в валюте страны');
         if (k === 'note') {
           var w = '';
-          for (var i = 0; i < r.warnings.length; i++) if (r.warnings[i].level === 'warn') { w = r.warnings[i].code === 'age-month' ? 'Год пограничный: в подробном расчёте укажите месяц выпуска.' : /^(jp|kr)-/.test(r.warnings[i].code) ? 'На такой двигатель действует экспортное ограничение — расчёт с надбавкой.' : ''; if (w) break; }
+          for (var i = 0; i < r.warnings.length; i++) if (r.warnings[i].level === 'warn') { w = r.warnings[i].code === 'age-month' ? 'Год пограничный: в подробном расчете укажите месяц выпуска.' : ''; if (w) break; }
           if (!r.ok) w = '';
           setText(el, w || (r.ok ? r.age.name + (r.age.cat === '3to5' ? ', проходной' : '') + ' · ' + (r.util.pref ? 'льготный утильсбор ' + F.rub(r.util.rub) : 'утильсбор ' + F.rub(r.util.rub)) : view.need(r)));
           el.classList.toggle('is-warn', !!w);
@@ -762,7 +761,7 @@
     render();
   });
 
-  // Заявка из мини-калькулятора уходит со сводкой расчёта (как в полном калькуляторе). Слушаем в фазе перехвата, чтобы
+  // Заявка из мини-калькулятора уходит со сводкой расчета (как в полном калькуляторе). Слушаем в фазе перехвата, чтобы
   // успеть до открытия модального окна; заявка, открытая любой другой кнопкой страницы, сводку не получает.
   if ($('[data-calc-mini]') && !$('[data-calc]')) {
     doc.addEventListener('click', function (e) {

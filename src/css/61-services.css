@@ -45,7 +45,7 @@
     linear-gradient(180deg, rgba(10, 12, 15, 0.66) 0%, rgba(10, 12, 15, 0) 26%, rgba(10, 12, 15, 0) 72%, rgba(10, 12, 15, 0.6) 100%);
 }
 
-/* кадр из видео: занимает правую часть шапки и уходит в тёмный фон слева */
+/* кадр из видео: занимает правую часть шапки и уходит в темный фон слева */
 .svc-head--frame .page-head__bg {
   left: 36%;
 }
@@ -56,7 +56,7 @@
     linear-gradient(180deg, rgba(10, 12, 15, 0.7) 0%, rgba(10, 12, 15, 0) 30%, rgba(10, 12, 15, 0) 66%, rgba(10, 12, 15, 0.72) 100%);
 }
 
-/* положение объекта в кадре — у каждого кадра своё */
+/* положение объекта в кадре — у каждого кадра свое */
 .svc-head--aukciony-yaponii .page-head__bg img {
   object-position: 14% center;
 }
@@ -65,7 +65,7 @@
   object-position: 100% center;
 }
 
-/* в левой части этого кадра — подсвеченное здание: под заголовком держим фон почти чёрным, автомобиль остаётся в свету */
+/* в левой части этого кадра — подсвеченное здание: под заголовком держим фон почти черным, автомобиль остается в свету */
 .svc-head--avtokredit .page-head__bg::after {
   background:
     linear-gradient(90deg, var(--ink) 0%, rgba(10, 12, 15, 0.92) 18%, rgba(10, 12, 15, 0.5) 34%, rgba(10, 12, 15, 0) 60%),
@@ -76,7 +76,7 @@
   object-position: 34% center;
 }
 
-/* мобильные: объект показываем в «окне» над текстом, ниже — ровный тёмный фон */
+/* мобильные: объект показываем в «окне» над текстом, ниже — ровный темный фон */
 @media (max-width: 900px) {
   .svc-head .page-head--photo {
     min-height: 0;
@@ -172,7 +172,7 @@
   }
 }
 
-/* тёмная плитка-призыв в конце сетки карточек */
+/* темная плитка-призыв в конце сетки карточек */
 .svc-promo {
   display: flex;
   flex-direction: column;
@@ -359,7 +359,7 @@
   }
 }
 
-/* --- «Что входит»: тёмная плитка с рендером + сетка карточек ---------------------------------- */
+/* --- «Что входит»: темная плитка с рендером + сетка карточек ---------------------------------- */
 
 .svc-bento {
   display: grid;
@@ -393,7 +393,7 @@
   z-index: -1;
 }
 
-/* рендер занимает верх плитки, низ под текстом — ровный тёмный фон */
+/* рендер занимает верх плитки, низ под текстом — ровный темный фон */
 .svc-feature__bg {
   bottom: 26%;
 }
@@ -456,7 +456,7 @@
   }
 }
 
-/* --- Три рынка (тёмные плитки стран) ------------------------------------------------------------ */
+/* --- Три рынка (темные плитки стран) ------------------------------------------------------------ */
 
 .svc-market {
   position: relative;
@@ -1072,7 +1072,7 @@
   }
 }
 
-/* --- Платёжный агент: тезисы, маршрут платежа, курсы, цитата ---------------------------------------- */
+/* --- Платежный агент: тезисы, маршрут платежа, курсы, цитата ---------------------------------------- */
 
 .svc-points {
   display: grid;
@@ -1328,58 +1328,6 @@
   }
 }
 
-/* --- Дилерам: контакты менеджеров ---------------------------------------------------------------------- */
-
-.svc-people {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--gap);
-}
-
-.svc-person {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: 2px 14px;
-  align-items: center;
-  padding: 14px 16px;
-  border-radius: var(--r-sm);
-  background: var(--card);
-}
-
-.svc-person img {
-  grid-row: span 2;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center 18%;
-  filter: grayscale(1) contrast(1.04);
-}
-
-.svc-person b {
-  align-self: end;
-  font-weight: var(--w-medium);
-  line-height: 1.2;
-}
-
-.svc-person a {
-  align-self: start;
-  color: var(--text-2);
-  font-size: 0.9375rem;
-  font-variant-numeric: tabular-nums;
-  transition: color var(--dur-fast) var(--ease-out);
-}
-
-.svc-person a:hover {
-  color: var(--accent);
-}
-
-@media (max-width: 560px) {
-  .svc-people {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 /* --- Автокредит: баннер и банки -------------------------------------------------------------------------- */
 
 .svc-credit .credit__copy h2 {
@@ -1573,6 +1521,11 @@
   grid-column: span 5;
 }
 
+/* последняя плитка одна в ряду — на всю ширину */
+.svc-grid--hub .svc--12 {
+  grid-column: 1 / -1;
+}
+
 .svc-grid--hub .svc--5 .svc__bg img {
   object-position: 82% center;
 }
@@ -1645,7 +1598,8 @@
 @media (max-width: 900px) {
   .svc-grid--hub .svc,
   .svc-grid--hub .svc--7,
-  .svc-grid--hub .svc--5 {
+  .svc-grid--hub .svc--5,
+  .svc-grid--hub .svc--12 {
     grid-column: 1 / -1;
     min-height: clamp(340px, 92vw, 460px);
   }

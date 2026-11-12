@@ -31,11 +31,16 @@
 }
 
 .quiz__avatar {
+  display: grid;
+  place-items: center;
   width: 72px;
   height: 72px;
   border-radius: var(--r-sm);
   overflow: hidden;
   background: var(--ink-3);
+  color: #fff;
+  font-size: 1.375rem;
+  font-weight: var(--w-medium);
 }
 
 /* портреты сняты по пояс — увеличиваем, чтобы в аватаре было лицо */
@@ -98,7 +103,7 @@
   color: var(--accent-on-dark);
 }
 
-/* панель с вопросами — светлая, как лист анкеты на тёмном столе */
+/* панель с вопросами — светлая, как лист анкеты на темном столе */
 .quiz__panel {
   display: flex;
   flex-direction: column;
@@ -110,9 +115,7 @@
   color: var(--text);
 }
 
-.quiz__panel .label,
-.quiz__panel .label::before,
-.quiz__panel .label::after {
+.quiz__panel .label {
   color: var(--text-3);
 }
 
@@ -165,7 +168,7 @@
   min-height: 1.4em;
 }
 
-/* варианты в квизе — на светлой панели, даже внутри тёмной секции */
+/* варианты в квизе — на светлой панели, даже внутри темной секции */
 .section--dark .quiz__panel .opt span {
   background: var(--paper);
   box-shadow: none;

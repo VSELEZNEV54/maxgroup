@@ -172,7 +172,7 @@ const jp = (o) => core.calc({ country: 'japan', price: 1500000, year: 2022, cc: 
 check('Япония: до 1,9 л — обычный профиль', jp({ cc: 1900 }).abroad.fixedCur, def.japan.amount);
 check('Япония: свыше 1,9 л — профиль под ограничениями', jp({ cc: 1901 }).abroad.fixedCur, def.japanSanctioned.amount);
 check('Япония: гибрид — фрахт в долларах', jp({ fuel: 'parallel', ehp: 70 }).abroad.freightUsd, def.japanSanctioned.freightUsd);
-check('Япония: электромобиль — предупреждение', jp({ fuel: 'ev', ehp: 100 }).warnings.some((w) => w.code === 'jp-ev'), true);
+check('Япония: электромобиль, справка о расходах', jp({ fuel: 'ev', ehp: 100 }).warnings.some((w) => w.code === 'jp-route'), true);
 check('Япония: мягкий гибрид — обычный профиль', jp({ fuel: 'mild' }).abroad.fixedCur, def.japan.amount);
 const kr = (o) => core.calc({ country: 'korea', price: 20000000, year: 2022, cc: 1999, hp: 150, date, ...o }, raw);
 check('Корея: до 2,0 л — без надбавки', kr({}).abroad.extraCur, 0);
@@ -209,11 +209,11 @@ check('адрес: мощности нет — поле пустое, а не 98
 check('адрес: пометка «с карточки авто»', lexus.ref, 'car');
 const lexusR = run({ country: 'japan', price: '4431000', year: '2023', cc: '2500', body: 'crossover' });
 check('адрес: без мощности расчёта нет', lexusR.ok, false);
-check('адрес: без мощности — просьба указать её', view.need(lexusR), 'Укажите мощность двигателя — от неё зависит утильсбор');
+check('адрес: без мощности — просьба указать её', view.need(lexusR), 'Укажите мощность двигателя: от нее зависит утильсбор');
 check('адрес: без мощности — никакого «льготного утильсбора»', view.status(lexusR), '');
 check('адрес: hp=0 — то же, что нет мощности', run({ country: 'korea', price: '21000000', year: '2022', cc: '1999', hp: '0' }).missing.includes('hp'), true);
 const leaf = run({ country: 'japan', price: '1238000', year: '2022', fuel: 'ev' });
-check('адрес: электромобиль без мощности — просьба указать её', view.need(leaf), 'Укажите мощность электромоторов — от неё зависят акциз и утильсбор');
+check('адрес: электромобиль без мощности — просьба указать её', view.need(leaf), 'Укажите мощность электромоторов: от нее зависят акциз и утильсбор');
 const li = start({ country: 'china', price: '239899', year: '2025', fuel: 'series', cc: '1496', hp: '449' });
 check('адрес: последовательный гибрид — мощность из hp уходит в электромоторы', li.state.ehp, '449');
 check('адрес: последовательный гибрид — ДВС в расчёте не участвует', li.state.hp + li.state.cc, 0);

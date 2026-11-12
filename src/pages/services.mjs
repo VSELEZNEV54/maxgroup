@@ -1,4 +1,4 @@
-// Услуги: хаб /uslugi/ и шесть посадочных (авто под заказ, аукционы Японии, таможня, платёжный агент, дилерам, автокредит).
+// Услуги: хаб /uslugi/ и пять посадочных (авто под заказ, аукционы Японии, таможня, платежный агент, автокредит).
 // Тексты — data/content/services.json. Отраслевые цифры подставляются из data/source/calc-rules.json через плейсхолдеры {…}.
 import { html, esc, u, img, typo, price, priceShort, num, dateRu } from '../lib/core.mjs';
 import { faqLd, serviceLd, howToLd, itemListLd } from '../lib/seo.mjs';
@@ -11,14 +11,13 @@ import { R } from '../routes.mjs';
 const HOME = { name: 'Главная', url: R.home };
 const HUB = { name: 'Услуги', url: R.services };
 
-// Шапки. У четырёх услуг — 3D-рендеры с maxgroupvl.ru (текст слева, объект справа).
-// У аукционов и кредита — кадры из видео: рендер руля уже занят страницей «Дилерам», а баннер кредита светлый и под тёмную шапку не годится.
+// Шапки. У четырех услуг — 3D-рендеры с maxgroupvl.ru (текст слева, объект справа).
+// У аукционов и кредита кадры из видео: рендер руля стоит в плитке аукционов на главной, а баннер кредита светлый.
 const HEAD = {
-  'avto-pod-zakaz': { photo: 'assets/img/services/service-car.webp', alt: 'Автомобиль под заказ: седан в тёмной студии', kind: 'render' },
+  'avto-pod-zakaz': { photo: 'assets/img/services/service-car.webp', alt: 'Автомобиль под заказ: седан в темной студии', kind: 'render' },
   'aukciony-yaponii': { photo: 'assets/img/hero/bridge-kei.webp', alt: 'Японский кей-кар на Золотом мосту во Владивостоке', kind: 'frame' },
-  'tamozhennoe-oformlenie': { photo: 'assets/img/services/service-container.webp', alt: 'Морской контейнер — таможенное оформление автомобилей', kind: 'render' },
-  'platezhnyj-agent': { photo: 'assets/img/services/service-card.webp', alt: 'Банковская карта — оплата автомобиля за рубеж', kind: 'render' },
-  dileram: { photo: 'assets/img/services/service-wheel.webp', alt: 'Руль автомобиля — поставки для дилеров и автосалонов', kind: 'render' },
+  'tamozhennoe-oformlenie': { photo: 'assets/img/services/service-container.webp', alt: 'Морской контейнер: таможенное оформление автомобилей', kind: 'render' },
+  'platezhnyj-agent': { photo: 'assets/img/services/service-card.webp', alt: 'Банковская карта: оплата автомобиля за рубеж', kind: 'render' },
   avtokredit: { photo: 'assets/img/hero/gclass-road.webp', alt: 'Белый внедорожник на ночной дороге во Владивостоке', kind: 'frame' },
 };
 const HUB_PHOTO = 'assets/img/hero/bridge-drive.webp';
@@ -28,17 +27,15 @@ const CTA_BG = {
   'aukciony-yaponii': 'assets/img/hero/kei-blue.webp',
   'tamozhennoe-oformlenie': 'assets/img/hero/bridge-drive.webp',
   'platezhnyj-agent': 'assets/img/hero/street-far.webp',
-  dileram: 'assets/img/hero/gclass-close.webp',
   avtokredit: 'assets/img/hero/street-night.webp',
 };
 // Статьи блога по теме услуги: перелинковка коммерческих страниц с информационными (ключ hub — для /uslugi/)
 const POSTS = {
   hub: ['yaponiya-koreya-ili-kitaj', 'rastamozhka-avto-2026', 'dostavka-avto-iz-vladivostoka'],
   'avto-pod-zakaz': ['yaponiya-koreya-ili-kitaj', 'skolko-stoit-privezti-avto-iz-yaponii', 'prohodnye-avto-3-5-let'],
-  'aukciony-yaponii': ['kak-kupit-avto-na-aukcione-yaponii', 'ocenki-aukcionnogo-lista', 'sankcionnye-avto-iz-yaponii-i-korei'],
+  'aukciony-yaponii': ['kak-kupit-avto-na-aukcione-yaponii', 'ocenki-aukcionnogo-lista', 'skolko-stoit-privezti-avto-iz-yaponii'],
   'tamozhennoe-oformlenie': ['rastamozhka-avto-2026', 'sbkts-i-epts-chto-eto', 'utilsbor-2026-160-ls'],
   'platezhnyj-agent': ['kak-kupit-avto-iz-korei', 'kak-privezti-avto-iz-kitaya', 'skolko-stoit-privezti-avto-iz-yaponii'],
-  dileram: ['kak-privezti-avto-iz-kitaya', 'utilsbor-2026-160-ls', 'dostavka-avto-iz-vladivostoka'],
   avtokredit: ['skolko-stoit-privezti-avto-iz-yaponii', 'avto-do-160-ls-spisok', 'yaponiya-koreya-ili-kitaj'],
 };
 const FAQ_TITLE = {
@@ -46,7 +43,6 @@ const FAQ_TITLE = {
   'aukciony-yaponii': ['Вопросы', 'об аукционах Японии'],
   'tamozhennoe-oformlenie': ['Вопросы', 'о растаможке'],
   'platezhnyj-agent': ['Вопросы', 'об оплате за рубеж'],
-  dileram: ['Вопросы', 'дилеров и автосалонов'],
   avtokredit: ['Вопросы', 'об автокредите'],
 };
 
@@ -54,9 +50,9 @@ const FAQ_TITLE = {
 
 const MONTHS = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 const dec = (n, d) => (d === undefined ? String(n) : Number(n).toFixed(d)).replace('.', ',');
-const rng = (a, f = (x) => x) => `${f(a[0])}–${f(a[1])}`;
+const rng = (a, f = (x) => x) => `${f(a[0])}-${f(a[1])}`;
 
-/** Адрес подборки, если её страница существует; иначе — хаб подборок */
+/** Адрес подборки, если ее страница существует; иначе — хаб подборок */
 const selUrl = (ctx, slug) => { const s = ctx.selections.find((x) => x.slug === slug && x.count > 0 && x.url); return s ? s.url : R.selections; };
 
 function buildVars(ctx) {
@@ -103,7 +99,7 @@ function buildVars(ctx) {
     jpCnfMax: Math.max(...cnf),
     evDuty: Math.round(c.stp.dutyPct * 100),
     vat: Math.round(c.stp.vatPct * 100),
-    markupRange: `${Math.min(...mk)}–${Math.max(...mk)}`,
+    markupRange: `${Math.min(...mk)}-${Math.max(...mk)}`,
     fullUtil12New: num(Math.round(full12[0] * base)),
     fullUtil12Old: num(Math.round(full12[1] * base)),
   });
@@ -120,14 +116,14 @@ function deepFill(x, v) {
 // --- общие блоки ---------------------------------------------------------------------------------------
 
 const two = (n) => String(n).padStart(2, '0');
-// цена «от … под ключ» — только по автомобилям с полным расчётом (без priceIsPartial: там цена без утильсбора)
+// цена «от … под ключ» — только по автомобилям с полным расчетом (без priceIsPartial: там цена без утильсбора)
 const minPrice = (cars) => { const p = cars.filter((c) => !c.priceIsPartial).map((c) => c.priceRub).filter(Boolean); return p.length ? Math.min(...p) : null; };
 // подписи из данных понижаем только в первой букве: «Стоимость до Владивостока» → «стоимость до Владивостока»
 const lcFirst = (s) => s.charAt(0).toLowerCase() + s.slice(1);
-// лёгкая типографика для текстов, взятых с сайта заказчика дословно: тире в диапазонах, неразрывный пробел в числах
-const dash = (s) => String(s).replace(/(\d)-(\d)/g, '$1–$2').replace(/([A-Za-zА-Яа-я])-(\d)/g, '$1–$2').replace(/(\d) (\d{3})(?!\d)/g, '$1\u00A0$2');
+// легкая типографика для текстов, взятых с сайта заказчика дословно: тире в диапазонах, неразрывный пробел в числах
+const dash = (s) => String(s).replace(/(\d)-(\d)/g, '$1-$2').replace(/([A-Za-zА-Яа-я])-(\d)/g, '$1-$2').replace(/(\d) (\d{3})(?!\d)/g, '$1\u00A0$2');
 
-/** Тёмная шапка услуги с фото. Композиция одна: текст слева, объект справа; kind (render | frame) задаёт только обработку фона в 61-services.css */
+/** Темная шапка услуги с фото. Композиция одна: текст слева, объект справа; kind (render | frame) задает только обработку фона в 61-services.css */
 function head(ctx, s, c, crumbs) {
   const h = HEAD[s.slug];
   const actions =
@@ -164,7 +160,7 @@ function rows(items, { tag = 'h3', cls = '' } = {}) {
           </ol>`;
 }
 
-/** Тёмная плитка-призыв в конце сетки карточек */
+/** Темная плитка-призыв в конце сетки карточек */
 function promoTile({ label: lbl, title, text, action, i = 3 }) {
   return html`
           <article class="svc-promo on-dark"${reveal(i)}>
@@ -206,7 +202,7 @@ function casesSection(ctx, b, list, { cls = '', foot = '' } = {}) {
   return html`
     <section class="section ${cls}" id="privezennye-avto">
       <div class="container">
-        ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead, aside: list.length > 4 ? railNav() : '', actions: more('Все привезённые авто', R.cases) })}
+        ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead, aside: list.length > 4 ? railNav() : '', actions: more('Все привезенные авто', R.cases) })}
         ${rail(list.map((x, i) => caseCard(x, { i, stack: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
         ${foot}
       </div>
@@ -247,8 +243,8 @@ function faqSection(ctx, s, c, { cls = 'section--white' } = {}) {
           <div class="split__sticky"${reveal()}>
             ${label('Вопросы и ответы')}
             <h2>${duo(t[0], t[1])}</h2>
-            <p class="lead">${typo('Не нашли ответ — спросите менеджера: ответим в рабочее время.')}</p>
-            ${btn('Задать вопрос', R.contacts, { variant: 'dark', modal: 'request', subject: `Вопрос: ${topic}`, attrs: { 'data-modal-title': 'Задайте вопрос менеджеру', 'data-modal-text': 'Оставьте контакты — перезвоним или напишем в мессенджер в рабочее время.' } })}
+            <p class="lead">${typo('Не нашли ответ? Спросите менеджера: ответим в рабочее время.')}</p>
+            ${btn('Задать вопрос', R.contacts, { variant: 'dark', modal: 'request', subject: `Вопрос: ${topic}`, attrs: { 'data-modal-title': 'Задайте вопрос менеджеру', 'data-modal-text': 'Оставьте контакты, и мы перезвоним или напишем в мессенджер в рабочее время.' } })}
           </div>
           <div class="split__body">${faqList(c.faq)}</div>
         </div>
@@ -269,7 +265,7 @@ function crossLinks(ctx, s, { cls = 'section--white' } = {}) {
     { name: 'Калькулятор стоимости', url: R.calculator },
     ...(R.howTo ? [{ name: 'Как заказать автомобиль', url: R.howTo }] : []),
     { name: 'Как читать аукционный лист', url: R.auctionSheet },
-    { name: 'Привезённые авто', url: R.cases },
+    { name: 'Привезенные авто', url: R.cases },
     { name: 'Отзывы клиентов', url: R.reviews },
     { name: 'Вопросы и ответы', url: R.faq },
     { name: 'О компании', url: R.about },
@@ -319,9 +315,9 @@ function cta(ctx, s, c) {
     subject: x.subject,
     bg: s ? CTA_BG[s.slug] : HUB_CTA_BG,
     fields: x.fields || ['name', 'phone', 'car'],
-    cta: x.cta || 'Получить расчёт',
+    cta: x.cta || 'Получить расчет',
     panelTitle: x.panelTitle || 'Рассчитаем авто под ключ',
-    panelText: x.panelText || 'Ответим в рабочее время, пришлём варианты и полный расчёт.',
+    panelText: x.panelText || 'Ответим в рабочее время, пришлем варианты и полный расчет.',
   });
 }
 
@@ -474,9 +470,9 @@ function auctionHow(c) {
             <h3>${esc(b.allowedTitle)}</h3>
             ${list(b.allowed, 'check')}
           </div>
-          <div class="svc-allow__col svc-allow__col--no"${reveal(1)}>
-            <h3>${esc(b.bannedTitle)}</h3>
-            ${list(b.banned, 'close')}
+          <div class="svc-allow__col svc-allow__col--yes"${reveal(1)}>
+            <h3>${esc(b.checkTitle)}</h3>
+            ${list(b.check, 'check')}
           </div>
         </div>
         <div class="u-mt-5">${note(typo(b.note))}</div>
@@ -500,14 +496,14 @@ function gradesSection(ctx, c) {
           title: duo(b.title[0], b.title[1]),
           lead: b.lead,
           actions:
-            btn(b.cta, R.contacts, { variant: 'dark', modal: 'request', subject: 'Расшифровка аукционного листа', attrs: { 'data-modal-title': 'Расшифруем аукционный лист', 'data-modal-text': 'Оставьте контакты — менеджер попросит прислать лист в мессенджер и объяснит каждую отметку.' } }) + more(b.more, R.auctionSheet),
+            btn(b.cta, R.contacts, { variant: 'dark', modal: 'request', subject: 'Расшифровка аукционного листа', attrs: { 'data-modal-title': 'Расшифруем аукционный лист', 'data-modal-text': 'Оставьте контакты: менеджер попросит прислать лист в мессенджер и объяснит каждую отметку.' } }) + more(b.more, R.auctionSheet),
         })}
         <div class="svc-grades">
           ${b.groups.map(
             (g, i) => html`
           <article class="svc-grade${i === b.groups.length - 1 ? ' svc-grade--risk on-dark' : ''}"${reveal(i)}>
             <div class="svc-grade__head">
-              <span class="svc-grade__range">${esc(g.codes[0])} — ${esc(g.codes.at(-1))}</span>
+              <span class="svc-grade__range">${esc(g.codes[0])}…${esc(g.codes.at(-1))}</span>
               <h3>${typo(g.title)}</h3>
               <p>${typo(g.text)}</p>
             </div>
@@ -538,7 +534,7 @@ function lotCard(c, i) {
   return html`
           <article class="case case--stack lot"${reveal(Math.min(i, 5))}>
             <div class="case__media">
-              ${img({ src: c.image, alt: `${c.name} — аукционная оценка ${grade}`, sizes: '(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 25vw', attrs: c.imageFocus ? { style: `object-position:${c.imageFocus}` } : {} })}
+              ${img({ src: c.image, alt: `${c.name}, аукционная оценка ${grade}`, sizes: '(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 25vw', attrs: c.imageFocus ? { style: `object-position:${c.imageFocus}` } : {} })}
               <span class="status ${c.statusCls}">${esc(c.statusLabel)}</span>
               <span class="lot__grade"><b>${esc(grade)}</b>оценка</span>
             </div>
@@ -565,7 +561,7 @@ function lotsSection(ctx, c) {
   return html`
     <section class="section" id="loty">
       <div class="container">
-        ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead, actions: more('Все привезённые авто', R.cases) })}
+        ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead, actions: more('Все привезенные авто', R.cases) })}
         <div class="grid grid--4">
           ${lots.map((x, i) => lotCard(x, i))}
           ${promoTile({
@@ -577,7 +573,7 @@ function lotsSection(ctx, c) {
           })}
         </div>
         <div class="section-foot">
-          <p class="muted" style="max-width:56ch">${typo('В каталоге — примеры лотов с японских аукционов с расчётом цены во Владивостоке.')}</p>
+          <p class="muted" style="max-width:56ch">${typo('В каталоге собраны примеры лотов с японских аукционов с расчетом цены во Владивостоке.')}</p>
           ${btn(`Каталог авто ${japan?.from || 'из Японии'}`, R.country('japan'), { variant: 'dark' })}
         </div>
         ${slices.length ? `<div class="u-mt-5">${chips(slices)}</div>` : ''}
@@ -661,10 +657,10 @@ function ratesSection(ctx, c) {
   const year = k.rates.default.slice(0, 4);
   const base = k.utilFee.baseRateRub;
   const eur = (n) => `${dec(n, 1)} €`;
-  const span = (list, i, unit, f = num) => (list[i].max === null ? `свыше ${f(list[i - 1].max)} ${unit}` : i === 0 ? `до ${f(list[i].max)} ${unit}` : `${f(list[i - 1].max + (unit === 'см³' ? 1 : 0))}–${f(list[i].max)} ${unit}`);
+  const span = (list, i, unit, f = num) => (list[i].max === null ? `свыше ${f(list[i - 1].max)} ${unit}` : i === 0 ? `до ${f(list[i].max)} ${unit}` : `${f(list[i - 1].max + (unit === 'см³' ? 1 : 0))}-${f(list[i].max)} ${unit}`);
 
   const used = k.ets['3to5'].map((x) => ({ max: x.maxCc, v: x.eurPerCc }));
-  const usedT = table(['Объём двигателя', '3–5 лет', 'Старше 5 лет'], used.map((x, i) => [span(used, i, 'см³'), eur(x.v), eur(k.ets.gt5[i].eurPerCc)]), { numCols: [1, 2] });
+  const usedT = table(['Объем двигателя', '3-5 лет', 'Старше 5 лет'], used.map((x, i) => [span(used, i, 'см³'), eur(x.v), eur(k.ets.gt5[i].eurPerCc)]), { numCols: [1, 2] });
 
   const fresh = k.ets.le3.map((x) => ({ max: x.maxValueEur, pct: x.pct, min: x.minEurPerCc }));
   const freshT = table(['Стоимость автомобиля', 'Ставка', 'Минимум за 1 см³'], fresh.map((x, i) => [span(fresh, i, '€'), `${Math.round(x.pct * 100)}%`, eur(x.min)]), { numCols: [1, 2] });
@@ -673,13 +669,13 @@ function ratesSection(ctx, c) {
   const pref = k.utilFee.preferential;
   const coef = (vol, idx) => ice[vol][year][idx].map((x) => price(Math.round(x * base)));
   const utilT = table(
-    ['Мощность и объём двигателя', 'До 3 лет', 'Старше 3 лет'],
+    ['Мощность и объем двигателя', 'До 3 лет', 'Старше 3 лет'],
     [
       [`<strong>до 160 л.с.</strong>, до 3,0 л`, `<strong>${price(pref.amountNewRub)}</strong>`, `<strong>${price(pref.amountOldRub)}</strong>`],
-      ['160–190 л.с., 1,0–2,0 л', ...coef('1001_2000', 4)],
-      ['190–220 л.с., 1,0–2,0 л', ...coef('1001_2000', 5)],
-      ['160–190 л.с., 2,0–3,0 л', ...coef('2001_3000', 4)],
-      ['190–220 л.с., 2,0–3,0 л', ...coef('2001_3000', 5)],
+      ['160-190 л.с., 1,0-2,0 л', ...coef('1001_2000', 4)],
+      ['190-220 л.с., 1,0-2,0 л', ...coef('1001_2000', 5)],
+      ['160-190 л.с., 2,0-3,0 л', ...coef('2001_3000', 4)],
+      ['190-220 л.с., 2,0-3,0 л', ...coef('2001_3000', 5)],
     ],
     { numCols: [1, 2] }
   );
@@ -695,13 +691,13 @@ function ratesSection(ctx, c) {
   const panels = {
     duty: html`
           <div class="svc-tables">
-            <div class="svc-table">${cap('Автомобили 3–5 лет и старше', b.dutyUsed)}${usedT}</div>
+            <div class="svc-table">${cap('Автомобили 3-5 лет и старше', b.dutyUsed)}${usedT}</div>
             <div class="svc-table">${cap('Автомобили до 3 лет', b.dutyNew)}${freshT}</div>
           </div>`,
     util: html`
           <div class="svc-tables svc-tables--aside">
             <div class="svc-table">${cap('Утилизационный сбор', b.util)}${utilT}</div>
-            <div class="svc-aside">${note(typo(b.utilNote), { warn: true })}<div class="u-mt-5">${chips([{ name: 'Авто до 160 л.с.', url: selUrl(ctx, 'do-160-ls') }, { name: 'Проходные 3–5 лет', url: selUrl(ctx, 'prohodnye-avto') }])}</div></div>
+            <div class="svc-aside">${note(typo(b.utilNote), { warn: true })}<div class="u-mt-5">${chips([{ name: 'Авто до 160 л.с.', url: selUrl(ctx, 'do-160-ls') }, { name: 'Проходные 3-5 лет', url: selUrl(ctx, 'prohodnye-avto') }])}</div></div>
           </div>`,
     fee: html`
           <div class="svc-tables svc-tables--aside">
@@ -766,7 +762,7 @@ function renderCustoms(ctx, s, c, crumbs) {
   ].join('\n');
 }
 
-// --- платёжный агент ---------------------------------------------------------------------------------------------------
+// --- платежный агент ---------------------------------------------------------------------------------------------------
 
 function payIntro(ctx, c) {
   const b = c.intro;
@@ -902,86 +898,6 @@ function renderPayments(ctx, s, c, crumbs) {
   ].join('\n');
 }
 
-// --- дилерам ----------------------------------------------------------------------------------------------------------------
-
-function people(ctx, title) {
-  if (!ctx.team.length) return '';
-  return html`
-            <div>
-              <h3 class="h4 svc-sub">${esc(title)}</h3>
-              <div class="svc-people">
-                ${ctx.team.map(
-                  (p, i) => html`
-                <div class="svc-person"${reveal(Math.min(i, 3))}>
-                  ${img({ src: p.photo, alt: `${p.name}, Макс Групп`, sizes: '56px' })}
-                  <b>${esc(p.name)}</b>
-                  <a href="tel:${p.tel}">${esc(p.phone)}</a>
-                </div>`
-                )}
-              </div>
-              <p class="muted small u-mt-4">${typo(`На связи ${ctx.site.contacts.hours} по Владивостоку.`)}</p>
-            </div>`;
-}
-
-function dealerBenefits(c) {
-  const b = c.benefits;
-  return html`
-    <section class="section section--white" id="chto-vhodit">
-      <div class="container">
-        ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead })}
-        <div class="grid grid--4 svc-cards">
-          ${b.items.map((x, i) => card({ icon: x.icon, title: x.title, text: x.text, tall: true, i }))}
-        </div>
-      </div>
-    </section>`;
-}
-
-function legalSection(ctx, c) {
-  const b = c.legal;
-  const k = ctx.calc;
-  let tbl = '';
-  if (k) {
-    const year = k.rates.default.slice(0, 4);
-    const base = k.utilFee.baseRateRub;
-    const full = k.utilFee.full.ice;
-    const row = (name, key) => [name, ...full[key][year][0].map((x) => price(Math.round(x * base)))];
-    tbl = table(['Объём двигателя', 'До 3 лет', 'Старше 3 лет'], [row('до 1,0 л', 'le1000'), row('1,0–2,0 л', '1001_2000'), row('2,0–3,0 л', '2001_3000')], { numCols: [1, 2] });
-  }
-  return html`
-    <section class="section section--dark" id="pravila">
-      <div class="container">
-        ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead, actions: more('Таможенный брокер', R.service('tamozhennoe-oformlenie')) })}
-        <div class="svc-cols svc-cols--rev">
-          <div>${rows(b.rows, { cls: 'svc-rows--stack' })}</div>
-          ${tbl
-            ? html`
-          <div class="svc-table"${reveal(1)}>
-            <div class="svc-table__cap"><h3>${esc(b.tableTitle)}</h3><p>${typo(b.tableNote)}</p></div>
-            ${tbl}
-            <div class="u-mt-5">${note(typo(b.note))}</div>
-            <div class="u-mt-5">${btn(b.cta, R.contacts, { variant: 'light', modal: 'request', subject: c.cta.subject, attrs: { 'data-modal-title': c.head.modalTitle, 'data-modal-text': c.head.modalText } })}</div>
-          </div>`
-            : ''}
-        </div>
-      </div>
-    </section>`;
-}
-
-function renderDealers(ctx, s, c, crumbs) {
-  const mixed = [...ctx.cases].filter((x) => x.price).sort((a, b) => (b.countrySlug === 'china') - (a.countrySlug === 'china')).slice(0, 10);
-  return [
-    head(ctx, s, c, crumbs),
-    introSplit(ctx, c, { extra: people(ctx, c.intro.peopleTitle) }),
-    dealerBenefits(c),
-    legalSection(ctx, c),
-    casesSection(ctx, c.proof, mixed),
-    stepsSection(c.steps, { cls: 'section--white', layout: 'five' }),
-    faqSection(ctx, s, c, { cls: '' }),
-    crossLinks(ctx, s, { cls: 'section--white' }),
-    cta(ctx, s, c),
-  ].join('\n');
-}
-
 // --- автокредит -----------------------------------------------------------------------------------------------------------------
 
 function creditBanner(ctx, c) {
@@ -1005,7 +921,7 @@ function creditBanner(ctx, c) {
           </div>
         </div>
         <dl class="svc-strip svc-strip--tight">
-          ${credit.banner.benefits.map((t, i) => `<div class="svc-strip__item"${reveal(i)}><dt>${esc(t)}</dt><dd>${typo(b.benefitTexts[t] || '')}</dd></div>`)}
+          ${credit.banner.benefits.map((t, i) => `<div class="svc-strip__item"${reveal(i)}><dt>${esc(t)}</dt><dd>${typo(b.benefitTexts[t] || b.benefitTexts[t.replace(/ё/g, 'е')] || '')}</dd></div>`)}
         </dl>
       </div>
     </section>`;
@@ -1019,7 +935,7 @@ function banksSection(ctx, c) {
   const modal = (bank) => ({
     variant: 'dark',
     modal: 'request',
-    subject: bank ? `Автокредит — ${bank}` : 'Автокредит',
+    subject: bank ? `Автокредит: ${bank}` : 'Автокредит',
     attrs: { 'data-modal-title': credit.modal.title, 'data-modal-text': credit.modal.text.replace('{банк}', bank || credit.modal.defaultBank), 'data-modal-label': 'Автокредит' },
   });
   return html`
@@ -1037,7 +953,7 @@ function banksSection(ctx, c) {
             const m = modal(name);
             return html`
           <article class="bank"${reveal(Math.min(i, 4))}>
-            <div class="bank__media">${img({ src: x.image3d, alt: `${name} — банк-партнёр Макс Групп`, sizes: '(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw' })}</div>
+            <div class="bank__media">${img({ src: x.image3d, alt: `${name}, банк-партнер Макс Групп`, sizes: '(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw' })}</div>
             <div class="bank__body">
               <span class="bank__logo">${img({ src: x.logo, alt: '', sizes: '120px' })}</span>
               <h3 class="bank__name">${esc(name)}</h3>
@@ -1087,7 +1003,7 @@ function creditCars(ctx, c) {
         </div>
         <div class="section-foot">
           ${chips([...budgets.map((x) => ({ name: x.name, url: x.url, count: x.count })), ...ctx.nav.countries.map((cn) => ({ name: `Авто ${cn.from}`, url: cn.url }))])}
-          ${btn(`Весь каталог — ${ctx.carWord(ctx.cars.length)}`, R.catalog, { variant: 'dark' })}
+          ${btn(`Весь каталог: ${ctx.carWord(ctx.cars.length)}`, R.catalog, { variant: 'dark' })}
         </div>
       </div>
     </section>`;
@@ -1110,8 +1026,8 @@ function renderCredit(ctx, s, c, crumbs) {
 // --- хаб /uslugi/ ------------------------------------------------------------------------------------------------------------------
 
 // раскладка плиток хаба: ширина в 12-колоночной сетке
-const HUB_SPAN = { 'avto-pod-zakaz': 7, 'aukciony-yaponii': 5, 'tamozhennoe-oformlenie': 5, 'platezhnyj-agent': 7, avtokredit: 7, dileram: 5 };
-const HUB_ORDER = ['avto-pod-zakaz', 'aukciony-yaponii', 'tamozhennoe-oformlenie', 'platezhnyj-agent', 'avtokredit', 'dileram'];
+const HUB_SPAN = { 'avto-pod-zakaz': 7, 'aukciony-yaponii': 5, 'tamozhennoe-oformlenie': 5, 'platezhnyj-agent': 7, avtokredit: 12 };
+const HUB_ORDER = ['avto-pod-zakaz', 'aukciony-yaponii', 'tamozhennoe-oformlenie', 'platezhnyj-agent', 'avtokredit'];
 
 function hubGrid(ctx, c) {
   const b = c.grid;
@@ -1241,7 +1157,6 @@ const RENDER = {
   'aukciony-yaponii': renderAuctions,
   'tamozhennoe-oformlenie': renderCustoms,
   'platezhnyj-agent': renderPayments,
-  dileram: renderDealers,
   avtokredit: renderCredit,
 };
 
@@ -1251,11 +1166,11 @@ function servicePage(ctx, s, vars) {
   if (!raw || !render) return null;
   const c = deepFill(raw, vars);
   if (!c.kv && s.slug === 'avtokredit') {
-    // факты шапки — дословно с сайта заказчика: «Одобрение от 1 дня», «Банки-партнёры», «Страхование на всех этапах»
+    // факты шапки — дословно с сайта заказчика: «Одобрение от 1 дня», «Банки-партнеры», «Страхование на всех этапах»
     const cr = ctx.source.credit;
     c.kv = [
       { k: 'Одобрение', v: 'от 1 дня' },
-      { k: 'Банки-партнёры', v: String(cr.banks.length) },
+      { k: 'Банки-партнеры', v: String(cr.banks.length) },
       { k: 'Страхование', v: 'на всех этапах' },
     ];
   }

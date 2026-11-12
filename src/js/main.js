@@ -105,7 +105,7 @@
 
   doc.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    // фокус из закрытого меню возвращается на его пункт, из шторки — на кнопку, которой её открыли
+    // фокус из закрытого меню возвращается на его пункт, из шторки — на кнопку, которой ее открыли
     var openItem = megaItems.filter(function (it) { return it.classList.contains('is-open') && it.contains(doc.activeElement); })[0];
     if (openItem) { var link = $('.nav__link', openItem); if (link) link.focus(); }
     closeMega();
@@ -175,7 +175,7 @@
       zones.forEach(function (z) {
         $$(sel, z).forEach(function (el) {
           if (el.tabIndex < 0 || !el.getClientRects().length) return;
-          // ссылки внутри свёрнутого раздела недоступны; сам заголовок раздела (summary) — доступен
+          // ссылки внутри свернутого раздела недоступны; сам заголовок раздела (summary) — доступен
           var closed = el.closest('details:not([open])');
           if (closed && !(el.tagName === 'SUMMARY' && el.parentNode === closed)) return;
           items.push(el);
@@ -246,11 +246,11 @@
         });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
       revealEls.forEach(function (el) { io.observe(el); });
-      // перед печатью и сохранением в PDF показываем всё, что ещё не «проявилось»
+      // перед печатью и сохранением в PDF показываем все, что еще не «проявилось»
       window.addEventListener('beforeprint', function () {
         revealEls.forEach(function (el) { el.classList.add('is-in'); });
       });
-      // страховка: если наблюдатель не сработал (печать, скрытая вкладка) — показать всё
+      // страховка: если наблюдатель не сработал (печать, скрытая вкладка) — показать все
       window.addEventListener('load', function () {
         setTimeout(function () {
           revealEls.forEach(function (el) {
@@ -286,7 +286,7 @@
     video.addEventListener('playing', function () { wrap.classList.add('is-playing'); setState(true); });
     video.addEventListener('pause', function () { setState(false); });
 
-    // экономим трафик: на мобильных — облегчённый файл
+    // экономим трафик: на мобильных — облегченный файл
     var src = window.innerWidth < 760 && video.dataset.srcMobile ? video.dataset.srcMobile : video.dataset.src;
     var saveData = navigator.connection && navigator.connection.saveData;
     if (src && !reduceMotion && !saveData) {
@@ -324,7 +324,7 @@
     var btns = $$('[data-tab]', group);
     var scope = group.closest('[data-tabs-scope]') || group.parentNode;
     var panels = $$('[data-tab-panel]', scope);
-    // связи «вкладка ↔ панель» для скринридеров (id выдаём здесь, если их нет в разметке)
+    // связи «вкладка ↔ панель» для скринридеров (id выдаем здесь, если их нет в разметке)
     btns.forEach(function (b, i) {
       var panel = panels.filter(function (p) { return p.dataset.tabPanel === b.dataset.tab; })[0];
       if (!panel) return;
@@ -458,14 +458,14 @@
       if (t) { if (!t.dataset.def) t.dataset.def = t.textContent; t.textContent = ds.modalTitle || t.dataset.def; }
       if (x) { if (!x.dataset.def) x.dataset.def = x.textContent; x.textContent = ds.modalText || x.dataset.def; }
       if (l) { if (!l.dataset.def) l.dataset.def = l.textContent; l.textContent = ds.modalLabel || l.dataset.def; }
-      // поле «Какой автомобиль»: подставляем авто с кнопки, но не стираем то, что посетитель ввёл сам
+      // поле «Какой автомобиль»: подставляем авто с кнопки, но не стираем то, что посетитель ввел сам
       var car = $('input[name="car"]', dlg);
       if (car) {
         if (ds.modalCar) car.value = ds.modalCar;
         else if (car.dataset.auto && car.dataset.auto === car.value) car.value = '';
         car.dataset.auto = ds.modalCar || '';
       }
-      // сводка калькулятора уходит в заявку, только если её открыли из калькулятора (на его странице — всегда)
+      // сводка калькулятора уходит в заявку, только если ее открыли из калькулятора (на его странице — всегда)
       var calc = $('input[name="calc"]', dlg);
       if (calc && !trigger.closest('[data-calc], [data-calc-mini]') && !$('[data-calc]')) calc.value = '';
       var form = $('form', dlg);
@@ -500,10 +500,10 @@
   /* ---------------------------------------------------------------------- формы заявок */
 
   /* Маска телефона: +7 (XXX) XXX-XX-XX.
-     Скобка закрывается, только когда введена следующая цифра, — иначе Backspace «упирался» в неё и код оператора
-     нельзя было стереть. Каретка после правки в середине остаётся на своей цифре, а не прыгает в конец. */
+     Скобка закрывается, только когда введена следующая цифра, — иначе Backspace «упирался» в нее и код оператора
+     нельзя было стереть. Каретка после правки в середине остается на своей цифре, а не прыгает в конец. */
 
-  // Цифры номера с кодом страны. shift — на сколько цифр номер сдвинулся относительно введённого:
+  // Цифры номера с кодом страны. shift — на сколько цифр номер сдвинулся относительно введенного:
   // +1 — код страны подставлен, −1 — убран лишний (нужно, чтобы вернуть каретку на свою цифру).
   function phoneParts(value, bulk) {
     var d = String(value).replace(/\D/g, '');
@@ -567,12 +567,12 @@
 
       var next;
       if (isDelete && d.length <= 1) {
-        // стёрты все цифры номера: сначала остаётся «+7 (», следующее удаление очищает поле
+        // стерты все цифры номера: сначала остается «+7 (», следующее удаление очищает поле
         next = prevD.length > 1 ? '+7 (' : '';
         atEnd = true;
       } else {
         if (isDelete && d === prevD && raw.length < prev.length && (!type || type === 'deleteContentBackward' || type === 'deleteContentForward')) {
-          // удалён разделитель (скобка, пробел, дефис) — убираем соседнюю цифру, чтобы удаление не «застревало»
+          // удален разделитель (скобка, пробел, дефис) — убираем соседнюю цифру, чтобы удаление не «застревало»
           if (type === 'deleteContentForward') {
             if (left >= 1 && left < d.length) d = d.slice(0, left) + d.slice(left + 1);
           } else if (left > 1) {
@@ -606,7 +606,7 @@
     var lines = [];
     var subject = data.get('subject');
     if (subject) lines.push(subject);
-    var map = { name: 'Имя', phone: 'Телефон', car: 'Автомобиль', budget: 'Бюджет', city: 'Город', comment: 'Комментарий', contact: 'Связь', calc: 'Расчёт' };
+    var map = { name: 'Имя', phone: 'Телефон', car: 'Автомобиль', budget: 'Бюджет', city: 'Город', comment: 'Комментарий', contact: 'Связь', calc: 'Расчет' };
     Object.keys(map).forEach(function (k) {
       var v = data.get(k);
       if (v) lines.push(map[k] + ': ' + v);
@@ -689,11 +689,11 @@
       });
       var idx = lbItems.findIndex(function (a) { return a.href === item.href; });
       e.preventDefault();
-      lb.classList.toggle('is-single', lbItems.length < 2); // одно фото — без стрелок и счётчика
+      lb.classList.toggle('is-single', lbItems.length < 2); // одно фото — без стрелок и счетчика
       showLb(Math.max(idx, 0));
       if (typeof lb.showModal === 'function') lb.showModal();
     });
-    // клик по тёмному полю вокруг фото закрывает просмотр
+    // клик по темному полю вокруг фото закрывает просмотр
     lb.addEventListener('click', function (e) {
       if (e.target === lb || e.target.classList.contains('lightbox')) lb.close();
     });
@@ -722,7 +722,7 @@
     try { accepted = localStorage.getItem('mg-cookie') === '1'; } catch (err) { /* приватный режим */ }
     if (!accepted) {
       cookie.hidden = false;
-      // плашка не должна закрывать первый экран: показываем её после первой прокрутки или через 12 секунд
+      // плашка не должна закрывать первый экран: показываем ее после первой прокрутки или через 12 секунд
       var showCookie = function () {
         window.removeEventListener('scroll', onFirstScroll);
         cookie.classList.add('is-visible');

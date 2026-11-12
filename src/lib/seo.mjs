@@ -8,12 +8,12 @@ export function headTags(site, page) {
   const title = page.title;
   const desc = clip(page.description || site.description, 200);
   const canonical = abs(site, page.canonical || page.url);
-  // для превью в мессенджерах надёжнее JPG 1200×630: если для кадра есть копия в assets/img/og/<имя>.jpg — берём её
+  // для превью в мессенджерах надежнее JPG 1200×630: если для кадра есть копия в assets/img/og/<имя>.jpg — берем ее
   let og = String(page.ogImage || site.ogImage).replace(/^\/?(assets\/)?/, '');
   const jpg = `img/og/${og.replace(/^img\//, '').replace(/[/]/g, '-').replace(/\.(webp|png)$/, '.jpg')}`;
   if (/\.(webp|png)$/.test(og) && fileExists('assets/' + jpg)) og = jpg;
   const ogImage = abs(site, '/assets/' + og);
-  // размеры превью: мессенджеры и соцсети показывают картинку сразу, не дожидаясь её загрузки
+  // размеры превью: мессенджеры и соцсети показывают картинку сразу, не дожидаясь ее загрузки
   const ogSize = /\.(jpe?g|png)$/i.test(og) ? imgSize('assets/' + og) : null;
   const robots = page.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
   const graph = [organizationLd(site), websiteLd(site), ...(page.breadcrumbs?.length ? [breadcrumbLd(site, page.breadcrumbs)] : []), ...(page.jsonld || [])].filter(Boolean);
@@ -181,7 +181,7 @@ export function carLd(site, car) {
 
 /**
  * Листинг модели: Product + AggregateOffer с вилкой цен.
- * В вилку идут только автомобили с полной ценой «под ключ»; если таких нет — разметку не выводим (вернётся null).
+ * В вилку идут только автомобили с полной ценой «под ключ»; если таких нет — разметку не выводим (вернется null).
  */
 export function aggregateOfferLd(site, { name, description, url, image, cars, brand }) {
   const prices = cars.filter((c) => !c.priceIsPartial).map((c) => c.priceRub).filter(Boolean);

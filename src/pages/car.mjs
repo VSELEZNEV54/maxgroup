@@ -47,10 +47,10 @@ function carPage(ctx, car) {
   const plain = (x) => String(x).replace(/[\u00a0\u202f]/g, ' ').replace(/\s+/g, ' ');
   const from = car.priceIsPartial ? 'от ' : '';
   const engShort = [liters(eng.volumeCc), eng.type].filter(Boolean).join(' ');
-  // цена без утилизационного сбора — не «под ключ»: в title она идёт с пометкой «без утильсбора»
+  // цена без утилизационного сбора — не «под ключ»: в title она идет с пометкой «без утильсбора»
   const titles = car.priceIsPartial
-    ? [`${car.titleFull} ${car.year || ''} ${cn.from} — от ${price(car.priceRub)} без утильсбора`, `${car.titleYear} ${cn.from} — от ${price(car.priceRub)} без утильсбора`, `${car.titleYear} — от ${price(car.priceRub)} без утильсбора`]
-    : [`${car.titleFull} ${car.year || ''}, ${engShort} — ${price(car.priceRub)} ${cn.from}`, `${car.titleYear}, ${engShort} — ${price(car.priceRub)} ${cn.from}`, `${car.titleYear} — ${price(car.priceRub)} ${cn.from}`];
+    ? [`${car.titleFull} ${car.year || ''} ${cn.from} от ${price(car.priceRub)} без утильсбора`, `${car.titleYear} ${cn.from} от ${price(car.priceRub)} без утильсбора`, `${car.titleYear} от ${price(car.priceRub)} без утильсбора`]
+    : [`${car.titleFull} ${car.year || ''}, ${engShort} за ${price(car.priceRub)} ${cn.from}`, `${car.titleYear}, ${engShort} за ${price(car.priceRub)} ${cn.from}`, `${car.titleYear} за ${price(car.priceRub)} ${cn.from}`];
   const title = fitTitle(...titles.map((t) => plain(t).replace(/ ,/g, ',')));
   const descParts = [car.mileageKm || car.mileageKm === 0 ? `пробег ${num(car.mileageKm)} км` : null, specsShort, car.color ? `цвет ${car.color}` : null, car.auctionGrade ? `оценка ${car.auctionGrade}` : null].filter(Boolean);
   // описание — до 165 знаков: если не помещается, убираем с конца оценку и цвет
@@ -61,11 +61,11 @@ function carPage(ctx, car) {
   const wa = site.socials.whatsapp ? `${site.socials.whatsapp.url}?text=${waText}` : null;
   const passing = car.isPassing;
   const fee = car.priceBreakdown.find((r) => r.key === 'recycling_fee');
-  // «Льготный утильсбор» — только если льгота не вызывает сомнений; иначе — нейтральная врезка под расчётом (data/car-flags.json)
+  // «Льготный утильсбор» — только если льгота не вызывает сомнений; иначе — нейтральная врезка под расчетом (data/car-flags.json)
   const lowFee = fee ? fee.rub <= 5200 && !car.powerDoubt : false;
-  const feeDoubt = car.powerDoubt && fee ? `В расчёте каталога утильсбор ${price(fee.rub)}. Мощность подтверждаем по документам до покупки — от неё зависит итог.` : '';
+  const feeDoubt = car.powerDoubt && fee ? `В расчете каталога утильсбор ${price(fee.rub)}. Мощность подтверждаем по документам до покупки: от нее зависит итог.` : '';
   // параметры для калькулятора: страна, цена в валюте страны, год, двигатель, тип кузова для тарифа автовоза.
-  // Тип силовой установки: электромобиль; последовательный гибрид (в расчёте заказчика — тариф электромобиля) — series
+  // Тип силовой установки: электромобиль; последовательный гибрид (в расчете заказчика — тариф электромобиля) — series
   // с мощностью электромоторов в ehp; остальные гибриды — parallel с мощностью ДВС в hp.
   const FUEL = car.isElectric ? 'ev' : car.isSeriesHybrid || (car.isHybrid && car.isEvTariff) ? 'series' : car.isHybrid ? 'parallel' : /мягкий гибрид/i.test(eng.subtype || '') ? 'mild' : 'ice';
   const BODY = /кроссовер/i.test(car.body || '') ? 'crossover' : /внедорожник|минивэн|пикап/i.test(car.body || '') ? 'suv' : 'sedan';
@@ -76,18 +76,17 @@ function carPage(ctx, car) {
     ['month', car.month],
     ['fuel', FUEL !== 'ice' ? FUEL : null],
     ['cc', FUEL === 'ev' ? null : eng.volumeCc],
-    // мощность неизвестна — передаём 0: калькулятор попросит её указать и не подставит мощность своего примера
+    // мощность неизвестна — передаем 0: калькулятор попросит ее указать и не подставит мощность своего примера
     [FUEL === 'ev' || FUEL === 'series' ? 'ehp' : 'hp', eng.powerHp || 0],
     ['body', BODY !== 'sedan' ? BODY : null],
     ['ref', 'car'],
   ].filter(([, v]) => v !== null && v !== undefined && v !== '').map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&amp;');
   const lotLabel = car.auction?.lot ? `Лот ${car.auction.lot}` : car.source?.listingId ? `ID ${car.source.listingId}` : '';
   const tags = [
-    passing ? '<span class="badge badge--accent">Проходной: 3–5 лет</span>' : '',
+    passing ? '<span class="badge badge--accent">Проходной: 3-5 лет</span>' : '',
     lowFee ? '<span class="badge badge--ok">Льготный утильсбор</span>' : '',
     car.mileageKm === 0 ? '<span class="badge">Новый</span>' : '',
     car.auctionGrade ? `<span class="badge badge--line">Аукционная оценка ${esc(car.auctionGrade)}</span>` : '',
-    car.sanctionBadge ? '<span class="badge badge--line">Особый маршрут доставки</span>' : '',
     `<span class="badge badge--line">${esc(cap(cn.steering))}</span>`,
   ].filter(Boolean);
   const rows = [
@@ -95,8 +94,8 @@ function carPage(ctx, car) {
     ['Год выпуска', car.year ? `${car.year}${car.month ? `, ${String(car.month).padStart(2, '0')} мес.` : ''}` : null],
     ['Пробег', car.mileageKm || car.mileageKm === 0 ? km(car.mileageKm) : null],
     ['Двигатель', [liters(eng.volumeCc), eng.type].filter(Boolean).join(', ') || null],
-    ['Объём', eng.volumeCc ? `${num(eng.volumeCc)} см³` : null],
-    ['Мощность', eng.powerHp ? `${eng.powerHp} л.с.` : eng.powerHpSource ? `${eng.powerHpSource} л.с. — по данным источника, уточняем по документам` : null],
+    ['Объем', eng.volumeCc ? `${num(eng.volumeCc)} см³` : null],
+    ['Мощность', eng.powerHp ? `${eng.powerHp} л.с.` : eng.powerHpSource ? `${eng.powerHpSource} л.с. (по данным источника, уточняем по документам)` : null],
     ['Коробка передач', cap(car.transmission)],
     ['Привод', cap(car.drive)],
     ['Кузов', cap(car.body)],
@@ -109,14 +108,15 @@ function carPage(ctx, car) {
     ['Аукцион', car.auction?.house ? `${esc(car.auction.house)}${car.auction.lot ? `, лот ${esc(car.auction.lot)}` : ''}` : null],
     ['Дата торгов', car.auction?.date ? dateRu(car.auction.date) : null],
     ['Страна покупки', `<a class="link" href="${u(R.country(cn.slug))}">${esc(cn.name)}</a>${car.city ? `, ${esc(car.city)}` : ''}`],
-    ['Источник', car.source?.name ? esc(car.source.name) : cn.source],
+    // названия корейских и китайских площадок не публикуем (решение 12.11.2026), у японских лотов источник — аукционы
+    ['Источник', car.country === 'japan' && car.source?.name ? esc(car.source.name) : cn.source],
   ];
   const photos = car.photos;
   const sim = similar(ctx, car);
   const cities = ctx.cities.filter((c) => c.priceFrom).slice(0, 8);
   const subject = `Заявка на ${car.titleYear} (${car.id})`;
   const cta = (text, variant = 'primary') =>
-    btn(text, R.contacts, { variant, modal: 'request', subject, block: true, attrs: { 'data-modal-title': `${car.titleYear}: узнать подробнее`, 'data-modal-text': 'Оставьте контакты — менеджер проверит актуальность лота, пришлёт аукционный лист или отчёт и точный расчёт под ключ.', 'data-modal-car': car.titleYear, 'data-modal-label': 'Автомобиль из каталога' } });
+    btn(text, R.contacts, { variant, modal: 'request', subject, block: true, attrs: { 'data-modal-title': `${car.titleYear}: узнать подробнее`, 'data-modal-text': 'Оставьте контакты, и менеджер проверит актуальность лота, пришлет аукционный лист или отчет и точный расчет под ключ.', 'data-modal-car': car.titleYear, 'data-modal-label': 'Автомобиль из каталога' } });
   return {
     url: car.url,
     type: 'car',
@@ -139,15 +139,15 @@ function carPage(ctx, car) {
         <div class="carpage">
           <div class="gallery" data-gallery>
             ${photos[0]
-              ? html`<a class="gallery__main" href="${a(photos[0])}" data-gallery-item data-alt="${esc(car.titleYear)} — фото 1">
-              ${img({ src: photos[0], alt: `${car.titleYear} ${cn.from} — фото 1`, priority: true, sizes: '(max-width: 1000px) 100vw, 58vw' })}
+              ? html`<a class="gallery__main" href="${a(photos[0])}" data-gallery-item data-alt="${esc(car.titleYear)}, фото 1">
+              ${img({ src: photos[0], alt: `${car.titleYear} ${cn.from}, фото 1`, priority: true, sizes: '(max-width: 1000px) 100vw, 58vw' })}
               <span class="gallery__zoom">${icon('camera')} ${count(photos.length, ['фото', 'фото', 'фото'])}</span>
             </a>`
               : ''}
             ${photos.length > 1
               ? html`<div class="gallery__thumbs" style="--thumbs:${Math.max(3, Math.min(5, photos.length - 1))}">
-              ${photos.slice(1, 6).map((p, i) => `<a class="gallery__thumb" href="${a(p)}" data-gallery-item data-alt="${esc(car.titleYear)} — фото ${i + 2}">${img({ src: p, alt: `${car.titleYear} — фото ${i + 2}`, sizes: '(max-width: 1000px) 25vw, 12vw' })}${i === 4 && photos.length > 6 ? `<span>+${photos.length - 6}</span>` : ''}</a>`)}
-              ${photos.slice(6).map((p, i) => `<a href="${a(p)}" data-gallery-item data-alt="${esc(car.titleYear)} — фото ${i + 7}" hidden></a>`)}
+              ${photos.slice(1, 6).map((p, i) => `<a class="gallery__thumb" href="${a(p)}" data-gallery-item data-alt="${esc(car.titleYear)}, фото ${i + 2}">${img({ src: p, alt: `${car.titleYear}, фото ${i + 2}`, sizes: '(max-width: 1000px) 25vw, 12vw' })}${i === 4 && photos.length > 6 ? `<span>+${photos.length - 6}</span>` : ''}</a>`)}
+              ${photos.slice(6).map((p, i) => `<a href="${a(p)}" data-gallery-item data-alt="${esc(car.titleYear)}, фото ${i + 7}" hidden></a>`)}
             </div>`
               : ''}
           </div>
@@ -165,13 +165,13 @@ function carPage(ctx, car) {
                   <summary>Из чего складывается цена ${icon('chevron')}</summary>
                   <dl class="breakdown">
                     ${car.priceBreakdown.map((r) => `<div><dt>${esc(r.name)}${r.note ? `<small>${esc(r.note)}</small>` : ''}</dt><dd>${price(r.rub)}</dd></div>`)}
-                    ${car.priceIsPartial ? '<div><dt>Утилизационный сбор<small>зависит от мощности — рассчитаем по документам автомобиля</small></dt><dd>уточняется</dd></div>' : ''}
+                    ${car.priceIsPartial ? '<div><dt>Утилизационный сбор<small>зависит от мощности, рассчитаем по документам автомобиля</small></dt><dd>уточняется</dd></div>' : ''}
                     <div class="is-total"><dt>${car.priceIsPartial ? 'Итого без утильсбора' : 'Итого во Владивостоке'}</dt><dd>${price(car.priceRub)}</dd></div>
                   </dl>
                 </details>`
                   : ''}
                 ${feeDoubt ? `<div class="buybox__flag">${note(typo(feeDoubt))}</div>` : ''}
-                <p class="breakdown__note">${car.priceIsPartial ? 'Утилизационный сбор для этого автомобиля считается по мощности из документов — менеджер пришлёт точную сумму. ' : ''}Расчёт предварительный: итог зависит от курса валют на день оплаты и результата торгов. Доставка в ваш город считается отдельно.</p>
+                <p class="breakdown__note">${car.priceIsPartial ? 'Утилизационный сбор для этого автомобиля считается по мощности из документов. Менеджер пришлет точную сумму. ' : ''}Расчет предварительный: итог зависит от курса валют на день оплаты и результата торгов. Доставка в ваш город считается отдельно.</p>
               </div>
               <div class="buybox__actions">
                 ${cta('Узнать и забронировать')}
@@ -182,7 +182,7 @@ function carPage(ctx, car) {
               </div>
             </div>
             <div class="manager">
-              <div class="manager__photo">${img({ src: manager.photo, alt: manager.name, sizes: '56px' })}</div>
+              <div class="manager__photo" aria-hidden="true">${esc(manager.initials || manager.name.trim()[0])}</div>
               <div>
                 <div class="manager__name">${esc(manager.name)}</div>
                 <div class="manager__role">Ответит на вопросы по этому автомобилю</div>
@@ -202,7 +202,6 @@ function carPage(ctx, car) {
             <h2 class="u-mt-5">${duo(`${car.brand} ${car.model} ${car.year || ''}`.trim(), 'в деталях')}</h2>
             <p class="lead u-mt-5">${typo(`${car.titleYear} ${cn.from}${car.mileageKm ? ` с пробегом ${num(car.mileageKm)} км` : ''}. ${car.auction?.house ? `Аукцион ${car.auction.house}` : cap(cn.source)}. Перед покупкой проверяем состояние и документы и согласуем ${car.country === 'japan' ? 'ставку' : 'цену покупки'} с вами.`)}</p>
             ${car.options?.length ? `<h3 class="h4" style="margin:32px 0 14px">Комплектация и опции</h3><ul class="options">${car.options.slice(0, 28).map((o) => `<li>${esc(o)}</li>`).join('')}</ul>` : ''}
-            ${car.sanctionBadge ? `<div class="u-mt-6">${note(typo(`Автомобиль попадает под экспортные ограничения страны покупки, поэтому едет по отдельному маршруту. ${car.hasRouteSurcharge ? 'Расходы особого маршрута показаны в расчёте отдельной строкой.' : 'В расчёте каталога доплата за особый маршрут не выделена — уточняется при заказе.'}`), { warn: true })}</div>` : ''}
             ${car.auctionSheet
               ? html`<h3 class="h4" style="margin:32px 0 14px">Аукционный лист</h3>
             <a class="sheet" href="${a(car.auctionSheet)}" data-gallery-item data-alt="Аукционный лист: ${esc(car.titleYear)}">
@@ -212,9 +211,9 @@ function carPage(ctx, car) {
             <p class="small muted u-mt-4">Не знаете, что означают отметки? <a class="link" href="${u(R.auctionSheet)}">Как читать аукционный лист</a></p>`
               : ''}
             <div class="u-mt-6">${ticks([
-              car.country === 'japan' ? 'Переведём аукционный лист и объясним каждую отметку' : 'Проверим историю, страховые случаи и состояние по отчёту площадки',
+              car.country === 'japan' ? 'Переведем аукционный лист и объясним каждую отметку' : 'Проверим историю, страховые случаи и состояние по отчету площадки',
               car.country === 'japan' ? 'Согласуем предельную ставку до торгов' : 'Согласуем цену покупки до сделки',
-              'Оформим таможню, СБКТС и ЭПТС — автомобиль готов к постановке на учёт',
+              'Оформим таможню, СБКТС и ЭПТС, чтобы автомобиль был готов к постановке на учет',
             ])}</div>
           </div>
           <div${reveal(1)}>${specList(rows)}</div>
@@ -224,7 +223,7 @@ function carPage(ctx, car) {
 
     <section class="section">
       <div class="container">
-        ${sectionHead({ label: 'Как купить', title: duo('Как заказать этот автомобиль', 'или похожий'), lead: 'Лоты на аукционах и площадках уходят быстро. Если этот автомобиль уже продан — подберём такой же по году, пробегу и комплектации.' })}
+        ${sectionHead({ label: 'Как купить', title: duo('Как заказать этот автомобиль', 'или похожий'), lead: 'Лоты на аукционах и площадках уходят быстро. Если этот автомобиль уже продан, подберем такой же по году, пробегу и комплектации.' })}
         <div class="grid grid--3">${steps.slice(0, 6).map((s, i) => step(s, i, { light: true }))}</div>
       </div>
     </section>
@@ -233,11 +232,11 @@ function carPage(ctx, car) {
       ? html`
     <section class="section section--white">
       <div class="container">
-        ${sectionHead({ label: 'Доставка', title: duo(`${car.brand} ${car.model}`, 'с доставкой в ваш город'), lead: `Ориентировочная стоимость и срок перевозки автовозом из Владивостока. Итог — цена автомобиля плюс доставка.${car.priceIsPartial ? ' Утилизационный сбор в итог не входит.' : ''}`, actions: more('Все города', R.delivery) })}
+        ${sectionHead({ label: 'Доставка', title: duo(`${car.brand} ${car.model}`, 'с доставкой в ваш город'), lead: `Ориентировочная стоимость и срок перевозки автовозом из Владивостока. Итог: цена автомобиля плюс доставка.${car.priceIsPartial ? ' Утилизационный сбор в итог не входит.' : ''}`, actions: more('Все города', R.delivery) })}
         <div class="table-wrap">
           <table class="table table--delivery">
             <thead><tr><th>Город</th><th class="num u-hide-mobile">Срок</th><th class="num">Доставка</th><th class="num">${car.priceIsPartial ? 'Итого без утильсбора' : 'Итого'}</th></tr></thead>
-            <tbody>${cities.map((c) => `<tr><td><a href="${u(c.url)}"><strong>${esc(c.name)}</strong></a></td><td class="num u-hide-mobile">${esc(c.daysLabel || '—')}</td><td class="num">от ${price(c.priceFrom)}</td><td class="num">от ${price(car.priceRub + c.priceFrom)}</td></tr>`)}</tbody>
+            <tbody>${cities.map((c) => `<tr><td><a href="${u(c.url)}"><strong>${esc(c.name)}</strong></a></td><td class="num u-hide-mobile">${esc(c.daysLabel || 'по запросу')}</td><td class="num">от ${price(c.priceFrom)}</td><td class="num">от ${price(car.priceRub + c.priceFrom)}</td></tr>`)}</tbody>
           </table>
         </div>
       </div>
@@ -248,13 +247,13 @@ function carPage(ctx, car) {
       ? html`
     <section class="section">
       <div class="container">
-        ${sectionHead({ label: 'Похожие автомобили', title: duo('Посмотрите', 'ещё варианты'), actions: more(`Все ${car.brand} ${car.model} ${cn.from}`, model.url) + more(`Все ${car.brand}`, brand.url, 'u-hide-mobile') })}
+        ${sectionHead({ label: 'Похожие автомобили', title: duo('Посмотрите', 'еще варианты'), actions: more(`Все ${car.brand} ${car.model} ${cn.from}`, model.url) + more(`Все ${car.brand}`, brand.url, 'u-hide-mobile') })}
         <div class="grid grid--4${sim.length > 1 ? ' cars-grid--duo' : ''}">${sim.map((c, i) => carCard(c, { i }))}</div>
       </div>
     </section>`
       : ''}
 
-    ${ctaBand(ctx, { subject, title: duo(`Нужен ${car.brand} ${car.model}?`, 'Подберём и привезём'), car: car.titleYear, text: `Проверим актуальность этого лота, пришлём аукционный лист или отчёт о состоянии и точный расчёт под ключ. Если автомобиль уже продан — найдём такой же.` })}
+    ${ctaBand(ctx, { subject, title: duo(`Нужен ${car.brand} ${car.model}?`, 'Подберем и привезем'), car: car.titleYear, text: `Проверим актуальность этого лота, пришлем аукционный лист или отчет о состоянии и точный расчет под ключ. Если автомобиль уже продан, найдем такой же.` })}
 
     <div class="buybar">
       <div class="buybar__price">${from}${price(car.priceRub)}<small>${esc(car.priceLabel)}</small></div>

@@ -49,9 +49,9 @@ function facts(ctx, rules, examples) {
   const pct = (x) => num(x * 100, 1);
   const lit = (cc) => (cc / 1000).toFixed(1).replace('.', ',') + NB + 'л';
   const city = (name) => raw.delivery.cities.find((c) => c.city === name);
-  const dRange = (name) => (city(name) ? `${num(city(name).truckRub.sedan)}–${rub(city(name).truckRub.suv)}` : 'по запросу');
-  const days = (name) => (city(name) ? city(name).days.join('–') : '—');
-  const duty = (id) => { const e = examples.find((x) => x.id === id); return e ? rub(e.result.duty.rub) : '—'; };
+  const dRange = (name) => (city(name) ? `${num(city(name).truckRub.sedan)}-${rub(city(name).truckRub.suv)}` : 'по запросу');
+  const days = (name) => (city(name) ? city(name).days.join('-') : '');
+  const duty = (id) => { const e = examples.find((x) => x.id === id); return e ? rub(e.result.duty.rub) : ''; };
   const used = raw.ets['3to5'];
   const old = raw.ets.gt5;
   const fresh = raw.ets.le3;
@@ -62,10 +62,10 @@ function facts(ctx, rules, examples) {
     nextYear: year + 1,
     date: fmt.dateRu(Date.parse(rules.date)) + ' года',
     dateShort: fmt.dateShort(Date.parse(rules.date)),
-    // годы выпуска, которые на дату ставок попадают в категорию «3–5 лет», если месяц неизвестен (дата выпуска — 1 июля)
+    // годы выпуска, которые на дату ставок попадают в категорию «3-5 лет», если месяц неизвестен (дата выпуска — 1 июля)
     passYears: (() => {
       const ys = [year - 6, year - 5, year - 4, year - 3, year - 2].filter((y) => core.ageInfo(y, 0, rules.date).cat === '3to5');
-      return ys.length > 1 ? `${ys[0]}–${ys[ys.length - 1]}` : String(ys[0] || year - 4);
+      return ys.length > 1 ? `${ys[0]}-${ys[ys.length - 1]}` : String(ys[0] || year - 4);
     })(),
     eur: num(rules.rates.EUR, 4),
     utilBase: rub(base),
@@ -109,10 +109,10 @@ function facts(ctx, rules, examples) {
     markupJpy: pct(rules.markup.JPY) + NB + '%',
     markupKrw: pct(rules.markup.KRW) + NB + '%',
     markupCny: pct(rules.markup.CNY) + NB + '%',
-    // общий диапазон наценки курса перевода по трём валютам — одна формулировка на всём сайте: «примерно на 2–8 %»
+    // общий диапазон наценки курса перевода по трем валютам — одна формулировка на всем сайте: «примерно на 2-8 %»
     markupRange: (() => {
       const r = ['JPY', 'KRW', 'CNY'].map((k) => (raw.rates.transfer.markupRange || {})[k]).filter(Boolean);
-      return r.length ? `${pct(Math.min(...r.map((x) => x[0])))}–${pct(Math.max(...r.map((x) => x[1])))}${NB}%` : `${pct(rules.markup.CNY)}–${pct(rules.markup.JPY)}${NB}%`;
+      return r.length ? `${pct(Math.min(...r.map((x) => x[0])))}-${pct(Math.max(...r.map((x) => x[1])))}${NB}%` : `${pct(rules.markup.CNY)}-${pct(rules.markup.JPY)}${NB}%`;
     })(),
     priusPass: duty(PAIR[0]),
     priusOld: duty(PAIR[1]),
@@ -132,7 +132,7 @@ const rangeOf = (list, i, key, unit, step = 1, dec = 0) => {
   const prev = i ? list[i - 1][key] : null;
   if (max === null) return `свыше ${num(prev, dec)}${NB}${unit}`;
   if (prev === null) return `до ${num(max, dec)}${NB}${unit}`;
-  return `${num(prev + step, dec)}–${num(max, dec)}${NB}${unit}`;
+  return `${num(prev + step, dec)}-${num(max, dec)}${NB}${unit}`;
 };
 
 const SWIPE = '<span class="calc-swipe"> · таблица листается вбок →</span>';
@@ -193,7 +193,7 @@ function tablesSection(ctx, c, rules, f) {
 
   // 1. единая ставка для авто старше 3 лет
   const used = table(
-    ['Объём двигателя', '3–5 лет, €/см³', 'Старше 5 лет, €/см³', 'Пример двигателя', 'Пошлина, 3–5 лет', 'Пошлина, старше 5 лет'],
+    ['Объем двигателя', '3-5 лет, €/см³', 'Старше 5 лет, €/см³', 'Пример двигателя', 'Пошлина, 3-5 лет', 'Пошлина, старше 5 лет'],
     raw.ets['3to5'].map((row, i) => {
       const cc = SAMPLE_CC[i] || (row.maxCc ? row.maxCc : raw.ets['3to5'][i - 1].maxCc + 500);
       const old = raw.ets.gt5[i];
@@ -207,7 +207,7 @@ function tablesSection(ctx, c, rules, f) {
     ['Стоимость автомобиля', 'В рублях по курсу ЦБ', 'Ставка', 'Но не меньше'],
     raw.ets.le3.map((row, i) => {
       const prev = i ? raw.ets.le3[i - 1].maxValueEur : null;
-      const eurLabel = row.maxValueEur === null ? `свыше ${num(prev)}${NB}€` : prev === null ? `до ${num(row.maxValueEur)}${NB}€` : `${num(prev)}–${num(row.maxValueEur)}${NB}€`;
+      const eurLabel = row.maxValueEur === null ? `свыше ${num(prev)}${NB}€` : prev === null ? `до ${num(row.maxValueEur)}${NB}€` : `${num(prev)}-${num(row.maxValueEur)}${NB}€`;
       const rubLabel = row.maxValueEur === null ? `свыше ${rub(prev * eur)}` : `до ${rub(row.maxValueEur * eur)}`;
       return [eurLabel, rubLabel, `<strong>${num(row.pct * 100)}${NB}%</strong>`, `${num(row.minEurPerCc, 2)}${NB}€/см³`];
     }),
@@ -218,7 +218,7 @@ function tablesSection(ctx, c, rules, f) {
   const keys = raw.utilFee.iceVolumeKeys;
   const volHead = raw.utilFee.iceVolumeMaxCc.map((max, i) => {
     const prev = i ? raw.utilFee.iceVolumeMaxCc[i - 1] : null;
-    return max === null ? `свыше ${num(prev)}${NB}см³` : prev === null ? `до ${num(max)}${NB}см³` : `${num(prev + 1)}–${num(max)}${NB}см³`;
+    return max === null ? `свыше ${num(prev)}${NB}см³` : prev === null ? `до ${num(max)}${NB}см³` : `${num(prev + 1)}-${num(max)}${NB}см³`;
   });
   const hpMax = raw.utilFee.icePowerBracketsMaxHpApprox;
   const kwMax = raw.utilFee.icePowerBracketsMaxKw;
@@ -226,15 +226,15 @@ function tablesSection(ctx, c, rules, f) {
   const P = (key, i) => raw.utilFee.personal.ice[key][uy][i];
   const Fl = (key, i) => raw.utilFee.full.ice[key][uy][i];
   const powerLabel = (i) => {
-    const kw = i ? `${num(kwMax[i - 1] + 0.01, 2)}${kwMax[i] === null ? ` кВт и выше` : `–${num(kwMax[i], 2)} кВт`}` : `до ${num(kwMax[i], 2)} кВт`;
-    const hp = hpMax[i] === null ? `свыше ${hpMax[i - 1]}${NB}л.с.` : i ? `${hpMax[i - 1]}–${hpMax[i]}${NB}л.с.` : `до ${hpMax[i]}${NB}л.с.`;
+    const kw = i ? `${num(kwMax[i - 1] + 0.01, 2)}${kwMax[i] === null ? ` кВт и выше` : `-${num(kwMax[i], 2)} кВт`}` : `до ${num(kwMax[i], 2)} кВт`;
+    const hp = hpMax[i] === null ? `свыше ${hpMax[i - 1]}${NB}л.с.` : i ? `${hpMax[i - 1]}-${hpMax[i]}${NB}л.с.` : `до ${hpMax[i]}${NB}л.с.`;
     return `${hp}<small>${kw}</small>`;
   };
   const mergeLow = keys.every((k) => Array.from({ length: limIdx }, (_, i) => i).every((i) => same(P(k, i), P(k, limIdx)) && same(Fl(k, i), Fl(k, limIdx))));
   const utilRows = [];
   if (mergeLow) {
-    utilRows.push([`до ${hpMax[limIdx]}${NB}л.с. — для личного пользования<small>до ${num(kwMax[limIdx], 2)} кВт</small>`, ...keys.map((k) => (P(k, limIdx)[0] < 1 ? `<strong class="calc-accent">${pair(base, P(k, limIdx))}</strong>` : pair(base, P(k, limIdx))))]);
-    utilRows.push([`до ${hpMax[limIdx]}${NB}л.с. — без льготы<small>второй автомобиль за год, перепродажа, юрлица</small>`, ...keys.map((k) => pair(base, Fl(k, limIdx)))]);
+    utilRows.push([`до ${hpMax[limIdx]}${NB}л.с. для личного пользования<small>до ${num(kwMax[limIdx], 2)} кВт</small>`, ...keys.map((k) => (P(k, limIdx)[0] < 1 ? `<strong class="calc-accent">${pair(base, P(k, limIdx))}</strong>` : pair(base, P(k, limIdx))))]);
+    utilRows.push([`до ${hpMax[limIdx]}${NB}л.с. без льготы<small>второй автомобиль за год, перепродажа, юрлица</small>`, ...keys.map((k) => pair(base, Fl(k, limIdx)))]);
   }
   for (let i = mergeLow ? limIdx + 1 : 0; i < kwMax.length; i++) utilRows.push([powerLabel(i), ...keys.map((k) => pair(base, P(k, i)))]);
   const util = table(['Мощность', ...volHead], utilRows, { numCols: [1, 2, 3, 4, 5] });
@@ -267,7 +267,7 @@ function tablesSection(ctx, c, rules, f) {
   const evRows = [];
   for (let i = 0; i < evKw.length; i++) {
     const tail = evP.slice(i).every((p) => same(p, evP[i]));
-    const lbl = i === 0 ? `до ${num(evKw[0], 2)}${NB}кВт<small>до ${evHp[0]} л.с. — льготный</small>` : tail ? `свыше ${num(evKw[i - 1], 2)}${NB}кВт<small>свыше ${evHp[i - 1]} л.с.</small>` : `${num(evKw[i - 1] + 0.01, 2)}–${num(evKw[i], 2)}${NB}кВт<small>${evHp[i - 1]}–${evHp[i]} л.с.</small>`;
+    const lbl = i === 0 ? `до ${num(evKw[0], 2)}${NB}кВт<small>до ${evHp[0]} л.с., льготный</small>` : tail ? `свыше ${num(evKw[i - 1], 2)}${NB}кВт<small>свыше ${evHp[i - 1]} л.с.</small>` : `${num(evKw[i - 1] + 0.01, 2)}-${num(evKw[i], 2)}${NB}кВт<small>${evHp[i - 1]}-${evHp[i]} л.с.</small>`;
     evRows.push([lbl, i === 0 ? `<strong class="calc-accent">${rub(base * evP[i][0])}</strong>` : rub(base * evP[i][0]), i === 0 ? `<strong class="calc-accent">${rub(base * evP[i][1])}</strong>` : rub(base * evP[i][1])]);
     if (tail) break;
   }
@@ -281,7 +281,7 @@ function tablesSection(ctx, c, rules, f) {
           title: duoPlain('Таблицы ставок:', 'пошлина, утильсбор, сборы'),
           lead: T.lead,
           aside: html`<nav class="calc-toc" aria-label="Таблицы ставок">
-            <a href="#stavki-poshlina">Пошлина 3–5 лет и старше</a>
+            <a href="#stavki-poshlina">Пошлина 3-5 лет и старше</a>
             <a href="#stavki-do-3-let">Пошлина до 3 лет</a>
             <a href="#stavki-utilsbor">Утильсбор ${f.year}</a>
             <a href="#stavki-sbor">Таможенный сбор</a>
@@ -295,7 +295,7 @@ function tablesSection(ctx, c, rules, f) {
           ${sheet({
             id: 'stavki-sbor',
             t: T.fee,
-            body: `<div class="calc-sheet__pair">${fee}${fact({ value: num(feeMid.feeRub), unit: '₽', name: `при стоимости до ${String(feeMid.maxValueRub / 1000000).replace('.', ',')} млн ₽`, text: `Ступень от ${num(feeLow.maxValueRub / 1000)} тыс. до ${String(feeMid.maxValueRub / 1000000).replace('.', ',')} млн ₽ таможенной стоимости: в неё попадает Honda Fit из примеров ниже. Следующая ступень — ${rub(feeNext.feeRub)}.`, variant: 'accent' })}</div>`,
+            body: `<div class="calc-sheet__pair">${fee}${fact({ value: num(feeMid.feeRub), unit: '₽', name: `при стоимости до ${String(feeMid.maxValueRub / 1000000).replace('.', ',')} млн ₽`, text: `Ступень от ${num(feeLow.maxValueRub / 1000)} тыс. до ${String(feeMid.maxValueRub / 1000000).replace('.', ',')} млн ₽ таможенной стоимости: в нее попадает Honda Fit из примеров ниже. Следующая ступень: ${rub(feeNext.feeRub)}.`, variant: 'accent' })}</div>`,
           })}
           ${sheet({ id: 'stavki-elektro', t: T.ev, body: `<p class="calc-sheet__cap">Акциз, ₽ за 1 л.с.</p>${excise}<p class="calc-sheet__cap">Утилизационный сбор · ${f.year} год · личное пользование</p>${evUtil}` })}
         </div>
@@ -344,8 +344,8 @@ function examplesSection(ctx, c, examples, f) {
     <section class="section" id="primery">
       <div class="container">
         ${sectionHead({
-          label: `Примеры · расчёт на ${f.dateShort}`,
-          title: duoPlain('Три расчёта:', 'Япония, Корея, Китай'),
+          label: `Примеры · расчет на ${f.dateShort}`,
+          title: duoPlain('Три расчета:', 'Япония, Корея, Китай'),
           lead: c.examplesLead,
         })}
         <div class="calc-exs">
@@ -389,12 +389,12 @@ function limitsSection(c, f) {
       <div class="container">
         ${sectionHead({
           label: `Важно знать · ${f.year}`,
-          title: duoPlain('Что не входит в расчёт.', `Ограничения ${f.year} года`),
+          title: duoPlain('Что не входит в расчет.', `Правила ${f.year} года`),
           lead: c.limitsLead,
         })}
         <div class="calc-limits__grid">
           <div class="calc-out"${reveal()}>
-            <h3 class="label">В расчёт не входит</h3>
+            <h3 class="label">В расчет не входит</h3>
             <ul class="calc-out__list">
               ${c.notIncluded.map((x) => `<li><b>${typo(x.title)}</b><span>${typo(x.text)}</span></li>`)}
             </ul>
@@ -421,8 +421,8 @@ function faqSection(faq) {
         <div class="split">
           <div class="split__sticky"${reveal()}>
             ${label('Вопросы и ответы')}
-            <h2>${duo('О пошлине, утильсборе', 'и точности расчёта')}</h2>
-            <p class="lead">${typo('Коротко о том, как считаются таможенные платежи и что влияет на итог. Не нашли ответ — спросите менеджера.')}</p>
+            <h2>${duo('О пошлине, утильсборе', 'и точности расчета')}</h2>
+            <p class="lead">${typo('Коротко о том, как считаются таможенные платежи и что влияет на итог. Не нашли ответ? Спросите менеджера.')}</p>
             ${more('Все вопросы', R.faq)}
           </div>
           <div class="split__body">
@@ -442,10 +442,10 @@ function linksSection(ctx, c) {
   const svc = (slug) => ctx.services.find((s) => s.slug === slug);
   const services = ['tamozhennoe-oformlenie', 'platezhnyj-agent', 'avto-pod-zakaz', 'avtokredit'].map(svc).filter(Boolean).map((s) => ({ name: s.navName || s.name, url: s.url }));
   // статьи блога о том, что считает калькулятор: растаможка, утильсбор, проходной возраст, гибриды; если адрес статьи
-  // сменится — добираем из рубрики «Таможня и расчёты»
+  // сменится — добираем из рубрики «Таможня и расчеты»
   const posts = ctx.posts || [];
   const picked = POSTS.map((slug) => posts.find((p) => p.slug === slug)).filter(Boolean);
-  const guides = [...picked, ...posts.filter((p) => p.category === 'Таможня и расчёты' && !picked.includes(p))].slice(0, 4).map((p) => ({ name: p.short || p.title, url: p.url }));
+  const guides = [...picked, ...posts.filter((p) => p.category === 'Таможня и расчеты' && !picked.includes(p))].slice(0, 4).map((p) => ({ name: p.short || p.title, url: p.url }));
   return html`
     <section class="section section--sm" id="dalshe">
       <div class="container">
@@ -455,7 +455,7 @@ function linksSection(ctx, c) {
           ${linkBlock('Подборки под выгодную растаможку', selItems)}
           ${linkBlock('Каталог по странам', [...ctx.nav.countries.map((x) => ({ name: `Авто ${x.from}`, url: x.url })), { name: 'Весь каталог', url: R.catalog }, { name: 'Все подборки', url: R.selections }])}
           ${linkBlock('Доставка из Владивостока', [{ name: 'Все города и тарифы', url: R.delivery }, ...ctx.cities.slice(0, 12).map((x) => ({ name: x.name, url: x.url }))])}
-          ${linkBlock('Услуги и справка', [...services, { name: 'Как читать аукционный лист', url: R.auctionSheet }, { name: 'Привезённые авто', url: R.cases }, { name: 'Вопросы и ответы', url: R.faq }])}
+          ${linkBlock('Услуги и справка', [...services, { name: 'Как читать аукционный лист', url: R.auctionSheet }, { name: 'Привезенные авто', url: R.cases }, { name: 'Вопросы и ответы', url: R.faq }])}
         </div>
       </div>
     </section>`;
@@ -477,7 +477,7 @@ export function calculatorPages(ctx) {
     return !ctx.cars.length || (s && s.count > 0 && s.global !== false) ? R.selection(slug) : R.selections;
   };
   const links = {
-    passing: { url: selUrl('prohodnye-avto'), text: 'Проходные авто 3–5 лет' },
+    passing: { url: selUrl('prohodnye-avto'), text: 'Проходные авто 3-5 лет' },
     hp160: { url: selUrl('do-160-ls'), text: `Авто до ${f.hpLimit} л.с.` },
     personal: { url: '#calc-engine', text: 'Условия льготы' },
   };
@@ -535,8 +535,8 @@ export function calculatorPages(ctx) {
     })}
     <section class="section section--flush-top calc-section" id="raschet">
       <div class="container">
-        <h2 class="sr-only">Расчёт стоимости автомобиля под ключ</h2>
-        ${fullCalc(ctx, { tips: c.tips, links, budgets, subject: 'Точный расчёт (калькулятор)' })}
+        <h2 class="sr-only">Расчет стоимости автомобиля под ключ</h2>
+        ${fullCalc(ctx, { tips: c.tips, links, budgets, subject: 'Точный расчет (калькулятор)' })}
         ${calcRulesScript(ctx)}
       </div>
     </section>
@@ -547,14 +547,14 @@ export function calculatorPages(ctx) {
     ${faqSection(c.faq)}
     ${linksSection(ctx, c)}
     ${ctaBand(ctx, {
-      label: 'Точный расчёт',
+      label: 'Точный расчет',
       title: duo('Посчитаем под конкретный автомобиль', 'до покупки'),
-      text: 'Пришлите ссылку на лот или опишите, что ищете. Менеджер проверит автомобиль, уточнит мощность по документам, курс и логистику и пришлёт расчёт до Владивостока и вашего города.',
-      subject: 'Точный расчёт (калькулятор, форма внизу)',
+      text: 'Пришлите ссылку на лот или опишите, что ищете. Менеджер проверит автомобиль, уточнит мощность по документам, курс и логистику и пришлет расчет до Владивостока и вашего города.',
+      subject: 'Точный расчет (калькулятор, форма внизу)',
       bg: 'assets/img/hero/gclass-road.webp',
       fields: ['name', 'phone', 'car', 'city'],
-      cta: 'Получить точный расчёт',
-      panelTitle: 'Точный расчёт от менеджера',
+      cta: 'Получить точный расчет',
+      panelTitle: 'Точный расчет от менеджера',
       panelText: 'Параметры из калькулятора добавим к заявке автоматически.',
     })}`,
     },

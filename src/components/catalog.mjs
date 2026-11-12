@@ -13,7 +13,7 @@ const COUNTRY_NAME = { japan: 'Япония', korea: 'Корея', china: 'Ки�
 /**
  * Цена «от» для текстов листинга. x — марка, модель, подборка или срез с полями priceStats() (src/data/index.mjs).
  * Цену без утилизационного сбора нельзя называть «под ключ»: если в списке есть авто с полной ценой,
- * «от» считается по ним; если нет — берётся минимальная и partial = true («от X без утильсбора»).
+ * «от» считается по ним; если нет — берется минимальная и partial = true («от X без утильсбора»).
  * Возвращает { value, partial } или null.
  */
 export function fromPrice(x) {
@@ -28,7 +28,7 @@ export const fromShort = (x) => { const f = fromPrice(x); return f ? `от ${pri
 /** Ячейка «цена» для таблиц: вилка по авто с полной ценой; если полных цен нет — «от X без утильсбора» */
 function priceCell(cars) {
   const full = cars.filter((c) => c.priceRub && !c.priceIsPartial).map((c) => c.priceRub);
-  if (full.length) return Math.min(...full) === Math.max(...full) ? price(full[0]) : `${price(Math.min(...full))} — ${price(Math.max(...full))}`;
+  if (full.length) return Math.min(...full) === Math.max(...full) ? price(full[0]) : `от ${price(Math.min(...full))} до ${price(Math.max(...full))}`;
   const part = cars.filter((c) => c.priceRub).map((c) => c.priceRub);
   return part.length ? `от ${price(Math.min(...part))} <span class="muted">без утильсбора</span>` : 'по запросу';
 }
@@ -90,7 +90,7 @@ export function filtersBar(cars, { hide = [] } = {}) {
 }
 
 /** Плитка-заявка внутри сетки */
-export function promoTile({ title = 'Не нашли нужный автомобиль?', text = 'В каталоге — примеры. Подберём под ваш запрос на аукционах и площадках и пришлём расчёт под ключ.', subject = 'Подбор автомобиля (каталог)', car, accent = false } = {}) {
+export function promoTile({ title = 'Не нашли нужный автомобиль?', text = 'В каталоге собраны примеры. Подберем под ваш запрос на аукционах и площадках и пришлем расчет под ключ.', subject = 'Подбор автомобиля (каталог)', car, accent = false } = {}) {
   return html`
           <div class="${cx('promo-tile', accent && 'promo-tile--accent')}" data-grid-extra>
             <div>
@@ -98,16 +98,16 @@ export function promoTile({ title = 'Не нашли нужный автомоб
               <p class="promo-tile__title">${typo(title)}</p>
               <p>${typo(text)}</p>
             </div>
-            ${btn('Подобрать автомобиль', R.contacts, { variant: 'light', modal: 'request', subject, attrs: { 'data-modal-title': 'Подберём автомобиль под ваш запрос', 'data-modal-car': car || null } })}
+            ${btn('Подобрать автомобиль', R.contacts, { variant: 'light', modal: 'request', subject, attrs: { 'data-modal-title': 'Подберем автомобиль под ваш запрос', 'data-modal-car': car || null } })}
           </div>`;
 }
 
-/** Подпись к ценам листинга: «под ключ» — только там, где в цену вошёл утилизационный сбор */
+/** Подпись к ценам листинга: «под ключ» — только там, где в цену вошел утилизационный сбор */
 function pricesNote(cars) {
   const partial = cars.filter((c) => c.priceIsPartial).length;
-  if (!partial) return 'Цены — под ключ во Владивостоке, с таможенными платежами.';
-  if (partial === cars.length) return 'Цены — во Владивостоке, без утилизационного сбора: его считаем по документам автомобиля.';
-  return 'Цены — под ключ во Владивостоке, с таможенными платежами. Где утильсбор не вошёл в цену, в карточке указано «без утильсбора».';
+  if (!partial) return 'Цены указаны под ключ во Владивостоке, с таможенными платежами.';
+  if (partial === cars.length) return 'Цены указаны во Владивостоке, без утилизационного сбора: его считаем по документам автомобиля.';
+  return 'Цены указаны под ключ во Владивостоке, с таможенными платежами. Где утильсбор не вошел в цену, в карточке указано «без утильсбора».';
 }
 
 /**
@@ -119,8 +119,8 @@ export function carsBlock(cars, { filters = true, hide = [], pageSize = 24, prom
     return html`
         <div class="empty">
           ${icon('search', 'card__icon')}
-          <p class="h3">${typo(emptyText || 'Сейчас в каталоге нет примеров, но мы привезём такой автомобиль под заказ')}</p>
-          <p>Оставьте заявку — подберём варианты на аукционах и площадках и пришлём расчёт под ключ.</p>
+          <p class="h3">${typo(emptyText || 'Сейчас в каталоге нет примеров, но мы привезем такой автомобиль под заказ')}</p>
+          <p>Оставьте заявку, и мы подберем варианты на аукционах и площадках и пришлем расчет под ключ.</p>
           ${btn('Оставить заявку', R.contacts, { modal: 'request', subject: 'Подбор автомобиля (пустой раздел каталога)' })}
         </div>`;
   }
@@ -134,11 +134,11 @@ export function carsBlock(cars, { filters = true, hide = [], pageSize = 24, prom
           ${cars.map((c, i) => carCard(c, { i: i % 4, tag, priority: priority && i === 0 }))}
           ${promo ? promoTile(promoOpts) : ''}
         </div>
-        <div class="cars-more" hidden><button class="btn btn--ghost" type="button" data-cars-more><span>Показать ещё</span> ${icon('arrow-down')}</button></div>
+        <div class="cars-more" hidden><button class="btn btn--ghost" type="button" data-cars-more><span>Показать еще</span> ${icon('arrow-down')}</button></div>
         <div class="empty" data-cars-empty hidden>
           ${icon('search', 'card__icon')}
           <p class="h3">По таким параметрам примеров нет</p>
-          <p>Это не значит, что автомобиля нет на рынке: подберём его под заказ.</p>
+          <p>Это не значит, что автомобиля нет на рынке: подберем его под заказ.</p>
           <div class="btn-row">
             <button class="btn btn--ghost" type="button" data-filters-reset-all>Сбросить фильтры</button>
             ${btn('Подобрать под запрос', R.contacts, { modal: 'request', subject: 'Подбор автомобиля (фильтр без результатов)' })}
@@ -156,7 +156,7 @@ export function modelsPriceTable(models) {
     ['Модель', 'Годы выпуска', 'Вариантов', priceHead(models.flatMap((m) => m.cars))],
     models.map((m) => [
       `<a href="${u(m.url)}"><strong>${esc(m.brand)} ${esc(m.name)}</strong></a>`,
-      m.yearFrom === m.yearTo ? String(m.yearFrom) : `${m.yearFrom}–${m.yearTo}`,
+      m.yearFrom === m.yearTo ? String(m.yearFrom) : `${m.yearFrom}-${m.yearTo}`,
       String(m.count),
       priceCell(m.cars),
     ]),
@@ -180,7 +180,7 @@ export function yearsPriceTable(cars) {
     ['Год выпуска', 'Пробег', 'Вариантов', cars.some((c) => c.priceIsPartial) ? 'Цена во Владивостоке' : 'Цена под ключ во Владивостоке'],
     rows.map((g) => [
       `<strong>${g.year}</strong>`,
-      g.km.length ? (Math.min(...g.km) === Math.max(...g.km) ? km(g.km[0]) : `${num(Math.min(...g.km))} — ${km(Math.max(...g.km))}`) : '—',
+      g.km.length ? (Math.min(...g.km) === Math.max(...g.km) ? km(g.km[0]) : `от ${num(Math.min(...g.km))} до ${km(Math.max(...g.km))}`) : 'нет данных',
       String(g.cars.length),
       priceCell(g.cars),
     ]),
@@ -191,8 +191,8 @@ export function yearsPriceTable(cars) {
 const PARTS = [
   ['Автомобиль', 'Цена на аукционе или у дилера в стране покупки. Каждую ставку согласуем с вами.'],
   ['Расходы в стране', 'Аукционный сбор, доставка до порта, экспортные документы и фрахт до Владивостока.'],
-  ['Таможня', 'Пошлина, утилизационный сбор и сбор за оформление. Расчёт и оформление берём на себя.'],
-  ['Документы', 'СБКТС и электронный ПТС, лаборатория, стоянка — всё для постановки на учёт.'],
+  ['Таможня', 'Пошлина, утилизационный сбор и сбор за оформление. Расчет и оформление берем на себя.'],
+  ['Документы', 'СБКТС и электронный ПТС, лаборатория, стоянка: все для постановки на учет.'],
   ['Услуги компании', 'Вознаграждение за подбор, проверку и сопровождение сделки. Размер согласуется до покупки.'],
 ];
 
@@ -204,7 +204,7 @@ export function priceParts({ white = false } = {}) {
         ${sectionHead({
           label: 'Цена под ключ',
           title: duo('Из чего складывается', 'итоговая стоимость'),
-          lead: 'В каталоге указана цена автомобиля во Владивостоке со всеми платежами. Если утилизационный сбор в неё не вошёл, это отмечено в карточке. Доставка в ваш город считается отдельно.',
+          lead: 'В каталоге указана цена автомобиля во Владивостоке со всеми платежами. Если утилизационный сбор в нее не вошел, это отмечено в карточке. Доставка в ваш город считается отдельно.',
           actions: btn('Рассчитать в калькуляторе', R.calculator, { variant: 'dark' }),
         })}
         <div class="price-parts">
@@ -214,7 +214,7 @@ export function priceParts({ white = false } = {}) {
     </section>`;
 }
 
-/** Сравнение трёх стран; колонка текущей подсвечена */
+/** Сравнение трех стран; колонка текущей подсвечена */
 export function countryCompare(ctx, current) {
   const rows = ctx.content.countryCompare;
   if (!rows?.length) return '';
@@ -222,9 +222,9 @@ export function countryCompare(ctx, current) {
   return html`
         <div class="table-wrap">
           <table class="table">
-            <thead><tr><th></th>${cols.map((c) => `<th${c.slug === current ? ' class="is-here"' : ''}>${c.slug === current ? esc(c.navTitle) + ' — вы здесь' : `<a href="${u(R.country(c.slug))}">${esc(c.navTitle)}</a>`}</th>`).join('')}</tr></thead>
+            <thead><tr><th></th>${cols.map((c) => `<th${c.slug === current ? ' class="is-here"' : ''}>${c.slug === current ? esc(c.navTitle) + ' (вы здесь)' : `<a href="${u(R.country(c.slug))}">${esc(c.navTitle)}</a>`}</th>`).join('')}</tr></thead>
             <tbody>
-              ${rows.map((r) => `<tr><td><strong>${esc(r.name)}</strong></td>${cols.map((c) => `<td${c.slug === current ? ' class="is-here"' : ''}>${typo(r[c.slug] || '—')}</td>`).join('')}</tr>`)}
+              ${rows.map((r) => `<tr><td><strong>${esc(r.name)}</strong></td>${cols.map((c) => `<td${c.slug === current ? ' class="is-here"' : ''}>${typo(r[c.slug] || 'нет данных')}</td>`).join('')}</tr>`)}
             </tbody>
           </table>
         </div>`;

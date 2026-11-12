@@ -218,34 +218,32 @@ small,
   font-variant-numeric: tabular-nums;
 }
 
-/* --- Моно-метка в квадратных скобках (фирменный элемент) --------------- */
+/* --- Метка раздела: акцентная точка и текст без капса (фирменный элемент) --- */
 
 .label {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 400;
+  gap: 0.6em;
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: var(--w-medium);
   line-height: 1.3;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  letter-spacing: 0;
   color: var(--text-2);
   white-space: nowrap;
 }
 
+/* метка раздела: акцентная точка перед текстом, без скобок и капса */
 .label::before {
-  content: '[';
-  color: var(--text-3);
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
-.label::after {
-  content: ']';
-  color: var(--text-3);
-}
-
-.label--plain::before,
-.label--plain::after {
+.label--plain::before {
   content: none;
 }
 
@@ -267,18 +265,12 @@ small,
 }
 
 .on-dark .label::before,
-.on-dark .label::after,
 .section--dark .label::before,
-.section--dark .label::after,
 .footer .label::before,
-.footer .label::after,
 .mega__promo .label::before,
-.mega__promo .label::after,
 .promo-tile .label::before,
-.promo-tile .label::after,
-.dmini--dark .label::before,
-.dmini--dark .label::after {
-  color: var(--on-dark-3);
+.dmini--dark .label::before {
+  background: var(--accent-on-dark);
 }
 
 .mono {
@@ -415,7 +407,7 @@ small,
   transform: none;
 }
 
-/* страховка: если основной скрипт не загрузился или упал, контент не остаётся невидимым
+/* страховка: если основной скрипт не загрузился или упал, контент не остается невидимым
    (класс ставит встроенный скрипт в <head> по таймеру, см. src/layout/base.mjs) */
 .reveal-off [data-reveal],
 .reveal-off [data-split] .w,
@@ -498,7 +490,7 @@ small,
     transition: none !important;
   }
 
-  /* тёмные полосы печатаются как на экране — иначе светлый текст остаётся на белой бумаге */
+  /* темные полосы печатаются как на экране — иначе светлый текст остается на белой бумаге */
   html {
     scroll-padding: 0;
     -webkit-print-color-adjust: exact;

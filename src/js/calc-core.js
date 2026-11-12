@@ -1,13 +1,13 @@
 /* Макс Групп — ядро калькулятора «авто под ключ» (без DOM и без зависимостей).
    Браузер: window.MGCalc. Node: require('./calc-core.js') или globalThis.MGCalc.
 
-   MGCalc.calc(input, rules) → подробный результат со всеми строками расчёта.
+   MGCalc.calc(input, rules) → подробный результат со всеми строками расчета.
    rules — компактная выжимка (MGCalc.compactRules(raw)) либо исходный data/source/calc-rules.json:
    исходный файл ужимается на лету. Алгоритм — поле algorithm того же файла:
      1. курсы ЦБ на дату ставок; 2. возраст (год → 1 июля, год + месяц → 15-е число);
      3. таможенная стоимость = (цена + фиксированные расходы за рубежом) × курс ЦБ;
      4. пошлина по единым ставкам либо СТП (15 % + акциз + НДС) для электромобилей и последовательных гибридов;
-     5. таможенный сбор; 6. утилизационный сбор; 7–10. расходы за рубежом, Владивосток, комиссия, доставка.
+     5. таможенный сбор; 6. утилизационный сбор; 7-10. расходы за рубежом, Владивосток, комиссия, доставка.
    Все суммы округляются до рубля построчно, итог — сумма строк. */
 (function (root, factory) {
   var api = factory();
@@ -29,7 +29,7 @@
     china: { name: 'Китай', from: 'из Китая', inLoc: 'в Китае', cur: 'CNY' }
   };
 
-  // sign — знак в полях и формулах, per — за сколько единиц ЦБ публикует курс, step — шаг округления при пересчёте цены между странами
+  // sign — знак в полях и формулах, per — за сколько единиц ЦБ публикует курс, step — шаг округления при пересчете цены между странами
   var CURRENCIES = {
     JPY: { sign: '¥', name: 'иена', gen: 'иен', per: 100, step: 10000 },
     KRW: { sign: '₩', name: 'вона', gen: 'вон', per: 1000, step: 100000 },
@@ -68,7 +68,7 @@
 
   var AGE = {
     le3: { name: 'до 3 лет', full: 'не старше 3 лет' },
-    '3to5': { name: '3–5 лет', full: 'от 3 до 5 лет, «проходной»' },
+    '3to5': { name: '3-5 лет', full: 'от 3 до 5 лет, «проходной»' },
     gt5: { name: 'старше 5 лет', full: 'старше 5 лет' }
   };
 
@@ -80,7 +80,7 @@
 
   /** 1234567.891 → «1 234 567,89» (dec — максимум знаков после запятой, хвостовые нули убираются) */
   function num(n, dec) {
-    if (n === null || n === undefined || isNaN(n)) return '—';
+    if (n === null || n === undefined || isNaN(n)) return '';
     var neg = n < 0;
     var s = Math.abs(n).toFixed(dec || 0);
     if (dec) s = s.replace(/\.?0+$/, '');
@@ -152,7 +152,7 @@
     return Math.round(n * 100) / 100;
   }
 
-  /** До рубля через копейки: 1 500 000 × 0,062717 в двоичной арифметике даёт 94075,49999999999, а не 94075,5 */
+  /** До рубля через копейки: 1 500 000 × 0,062717 в двоичной арифметике дает 94075,49999999999, а не 94075,5 */
   function rnd(n) {
     return Math.round(Math.round(n * 100) / 100);
   }
@@ -310,7 +310,7 @@
   var lastCompact = null;
 
   function prepare(rules) {
-    if (!rules) throw new Error('MGCalc: не переданы правила расчёта');
+    if (!rules) throw new Error('MGCalc: не переданы правила расчета');
     if (rules.v) return rules;
     if (rules !== lastRaw) {
       lastCompact = compactRules(rules);
@@ -328,7 +328,7 @@
   }
 
   function monthRange(a, b) {
-    return a === b ? MONTHS_PREP[a] : MONTHS_PREP[a] + '–' + MONTHS_PREP[b];
+    return a === b ? MONTHS_PREP[a] : MONTHS_PREP[a] + '-' + MONTHS_PREP[b];
   }
 
   /**
@@ -410,7 +410,7 @@
     var prev = idx > 0 ? (typeof list[idx - 1] === 'object' && list[idx - 1] !== null ? list[idx - 1][0] : list[idx - 1]) : null;
     if (max === null || max === undefined) return 'свыше ' + num(prev, dec) + NB + unit;
     if (prev === null) return 'до ' + num(max, dec) + NB + unit;
-    return num(prev + Math.pow(10, -dec), dec) + '–' + num(max, dec) + NB + unit;
+    return num(prev + Math.pow(10, -dec), dec) + '-' + num(max, dec) + NB + unit;
   }
 
   function utilLookup(R, o) {
@@ -425,7 +425,7 @@
     return { coef: coef, rub: rnd(u.base * coef), idx: idx, volIdx: volIdx, year: +yk };
   }
 
-  // --- расчёт -----------------------------------------------------------------------------
+  // --- расчет -----------------------------------------------------------------------------
 
   function calc(input, rules) {
     var R = prepare(rules);
@@ -479,7 +479,7 @@
       age = { cat: '3to5', name: AGE['3to5'].name, full: AGE['3to5'].full, isNew: false, ambiguous: false, next: null, year: 0, monthKnown: false };
     }
 
-    // ограничения экспорта → профиль расходов
+    // профиль расходов на доставку по правилам клиента
     var lim = R.limits;
     var sanctioned = false;
     var reasons = [];
@@ -584,7 +584,7 @@
     util.reason = util.pref ? null : !personal ? 'personal' : !isStp && cc > u.pref.iceCc ? 'volume' : 'power';
     util.reserveKw = util.pref ? round2(util.thresholdKw - utilKw) : 0;
 
-    // 8–9. Владивосток и комиссия
+    // 8-9. Владивосток и комиссия
     var vladivostokRub = input.vladivostok !== undefined ? toNum(input.vladivostok) : R.costs.vladivostok;
     var logisticsRub = input.logistics !== undefined ? toNum(input.logistics) : R.costs.logistics;
     var commissionRub = input.commission !== undefined ? toNum(input.commission) : R.costs.commission[bracket(R.costs.commission, carRub, 0)][1];
@@ -606,44 +606,44 @@
       delivery.custom = true;
     }
 
-    // --- строки расчёта -------------------------------------------------------------------
+    // --- строки расчета -------------------------------------------------------------------
     var rows1 = [];
-    rows1.push({ id: 'price', label: 'Цена автомобиля ' + cn.inLoc, rub: carRub, note: money(price, cur) + ' × ' + num(rate, 6) + NB + '₽ — курс ЦБ' });
+    rows1.push({ id: 'price', label: 'Цена автомобиля ' + cn.inLoc, rub: carRub, note: money(price, cur) + ' × ' + num(rate, 6) + NB + '₽ по курсу ЦБ' });
     rows1.push({
       id: 'abroad',
-      label: country === 'china' ? 'Расходы в Китае и доставка до границы' : freightRub ? 'Расходы ' + cn.inLoc + ' при экспорте через третьи страны' : 'Расходы ' + cn.inLoc + ' и доставка до Владивостока',
+      label: country === 'china' ? 'Расходы в Китае и доставка до границы' : 'Расходы ' + cn.inLoc + ' и доставка до Владивостока',
       rub: fixedRub,
-      note: money(fixedCur, cur) + (sanctioned && cost.sanFixed && input.abroadFixed === undefined ? ' — профиль для автомобилей под экспортными ограничениями' : country === 'china' ? ' — экспортные документы, осмотр, доставка до границы' : country === 'korea' ? ' — экспортные документы, осмотр, доставка в порт, фрахт' : ' — фиксированные расходы по профилю поставки')
+      note: money(fixedCur, cur) + (country === 'china' ? ': экспортные документы, осмотр, доставка до границы' : country === 'korea' ? ': экспортные документы, осмотр, доставка в порт, фрахт' : ': фиксированные расходы по профилю поставки')
     });
-    if (extraRub) rows1.push({ id: 'abroadExtra', label: 'Надбавка за поставку через третьи страны', rub: extraRub, note: money(extraCur, cur) + ' — рыночный ориентир, считается индивидуально' });
-    if (freightRub) rows1.push({ id: 'freight', label: 'Фрахт для автомобиля под ограничениями', rub: freightRub, note: num(freightUsd) + NB + '$ × ' + num(usd, 4) + NB + '₽' });
-    if (markupRub) rows1.push({ id: 'markup', label: 'Конвертация и перевод за рубеж', rub: markupRub, note: '+' + num(markupPct * 100, 1) + NB + '% к курсу ЦБ — ориентир по рынку' });
+    if (extraRub) rows1.push({ id: 'abroadExtra', label: 'Дополнительные расходы на доставку', rub: extraRub, note: money(extraCur, cur) + ', рыночный ориентир, считается индивидуально' });
+    if (freightRub) rows1.push({ id: 'freight', label: 'Фрахт до Владивостока', rub: freightRub, note: num(freightUsd) + NB + '$ × ' + num(usd, 4) + NB + '₽' });
+    if (markupRub) rows1.push({ id: 'markup', label: 'Конвертация и перевод за рубеж', rub: markupRub, note: '+' + num(markupPct * 100, 1) + NB + '% к курсу ЦБ, ориентир по рынку' });
 
     var rows2 = [];
     var dutyNote;
-    if (duty.type === 'perCc') dutyNote = 'единая ставка ' + num(duty.eurPerCc, 2) + NB + '€/см³ × ' + num(cc) + NB + 'см³ × ' + num(eur, 4) + NB + '₽ — ' + age.name;
+    if (duty.type === 'perCc') dutyNote = 'единая ставка ' + num(duty.eurPerCc, 2) + NB + '€/см³ × ' + num(cc) + NB + 'см³ × ' + num(eur, 4) + NB + '₽, ' + age.name;
     else if (duty.type === 'le3') dutyNote = duty.by === 'pct' ? 'единая ставка ' + num(duty.pct * 100) + NB + '% от таможенной стоимости ' + rub(cvRub) : 'единая ставка, минимум ' + num(duty.minEurPerCc, 2) + NB + '€/см³ × ' + num(cc) + NB + 'см³ × ' + num(eur, 4) + NB + '₽';
     else dutyNote = num(duty.pct * 100) + NB + '% от таможенной стоимости ' + rub(cvRub);
     rows2.push({ id: 'duty', label: 'Таможенная пошлина', rub: duty.rub, note: dutyNote });
-    if (excise) rows2.push({ id: 'excise', label: 'Акциз', rub: excise.rub, note: excise.rate ? num(excise.rate) + NB + '₽ × ' + num(excise.hp, 2) + NB + 'л.с. (30-минутная мощность)' : num(excise.hp, 2) + NB + 'л.с. — до 90 л.с. акциз не начисляется' });
-    if (vat) rows2.push({ id: 'vat', label: 'НДС ' + num(vat.pct * 100) + NB + '%', rub: vat.rub, note: 'от суммы стоимости, пошлины и акциза — ' + rub(vat.base) });
+    if (excise) rows2.push({ id: 'excise', label: 'Акциз', rub: excise.rub, note: excise.rate ? num(excise.rate) + NB + '₽ × ' + num(excise.hp, 2) + NB + 'л.с. (30-минутная мощность)' : num(excise.hp, 2) + NB + 'л.с.: до 90 л.с. акциз не начисляется' });
+    if (vat) rows2.push({ id: 'vat', label: 'НДС ' + num(vat.pct * 100) + NB + '%', rub: vat.rub, note: 'от суммы стоимости, пошлины и акциза: ' + rub(vat.base) });
     rows2.push({ id: 'fee', label: 'Таможенный сбор', rub: fee.rub, note: 'таможенная стоимость ' + rub(cvRub) });
     rows2.push({
       id: 'util',
       label: 'Утилизационный сбор',
       rub: util.rub,
-      note: num(u.base) + NB + '₽ × ' + num(util.coef, 2) + ' — ' + (util.pref ? 'льготный' : 'полная ставка') + ': ' + num(util.powerKw, 2) + NB + 'кВт' + (isStp ? ' 30-минутной мощности' : fuel === 'parallel' ? (e30 ? ' (ДВС + электромотор)' : ' (только ДВС: мощность электромотора не указана)') : ' (' + num(hp, 1) + NB + 'л.с.)') + (isStp ? '' : ', ' + util.volRange)
+      note: num(u.base) + NB + '₽ × ' + num(util.coef, 2) + ' (' + (util.pref ? 'льготный' : 'полная ставка') + '): ' + num(util.powerKw, 2) + NB + 'кВт' + (isStp ? ' 30-минутной мощности' : fuel === 'parallel' ? (e30 ? ' (ДВС + электромотор)' : ' (только ДВС: мощность электромотора не указана)') : ' (' + num(hp, 1) + NB + 'л.с.)') + (isStp ? '' : ', ' + util.volRange)
     });
 
     var rows3 = [
-      { id: 'vladivostok', label: country === 'china' ? 'Оформление в России' : 'Оформление во Владивостоке', rub: vladivostokRub, note: 'склад временного хранения, лаборатория, СБКТС и ЭПТС — ориентир' },
-      { id: 'logistics', label: 'Логистика на месте', rub: logisticsRub, note: country === 'china' ? 'доставка Уссурийск — Владивосток' : 'фотоопись, перегон со склада в лабораторию и на стоянку, трекер' },
-      { id: 'commission', label: 'Комиссия компании', rub: commissionRub, note: 'ориентир по цене автомобиля — точный размер уточняйте у менеджера' }
+      { id: 'vladivostok', label: country === 'china' ? 'Оформление в России' : 'Оформление во Владивостоке', rub: vladivostokRub, note: 'склад временного хранения, лаборатория, СБКТС и ЭПТС, ориентир' },
+      { id: 'logistics', label: 'Логистика на месте', rub: logisticsRub, note: country === 'china' ? 'доставка из Уссурийска во Владивосток' : 'фотоопись, перегон со склада в лабораторию и на стоянку, трекер' },
+      { id: 'commission', label: 'Комиссия компании', rub: commissionRub, note: 'ориентир по цене автомобиля, точный размер уточняйте у менеджера' }
     ];
 
     var rows4 = [];
     if (!delivery.city && delivery.custom && delivery.rub) rows4.push({ id: 'delivery', label: 'Доставка по России', rub: delivery.rub, note: 'сумма задана вручную' });
-    if (delivery.city) rows4.push({ id: 'delivery', label: 'Автовоз Владивосток — ' + delivery.name, rub: delivery.rub, note: BODIES[body].short + (delivery.days ? ', ' + (delivery.days[0] === delivery.days[1] ? delivery.days[0] : delivery.days[0] + '–' + delivery.days[1]) + NB + 'дней в пути' : '') + (delivery.estimated ? ', оценка по соседним направлениям' : ', ориентир по прайсам перевозчиков') });
+    if (delivery.city) rows4.push({ id: 'delivery', label: 'Автовоз из Владивостока в ' + delivery.acc, rub: delivery.rub, note: BODIES[body].short + (delivery.days ? ', ' + (delivery.days[0] === delivery.days[1] ? delivery.days[0] : delivery.days[0] + '-' + delivery.days[1]) + NB + 'дней в пути' : '') + (delivery.estimated ? ', оценка по соседним направлениям' : ', ориентир по прайсам перевозчиков') });
 
     function sum(rows) {
       var s = 0;
@@ -665,17 +665,11 @@
       warnings.push({ code: code, level: level, text: text });
     }
     var i;
-    if (country === 'japan') {
-      for (i = 0; i < reasons.length; i++) {
-        var what = reasons[i] === 'cc' ? 'автомобилей с двигателем больше ' + liters(lim.japan.maxCc) : reasons[i] === 'hybrid' ? 'гибридов' : 'электромобилей';
-        warn('jp-' + reasons[i], 'warn', 'Япония запрещает прямой экспорт в Россию ' + what + '. Такие машины везут через третьи страны — дольше и дороже. В расчёт включён профиль для автомобилей под ограничениями: ' + money(cost.sanFixed, cur) + ' расходов и фрахт ' + num(cost.sanFreightUsd) + NB + '$. Точную сумму считаем индивидуально.');
-        break;
-      }
-      if (fuel === 'mild') warn('jp-mild', 'info', 'Мягкие гибриды из Японии фактически возят, но возможность экспорта конкретной модели нужно подтвердить у экспортёра до торгов.');
-      if (price > lim.japan.newMaxJpy && age.cat === 'le3') warn('jp-price', 'info', 'Новые автомобили дороже ' + num(lim.japan.newMaxJpy / 1000000) + NB + 'млн ¥ Япония в Россию не экспортирует. Для автомобиля с пробегом ограничение не действует — уточните у менеджера.');
+    if (sanctioned && country === 'japan' && (cost.sanFixed || cost.sanFreightUsd)) {
+      warn('jp-route', 'info', 'Для этой машины расходы на доставку выше обычных. В расчет включены ' + money(cost.sanFixed, cur) + ' расходов в Японии и фрахт ' + num(cost.sanFreightUsd) + NB + '$. Точную сумму считаем индивидуально.');
     }
-    if (country === 'korea' && reasons.length) {
-      warn('kr-' + reasons[0], 'warn', 'Корея запрещает экспорт в Россию автомобилей ' + (reasons[0] === 'cc' ? 'с двигателем больше ' + liters(lim.korea.maxCc) : 'дороже ' + num(lim.korea.maxUsd) + NB + '$') + '. Поставка идёт через третьи страны; в расчёт добавлена надбавка ' + money(cost.sanExtra, cur) + ' — это рыночный ориентир. В расчётах каталога доплата за особый маршрут не выделена — она уточняется при заказе.');
+    if (sanctioned && country === 'korea' && cost.sanExtra) {
+      warn('kr-route', 'info', 'Для этой машины расходы на доставку выше обычных. В расчет добавлено ' + money(cost.sanExtra, cur) + ' по рыночному ориентиру. Точную сумму считаем индивидуально.');
     }
     // пошлина + утильсбор для другой возрастной категории (остальные строки от возраста не зависят)
     function customsFor(cat) {
@@ -687,30 +681,30 @@
       var other = age.alt[0].cat === age.cat ? age.alt[1] : age.alt[0];
       var gap = Math.abs(customsFor(other.cat) - customsNow);
       age.gapRub = gap;
-      warn('age-month', 'warn', 'Нужен месяц выпуска: ' + year + ' год пограничный. Автомобиль, выпущенный в ' + age.alt[0].months + ', относится к категории «' + age.alt[0].name + '», в ' + age.alt[1].months + ' — «' + age.alt[1].name + '»' + (gap ? '; разница в платежах — ' + rub(gap) : '') + '. Пока месяц не указан, датой выпуска считается 1 июля и расчёт сделан для категории «' + age.name + '».');
+      warn('age-month', 'warn', 'Нужен месяц выпуска: ' + year + ' год пограничный. Автомобиль, выпущенный в ' + age.alt[0].months + ', относится к категории «' + age.alt[0].name + '», а выпущенный в ' + age.alt[1].months + ' относится к категории «' + age.alt[1].name + '»' + (gap ? '; разница в платежах: ' + rub(gap) : '') + '. Пока месяц не указан, датой выпуска считается 1 июля и расчет сделан для категории «' + age.name + '».');
     } else if (age.next && age.next.days >= 0 && age.next.days <= 120 && !age.forced) {
       var diff = customsFor(age.next.cat) - customsNow;
       age.next.diffRub = diff;
-      if (diff) warn('age-soon', diff > 0 ? 'warn' : 'info', 'Через ' + age.next.days + NB + plural(age.next.days, ['день', 'дня', 'дней']) + ' автомобиль перейдёт в категорию «' + age.next.name + '», и таможенные платежи ' + (diff > 0 ? 'вырастут на ' : 'снизятся на ') + rub(Math.abs(diff)) + '. Последний день в текущей категории — ' + age.next.last + ': учитывайте срок доставки и оформления.');
+      if (diff) warn('age-soon', diff > 0 ? 'warn' : 'info', 'Через ' + age.next.days + NB + plural(age.next.days, ['день', 'дня', 'дней']) + ' автомобиль перейдет в категорию «' + age.next.name + '», и таможенные платежи ' + (diff > 0 ? 'вырастут на ' : 'снизятся на ') + rub(Math.abs(diff)) + '. Последний день в текущей категории: ' + age.next.last + '. Учитывайте срок доставки и оформления.');
     }
     if (e30Estimated) {
-      warn('e30', 'info', '30-минутная мощность электромотора оценена как пиковая × ' + num(u.peakTo30, 2) + ' = ' + num(e30, 2) + NB + 'кВт. По документам конкретной модификации она может отличаться — от неё ' + (isStp ? 'зависят утильсбор и акциз.' : 'зависит утильсбор.'));
+      warn('e30', 'info', '30-минутная мощность электромотора оценена как пиковая × ' + num(u.peakTo30, 2) + ' = ' + num(e30, 2) + NB + 'кВт. По документам конкретной модификации она может отличаться, а от нее ' + (isStp ? 'зависят утильсбор и акциз.' : 'зависит утильсбор.'));
     }
     if (fuel === 'parallel' && !ehp && !e30in) warn('e30-missing', 'warn', 'Укажите мощность электромотора: для гибрида утильсбор считается по сумме мощности ДВС и 30-минутной мощности электромотора.');
     if (util.pref && util.reserveKw >= 0 && util.reserveKw < 11 && (e30Estimated || fuel === 'ice' || fuel === 'mild')) {
-      warn('util-edge', 'info', (util.reserveKw < 0.5 ? 'Мощность — на самой границе льготного утильсбора (' + num(util.thresholdKw, 2) + NB + 'кВт, ' + util.thresholdHp + NB + 'л.с.).' : 'До порога льготного утильсбора ' + num(util.thresholdKw, 2) + NB + 'кВт остаётся ' + num(util.reserveKw, 2) + NB + 'кВт.') + ' Если по документам мощность окажется выше, сбор вырастет с ' + rub(util.rub) + ' до ' + rub(utilLookup(R, { table: utilTable, kw: util.thresholdKw + 1, cc: cc, isNew: age.isNew, year: declYear, personal: personal }).rub) + '.');
+      warn('util-edge', 'info', (util.reserveKw < 0.5 ? 'Мощность находится на самой границе льготного утильсбора (' + num(util.thresholdKw, 2) + NB + 'кВт, ' + util.thresholdHp + NB + 'л.с.).' : 'До порога льготного утильсбора ' + num(util.thresholdKw, 2) + NB + 'кВт остается ' + num(util.reserveKw, 2) + NB + 'кВт.') + ' Если по документам мощность окажется выше, сбор вырастет с ' + rub(util.rub) + ' до ' + rub(utilLookup(R, { table: utilTable, kw: util.thresholdKw + 1, cc: cc, isNew: age.isNew, year: declYear, personal: personal }).rub) + '.');
     }
-    if (!personal) warn('personal', 'info', 'Расчёт без льготы «для личного пользования»: утильсбор по полной шкале. Так считают второй автомобиль за 12 месяцев и ввоз для перепродажи.');
-    if (year && year < lim.eptsYear && !age.forced) warn('epts', 'warn', 'Электронный ПТС сейчас получают на бензиновые автомобили ' + lim.eptsYear + ' года и новее, дизельные — ' + (lim.eptsYear + 1) + ' года и новее. Автомобиль ' + year + ' года оформить с ЭПТС, скорее всего, не получится — такой ввоз в расчёт «под ключ» не входит.');
+    if (!personal) warn('personal', 'info', 'Расчет без льготы «для личного пользования»: утильсбор по полной шкале. Так считают второй автомобиль за 12 месяцев и ввоз для перепродажи.');
+    if (year && year < lim.eptsYear && !age.forced) warn('epts', 'warn', 'Электронный ПТС сейчас получают на бензиновые автомобили ' + lim.eptsYear + ' года и новее, на дизельные ' + (lim.eptsYear + 1) + ' года и новее. Автомобиль ' + year + ' года оформить с ЭПТС, скорее всего, не получится. Такой ввоз в расчет «под ключ» не входит.');
 
     // --- что изменило бы сумму ------------------------------------------------------------
     if (!isStp && cc) {
       if (age.cat === 'gt5') {
         var p35 = etsFor('3to5');
-        if (duty.rub > p35.rub) insights.push({ code: 'passing', save: duty.rub - p35.rub, text: 'Тот же двигатель в «проходном» возрасте 3–5 лет: пошлина ' + rub(p35.rub) + ' вместо ' + rub(duty.rub) + '.' });
+        if (duty.rub > p35.rub) insights.push({ code: 'passing', save: duty.rub - p35.rub, text: 'Тот же двигатель в «проходном» возрасте 3-5 лет: пошлина ' + rub(p35.rub) + ' вместо ' + rub(duty.rub) + '.' });
       } else if (age.cat === 'le3') {
         var p3 = etsFor('3to5');
-        if (duty.rub > p3.rub) insights.push({ code: 'passing', save: duty.rub - p3.rub, text: 'После трёх лет пошлина считается только от объёма двигателя: ' + rub(p3.rub) + ' вместо ' + rub(duty.rub) + '.' });
+        if (duty.rub > p3.rub) insights.push({ code: 'passing', save: duty.rub - p3.rub, text: 'После трех лет пошлина считается только от объема двигателя: ' + rub(p3.rub) + ' вместо ' + rub(duty.rub) + '.' });
       }
     }
     if (!util.pref && personal && util.reason === 'power') {
@@ -721,7 +715,7 @@
     }
     if (!personal) {
       var own = utilLookup(R, { table: utilTable, kw: utilKw, cc: cc, isNew: age.isNew, year: declYear, personal: true });
-      if (own.rub < util.rub) insights.push({ code: 'personal', save: util.rub - own.rub, text: 'При ввозе для личного пользования утильсбор — ' + rub(own.rub) + ' вместо ' + rub(util.rub) + '.' });
+      if (own.rub < util.rub) insights.push({ code: 'personal', save: util.rub - own.rub, text: 'При ввозе для личного пользования утильсбор составит ' + rub(own.rub) + ' вместо ' + rub(util.rub) + '.' });
     }
     if (!util.pref && util.year === declYear) {
       var next = utilLookup(R, { table: utilTable, kw: utilKw, cc: cc, isNew: age.isNew, year: declYear + 1, personal: personal });

@@ -2,7 +2,7 @@
 // Цифры (тарифы, сроки, надбавки) берутся из data/cities.json и data/source/calc-rules.json,
 // тексты — из data/content/delivery.json и data/content/cities/<slug>.json. В текстах работают
 // подстановки {km}, {days}, {from}, {range}, {sedan}… и {range:novosibirsk} для другого города.
-// Город может заменить любой текст общего шаблона (delivery.city) полем "tpl" в своём файле — см. mergeTpl().
+// Город может заменить любой текст общего шаблона (delivery.city) полем "tpl" в своем файле — см. mergeTpl().
 import { html, esc, u, typo, price, num, plural, count } from '../lib/core.mjs';
 import { faqLd, serviceLd, itemListLd } from '../lib/seo.mjs';
 import { icon, label, duo, btn, more, reveal, sectionHead, pageHead, route, fact, caseCard, faqList, step, rail, railNav, ctaBand, seoText, note, img } from '../components/ui.mjs';
@@ -54,16 +54,16 @@ const PREF = {
 
 // --- форматирование ---------------------------------------------------------------------------
 
-const daysText = (d) => (d[0] === d[1] ? `${d[0]}${NB}${plural(d[0], DAY)}` : `${d[0]}–${d[1]}${NB}${plural(d[1], DAY)}`);
-const rangeText = (a, b) => (a === b ? price(a) : `${num(a)}–${price(b)}`);
+const daysText = (d) => (d[0] === d[1] ? `${d[0]}${NB}${plural(d[0], DAY)}` : `${d[0]}-${d[1]}${NB}${plural(d[1], DAY)}`);
+const rangeText = (a, b) => (a === b ? price(a) : `${num(a)}-${price(b)}`);
 const plain = (s) => String(s).replace(/[\u00a0\u202f]/g, ' ');
 /**
- * Числа в видимом тексте не рвутся при переносе: в диапазоне «10–15» после тире ставим соединитель слов,
+ * Числа в видимом тексте не рвутся при переносе: в диапазоне «10-15» после тире ставим соединитель слов,
  * в «20 000», набранном в текстах руками, — узкий неразрывный пробел. В мета-теги и JSON-LD это не попадает.
  */
 const wj = (s) =>
   String(s ?? '')
-    .replace(/(\d)–(?=\d)/g, '$1–\u2060')
+    .replace(/(\d)-(?=\d)/g, '$1-\u2060')
     .replace(/(\d) (?=\d{3}(?!\d))/g, '$1\u202f');
 const show = (s) => wj(typo(s));
 const monthLabel = (iso) => {
@@ -111,7 +111,7 @@ function globalVars(ctx) {
     wait: daysText(s.dispatchWaitDays || [3, 7]),
     winter: daysText(s.winterDelayDays || [2, 5]),
     notRunning: rangeText(nr[0], nr[1]),
-    door: `${Math.round(door[0] * 100)}–${Math.round(door[1] * 100)}${NB}%`,
+    door: `${Math.round(door[0] * 100)}-${Math.round(door[1] * 100)}${NB}%`,
     afterArrival: daysText(t.totalAfterArrivalDays || [7, 14]),
     cities: count(cities.length, CITY_WORD),
     citiesN: String(cities.length),
@@ -159,9 +159,9 @@ const truckClass = (car) => {
 
 /**
  * Примеры авто для городов: разные страны и бюджеты, с поправкой на регион.
- * Берём только автомобили с полной ценой под ключ: без priceIsPartial (цена без утильсбора) и без пометки
+ * Берем только автомобили с полной ценой под ключ: без priceIsPartial (цена без утильсбора) и без пометки
  * о спорной мощности — иначе сумма «авто + доставка» вводила бы в заблуждение.
- * Подбор идёт сразу для всех городов: из лучших кандидатов берём тот, которого ещё нет у городов с тем же тарифом,
+ * Подбор идет сразу для всех городов: из лучших кандидатов берем тот, которого еще нет у городов с тем же тарифом,
  * затем — самый редкий в разделе. Так у соседних городов (тот же тариф и срок) наборы не повторяются,
  * а в примерах участвует больше автомобилей каталога.
  */
@@ -198,7 +198,7 @@ function planExamples(ctx, n) {
         const tier = round % 2 === 0 ? list.slice(0, half) : list.slice(half);
         const cand = (tier.length ? tier : list).slice().sort((a, b) => score(b) - score(a) || a.priceRub - b.priceRub);
         const top = cand.slice(0, Math.min(cand.length, 6));
-        // обход шестёрки начинается со своего места для каждого города; выигрывает наименее «заезженный» автомобиль
+        // обход шестерки начинается со своего места для каждого города; выигрывает наименее «заезженный» автомобиль
         const start = idx * 7 + round * 3 + order.indexOf(cn) * 5;
         const ring = top.map((_, i) => top[(start + i) % top.length]);
         const rank = (c) => (sameTariff.has(c.id) ? 1000 : 0) + (shown.get(c.id) || 0);
@@ -264,7 +264,7 @@ function resolveTo(ctx, to) {
 
 /**
  * Заголовки секций анимируются по словам (data-split), и скрипт при этом теряет неразрывные пробелы.
- * Оборачиваем группы «предлог + слово», «5 937 км» в nowrap-обёртку, чтобы предлоги не повисали в конце строки.
+ * Оборачиваем группы «предлог + слово», «5 937 км» в nowrap-обертку, чтобы предлоги не повисали в конце строки.
  */
 const nw = (markup) =>
   String(markup)
@@ -309,7 +309,7 @@ function routeBoard(ctx, city, t, fill) {
     return c ? { name: c.name, km: c.distanceKm, url: c.url, meta: wj(c.daysLabel) } : { name: v };
   });
   return html`
-          <aside class="droute-card on-dark"${reveal(1)} aria-label="Маршрут автовоза Владивосток — ${esc(city.name)}">
+          <aside class="droute-card on-dark"${reveal(1)} aria-label="Маршрут автовоза из Владивостока в ${esc(city.nameAcc)}">
             <div class="droute-card__head">
               ${label('Маршрут автовоза')}
               <span class="droute-card__sum">${num(city.distanceKm)}${NB}км</span>
@@ -348,7 +348,7 @@ function introSection(ctx, city, t, fill, tpl) {
         <div class="split split--even dintro">
           <div class="dintro__text">
             <div${reveal()}>${label('Маршрут')}</div>
-            <h2 data-split>${nw(duo(`Владивосток — ${city.name}:`, `${num(city.distanceKm)} км и ${wj(daysText(city.days))} в пути`))}</h2>
+            <h2 data-split>${nw(duo(`Из Владивостока в ${city.nameAcc}:`, `${num(city.distanceKm)} км и ${wj(daysText(city.days))} в пути`))}</h2>
             <div class="prose"${reveal(1)}>
               ${(t.intro || []).map((p) => ctx.md(show(fill(p))))}
             </div>
@@ -407,7 +407,7 @@ function tariffSection(ctx, city, t, fill, tpl, g) {
         <div class="split">
           <div class="split__sticky"${reveal()}>
             ${label(`Тарифы · ${g.asOf}`)}
-            <h2>${duo(`Автовоз Владивосток — ${city.name}:`, 'цена и сроки')}</h2>
+            <h2>${duo(`Автовоз из Владивостока в ${city.nameAcc}:`, 'цена и сроки')}</h2>
             <p class="lead">${show(fill(tpl.tariffLead))}</p>
             <a class="btn btn--dark" href="${calcHref(city)}">Посчитать авто с доставкой ${icon('arrow', 'i-arrow')}</a>
           </div>
@@ -459,7 +459,7 @@ function exampleCard(ctx, city, x, i) {
 
 function examplesSection(ctx, city, picks, fill, tpl) {
   if (!picks.length) return '';
-  const subject = `Расчёт авто с доставкой в ${city.nameAcc}`;
+  const subject = `Расчет авто с доставкой в ${city.nameAcc}`;
   return html`
     <section class="section" id="primery">
       <div class="container">
@@ -474,11 +474,11 @@ function examplesSection(ctx, city, picks, fill, tpl) {
           <div class="dpromo dcars__promo on-dark"${reveal(2)}>
             <div class="dpromo__bg">${img({ src: 'assets/img/hero/city-towers.webp', alt: '', sizes: '(max-width: 720px) 80vw, 33vw' })}</div>
             <div>
-              ${label('Расчёт под запрос')}
+              ${label('Расчет под запрос')}
               <p class="dpromo__title">${show(fill(tpl.promoTitle))}</p>
               <p class="dpromo__text">${show(fill(tpl.promoText))}</p>
             </div>
-            ${requestBtn('Получить расчёт', { variant: 'light', subject, attrs: { 'data-modal-title': `Посчитаем авто с доставкой в ${city.nameAcc}`, 'data-modal-text': 'Напишите марку, модель и бюджет — пришлём варианты и цену под ключ с доставкой.', 'data-modal-label': `Доставка в ${city.nameAcc}` } })}
+            ${requestBtn('Получить расчет', { variant: 'light', subject, attrs: { 'data-modal-title': `Посчитаем авто с доставкой в ${city.nameAcc}`, 'data-modal-text': 'Напишите марку, модель и бюджет, и мы пришлем варианты и цену под ключ с доставкой.', 'data-modal-label': `Доставка в ${city.nameAcc}` } })}
           </div>
         </div>
         <p class="dcars__note muted small">${show(fill(tpl.examplesNote))}</p>
@@ -543,11 +543,11 @@ function casesSection(ctx, city, fill, tpl) {
     <section class="section" id="privezennye-avto">
       <div class="container">
         ${head({
-          label: 'Привезённые авто',
+          label: 'Привезенные авто',
           title: duo(fill(c.title), fill(c.muted)),
           lead: fill(c.lead),
           aside: list.length > 4 ? railNav() : '',
-          actions: more('Все привезённые авто', R.cases),
+          actions: more('Все привезенные авто', R.cases),
         })}
         ${rail(list.map((x, i) => caseCard(x, { i, stack: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
       </div>
@@ -560,7 +560,7 @@ function cityFaq(ctx, city, t, fill, tpl, picks) {
   const group = selfGroup(city);
   const out = [q(f.cost)];
   if (picks.length >= 2) {
-    const ex = picks.slice(0, 2).map((x) => `${x.car.titleYear} — ${price(x.car.priceRub)} во Владивостоке и ${price(x.ship)} автовоз, около ${price(x.total)} в ${city.namePrep}`);
+    const ex = picks.slice(0, 2).map((x) => `${x.car.titleYear}: ${price(x.car.priceRub)} во Владивостоке и ${price(x.ship)} автовоз, около ${price(x.total)} в ${city.namePrep}`);
     out.push({ q: fill(f.total.q), a: `${fill(f.total.intro)} ${ex.join('; ')}. ${fill(f.total.outro)}` });
   } else {
     out.push({ q: fill(f.total.q), a: `${fill(f.total.introNoCars)} ${fill(f.total.outro)}` });
@@ -589,7 +589,7 @@ function faqSection(city, faq, fill, tpl) {
             ${label('Вопросы и ответы')}
             <h2>${duo('Доставка', `в ${city.nameAcc}: частые вопросы`)}</h2>
             <p class="lead">${show(fill(tpl.faqLead))}</p>
-            ${requestBtn('Задать вопрос', { variant: 'dark', subject: `Вопрос о доставке в ${city.nameAcc}`, attrs: { 'data-modal-title': 'Задайте вопрос менеджеру', 'data-modal-text': 'Оставьте контакты — перезвоним или напишем в мессенджер в рабочее время.' } })}
+            ${requestBtn('Задать вопрос', { variant: 'dark', subject: `Вопрос о доставке в ${city.nameAcc}`, attrs: { 'data-modal-title': 'Задайте вопрос менеджеру', 'data-modal-text': 'Оставьте контакты, и мы перезвоним или напишем в мессенджер в рабочее время.' } })}
           </div>
           <div class="split__body">${faqList(faq.map((x) => ({ q: wj(x.q), a: wj(x.a) })))}</div>
         </div>
@@ -609,7 +609,7 @@ function cityLinks(ctx, city) {
     svc('avto-pod-zakaz') && { name: 'Авто под заказ', url: svc('avto-pod-zakaz').url },
     svc('tamozhennoe-oformlenie') && { name: 'Таможенное оформление', url: svc('tamozhennoe-oformlenie').url },
     svc('avtokredit') && { name: 'Автокредит', url: svc('avtokredit').url },
-    { name: 'Привезённые авто', url: R.cases },
+    { name: 'Привезенные авто', url: R.cases },
     { name: 'Отзывы клиентов', url: R.reviews },
     { name: 'Вопросы и ответы', url: R.faq },
   ].filter(Boolean);
@@ -617,7 +617,7 @@ function cityLinks(ctx, city) {
     <section class="section section--sm" id="smotrite-takzhe">
       <div class="container">
         <h2 class="sr-only">Смотрите также</h2>
-        ${linksBlock('Доставка в соседние города', neighbors.map((c) => ({ name: `${c.name} — от ${plain(price(c.priceFrom))}`, url: c.url })))}
+        ${linksBlock('Доставка в соседние города', neighbors.map((c) => ({ name: `${c.name}: от ${plain(price(c.priceFrom))}`, url: c.url })))}
         ${linksBlock(`Авто под заказ с доставкой в ${city.nameAcc}`, [...ctx.countries.map((cn) => ({ name: `Авто ${cn.from}`, url: R.country(cn.slug) })), { name: 'Весь каталог', url: R.catalog }])}
         ${linksBlock('Подборки', selections.map((s) => ({ name: s.name, url: s.url })))}
         ${linksBlock('Полезно знать', blogLinks(ctx))}
@@ -636,9 +636,9 @@ function cityDescription(city, g) {
   const v = cityVars(city);
   const head = `Доставка авто из Японии, Кореи и Китая в ${city.nameAcc}: автовоз из Владивостока от ${v.from}, ${v.days} в пути`;
   const variants = [
-    `${head} (${v.km}). Тарифы по типу кузова на ${g.asOf} и примеры расчёта.`,
-    `${head} (${v.km}). Тарифы на ${g.asOf} и примеры расчёта.`,
-    `${head}. Тарифы на ${g.asOf} и примеры расчёта.`,
+    `${head} (${v.km}). Тарифы по типу кузова на ${g.asOf} и примеры расчета.`,
+    `${head} (${v.km}). Тарифы на ${g.asOf} и примеры расчета.`,
+    `${head}. Тарифы на ${g.asOf} и примеры расчета.`,
   ].map(plain);
   return variants.find((x) => x.length <= 165) || variants[2];
 }
@@ -654,7 +654,7 @@ function cityPage(ctx, city, idx, baseTpl, g, picks) {
   const crumbsList = [HOME, HUB, { name: city.name, url: city.url }];
   const title = cityTitle(city);
   const description = cityDescription(city, g);
-  // H1 отвечает на тот же запрос, что title и адрес: «доставка авто … в {город}»; название города не рвётся при переносе
+  // H1 отвечает на тот же запрос, что title и адрес: «доставка авто … в {город}»; название города не рвется при переносе
   const h1Main = 'Доставка авто из Японии, Кореи и Китая';
   const h1City = `в ${city.nameAcc}`;
   const h1 = `${h1Main} ${h1City}`;
@@ -690,7 +690,7 @@ function cityPage(ctx, city, idx, baseTpl, g, picks) {
         { k: 'Автовоз', v: `от ${price(city.priceFrom)}` },
       ],
       actions:
-        requestBtn('Рассчитать с доставкой', { variant: 'light', subject, attrs: { 'data-modal-title': `Авто с доставкой в ${city.nameAcc}`, 'data-modal-text': 'Расскажите, какой автомобиль ищете, — пришлём варианты и цену под ключ с доставкой.', 'data-modal-label': subject } }) +
+        requestBtn('Рассчитать с доставкой', { variant: 'light', subject, attrs: { 'data-modal-title': `Авто с доставкой в ${city.nameAcc}`, 'data-modal-text': 'Расскажите, какой автомобиль ищете, и мы пришлем варианты и цену под ключ с доставкой.', 'data-modal-label': subject } }) +
         btn('Тарифы автовоза', '#tarify', { variant: 'ghost', arrow: false }),
     })}
     ${introSection(ctx, city, t, fill, tpl)}
@@ -703,13 +703,13 @@ function cityPage(ctx, city, idx, baseTpl, g, picks) {
     ${cityLinks(ctx, city)}
     ${ctaBand(ctx, {
       label: subject,
-      title: duo('Привезём автомобиль', `в ${city.nameAcc}`),
+      title: duo('Привезем автомобиль', `в ${city.nameAcc}`),
       text: wj(fill(tpl.ctaText)),
       subject,
       bg: ctaFrame.src,
       fields: ['name', 'phone', 'car', 'city'],
       city: city.name,
-      cta: 'Получить расчёт с доставкой',
+      cta: 'Получить расчет с доставкой',
       panelTitle: `Авто под ключ в ${city.namePrep}`,
       panelText: 'Ответим в рабочее время: варианты, цена во Владивостоке и доставка.',
     })}`,
@@ -811,7 +811,7 @@ function waysSection(ctx, h, fill) {
               <h3 class="dway__title">${esc(w.title)}</h3>
               <p class="dway__text">${show(fill(w.text))}</p>
               ${w.key === 'self' && (sc.irkutsk || sc.surgut)
-                ? `<div class="dway__links">${sc.irkutsk ? `<a class="more" href="${u(sc.irkutsk.url)}">${esc(sc.irkutsk.name)} — в${NB}Иркутск ${icon('arrow')}</a>` : ''}${sc.surgut ? `<a class="more" href="${u(sc.surgut.url)}">${esc(sc.surgut.name)} для клиента из${NB}Сургута ${icon('arrow')}</a>` : ''}</div>`
+                ? `<div class="dway__links">${sc.irkutsk ? `<a class="more" href="${u(sc.irkutsk.url)}">${esc(sc.irkutsk.name)} для клиента из${NB}Иркутска ${icon('arrow')}</a>` : ''}${sc.surgut ? `<a class="more" href="${u(sc.surgut.url)}">${esc(sc.surgut.name)} для клиента из${NB}Сургута ${icon('arrow')}</a>` : ''}</div>`
                 : ''}
             </div>
             <dl class="dway__list">
@@ -831,10 +831,10 @@ function factorsSection(ctx, h, fill) {
   const wait = s.dispatchWaitDays || [3, 7];
   const winter = s.winterDelayDays || [2, 5];
   const values = {
-    notRunning: { value: `+${nr[0] / 1000}–${nr[1] / 1000}`, unit: 'тыс. ₽' },
-    door: { value: `+${Math.round(door[0] * 100)}–${Math.round(door[1] * 100)}`, unit: '%' },
-    wait: { value: `${wait[0]}–${wait[1]}`, unit: plural(wait[1], DAY) },
-    winter: { value: `+${winter[0]}–${winter[1]}`, unit: plural(winter[1], DAY) },
+    notRunning: { value: `+${nr[0] / 1000}-${nr[1] / 1000}`, unit: 'тыс. ₽' },
+    door: { value: `+${Math.round(door[0] * 100)}-${Math.round(door[1] * 100)}`, unit: '%' },
+    wait: { value: `${wait[0]}-${wait[1]}`, unit: plural(wait[1], DAY) },
+    winter: { value: `+${winter[0]}-${winter[1]}`, unit: plural(winter[1], DAY) },
   };
   return html`
     <section class="section" id="chto-vliyaet">
@@ -897,7 +897,7 @@ function hubCasesSection(ctx, h, fill) {
   return html`
     <section class="section" id="privezennye-avto">
       <div class="container">
-        ${head({ label: 'Привезённые авто', title: duo('Автомобили, которые', 'уже уехали к владельцам'), lead: fill(h.casesLead), aside: list.length > 4 ? railNav() : '', actions: more('Все привезённые авто', R.cases) })}
+        ${head({ label: 'Привезенные авто', title: duo('Автомобили, которые', 'уже уехали к владельцам'), lead: fill(h.casesLead), aside: list.length > 4 ? railNav() : '', actions: more('Все привезенные авто', R.cases) })}
         ${rail(list.map((x, i) => caseCard(x, { i, stack: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
       </div>
     </section>`;
@@ -910,7 +910,7 @@ function hubPage(ctx, d, g) {
   const faq = h.faq.map((x) => ({ q: fill(x.q), a: fill(x.a) }));
   const crumbsList = [HOME, HUB];
   const year = ctx.build.year;
-  const title = `Доставка авто из Владивостока по России — автовоз, цены ${year}`;
+  const title = `Доставка авто из Владивостока по России | автовоз, цены ${year}`;
   const description = plain(fill(h.description));
   const service = serviceLd(ctx.site, { name: 'Доставка автомобилей из Владивостока по России', description, url: R.delivery, serviceType: 'Доставка автомобилей автовозом и по железной дороге' });
   const selections = ctx.selections.filter((s) => s.count > 0).slice(0, 12);
@@ -919,7 +919,7 @@ function hubPage(ctx, d, g) {
     { name: 'Калькулятор стоимости', url: R.calculator },
     svc('avto-pod-zakaz') && { name: 'Авто под заказ', url: svc('avto-pod-zakaz').url },
     svc('tamozhennoe-oformlenie') && { name: 'Таможенное оформление', url: svc('tamozhennoe-oformlenie').url },
-    svc('platezhnyj-agent') && { name: 'Платёжный агент', url: svc('platezhnyj-agent').url },
+    svc('platezhnyj-agent') && { name: 'Платежный агент', url: svc('platezhnyj-agent').url },
     svc('avtokredit') && { name: 'Автокредит', url: svc('avtokredit').url },
     { name: 'Отзывы клиентов', url: R.reviews },
     { name: 'Вопросы и ответы', url: R.faq },
@@ -954,7 +954,7 @@ function hubPage(ctx, d, g) {
         { k: 'Автовоз', v: `от ${g.minFrom}` },
       ],
       actions:
-        requestBtn('Рассчитать доставку', { variant: 'light', subject: 'Доставка по России', attrs: { 'data-modal-title': 'Рассчитаем доставку в ваш город', 'data-modal-text': 'Назовите город и автомобиль — пришлём цену и ближайшую дату отправки.', 'data-modal-label': 'Доставка по России' } }) +
+        requestBtn('Рассчитать доставку', { variant: 'light', subject: 'Доставка по России', attrs: { 'data-modal-title': 'Рассчитаем доставку в ваш город', 'data-modal-text': 'Назовите город и автомобиль, и мы пришлем цену и ближайшую дату отправки.', 'data-modal-label': 'Доставка по России' } }) +
         btn('Города и тарифы', '#goroda', { variant: 'ghost', arrow: false }),
     })}
     ${hubTableSection(ctx, h, fill, g, groups)}
@@ -994,7 +994,7 @@ function hubPage(ctx, d, g) {
       subject: 'Доставка по России',
       bg: 'assets/img/hero/city-towers.webp',
       fields: ['name', 'phone', 'car', 'city'],
-      cta: 'Получить расчёт с доставкой',
+      cta: 'Получить расчет с доставкой',
       panelTitle: 'Авто под ключ в вашем городе',
       panelText: 'Ответим в рабочее время: варианты, цена во Владивостоке и доставка.',
     })}`,

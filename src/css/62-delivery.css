@@ -8,7 +8,7 @@
   white-space: nowrap;
 }
 
-/* --- Шапка: кадр затемняем ещё и слева, под заголовок; название города в маршруте не рвётся --- */
+/* --- Шапка: кадр затемняем еще и слева, под заголовок; название города в маршруте не рвется --- */
 
 /* справа под маршрутом и цифрами в кадре бывает светлый автомобиль — правую половину затемняем почти так же, как левую */
 .p-delivery .page-head--photo .page-head__bg::after {
@@ -46,14 +46,12 @@
     line-height: 1.6;
   }
 
+  /* метка строчная: точка становится строчным блоком, иначе у нее нет размера */
   .p-delivery .page-head__main .label::before,
   .p-delivery .split__sticky > .label::before {
+    display: inline-block;
     margin-right: 0.5em;
-  }
-
-  .p-delivery .page-head__main .label::after,
-  .p-delivery .split__sticky > .label::after {
-    margin-left: 0.5em;
+    vertical-align: 0.12em;
   }
 }
 
@@ -627,7 +625,7 @@ a.droute__name:hover {
   letter-spacing: -0.03em;
 }
 
-/* тёмная плитка-заявка в сетке примеров */
+/* темная плитка-заявка в сетке примеров */
 .dpromo {
   position: relative;
   isolation: isolate;
@@ -1230,7 +1228,7 @@ a.droute__name:hover {
   }
 }
 
-/* --- Хаб: передача перевозчику и документы (тёмная секция) --------------------------- */
+/* --- Хаб: передача перевозчику и документы (темная секция) --------------------------- */
 
 .dhand {
   gap: var(--sp-7);

@@ -13,7 +13,7 @@ export const reveal = (i = 0) => ` data-reveal${i ? ` style="--i:${i}"` : ''}`;
 export const label = (text, cls = '') => `<span class="${cx('label', cls)}">${esc(text)}</span>`;
 
 /**
- * Двухтонный заголовок: duo('Почему выбирают', 'Макс Групп') → чёрная часть + серая часть.
+ * Двухтонный заголовок: duo('Почему выбирают', 'Макс Групп') → черная часть + серая часть.
  * Можно передать готовый HTML в первом аргументе и не передавать второй.
  */
 export const duo = (main, muted) => `${typo(main)}${muted ? ` <span class="mute">${typo(muted)}</span>` : ''}`;
@@ -31,7 +31,7 @@ export function btn(text, href, { variant = 'primary', size, arrow = true, block
   })}>${iconName ? icon(iconName) : ''}${esc(text)}${arrow ? ' ' + icon('arrow', 'i-arrow') : ''}</a>`;
 }
 
-/** Ссылка со стрелкой и подчёркиванием */
+/** Ссылка со стрелкой и подчеркиванием */
 export const more = (text, href, cls = '') => `<a class="${cx('more', cls)}" href="${u(href)}">${esc(text)} ${icon('arrow')}</a>`;
 
 /**
@@ -189,17 +189,17 @@ export function carCard(car, { i = 0, tag = 'h3', priority = false, sizes } = {}
 const GEN = { japan: 'Японии', korea: 'Кореи', china: 'Китая' };
 export const countryGen = (slug) => GEN[slug] || '';
 
-/** Карточка кейса (привезённый автомобиль). stack=true — фото сверху. */
+/** Карточка кейса (привезенный автомобиль). stack=true — фото сверху. */
 export function caseCard(c, { i = 0, stack = false, tag = 'h3', sizes } = {}) {
   const rows = Object.entries(c.specs || {}).filter(([k]) => !/цвет/i.test(k)).slice(0, 3);
   return html`
           <article class="${cx('case', stack && 'case--stack')}"${reveal(Math.min(i, 5))}>
             <div class="case__media">
-              ${img({ src: c.image, alt: `${c.name} — ${c.statusLabel.toLowerCase()}, Макс Групп`, sizes: sizes || '(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 25vw', attrs: c.imageFocus ? { style: `object-position:${c.imageFocus}` } : {} })}
+              ${img({ src: c.image, alt: `${c.name}, ${c.statusLabel.toLowerCase()}, Макс Групп`, sizes: sizes || '(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 25vw', attrs: c.imageFocus ? { style: `object-position:${c.imageFocus}` } : {} })}
               <span class="status ${c.statusCls}">${esc(c.statusLabel)}</span>
             </div>
             <div class="case__body">
-              ${c.countryName || (c.clientCity && c.clientCity !== 'Владивосток') ? route([c.countryName, 'Владивосток', c.clientCity && c.clientCity !== 'Владивосток' ? c.clientCity : null]) : '<div class="route"><span>Привезён во</span> <b>Владивосток</b></div>'}
+              ${c.countryName || (c.clientCity && c.clientCity !== 'Владивосток') ? route([c.countryName, 'Владивосток', c.clientCity && c.clientCity !== 'Владивосток' ? c.clientCity : null]) : '<div class="route"><span>Привезен во</span> <b>Владивосток</b></div>'}
               <${tag} class="case__title"><a href="${u(c.url)}">${esc(c.name)}</a></${tag}>
               ${rows.length ? `<dl class="case__list">${rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>` : ''}
               <div class="case__foot">
@@ -224,7 +224,7 @@ export function reviewCard(r, { i = 0, clamp = true } = {}) {
             </div>
             <p class="${cx('review__text', clamp && 'is-clamped')}">${esc(r.text)}</p>
             ${r.photos?.length
-              ? `<div class="review__photos" data-gallery>${r.photos.map((p, pi) => `<a href="${a(p)}" data-gallery-item data-alt="Фото ${pi + 1} к отзыву — ${esc(r.author)}">${img({ src: p, alt: `Фото автомобиля к отзыву — ${r.author}`, sizes: '84px' })}</a>`).join('')}</div>`
+              ? `<div class="review__photos" data-gallery>${r.photos.map((p, pi) => `<a href="${a(p)}" data-gallery-item data-alt="Фото ${pi + 1} к отзыву, ${esc(r.author)}">${img({ src: p, alt: `Фото автомобиля к отзыву, ${r.author}`, sizes: '84px' })}</a>`).join('')}</div>`
               : ''}
             <div class="review__foot">
               ${clamp ? '<button class="link" type="button" aria-expanded="false" data-review-more>Читать полностью</button>' : '<span></span>'}
@@ -304,8 +304,8 @@ export const ticks = (items) => `<ul class="ticks">${items.map((t) => `<li>${ico
 export const note = (text, { warn = false } = {}) => `<div class="${cx('note', warn && 'note--warn')}">${icon(warn ? 'alert' : 'info')}<div>${text}</div></div>`;
 
 /**
- * SEO-текст со сворачиванием: текст остаётся в DOM и индексируется.
- * Если текст начинается с заголовка H2, он уходит в левую колонку, а текст встаёт справа с 5-й колонки —
+ * SEO-текст со сворачиванием: текст остается в DOM и индексируется.
+ * Если текст начинается с заголовка H2, он уходит в левую колонку, а текст встает справа с 5-й колонки —
  * как у остальных секций (заголовок слева, содержимое справа), а не узкой колонкой у левого края.
  */
 export function seoText(htmlBody, { max = 420 } = {}) {
@@ -323,12 +323,12 @@ export function seoText(htmlBody, { max = 420 } = {}) {
 }
 
 /**
- * Финальный CTA: тёмная полоса с фоном и формой.
+ * Финальный CTA: темная полоса с фоном и формой.
  * @param {object} o {label, title (HTML), text, subject, bg (путь к фото), fields, cta, panelTitle, panelText}
  */
-export function ctaBand(ctx, { label: lbl = 'Заявка', title, text, subject = 'Заявка с сайта', bg = 'assets/img/hero/bridge-drive.webp', fields = ['name', 'phone', 'car'], cta = 'Получить расчёт', panelTitle = 'Рассчитаем авто под ключ', panelText = 'Ответим в рабочее время, пришлём варианты и полный расчёт.', car, city } = {}) {
+export function ctaBand(ctx, { label: lbl = 'Заявка', title, text, subject = 'Заявка с сайта', bg = 'assets/img/hero/bridge-drive.webp', fields = ['name', 'phone', 'car'], cta = 'Получить расчет', panelTitle = 'Рассчитаем авто под ключ', panelText = 'Ответим в рабочее время, пришлем варианты и полный расчет.', car, city } = {}) {
   const { site } = ctx;
-  // личного Telegram менеджера в данных нет — ссылка ведёт на канал и так и подписана
+  // личного Telegram менеджера в данных нет — ссылка ведет на канал и так и подписана
   const tg = site.socials.telegramManager || site.socials.telegram;
   const tgName = site.socials.telegramManager ? 'Telegram' : 'Telegram-канал';
   return html`
@@ -337,8 +337,8 @@ export function ctaBand(ctx, { label: lbl = 'Заявка', title, text, subject
       <div class="container cta__grid">
         <div class="cta__copy"${reveal()}>
           ${label(lbl)}
-          <h2>${title || duo('Ваш следующий автомобиль', 'уже ждёт на аукционе')}</h2>
-          <p class="lead">${typo(text || 'Расскажите, что ищете — подберём варианты в Японии, Корее и Китае, проверим перед покупкой и посчитаем полную стоимость с доставкой до вашего города.')}</p>
+          <h2>${title || duo('Ваш следующий автомобиль', 'уже ждет на аукционе')}</h2>
+          <p class="lead">${typo(text || 'Расскажите, что ищете, и мы подберем варианты в Японии, Корее и Китае, проверим перед покупкой и посчитаем полную стоимость с доставкой до вашего города.')}</p>
         </div>
         <div class="cta__panel"${reveal(1)}>
           <h3>${esc(panelTitle)}</h3>
@@ -368,7 +368,7 @@ export function rail(items, { col, colMobile } = {}) {
 
 export const railNav = () => html`<div class="rail__nav">
             <button class="rail__btn rail__btn--prev" type="button" aria-label="Назад" data-rail-prev>${icon('arrow')}</button>
-            <button class="rail__btn rail__btn--next" type="button" aria-label="Вперёд" data-rail-next>${icon('arrow')}</button>
+            <button class="rail__btn rail__btn--next" type="button" aria-label="Вперед" data-rail-next>${icon('arrow')}</button>
           </div>`;
 
 /** Блок перелинковки: заголовок + чипы */
@@ -381,5 +381,5 @@ export function linkBlock(title, items, { tag = 'h3' } = {}) {
         </div>`;
 }
 
-// реэкспорт базовых помощников, чтобы шаблон страницы мог импортировать всё из одного модуля
+// реэкспорт базовых помощников, чтобы шаблон страницы мог импортировать все из одного модуля
 export { html, esc, u, a, cx, img, typo, attrs, price, km, num, priceShort, plural, lcFirst, R };

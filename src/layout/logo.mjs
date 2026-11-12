@@ -1,4 +1,4 @@
-// Логотип инлайном: текст наследует цвет, знак-силуэт красится акцентом (на тёмном — белым).
+// Логотип инлайном: текст наследует цвет, знак-силуэт красится акцентом (на темном — белым).
 import { esc, u, cx, readText } from '../lib/core.mjs';
 
 let cache = null;
@@ -15,5 +15,5 @@ export function logoSvg(label = 'Макс Групп') {
 }
 
 export function logo(site, cls = '') {
-  return `<a class="${cx('logo', cls)}" href="${u('/')}" aria-label="${esc(site.name)} — на главную">${logoSvg(site.name)}</a>`;
+  return `<a class="${cx('logo', cls)}" href="${u('/')}" aria-label="${esc(site.name)}, на главную">${logoSvg(site.name)}</a>`;
 }

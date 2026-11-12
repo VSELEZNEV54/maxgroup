@@ -67,7 +67,7 @@ export function lint(ctx, rendered, outDir) {
       href = href.split('#')[0].split('?')[0];
       if (!href) continue;
       if (!href.startsWith('/')) href = posix.join(posix.dirname('/' + rel), href);
-      // сайт в подпапке: ссылка обязана начинаться с базового пути; дальше проверяем её как обычную
+      // сайт в подпапке: ссылка обязана начинаться с базового пути; дальше проверяем ее как обычную
       else if (base) {
         if (href !== base && !href.startsWith(base + '/')) { errors.push(`${where}: ссылка мимо базового пути ${base} — ${href}`); continue; }
         href = href.slice(base.length) || '/';

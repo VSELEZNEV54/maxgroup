@@ -10,7 +10,7 @@ export function howToPages(ctx) {
   if (!c) return [];
   const crumbsList = [{ name: 'Главная', url: R.home }, { name: 'Как заказать автомобиль', url: R.howTo }];
   const faq = [...c.fears, ...c.faq];
-  // доставленные автомобили: сначала те, у которых известен город клиента; лента из 8 карточек (трёх не хватало на ряд)
+  // доставленные автомобили: сначала те, у которых известен город клиента; лента из 8 карточек (трех не хватало на ряд)
   const deliveredAll = ctx.cases.filter((x) => x.statusCode === 'delivered');
   const delivered = [...deliveredAll.filter((x) => x.clientCity), ...deliveredAll.filter((x) => !x.clientCity && x.price)].slice(0, 8);
   // статьи блога по теме: связываем гид с информационными материалами
@@ -44,10 +44,10 @@ export function howToPages(ctx) {
       photoAlt: 'Автомобиль на ночной трассе во Владивостоке',
       kv: [
         { k: 'Этапов', v: '6' },
-        { k: 'До Владивостока', v: 'обычно 3–6 недель' },
+        { k: 'До Владивостока', v: 'обычно 3-6 недель' },
         { k: 'Оплата', v: 'по договору' },
       ],
-      actions: btn('Начать с расчёта', R.calculator, { variant: 'light' }) + btn('Задать вопрос', R.contacts, { variant: 'ghost', arrow: false, modal: 'request', subject: 'Вопрос: как заказать автомобиль' }),
+      actions: btn('Начать с расчета', R.calculator, { variant: 'light' }) + btn('Задать вопрос', R.contacts, { variant: 'ghost', arrow: false, modal: 'request', subject: 'Вопрос: как заказать автомобиль' }),
     })}
 
     <section class="section">
@@ -74,13 +74,13 @@ export function howToPages(ctx) {
 
     <section class="section section--white">
       <div class="container">
-        ${sectionHead({ label: 'Сроки', title: duo('Сколько идёт автомобиль', 'из каждой страны'), lead: 'Ориентиры на октябрь 2026 года: срок до Владивостока и время на таможню и документы. Точный срок зависит от расписания судов, загрузки портов и таможни.' })}
+        ${sectionHead({ label: 'Сроки', title: duo('Сколько идет автомобиль', 'из каждой страны'), lead: 'Ориентиры на октябрь 2026 года: срок до Владивостока и время на таможню и документы. Точный срок зависит от расписания судов, загрузки портов и таможни.' })}
         ${table(
           ['Страна', 'До Владивостока', 'Оформление'],
           [
-            [`<a href="${u(R.country('japan'))}"><strong>Япония</strong></a><br><span class="muted small">Аукционы</span>`, 'По отзывам клиентов — 2–3 недели после покупки на аукционе; рыночный ориентир — 4–6 недель', '7–14 дней'],
-            [`<a href="${u(R.country('korea'))}"><strong>Корея</strong></a><br><span class="muted small">Площадка Encar и дилеры</span>`, 'Обычно 3–4 недели', '7–14 дней'],
-            [`<a href="${u(R.country('china'))}"><strong>Китай</strong></a><br><span class="muted small">Дилеры и площадки авто с пробегом</span>`, '3–4 недели до Уссурийска', 'Около недели'],
+            [`<a href="${u(R.country('japan'))}"><strong>Япония</strong></a><br><span class="muted small">Аукционы</span>`, 'По отзывам клиентов 2-3 недели после покупки на аукционе; рыночный ориентир: 4-6 недель', '7-14 дней'],
+            [`<a href="${u(R.country('korea'))}"><strong>Корея</strong></a><br><span class="muted small">Площадки объявлений и дилеры</span>`, 'Обычно 3-4 недели', '7-14 дней'],
+            [`<a href="${u(R.country('china'))}"><strong>Китай</strong></a><br><span class="muted small">Дилеры и площадки авто с пробегом</span>`, '3-4 недели до Уссурийска', 'Около недели'],
           ]
         )}
         <div class="u-mt-7">${more('Сроки и стоимость доставки по городам России', R.delivery)}</div>
@@ -89,7 +89,7 @@ export function howToPages(ctx) {
 
     <section class="section section--dark">
       <div class="container">
-        ${sectionHead({ label: 'Документы', title: duo('Что вы получаете', 'на руки'), lead: 'Комплект, с которым автомобиль ставится на учёт в любом регионе России.' })}
+        ${sectionHead({ label: 'Документы', title: duo('Что вы получаете', 'на руки'), lead: 'Комплект, с которым автомобиль ставится на учет в любом регионе России.' })}
         <div class="grid grid--3">
           ${c.docs.map((d, i) => html`
           <article class="card card--tall"${reveal(i % 3)}>
@@ -106,7 +106,7 @@ export function howToPages(ctx) {
         <div class="split">
           <div class="split__sticky"${reveal()}>
             ${label('Сомнения')}
-            <h2>${duo('О чём переживают', 'перед первой покупкой')}</h2>
+            <h2>${duo('О чем переживают', 'перед первой покупкой')}</h2>
             <p class="lead">${typo('Заказывать автомобиль дистанционно непривычно. Отвечаем на частые вопросы тех, кто делает это впервые.')}</p>
             ${more('Отзывы клиентов', R.reviews)}
           </div>
@@ -119,7 +119,7 @@ export function howToPages(ctx) {
       ? html`
     <section class="section section--white">
       <div class="container">
-        ${sectionHead({ label: 'Как это было', title: duo('Автомобили, которые', 'уже уехали к владельцам'), lead: 'Реальные сделки: страна покупки, цена и город клиента, если он известен.', aside: railNav(), actions: more('Все привезённые авто', R.cases) })}
+        ${sectionHead({ label: 'Как это было', title: duo('Автомобили, которые', 'уже уехали к владельцам'), lead: 'Реальные сделки: страна покупки, цена и город клиента, если он известен.', aside: railNav(), actions: more('Все привезенные авто', R.cases) })}
         ${rail(delivered.map((x, i) => caseCard(x, { i, stack: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
       </div>
     </section>`
@@ -152,7 +152,7 @@ export function howToPages(ctx) {
       </div>
     </section>
 
-    ${ctaBand(ctx, { subject: 'Заявка: как заказать автомобиль', title: duo('Начнём с расчёта', 'под ваш бюджет') })}`,
+    ${ctaBand(ctx, { subject: 'Заявка: как заказать автомобиль', title: duo('Начнем с расчета', 'под ваш бюджет') })}`,
     },
   ];
 }

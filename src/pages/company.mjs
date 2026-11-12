@@ -18,10 +18,10 @@ const CAR_WORD = ['автомобиль', 'автомобиля', 'автомо�
 const extLink = (href) => `href="${esc(href)}" target="_blank" rel="noopener nofollow"`;
 const pad2 = (n) => String(n).padStart(2, '0');
 const comma = (n) => String(n).replace('.', ',');
-const range = (arr, f = comma) => (arr[0] === arr[1] ? f(arr[0]) : `${f(arr[0])}–${f(arr[1])}`);
+const range = (arr, f = comma) => (arr[0] === arr[1] ? f(arr[0]) : `${f(arr[0])}-${f(arr[1])}`);
 const thousands = (arr) => `${range(arr.map((x) => Math.round(x / 1000)))} тыс. ₽`;
 const pct = (arr) => `${range(arr.map((x) => Math.round(x * 100)))} %`;
-const daysText = (d) => (d[0] === d[1] ? `${d[0]} ${plural(d[0], DAYS)}` : `${d[0]}–${d[1]} ${plural(d[1], DAYS)}`);
+const daysText = (d) => (d[0] === d[1] ? `${d[0]} ${plural(d[0], DAYS)}` : `${d[0]}-${d[1]} ${plural(d[1], DAYS)}`);
 const dateDots = (iso) => (iso ? iso.split('-').reverse().join('.') : '');
 // Заголовки с data-split: main.js делит текст по любым пробелам, включая неразрывные, — предлог может остаться в конце строки,
 // а тире уйти в начало следующей. Поэтому пары «предлог + слово» и «слово + тире» оборачиваем в .nowrap с обычным пробелом.
@@ -51,7 +51,7 @@ function linkResolver(ctx) {
   };
 }
 
-/** Значения {{переменных}} в текстах FAQ: всё берётся из calc-rules.json и cities.json */
+/** Значения {{переменных}} в текстах FAQ: все берется из calc-rules.json и cities.json */
 function varResolver(ctx) {
   const c = ctx.calc || {};
   const year = (c.asOf || '2026').slice(0, 4);
@@ -105,7 +105,7 @@ function varResolver(ctx) {
     evDuty: safe(() => pct([c.stp.dutyPct, c.stp.dutyPct])),
     vat: safe(() => pct([c.stp.vatPct, c.stp.vatPct])),
     banks: banks.length > 1 ? `${banks.slice(0, -1).join(', ')} и ${banks.at(-1)}` : banks[0] || null,
-    // собственный профиль расходов заказчика (статьи расчёта из карточек каталога maxgroupvl.ru)
+    // собственный профиль расходов заказчика (статьи расчета из карточек каталога maxgroupvl.ru)
     mgVlad: safe(() => price(c.defaults?.vladivostokRub ?? c.costs.maxGroupSite.vladivostokRub)),
     mgLogistics: safe(() => price(c.defaults?.localLogisticsRub ?? c.costs.maxGroupSite.localLogisticsRub)),
     mgCommMin: safe(() => price(Math.min(...(c.costs.maxGroupSite.commission.observed || c.defaults.commissionTiers).map((x) => x.commissionRub)))),
@@ -131,7 +131,7 @@ function varResolver(ctx) {
       if (!ex) return null;
       if (p[2] === 'price') return num(ex.input.price);
       if (p[2] === 'breakdown') {
-        const rows = BREAKDOWN.filter(([k]) => ex.result[k] > 0).map(([k, name]) => `${name} — ${price(ex.result[k])}`);
+        const rows = BREAKDOWN.filter(([k]) => ex.result[k] > 0).map(([k, name]) => `${name} ${price(ex.result[k])}`);
         return rows.length >= 4 ? rows.join(', ') : null;
       }
       return typeof ex.result[p[2]] === 'number' ? price(ex.result[p[2]]) : null;
@@ -165,7 +165,7 @@ function textTools(ctx) {
     optional(String(s ?? '')).replace(/\{\{([\w.-]+)\}\}/g, (m, k) => {
       if (known(k)) return val(k);
       missingVars.add(k);
-      return '—';
+      return '';
     });
   const links = (s) => s.replace(/\]\(((?:r|svc|sel|city|country):[\w-]+)\)/g, (m, t) => `](${to(t)})`);
   const md = (s) => ctx.md(links(fill(s)).split('\n').map((line) => typo(line)).join('\n'));
@@ -223,7 +223,7 @@ function contactGrid(ctx, { alt, tag = 'h2', hoursLink } = {}) {
   const c = site.contacts;
   const main = c.phones[0];
   const s = site.socials;
-  // адреса менеджера в Telegram в источнике нет — ссылка ведёт на канал, и подпись называет его каналом
+  // адреса менеджера в Telegram в источнике нет — ссылка ведет на канал, и подпись называет его каналом
   const tg = s.telegramManager || s.telegram;
   return html`
         <div class="co-contact">
@@ -235,7 +235,7 @@ function contactGrid(ctx, { alt, tag = 'h2', hoursLink } = {}) {
               <p class="co-info__sub">${esc(main.person || 'Менеджер')} · звонки в рабочие часы офиса</p>
               <div class="co-info__foot">
                 <a class="btn btn--dark btn--sm" href="tel:${main.tel}">${icon('phone')} Позвонить</a>
-                ${btn('Заказать звонок', R.contacts, { variant: 'ghost', size: 'sm', arrow: false, modal: 'request', subject: 'Обратный звонок', attrs: { 'data-modal-title': 'Перезвоним в рабочее время', 'data-modal-text': `Оставьте номер — менеджер перезвонит в часы работы офиса: ${c.hours} по Владивостоку.`, 'data-modal-label': 'Звонок' } })}
+                ${btn('Заказать звонок', R.contacts, { variant: 'ghost', size: 'sm', arrow: false, modal: 'request', subject: 'Обратный звонок', attrs: { 'data-modal-title': 'Перезвоним в рабочее время', 'data-modal-text': `Оставьте номер, и менеджер перезвонит в часы работы офиса: ${c.hours} по Владивостоку.`, 'data-modal-label': 'Звонок' } })}
               </div>
             </div>
             <div class="co-info"${reveal(2)}>
@@ -272,7 +272,7 @@ function requisites(ctx, { tag = 'h2' } = {}) {
               <div><dt>Адрес</dt><dd>${esc(c.addressFull)}</dd></div>
               <div><dt>Телефон</dt><dd><a class="link" href="tel:${c.phones[0].tel}">${esc(c.phones[0].label)}</a></dd></div>
             </dl>
-            ${btn(t.cta, R.contacts, { variant: 'dark', modal: 'request', subject: 'Запрос реквизитов', attrs: { 'data-modal-title': 'Пришлём реквизиты компании', 'data-modal-text': 'Оставьте контакты — менеджер отправит реквизиты компании в мессенджер или на почту.', 'data-modal-label': 'Реквизиты' } })}
+            ${btn(t.cta, R.contacts, { variant: 'dark', modal: 'request', subject: 'Запрос реквизитов', attrs: { 'data-modal-title': 'Пришлем реквизиты компании', 'data-modal-text': 'Оставьте контакты, и менеджер отправит реквизиты компании в мессенджер или на почту.', 'data-modal-label': 'Реквизиты' } })}
           </div>
         </div>`;
 }
@@ -387,7 +387,6 @@ function aboutPage(ctx) {
     changefreq: 'monthly',
     ogImage: 'img/hero/poster.webp',
     preload: [{ href: 'img/hero/poster.webp', as: 'image', type: 'image/webp' }],
-    images: ctx.team.map((p) => p.photo),
     render: () => html`
     ${pageHead({
       crumbs,
@@ -501,7 +500,7 @@ function aboutPage(ctx) {
             auction: `${byStatus('На торгах')} на торгах`,
             cities: clientCities.join(', '),
           }),
-          actions: more('Все привезённые авто', R.cases),
+          actions: more('Все привезенные авто', R.cases),
         })}
         <div class="co-board">
           ${board.map(
@@ -518,25 +517,6 @@ function aboutPage(ctx) {
       </div>
     </section>`
       : ''}
-
-    <section class="section section--dark" id="komanda">
-      <div class="container">
-        ${sectionHead({ label: t.team.label, title: duoS(t.team.titleMain, t.team.titleMute), lead: t.team.lead, actions: more('Телефоны и мессенджеры', R.contacts) })}
-        <div class="grid grid--4 grid--keep-2 co-team">
-          ${ctx.team.map(
-            (p, i) => html`
-          <article class="person"${reveal(i)}>
-            <div class="person__photo">${img({ src: p.photo, alt: `${p.name} — ${p.role}, Макс Групп`, sizes: '(max-width: 900px) 50vw, 25vw' })}</div>
-            <div class="person__body">
-              <h3 class="person__name">${esc(p.name)}</h3>
-              <span class="person__role">${esc(p.role)}</span>
-              <a class="person__phone" href="tel:${p.tel}">${esc(p.phone)}</a>
-            </div>
-          </article>`
-          )}
-        </div>
-      </div>
-    </section>
 
     <section class="section section--white" id="otzyvy">
       <div class="container">
@@ -568,7 +548,7 @@ function aboutPage(ctx) {
           ${linkBlock('Полезное', [
             { name: 'Калькулятор стоимости', url: R.calculator },
             { name: 'Доставка по России', url: R.delivery },
-            { name: 'Привезённые авто', url: R.cases },
+            { name: 'Привезенные авто', url: R.cases },
             { name: 'Вопросы и ответы', url: R.faq },
             { name: 'Как читать аукционный лист', url: R.auctionSheet },
             { name: 'Видео', url: R.video },
@@ -578,7 +558,7 @@ function aboutPage(ctx) {
       </div>
     </section>
 
-    ${ctaBand(ctx, { subject: 'Заявка со страницы «О компании»', bg: 'assets/img/hero/gclass-road.webp', title: duo('Расскажите, какой автомобиль нужен —', 'остальное возьмём на себя') })}`,
+    ${ctaBand(ctx, { subject: 'Заявка со страницы «О компании»', bg: 'assets/img/hero/gclass-road.webp', title: duo('Расскажите, какой автомобиль нужен,', 'а остальное возьмем на себя') })}`,
   };
 }
 
@@ -599,14 +579,14 @@ function contactsPage(ctx) {
   const waLinks = [source.company?.links?.whatsapp, source.company?.links?.whatsappHeroManager].filter(Boolean);
   const waFor = (tel) => waLinks.find((x) => x.includes(String(tel).replace(/\D/g, '')));
   const people = [
-    ...ctx.team.map((p) => ({ name: p.name, role: p.role, phone: p.phone, tel: p.tel, photo: p.photo })),
+    ...ctx.team.map((p) => ({ name: p.name, role: p.role, phone: p.phone, tel: p.tel, initials: p.initials })),
     ...c.phones.filter((p) => !ctx.team.some((m) => m.tel === p.tel)).map((p) => ({ name: p.person || 'Менеджер', role: t.managers.extraRole, phone: p.label, tel: p.tel })),
   ];
 
   const zone = (z) => {
     const shift = z.offset - VL_OFFSET;
     const h = (x) => `${pad2((x + shift + 24) % 24)}:00`;
-    return { ...z, hours: `${h(open)}–${h(close)}`, diff: shift === 0 ? 'местное время' : `${shift > 0 ? '+' : '−'}${Math.abs(shift)} ч к Владивостоку` };
+    return { ...z, hours: `${h(open)}-${h(close)}`, diff: shift === 0 ? 'местное время' : `${shift > 0 ? '+' : '−'}${Math.abs(shift)} ч к Владивостоку` };
   };
 
   return {
@@ -627,8 +607,8 @@ function contactsPage(ctx) {
       lead: t.lead,
       side: html`<div class="co-clock" data-vl-clock data-open="${open}" data-close="${close}" data-offset="${VL_OFFSET}">
               <span class="label" data-vl-label>Режим работы офиса</span>
-              <div class="co-clock__time" data-vl-time>${esc(spec.opens)}–${esc(spec.closes)}</div>
-              <div class="co-clock__status" data-vl-status>Пн–Пт · время владивостокское, МСК+7</div>
+              <div class="co-clock__time" data-vl-time>${esc(spec.opens)}-${esc(spec.closes)}</div>
+              <div class="co-clock__status" data-vl-status>Пн-Пт · время владивостокское, МСК+7</div>
               <div class="co-clock__local" data-vl-local></div>
             </div>`,
     })}
@@ -647,7 +627,7 @@ function contactsPage(ctx) {
             const wa = waFor(p.tel);
             return html`
           <article class="co-man"${reveal(Math.min(i, 4))}>
-            <div class="co-man__photo">${p.photo ? img({ src: p.photo, alt: `${p.name} — ${p.role}`, sizes: '76px' }) : esc(p.name.trim()[0])}</div>
+            <div class="co-man__photo" aria-hidden="true">${esc(p.initials || p.name.trim()[0])}</div>
             <div>
               <h3 class="co-man__name">${esc(p.name)}</h3>
               <div class="co-man__role">${esc(p.role)}</div>
@@ -818,7 +798,7 @@ function reviewsPage(ctx) {
       ? html`
     <section class="section" id="avto-iz-otzyvov">
       <div class="container">
-        ${sectionHead({ label: t.cases.label, title: duoS(t.cases.titleMain, t.cases.titleMute), lead: t.cases.lead, aside: railNav(), actions: more(`Все ${count(ctx.cases.length, ['привезённый автомобиль', 'привезённых автомобиля', 'привезённых автомобилей'])}`, R.cases) })}
+        ${sectionHead({ label: t.cases.label, title: duoS(t.cases.titleMain, t.cases.titleMute), lead: t.cases.lead, aside: railNav(), actions: more(`Все ${count(ctx.cases.length, ['привезенный автомобиль', 'привезенных автомобиля', 'привезенных автомобилей'])}`, R.cases) })}
         ${rail(cases.map((c, i) => caseCard(c, { i, stack: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
       </div>
     </section>`
@@ -833,8 +813,8 @@ function reviewsPage(ctx) {
             <p class="lead">${typo(t.leave.lead)}</p>
           </div>
           <div class="co-channels co-channels--2">
-            ${channelTile({ href: site.contacts.maps.twoGis, iconName: 'pin', name: '2ГИС', handle: `на этой странице — ${twoGis} ${plural(twoGis, REVIEW_WORD)}`, text: t.leave.twoGis, i: 0 })}
-            ${channelTile({ href: site.contacts.maps.yandex, iconName: 'star', name: 'Яндекс Карты', handle: `на этой странице — ${total - twoGis} ${plural(total - twoGis, REVIEW_WORD)}`, text: t.leave.yandex, i: 1 })}
+            ${channelTile({ href: site.contacts.maps.twoGis, iconName: 'pin', name: '2ГИС', handle: `на этой странице ${twoGis} ${plural(twoGis, REVIEW_WORD)}`, text: t.leave.twoGis, i: 0 })}
+            ${channelTile({ href: site.contacts.maps.yandex, iconName: 'star', name: 'Яндекс Карты', handle: `на этой странице ${total - twoGis} ${plural(total - twoGis, REVIEW_WORD)}`, text: t.leave.yandex, i: 1 })}
           </div>
         </div>
       </div>
@@ -853,7 +833,7 @@ function reviewsPage(ctx) {
         <div class="u-mt-8">
           ${linkBlock('Каталог по странам', ctx.nav.countries.map((c) => ({ name: `Авто ${c.from}`, url: c.url })))}
           ${linkBlock('Дальше', [
-            { name: 'Привезённые авто', url: R.cases },
+            { name: 'Привезенные авто', url: R.cases },
             { name: 'Калькулятор стоимости', url: R.calculator },
             { name: 'Доставка по России', url: R.delivery },
             { name: 'Вопросы и ответы', url: R.faq },
@@ -863,7 +843,7 @@ function reviewsPage(ctx) {
       </div>
     </section>
 
-    ${ctaBand(ctx, { subject: 'Заявка со страницы отзывов', bg: 'assets/img/hero/bridge-kei.webp', title: duo('Следующий отзыв —', 'о вашем автомобиле') })}`,
+    ${ctaBand(ctx, { subject: 'Заявка со страницы отзывов', bg: 'assets/img/hero/bridge-kei.webp', title: duo('Следующий отзыв', 'будет о вашем автомобиле') })}`,
   };
 }
 
@@ -905,7 +885,7 @@ function faqPage(ctx) {
         { k: 'Ставки и сроки', v: `на ${asOf}` },
       ],
       actions:
-        btn('Задать свой вопрос', R.contacts, { modal: 'request', subject: 'Вопрос менеджеру (FAQ)', attrs: { 'data-modal-title': 'Задайте вопрос менеджеру', 'data-modal-text': 'Оставьте контакты — перезвоним или напишем в мессенджер в рабочее время.', 'data-modal-label': 'Вопрос' } }) +
+        btn('Задать свой вопрос', R.contacts, { modal: 'request', subject: 'Вопрос менеджеру (FAQ)', attrs: { 'data-modal-title': 'Задайте вопрос менеджеру', 'data-modal-text': 'Оставьте контакты, и мы перезвоним или напишем в мессенджер в рабочее время.', 'data-modal-label': 'Вопрос' } }) +
         btn('Калькулятор', R.calculator, { variant: 'ghost', arrow: false }),
     })}
 
@@ -917,7 +897,7 @@ function faqPage(ctx) {
               ${groups.map((g) => `<li><a href="#${g.id}">${esc(g.title)}<small>${pad2(g.items.length)}</small></a></li>`)}
             </ol>
             <div class="co-doc__nav-extra">
-              <p class="muted small" style="margin-bottom:12px">${typo('Не нашли ответ? Спросите менеджера — ответит по вашему автомобилю.')}</p>
+              <p class="muted small" style="margin-bottom:12px">${typo('Не нашли ответ? Спросите менеджера: он ответит по вашему автомобилю.')}</p>
               ${btn('Спросить', R.contacts, { variant: 'dark', size: 'sm', modal: 'request', subject: 'Вопрос менеджеру (FAQ)', attrs: { 'data-modal-title': 'Задайте вопрос менеджеру', 'data-modal-label': 'Вопрос' } })}
             </div>
           </aside>
@@ -951,13 +931,13 @@ function faqPage(ctx) {
           R.howTo ? { name: 'Как заказать автомобиль', url: R.howTo } : null,
           { name: 'Как читать аукционный лист', url: R.auctionSheet },
           { name: 'Блог', url: R.blog },
-          { name: 'Привезённые авто', url: R.cases },
+          { name: 'Привезенные авто', url: R.cases },
           { name: 'Отзывы', url: R.reviews },
         ].filter(Boolean), { tag: 'h2' })}
       </div>
     </section>
 
-    ${ctaBand(ctx, { label: 'Не нашли ответ?', subject: 'Вопрос со страницы FAQ', bg: 'assets/img/hero/city-towers.webp', title: duo('Спросите менеджера —', 'ответит по вашему автомобилю'), text: 'Напишите марку, модель и бюджет: менеджер подберёт варианты, объяснит, какие платежи к ним применяются, и посчитает цену под ключ.' })}
+    ${ctaBand(ctx, { label: 'Не нашли ответ?', subject: 'Вопрос со страницы FAQ', bg: 'assets/img/hero/city-towers.webp', title: duo('Спросите менеджера:', 'он ответит по вашему автомобилю'), text: 'Напишите марку, модель и бюджет: менеджер подберет варианты, объяснит, какие платежи к ним применяются, и посчитает цену под ключ.' })}
     <script>${TOC_JS}</script>`,
   };
 }
@@ -1003,7 +983,7 @@ function videoPage(ctx) {
       kv: [
         { k: 'На странице', v: reels },
         { k: 'Просмотров', v: `${views} тыс.` },
-        { k: 'Счётчики', v: 'с обложек роликов' },
+        { k: 'Счетчики', v: 'с обложек роликов' },
       ],
     })}
 
@@ -1015,7 +995,7 @@ function videoPage(ctx) {
             (v, i) => html`
           <a class="${cx('reel', i === 0 && 'reel--big')}" ${extLink(v.url)}${reveal(Math.min(i % 5, 4))}>
             <span class="reel__media">
-              ${img({ src: v.cover, alt: `Видео «${v.title}» — ${v.viewsOnCover} просмотров`, sizes: i === 0 ? '(max-width: 720px) 100vw, 34vw' : '(max-width: 720px) 50vw, 17vw', priority: i === 0 })}
+              ${img({ src: v.cover, alt: `Видео «${v.title}», ${v.viewsOnCover} просмотров`, sizes: i === 0 ? '(max-width: 720px) 100vw, 34vw' : '(max-width: 720px) 50vw, 17vw', priority: i === 0 })}
               <span class="reel__play" aria-hidden="true">${icon('play-fill')}</span>
             </span>
             <span class="reel__title">${esc(v.title)}</span>
@@ -1023,7 +1003,7 @@ function videoPage(ctx) {
           </a>`
           )}
         </div>
-        <p class="co-footnote">${typo(`${[...new Set(videos.map((v) => v.platform))].join(', ')}*. Ролики открываются на площадке, где они опубликованы; число просмотров — по счётчикам на обложках.`)}</p>
+        <p class="co-footnote">${typo(`${[...new Set(videos.map((v) => v.platform))].join(', ')}*. Ролики открываются на площадке, где они опубликованы; число просмотров указано по счетчикам на обложках.`)}</p>
       </div>
     </section>
 
@@ -1107,7 +1087,7 @@ function privacyPage(ctx) {
         </div>
       </div>
     </section>
-    ${ctaBand(ctx, { subject: 'Заявка со страницы политики конфиденциальности', label: 'Связаться', title: duo('Остались вопросы?', 'Напишите или позвоните нам'), text: 'По вопросам обработки персональных данных и по любым вопросам о заказе автомобиля — оставьте контакты, менеджер свяжется с вами в рабочее время.', panelTitle: 'Свяжемся в рабочее время', fields: ['name', 'phone', 'comment'], cta: 'Отправить' })}
+    ${ctaBand(ctx, { subject: 'Заявка со страницы политики конфиденциальности', label: 'Связаться', title: duo('Остались вопросы?', 'Напишите или позвоните нам'), text: 'По вопросам обработки персональных данных и по любым вопросам о заказе автомобиля оставьте контакты, и менеджер свяжется с вами в рабочее время.', panelTitle: 'Свяжемся в рабочее время', fields: ['name', 'phone', 'comment'], cta: 'Отправить' })}
     <script>${TOC_JS}</script>`,
   };
 }
@@ -1140,7 +1120,7 @@ function sitemapPage(ctx) {
     { name: 'Калькулятор стоимости', url: R.calculator },
     R.howTo ? { name: 'Как заказать автомобиль', url: R.howTo } : null,
     { name: 'Доставка по России', url: R.delivery },
-    { name: 'Привезённые авто', url: R.cases },
+    { name: 'Привезенные авто', url: R.cases },
     { name: 'Отзывы клиентов', url: R.reviews },
     { name: 'О компании', url: R.about },
     { name: 'Контакты', url: R.contacts },
@@ -1194,8 +1174,8 @@ function sitemapPage(ctx) {
 
   const groups = [
     group('razdely', 'Основные разделы', main.length, list(main)),
-    hasCatalog ? group('katalog', 'Каталог: страны, марки, модели', ctx.brands.length + ctx.models.length, catalogBody, 'Марки сгруппированы по стране покупки, под каждой — модели из каталога.') : '',
-    globalSelections.length + slices.length ? group('podborki', 'Подборки', globalSelections.length + slices.length, selectionsBody, 'По бюджету, типу кузова и условиям растаможки — общие и по странам.') : '',
+    hasCatalog ? group('katalog', 'Каталог: страны, марки, модели', ctx.brands.length + ctx.models.length, catalogBody, 'Марки сгруппированы по стране покупки, под каждой указаны модели из каталога.') : '',
+    globalSelections.length + slices.length ? group('podborki', 'Подборки', globalSelections.length + slices.length, selectionsBody, 'По бюджету, типу кузова и условиям растаможки: общие и по странам.') : '',
     group('uslugi', 'Услуги и инструменты', ctx.services.length + 3, list([{ name: 'Все услуги', url: R.services }, ...ctx.services.map((s) => ({ name: s.name, url: s.url })), { name: 'Калькулятор стоимости под ключ', url: R.calculator }, { name: 'Как читать аукционный лист', url: R.auctionSheet }])),
     ctx.cities.length
       ? group(
@@ -1208,9 +1188,9 @@ function sitemapPage(ctx) {
           'Автовозом из Владивостока, со сроками и ценами.'
         )
       : '',
-    ctx.cases.length ? group('privezennye-avto', 'Привезённые авто', ctx.cases.length, list(ctx.cases.map((c) => ({ name: c.name, url: c.url })))) : '',
+    ctx.cases.length ? group('privezennye-avto', 'Привезенные авто', ctx.cases.length, list(ctx.cases.map((c) => ({ name: c.name, url: c.url })))) : '',
     ctx.posts.length ? group('blog', 'Блог', ctx.posts.length, list(ctx.posts.map((p) => ({ name: p.title, url: p.url })))) : '',
-    hasCatalog ? group('avtomobili', 'Все автомобили каталога', ctx.cars.length, carsBody, 'Каждый автомобиль — с ценой под ключ во Владивостоке.') : '',
+    hasCatalog ? group('avtomobili', 'Все автомобили каталога', ctx.cars.length, carsBody, 'Каждый автомобиль указан с ценой под ключ во Владивостоке.') : '',
     group('sluzhebnye', 'Служебные страницы', 2, list([{ name: 'Политика конфиденциальности', url: R.privacy }, { name: 'Карта сайта', url: R.sitemap }])),
   ];
 
@@ -1232,7 +1212,7 @@ function sitemapPage(ctx) {
         hasCatalog ? { k: 'В каталоге', v: count(ctx.cars.length, CAR_WORD) } : null,
         hasCatalog ? { k: 'Марок и моделей', v: String(ctx.brands.length + ctx.models.length) } : null,
         { k: 'Городов доставки', v: String(ctx.cities.length) },
-        { k: 'Привезённых авто', v: String(ctx.cases.length) },
+        { k: 'Привезенных авто', v: String(ctx.cases.length) },
       ].filter(Boolean),
     })}
     <section class="section section--white section--sm">
@@ -1240,7 +1220,7 @@ function sitemapPage(ctx) {
         ${groups}
       </div>
     </section>
-    ${ctaBand(ctx, { subject: 'Заявка со страницы «Карта сайта»', title: duo('Не нашли нужный автомобиль?', 'Подберём под запрос') })}`,
+    ${ctaBand(ctx, { subject: 'Заявка со страницы «Карта сайта»', title: duo('Не нашли нужный автомобиль?', 'Подберем под запрос') })}`,
   };
 }
 
@@ -1282,11 +1262,11 @@ function notFoundPage(ctx) {
 
     <section class="section">
       <div class="container">
-        ${sectionHead({ label: 'Маршруты', title: duoS(t.linksTitleMain, t.linksTitleMute), lead: 'Самые востребованные разделы сайта — выберите нужный.' })}
+        ${sectionHead({ label: 'Маршруты', title: duoS(t.linksTitleMain, t.linksTitleMute), lead: 'Самые востребованные разделы сайта. Выберите нужный.' })}
         <div class="grid grid--4">
           ${[
             { icon: 'grid', title: 'Каталог автомобилей', text: 'Примеры из Японии, Кореи и Китая с ценой под ключ во Владивостоке.', href: R.catalog },
-            { icon: 'calc', title: 'Калькулятор', text: 'Пошлина, утилизационный сбор, доставка и оформление — расчёт за минуту.', href: R.calculator },
+            { icon: 'calc', title: 'Калькулятор', text: 'Пошлина, утилизационный сбор, доставка и оформление: расчет за минуту.', href: R.calculator },
             { icon: 'truck', title: 'Доставка по России', text: 'Сроки и цены автовоза из Владивостока до вашего города.', href: R.delivery },
             { icon: 'phone', title: 'Контакты', text: 'Телефоны менеджеров, мессенджеры и адрес офиса во Владивостоке.', href: R.contacts },
           ].map((x, i) => html`
@@ -1302,7 +1282,7 @@ function notFoundPage(ctx) {
           ${selections.length ? linkBlock('Подборки', selections.map((s) => ({ name: s.name, url: s.url }))) : ''}
           ${linkBlock('Компания', [
             { name: 'О компании', url: R.about },
-            { name: 'Привезённые авто', url: R.cases },
+            { name: 'Привезенные авто', url: R.cases },
             { name: 'Отзывы', url: R.reviews },
             { name: 'Вопросы и ответы', url: R.faq },
             { name: 'Услуги', url: R.services },
@@ -1313,7 +1293,7 @@ function notFoundPage(ctx) {
       </div>
     </section>
 
-    ${ctaBand(ctx, { subject: 'Заявка со страницы 404', title: duo('Искали конкретный автомобиль?', 'Подберём такой же') })}`,
+    ${ctaBand(ctx, { subject: 'Заявка со страницы 404', title: duo('Искали конкретный автомобиль?', 'Подберем такой же') })}`,
   };
 }
 

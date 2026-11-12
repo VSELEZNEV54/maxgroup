@@ -91,10 +91,13 @@ const { pages, problems } = await collectPages(ctx);
 
 // --- запись ---------------------------------------------------------------------------------
 
+// буквы «ё» на сайте нет (решение 12.11.2026): данные заказчика в data/source не правим, заменяем при записи страниц
+const noYo = (s) => s.replace(/ё/g, 'е').replace(/Ё/g, 'Е');
+
 function write(rel, content) {
   const file = join(OUT, rel);
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, content);
+  writeFileSync(file, typeof content === 'string' && /\.(html|xml|txt)$/.test(rel) ? noYo(content) : content);
 }
 
 function copyTree(src, dst) {
@@ -206,7 +209,7 @@ write(
   'site.webmanifest',
   JSON.stringify(
     {
-      name: `${ctx.site.name} — авто из Азии`,
+      name: `${ctx.site.name}: авто из Азии`,
       short_name: ctx.site.name,
       lang: 'ru',
       start_url: basePath + '/',

@@ -1,9 +1,9 @@
-// Сборка контекста данных: всё, что нужно шаблонам, в одном объекте ctx.
+// Сборка контекста данных: все, что нужно шаблонам, в одном объекте ctx.
 import { readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { ROOT, readJson, readText, slugify, groupBy, liters, frontMatter, markdown, fileExists, plural } from '../lib/core.mjs';
 import { R } from '../routes.mjs';
-import { site, source } from './site.mjs';
+import { site, source, SITE_TELS } from './site.mjs';
 import { countries, countryBySlug } from './countries.mjs';
 import { selections as selectionDefs } from './selections.mjs';
 import { services, serviceGroups } from './services.mjs';
@@ -18,14 +18,14 @@ const COUNTRY_ALIASES = { japan: 'japan', korea: 'korea', china: 'china', Япо
 
 /**
  * Возрастная категория для таможни: le3 (до 3 лет) | 3to5 | gt5.
- * Берём ту же, что стоит в расчёте цены на сайте заказчика («Тариф: …»), иначе считаем по правилу:
+ * Берем ту же, что стоит в расчете цены на сайте заказчика («Тариф: …»), иначе считаем по правилу:
  * известен только год — датой выпуска считается 1 июля, год и месяц — 15-е число (Решение Совета ЕЭК № 107).
  */
 const CALC_DATE = Date.UTC(2026, 9, 13);
 function ageCategory(raw, breakdown) {
   const note = breakdown.find((r) => r.key === 'customs_payments')?.note || '';
   if (/до 3 лет/i.test(note)) return 'le3';
-  if (/от 3 до 5|3[–-]5/i.test(note)) return '3to5';
+  if (/от 3 до 5|3[--]5/i.test(note)) return '3to5';
   if (/старше 5/i.test(note)) return 'gt5';
   if (!raw.year) return null;
   const made = raw.month ? Date.UTC(raw.year, raw.month - 1, 15) : Date.UTC(raw.year, 6, 1);
@@ -39,14 +39,14 @@ function normalizeCar(raw) {
   const modelSlug = slugify(raw.model);
   const cn = countryBySlug[country];
   const flag = carFlags[raw.id] || {};
-  // мощность, которую сам источник помечает как ошибку справочника, не показываем как факт (остаётся в powerHpSource)
+  // мощность, которую сам источник помечает как ошибку справочника, не показываем как факт (остается в powerHpSource)
   const eng = flag.hidePower && raw.engine ? { ...raw.engine, powerHp: null, powerHpSource: raw.engine.powerHp || null } : raw.engine || {};
   const trim = raw.trim && raw.trim.length <= 26 && !/^\d{4}$/.test(raw.trim) ? raw.trim : null;
   const partial = Boolean(raw.priceIsPartial);
   // расшифровка цены приходит с сайта заказчика готовой структурой — показываем как есть
   const breakdown = (raw.priceBreakdown || []).filter((r) => r.amountRub).map((r) => ({
     key: r.key,
-    name: r.label.replace(/Max Group/i, 'Макс Групп'),
+    name: r.key === 'japan_freight' ? 'Фрахт до Владивостока' : r.label.replace(/Max Group/i, 'Макс Групп'),
     rub: r.amountRub,
     note: r.note || null,
     bullets: r.bullets || [],
@@ -72,11 +72,11 @@ function normalizeCar(raw) {
     engineLabel: [/электро/i.test(eng.type || '') ? null : liters(eng.volumeCc), eng.type].filter(Boolean).join(' · ') || eng.type || null,
     isElectric,
     isHybrid,
-    // последовательный гибрид (EREV): колёса крутит электромотор, заказчик считает таможню по тарифу электромобиля
+    // последовательный гибрид (EREV): колеса крутит электромотор, заказчик считает таможню по тарифу электромобиля
     isSeriesHybrid: isHybrid && /последовательн|erev/i.test(eng.subtype || ''),
     isEvTariff: /электромобил/i.test(customsNote),
     recyclingFee: feeRow ? feeRow.rub : null,
-    // особый маршрут: у японских авто расходы выделены строкой «Фрахт (доплата…)», у корейских надбавка в расчёте не выделена
+    // особый маршрут: у японских авто расходы выделены строкой «Фрахт (доплата…)», у корейских надбавка в расчете не выделена
     hasRouteSurcharge: breakdown.some((r) => r.key === 'japan_freight'),
     powerDoubt: Boolean(flag.powerDoubt),
     powerNote: flag.note || null,
@@ -86,13 +86,13 @@ function normalizeCar(raw) {
     priceBreakdown: breakdown,
     // короткая подпись для карточек и полная — для страницы автомобиля
     priceLabel: partial ? 'во Владивостоке, без утильсбора' : 'под ключ во Владивостоке',
-    priceLabelFull: partial ? 'Рассчитанная часть стоимости во Владивостоке — без утилизационного сбора' : 'Предварительная цена под ключ во Владивостоке',
+    priceLabelFull: partial ? 'Рассчитанная часть стоимости во Владивостоке, без утилизационного сбора' : 'Предварительная цена под ключ во Владивостоке',
   };
-  // «проходной» — таможенная категория 3–5 лет; для электромобилей и авто, посчитанных по тарифу электромобиля
+  // «проходной» — таможенная категория 3-5 лет; для электромобилей и авто, посчитанных по тарифу электромобиля
   // (последовательные гибриды), понятие не применяется: пошлина от возраста не зависит
   car.isPassing = car.ageCat === '3to5' && !car.isElectric && !car.isEvTariff;
   // «до 160 л.с.» — только там, где льгота не вызывает сомнений: мощность до 160 л.с., не электромобиль,
-  // у гибридов — ДВС до 110 л.с. (мощность электромотора прибавляется), утильсбор в расчёте заказчика льготный,
+  // у гибридов — ДВС до 110 л.с. (мощность электромотора прибавляется), утильсбор в расчете заказчика льготный,
   // и автомобиль не помечен в data/car-flags.json
   const hp = eng.powerHp || null;
   car.isLowPower = Boolean(hp) && hp <= 160 && !car.isElectric && (!car.isHybrid || hp <= 110) && (!feeRow || feeRow.rub <= 5200) && !car.powerDoubt;
@@ -102,7 +102,7 @@ function normalizeCar(raw) {
   return car;
 }
 
-// --- кейсы («привезли и везём») -------------------------------------------------------
+// --- кейсы («привезли и везем») -------------------------------------------------------
 
 const CASE_STATUS = {
   delivered: { label: 'Доставлен', cls: 'status--ok' },
@@ -177,7 +177,7 @@ function loadContent() {
 }
 
 // --- цены «от» -----------------------------------------------------------------------------------
-// У части авто цена неполная (priceIsPartial — без утилизационного сбора). Если самая дешёвая машина списка такая,
+// У части авто цена неполная (priceIsPartial — без утилизационного сбора). Если самая дешевая машина списка такая,
 // цену «от» нельзя называть «под ключ»: шаблоны смотрят на priceFromPartial и пишут «от X без утильсбора».
 
 /** { priceFrom, priceTo, priceFromPartial, priceFromFull, hasPartial, allPartial } для списка автомобилей */
@@ -251,7 +251,7 @@ export function loadContext(build) {
   }
   const brandsOf = (country) => brands.filter((b) => b.country === country).sort((x, y) => y.count - x.count || x.name.localeCompare(y.name));
 
-  const MIN_SLICE = 4; // страновой срез создаётся, только если в нём есть что показать
+  const MIN_SLICE = 4; // страновой срез создается, только если в нем есть что показать
   const brandSlugs = new Set(brands.map((b) => b.slug));
   const selections = selectionDefs.map((s) => {
     if (brandSlugs.has(s.slug)) throw new Error(`Слаг подборки «${s.slug}» совпадает со слагом марки`);
@@ -264,7 +264,7 @@ export function loadContext(build) {
         return { country: cn.slug, cn, selection: sel, slug: s.slug, name: s.name, h1: s.h1c(cn), url: R.countrySelection(cn.slug, s.slug), cars: sub, count: sub.length, ...priceStats(sub) };
       })
       .filter((x) => x.count >= MIN_SLICE);
-    // подборка только для одной страны живёт внутри страны; в /podborki/ ведём на её срез
+    // подборка только для одной страны живет внутри страны; в /podborki/ ведем на ее срез
     sel.url = sel.global ? R.selection(s.slug) : sel.slices[0]?.url || null;
     return sel;
   }).filter((s) => s.url && (!s.global || s.count >= 3)); // общая подборка появляется, когда в ней есть хотя бы 3 автомобиля
@@ -273,7 +273,8 @@ export function loadContext(build) {
 
   const cases = (source.cases || []).map(normalizeCase);
   const reviews = (source.reviews || []).map((r, i) => ({ ...r, id: i + 1, photos: (r.photos || []).filter((p) => fileExists(p)) }));
-  const team = (source.team || []).map((t) => ({ ...t, role: t.position || 'Менеджер' }));
+  // на сайте только Сергей Усов (общий номер) и Владислав Ли, фото сотрудников пока не показываем (решение 12.11.2026)
+  const team = (source.team || []).filter((t) => SITE_TELS.includes(t.tel)).map((t) => ({ ...t, photo: null, role: t.position || 'Менеджер' }));
   const cities = optionalJson('data/cities.json', []).map((c) => ({ ...c, url: R.city(c.slug) }));
   const posts = loadPosts();
   const faq = optionalJson('data/faq.json', []);
@@ -296,22 +297,22 @@ export function loadContext(build) {
     })),
     selections: selections.filter((s) => s.count > 0 && s.nav !== false).slice(0, 10).map((s) => ({ name: s.name, url: s.url, count: s.count })),
     serviceGroups: serviceGroups.map((g) => ({ ...g, items: g.items.map((slug) => services.find((s) => s.slug === slug)).filter(Boolean).map((s) => ({ name: s.navName || s.name, url: s.url })) })),
-    servicePromo: { label: 'Калькулятор', title: 'Сколько стоит авто под ключ', text: 'Пошлина, утильсбор, доставка и оформление — расчёт за минуту.', cta: 'Рассчитать', url: R.calculator },
+    servicePromo: { label: 'Калькулятор', title: 'Сколько стоит авто под ключ', text: 'Пошлина, утильсбор, доставка и оформление: расчет за минуту.', cta: 'Рассчитать', url: R.calculator },
     top: [
       { name: 'Калькулятор', url: R.calculator },
       { name: 'Доставка', url: R.delivery },
-      { name: 'Привезённые авто', url: R.cases },
+      { name: 'Привезенные авто', url: R.cases },
       { name: 'Отзывы', url: R.reviews },
     ],
     companyGroups: [
-      { title: 'Компания', items: [{ name: 'О компании', url: R.about }, { name: 'Отзывы клиентов', url: R.reviews }, { name: 'Привезённые авто', url: R.cases }, { name: 'Контакты', url: R.contacts }] },
+      { title: 'Компания', items: [{ name: 'О компании', url: R.about }, { name: 'Отзывы клиентов', url: R.reviews }, { name: 'Привезенные авто', url: R.cases }, { name: 'Контакты', url: R.contacts }] },
       { title: 'Полезное', items: [{ name: 'Как заказать автомобиль', url: R.howTo }, { name: 'Блог', url: R.blog }, { name: 'Вопросы и ответы', url: R.faq }, { name: 'Как читать аукционный лист', url: R.auctionSheet }, { name: 'Видео и обзоры', url: R.video }] },
       { title: 'Доставка', items: [{ name: 'Доставка по России', url: R.delivery }, ...cities.slice(0, 3).map((c) => ({ name: `Доставка в ${c.nameAcc || c.name}`, url: c.url }))] },
     ],
     companyPromo: { label: 'Офис во Владивостоке', title: site.contacts.street, text: `${site.contacts.office} · ${site.contacts.hours}`, cta: 'Как добраться', url: R.contacts },
     footerCompany: [
       { name: 'О компании', url: R.about },
-      { name: 'Привезённые авто', url: R.cases },
+      { name: 'Привезенные авто', url: R.cases },
       { name: 'Отзывы', url: R.reviews },
       { name: 'Доставка по России', url: R.delivery },
       { name: 'Как заказать авто', url: R.howTo },

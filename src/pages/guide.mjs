@@ -46,12 +46,12 @@ function sheetSvg() {
   const badge = (n, x, y) => `<g class="sheet__badge"><circle cx="${x}" cy="${y}" r="11"/><text x="${x}" y="${y + 4}" text-anchor="middle">${n}</text></g>`;
   const specRows = [['КПП', 'FAT'], ['ПРИВОД', '4WD'], ['ПРОБЕГ', '37 000 km'], ['САЛОН', 'B'], ['ОПЦИИ', 'AAC · AW · NAVI']];
   return html`
-            <svg class="sheet" viewBox="0 0 400 520" role="img" aria-label="Условная схема аукционного листа: 1 — общая оценка, 2 — схема кузова, 3 — салон и техника, 4 — комментарий инспектора">
+            <svg class="sheet" viewBox="0 0 400 520" role="img" aria-label="Условная схема аукционного листа: общая оценка (1), схема кузова (2), салон и техника (3), комментарий инспектора (4)">
               <rect class="sheet__paper" x="0.5" y="0.5" width="399" height="519" rx="4"/>
               <g class="sheet__box">
                 <rect x="14" y="14" width="92" height="52"/><text class="sheet__k" x="22" y="31">ЛОТ</text><text class="sheet__v" x="22" y="54">30417</text>
                 <rect x="112" y="14" width="76" height="52"/><text class="sheet__k" x="120" y="31">ГОД</text><text class="sheet__v" x="120" y="54">2021</text>
-                <rect x="194" y="14" width="82" height="52"/><text class="sheet__k" x="202" y="31">ОБЪЁМ</text><text class="sheet__v" x="202" y="54">1500</text>
+                <rect x="194" y="14" width="82" height="52"/><text class="sheet__k" x="202" y="31">ОБЪЕМ</text><text class="sheet__v" x="202" y="54">1500</text>
               </g>
               <g class="sheet__zone" data-zone="1">
                 <rect x="282" y="14" width="104" height="52"/>
@@ -103,7 +103,7 @@ function guidePage(ctx) {
       modal: 'request',
       subject: 'Разбор аукционного листа',
       ...opts,
-      attrs: { 'data-modal-title': 'Поможем разобрать аукционный лист', 'data-modal-text': 'Оставьте контакты — менеджер свяжется с вами и подскажет, как передать фото листа или ссылку на лот.', 'data-modal-label': 'Аукционный лист' },
+      attrs: { 'data-modal-title': 'Поможем разобрать аукционный лист', 'data-modal-text': 'Оставьте контакты: менеджер свяжется с вами и подскажет, как передать фото листа или ссылку на лот.', 'data-modal-label': 'Аукционный лист' },
     });
 
   const commentsCount = g.comments.groups.reduce((s, x) => s + x.items.length, 0);
@@ -401,14 +401,14 @@ function guidePage(ctx) {
       ? html`
     <section class="section section--dark" id="primery">
       <div class="container">
-        ${sectionHead({ label: g.real.label, title: duo(g.real.title[0], g.real.title[1]), lead: g.real.lead, actions: more('Все привезённые авто', R.cases) })}
+        ${sectionHead({ label: g.real.label, title: duo(g.real.title[0], g.real.title[1]), lead: g.real.lead, actions: more('Все привезенные авто', R.cases) })}
         <div class="real-grid">
           ${real.map(
             ({ c, grade, meaning }, i) => html`
           <a class="real-tile" href="${u(c.url)}"${reveal(Math.min(i, 4))}>
             <span class="real-tile__top">
               <span class="real-tile__grade">${esc(grade)}</span>
-              <span class="real-tile__thumb">${img({ src: c.image, alt: `${c.name} — автомобиль с аукционной оценкой ${grade}`, sizes: '72px', attrs: c.imageFocus ? { style: `object-position:${c.imageFocus}` } : {} })}</span>
+              <span class="real-tile__thumb">${img({ src: c.image, alt: `${c.name}, автомобиль с аукционной оценкой ${grade}`, sizes: '72px', attrs: c.imageFocus ? { style: `object-position:${c.imageFocus}` } : {} })}</span>
             </span>
             <span class="real-tile__meaning">${meaning ? typo(meaning) : 'аукционная оценка'}</span>
             <span class="real-tile__foot">
@@ -458,7 +458,7 @@ function guidePage(ctx) {
         <div class="u-mt-7">
           ${linkBlock('Автомобили с японских аукционов', [{ name: `Авто ${japan.from}`, url: R.country('japan') }, ...ctx.brandsOf('japan').slice(0, 10).map((b) => ({ name: `${b.name} ${japan.from}`, url: b.url })), ...selections.map((s) => ({ name: s.name, url: s.url }))])}
           ${linkBlock(g.posts?.title || 'Статьи по теме', posts)}
-          ${linkBlock('Полезное', [{ name: 'Как заказать автомобиль', url: R.howTo }, { name: 'Привезённые авто', url: R.cases }, { name: 'Калькулятор стоимости', url: R.calculator }, { name: 'Доставка по России', url: R.delivery }, { name: 'Вопросы и ответы', url: R.faq }, { name: 'Отзывы клиентов', url: R.reviews }, { name: 'Блог', url: R.blog }])}
+          ${linkBlock('Полезное', [{ name: 'Как заказать автомобиль', url: R.howTo }, { name: 'Привезенные авто', url: R.cases }, { name: 'Калькулятор стоимости', url: R.calculator }, { name: 'Доставка по России', url: R.delivery }, { name: 'Вопросы и ответы', url: R.faq }, { name: 'Отзывы клиентов', url: R.reviews }, { name: 'Блог', url: R.blog }])}
         </div>
       </div>
     </section>

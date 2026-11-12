@@ -1,4 +1,4 @@
-// Привезённые авто: хаб кейсов (/privezennye-avto/) и страница каждого автомобиля клиента.
+// Привезенные авто: хаб кейсов (/privezennye-avto/) и страница каждого автомобиля клиента.
 // Факты — только из data/source/maxgroup.json → cases; тексты — data/content/cases/*.json (общие блоки — _hub.json).
 import { html, esc, u, a, abs, img, imgSize, typo, price, priceShort, num, count } from '../lib/core.mjs';
 import { faqLd, itemListLd } from '../lib/seo.mjs';
@@ -7,18 +7,24 @@ import { fromShort } from '../components/catalog.mjs';
 import { R } from '../routes.mjs';
 
 const HOME = { name: 'Главная', url: R.home };
-const HUB = { name: 'Привезённые авто', url: R.cases };
+const HUB = { name: 'Привезенные авто', url: R.cases };
 const carWord = ['автомобиль', 'автомобиля', 'автомобилей'];
 
 const plain = (s) => String(s).replace(/[  ]/g, ' ');
 const fill = (tpl, vars) => String(tpl ?? '').replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
 const tokens = (s) => String(s).toLowerCase().replace(/[^a-z0-9а-яё]+/g, ' ').trim().split(' ').filter(Boolean);
 const shortName = (name) => name.replace(/\s+(19|20)\d{2}$/, '');
-/** Типографика текстов кейса: typo() + неразрывный пробел между разрядами («37 000 км» не рвётся на «37 / 000») */
+/** Типографика текстов кейса: typo() + неразрывный пробел между разрядами («37 000 км» не рвется на «37 / 000») */
 const tt = (s) => typo(s).replace(/(\d) (?=\d{3}(?!\d))/g, '$1\u00a0');
 /** Предлог перед названием: «об Audi A3L», но «о Ford Ranger» (перед гласным звуком — «об») */
 const about = (name) => `${/^[aeiouаиоуыэ]/i.test(name) ? 'об' : 'о'} ${name}`;
-const range = (arr) => (arr?.length ? (arr[0] === arr[1] ? String(arr[0]) : `${arr[0]}–${arr[1]}`) : '');
+const range = (arr) => (arr?.length ? (arr[0] === arr[1] ? String(arr[0]) : `${arr[0]}-${arr[1]}`) : '');
+/** Диапазон цен для плитки: нижняя граница в единицах верхней («от 0,85 до 4,3 млн ₽»), чтобы строка помещалась в колонку */
+const rangeShort = (lo, hi) => {
+  if (hi < 1_000_000) return `от ${Math.round(lo / 1000)} до ${priceShort(hi)}`;
+  const m = lo >= 1_000_000 ? Math.round(lo / 100_000) / 10 : Math.round(lo / 10_000) / 100;
+  return `от ${String(m).replace('.', ',')} до ${priceShort(hi)}`;
+};
 /** Рыночные ориентиры сроков из calc-rules.json — для ответов о сроке доставки */
 function timingVars(ctx) {
   const c = ctx.calc?.costs || {};
@@ -34,7 +40,7 @@ const postLinks = (ctx, slugs = []) => [...new Set(slugs)].map((slug) => ctx.pos
 /** Размеры фото в сетке хаба: 4 колонки → 3 (до 1180px) → 2 (до 900px); горизонтальный снимок занимает две колонки */
 const GRID_SIZES = { wide: '(max-width: 900px) 100vw, (max-width: 1180px) 66vw, 50vw', normal: '(max-width: 900px) 50vw, (max-width: 1180px) 33vw, 25vw' };
 
-// Статусы считаем сами: в общих данных код «in-transit» не получает свой цвет (см. отчёт, sharedNeeds).
+// Статусы считаем сами: в общих данных код «in-transit» не получает свой цвет (см. отчет, sharedNeeds).
 const STATUS = {
   delivered: { key: 'delivered', label: 'Доставлен', cls: 'status--ok', hash: 'dostavlen', total: 'Доставлено' },
   transit: { key: 'transit', label: 'В пути', cls: 'status--transit', hash: 'v-puti', total: 'В пути' },
@@ -101,7 +107,7 @@ function afterBrand(caseTokens, brandName) {
 
 /**
  * Модели и марки каталога, которые совпадают с названием кейса. Модель — только при точном совпадении слов.
- * Сначала ищем в стране кейса; если там марки нет — берём ту же марку из других стран каталога.
+ * Сначала ищем в стране кейса; если там марки нет — берем ту же марку из других стран каталога.
  */
 function catalogMatch(ctx, c) {
   const find = (scope) => {
@@ -153,7 +159,7 @@ function shotReview(r, i) {
   return html`
           <article class="shot" data-review${reveal(Math.min(i, 4))}>
             <div class="shot__media shot__media--${photos.length}" data-gallery>
-              ${photos.map((p, pi) => `<a href="${a(p)}" data-gallery-item data-alt="Фото ${pi + 1} к отзыву — ${esc(r.author)}">${img({ src: p, alt: `Автомобиль клиента — фото к отзыву, ${r.author}`, sizes: photos.length > 1 ? '140px' : '(max-width: 900px) 80vw, 27vw' })}</a>`)}
+              ${photos.map((p, pi) => `<a href="${a(p)}" data-gallery-item data-alt="Фото ${pi + 1} к отзыву, ${esc(r.author)}">${img({ src: p, alt: `Фото автомобиля клиента к отзыву, ${r.author}`, sizes: photos.length > 1 ? '140px' : '(max-width: 900px) 80vw, 27vw' })}</a>`)}
             </div>
             <div class="shot__body">
               <div class="review__head">
@@ -182,7 +188,7 @@ function quoteBlock(r, meta) {
             <h3 class="case-quote__title">${duo(meta.title[0], meta.title[1])}</h3>
             <p class="case-quote__cap">${typo(meta.caption)}</p>
             ${r.photos.length
-              ? `<div class="review__photos" data-gallery>${r.photos.map((p, pi) => `<a href="${a(p)}" data-gallery-item data-alt="Фото ${pi + 1} к отзыву — ${esc(r.author)}">${img({ src: p, alt: `Фото автомобиля к отзыву — ${r.author}`, sizes: '84px' })}</a>`).join('')}</div>`
+              ? `<div class="review__photos" data-gallery>${r.photos.map((p, pi) => `<a href="${a(p)}" data-gallery-item data-alt="Фото ${pi + 1} к отзыву, ${esc(r.author)}">${img({ src: p, alt: `Фото автомобиля к отзыву, ${r.author}`, sizes: '84px' })}</a>`).join('')}</div>`
               : ''}
           </div>
           <div class="case-quote__main">
@@ -250,9 +256,9 @@ function hubPage(ctx, list) {
               <p class="promo-tile__title">${typo(t.promo.title)}</p>
               <p>${typo(t.promo.text)}</p>
             </div>
-            ${btn('Хочу такой же', R.contacts, { variant: 'light', modal: 'request', subject: 'Хочу такой же автомобиль (привезённые авто, плитка)', attrs: { 'data-modal-title': 'Привезём такой же автомобиль', 'data-modal-text': 'Назовите модель и бюджет — подберём варианты и пришлём расчёт под ключ.' } })}
+            ${btn('Хочу такой же', R.contacts, { variant: 'light', modal: 'request', subject: 'Хочу такой же автомобиль (привезенные авто, плитка)', attrs: { 'data-modal-title': 'Привезем такой же автомобиль', 'data-modal-text': 'Назовите модель и бюджет, и мы подберем варианты и пришлем расчет под ключ.' } })}
           </div>`;
-  // у широких плиток слот вдвое больше: без своего sizes браузер берёт файл 480px и фото выходит размытым
+  // у широких плиток слот вдвое больше: без своего sizes браузер берет файл 480px и фото выходит размытым
   const gridSizes = (c) => (c.wide ? GRID_SIZES.wide : GRID_SIZES.normal);
   const tiles = () => {
     const out = list.map(
@@ -273,7 +279,7 @@ function hubPage(ctx, list) {
   const geo = list.filter((c) => c.clientCity).sort((x, y) => dist(y) - dist(x));
   const geoText = (c) => {
     if (c.extra.selfPickup) return `${t.geo.selfDrive}${c.city ? `: ${num(c.city.distanceKm)} км` : ''}`;
-    if (c.city) return `Автовозом из Владивостока — ориентировочно <span class="nowrap">${daysText(c.city)}</span>, от ${price(c.city.priceFrom)}`;
+    if (c.city) return `Автовозом из Владивостока: ориентировочно <span class="nowrap">${daysText(c.city)}</span>, от ${price(c.city.priceFrom)}`;
     if (c.clientCity === 'Владивосток') return 'Клиент получает автомобиль во Владивостоке';
     return t.geo.local;
   };
@@ -293,7 +299,7 @@ function hubPage(ctx, list) {
     changefreq: 'weekly',
     images: list.slice(0, 8).map((c) => c.image),
     ogImage: list[0] ? list[0].image.replace(/^assets\//, '') : undefined,
-    jsonld: [itemListLd(site, 'Привезённые автомобили клиентов Макс Групп', list.map((c) => ({ url: c.url, name: c.name }))), faqLd(faq)].filter(Boolean),
+    jsonld: [itemListLd(site, 'Привезенные автомобили клиентов Макс Групп', list.map((c) => ({ url: c.url, name: c.name }))), faqLd(faq)].filter(Boolean),
     render: () => html`
     <section class="page-head page-head--dark on-dark page-head--photo cases-head">
       <div class="page-head__bg">${img({ src: 'assets/img/hero/bridge-kei.webp', alt: 'Автомобиль на вантовом мосту во Владивостоке ночью', priority: true, sizes: '100vw' })}</div>
@@ -307,7 +313,7 @@ function hubPage(ctx, list) {
           <div class="page-head__side">
             <p class="lead">${typo(t.lead)}</p>
             <div class="page-head__actions">
-              ${btn('Хочу такой же', R.contacts, { variant: 'light', modal: 'request', subject: 'Хочу такой же автомобиль (привезённые авто)', attrs: { 'data-modal-title': 'Привезём такой же автомобиль', 'data-modal-text': 'Назовите модель и бюджет — подберём варианты и пришлём расчёт под ключ.' } })}
+              ${btn('Хочу такой же', R.contacts, { variant: 'light', modal: 'request', subject: 'Хочу такой же автомобиль (привезенные авто)', attrs: { 'data-modal-title': 'Привезем такой же автомобиль', 'data-modal-text': 'Назовите модель и бюджет, и мы подберем варианты и пришлем расчет под ключ.' } })}
               ${btn('Смотреть каталог', R.catalog, { variant: 'ghost', arrow: false })}
             </div>
           </div>
@@ -325,7 +331,7 @@ function hubPage(ctx, list) {
           ${priceFrom
             ? html`
           <div class="cases-stat">
-            <span class="cases-stat__value cases-stat__value--range">${priceShort(priceFrom).replace(/\s*₽$/, '')} — ${priceShort(priceTo)}</span>
+            <span class="cases-stat__value cases-stat__value--range">${rangeShort(priceFrom, priceTo)}</span>
             <span class="cases-stat__name">Диапазон цен</span>
             <span class="cases-stat__text">${typo(t.stats.price)}</span>
           </div>`
@@ -365,7 +371,7 @@ function hubPage(ctx, list) {
           <p>${typo(t.empty.text)}</p>
           <div class="btn-row">
             <button class="btn btn--ghost" type="button" data-cases-reset>Сбросить фильтр</button>
-            ${btn('Оставить заявку', R.contacts, { modal: 'request', subject: 'Подбор автомобиля (привезённые авто, пустой фильтр)' })}
+            ${btn('Оставить заявку', R.contacts, { modal: 'request', subject: 'Подбор автомобиля (привезенные авто, пустой фильтр)' })}
           </div>
         </div>
         <div class="section-foot">
@@ -490,7 +496,7 @@ function hubPage(ctx, list) {
       </div>
     </section>
 
-    ${ctaBand(ctx, { label: t.cta.label, title: duo(t.cta.title[0], t.cta.title[1]), text: t.cta.text, subject: 'Хочу такой же автомобиль (привезённые авто)', bg: 'assets/img/hero/street-far.webp', fields: ['name', 'phone', 'car', 'city'], cta: 'Хочу такой же' })}`,
+    ${ctaBand(ctx, { label: t.cta.label, title: duo(t.cta.title[0], t.cta.title[1]), text: t.cta.text, subject: 'Хочу такой же автомобиль (привезенные авто)', bg: 'assets/img/hero/street-far.webp', fields: ['name', 'phone', 'car', 'city'], cta: 'Хочу такой же' })}`,
   };
 }
 
@@ -500,7 +506,7 @@ function hubPage(ctx, list) {
 const CTA_BG = ['assets/img/hero/gclass-road.webp', 'assets/img/hero/street-night.webp', 'assets/img/hero/kei-blue.webp', 'assets/img/hero/city-towers.webp'];
 
 function h1Tail(c) {
-  if (c.st.key === 'transit') return c.cn ? `везём ${c.cn.from}` : 'везём под заказ';
+  if (c.st.key === 'transit') return c.cn ? `везем ${c.cn.from}` : 'везем под заказ';
   if (c.st.key === 'auction') return 'на торгах';
   return c.cn ? `привезли ${c.cn.from}` : 'привезли под заказ';
 }
@@ -519,8 +525,8 @@ function caseTitle(c) {
   let short; // запасной вариант без страны
   if (c.st.key === 'transit') {
     const to = c.clientCity ? ` ${cityAcc(c)}` : '';
-    full = [`${c.name}${from}: везём под заказ${to}`, `${c.name}${from}: везём под заказ`];
-    short = `${c.name}: везём${from || ' под заказ'}`;
+    full = [`${c.name}${from}: везем под заказ${to}`, `${c.name}${from}: везем под заказ`];
+    short = `${c.name}: везем${from || ' под заказ'}`;
   } else if (c.st.key === 'auction') {
     full = [`${c.name}: лот на торгах, подбор под заказ`, `${c.name}: лот на торгах`];
     short = `${c.name}: на торгах`;
@@ -540,7 +546,7 @@ function caseDescription(c) {
   const forWhom = c.clientCity ? ` для клиента из ${cityGen(c)}` : '';
   const first =
     c.st.key === 'transit'
-      ? `${c.name}: везём под заказ${from}${forWhom}.`
+      ? `${c.name}: везем под заказ${from}${forWhom}.`
       : c.st.key === 'auction'
         ? `${c.name}: лот, отобранный для торгов под заказ клиента.`
         : `${c.name}: привезли под заказ${from}${forWhom}.`;
@@ -551,16 +557,16 @@ function caseDescription(c) {
   // состав цены из источника: «В стоимость под ключ входят: таможенное оформление, СБКТС, ЭПТС»
   const inc = (c.priceIncludes || []).map((x) => (/^[А-ЯЁ][а-яё]/.test(x) ? x[0].toLowerCase() + x.slice(1) : x));
   const incList = inc.length > 1 ? `${inc.slice(0, -1).join(', ')} и ${inc.at(-1)}` : inc[0] || '';
-  // части в порядке показа; prio — очерёдность, в которой они занимают место в 165 знаках (цена важнее характеристик).
-  // У части может быть несколько вариантов (alts) — берётся первый, который помещается.
+  // части в порядке показа; prio — очередность, в которой они занимают место в 165 знаках (цена важнее характеристик).
+  // У части может быть несколько вариантов (alts) — берется первый, который помещается.
   const parts = [
     { prio: 0, alts: [first] },
     { prio: 3, alts: [specs.length ? `${specs.join('; ')}.`.replace(/^./, (x) => x.toUpperCase()) : ''] },
     { prio: 1, alts: [c.price ? `${c.priceLabel}: ${price(c.price)}.` : ''] },
     { prio: 4, alts: incList ? [`В стоимость под ключ вошли ${incList}.`, `В цене: ${incList}.`] : [''] },
-    { prio: 2, alts: [c.deliveryTerm ? `Срок доставки — ${c.deliveryTerm}.` : ''] },
+    { prio: 2, alts: [c.deliveryTerm ? `Срок доставки: ${c.deliveryTerm}.` : ''] },
     { prio: 5, alts: [c.multi ? 'Реальные автомобили клиентов Макс Групп: фото, статус и детали сделки.' : 'Реальный автомобиль клиента Макс Групп: фото, статус и детали сделки.', 'Фото, статус и детали сделки.'] },
-    { prio: 6, alts: ['Расчёт такого же авто под ключ с доставкой по России.', 'Расчёт такого же авто под ключ.'] },
+    { prio: 6, alts: ['Расчет такого же авто под ключ с доставкой по России.', 'Расчет такого же авто под ключ.'] },
   ].filter((p) => p.alts[0]);
   let left = 165;
   for (const p of [...parts].sort((x, y) => x.prio - y.prio)) {
@@ -604,7 +610,7 @@ function casePage(ctx, list, c) {
   const guide = ctx.content.guide || {};
   const ex = c.extra;
   const from = c.cn ? ` ${c.cn.from}` : '';
-  const h1 = `${c.name} — ${h1Tail(c)}`;
+  const h1 = `${c.name}, ${h1Tail(c)}`;
   const title = caseTitle(c);
   const description = caseDescription(c);
   const crumbsList = [HOME, HUB, { name: c.name, url: c.url }];
@@ -619,7 +625,7 @@ function casePage(ctx, list, c) {
       modal: 'request',
       subject,
       ...extra,
-      attrs: { 'data-modal-title': `${c.short}: привезём такой же`, 'data-modal-text': 'Оставьте контакты — подберём автомобиль той же модели и пришлём расчёт под ключ.', 'data-modal-car': c.multi ? null : c.short, 'data-modal-label': 'Привезённые авто' },
+      attrs: { 'data-modal-title': `${c.short}: привезем такой же`, 'data-modal-text': 'Оставьте контакты, и мы подберем автомобиль той же модели и пришлем расчет под ключ.', 'data-modal-car': c.multi ? null : c.short, 'data-modal-label': 'Привезенные авто' },
     });
 
   // паспорт сделки
@@ -633,7 +639,7 @@ function casePage(ctx, list, c) {
     c.clientName ? ['Клиент', esc(c.clientName)] : null,
     c.clientCity ? ['Город клиента', c.city ? `<a class="link" href="${c.city.url}">${esc(c.clientCity)}</a>` : esc(c.clientCity)] : null,
   ].filter(Boolean);
-  const noPriceText = c.st.key === 'auction' ? 'Цена — по итогам торгов' : c.st.key === 'transit' ? 'В пути во Владивосток' : 'Цена сделки не публиковалась';
+  const noPriceText = c.st.key === 'auction' ? 'Цена по итогам торгов' : c.st.key === 'transit' ? 'В пути во Владивосток' : 'Цена сделки не публиковалась';
 
   // блок о цене
   const priceKind = c.price ? (c.priceIncludes?.length ? 'includes' : 'plain') : c.st.key === 'auction' ? 'auction' : c.st.key === 'transit' ? 'transit' : 'none';
@@ -703,10 +709,10 @@ function casePage(ctx, list, c) {
     f.grade && c.grade && gradeMeaning ? { q: fill(f.grade.q, vars), a: fill(f.grade.a, vars) } : null,
   ].filter(Boolean);
 
-  const story = (ex.story?.length ? ex.story : [`${c.name} — автомобиль клиента Макс Групп. Статус: ${c.st.label.toLowerCase()}.`]).map((p) => tt(p)).join('\n\n');
+  const story = (ex.story?.length ? ex.story : [`Автомобиль клиента Макс Групп: ${c.name}. Статус: ${c.st.label.toLowerCase()}.`]).map((p) => tt(p)).join('\n\n');
   const cta = c.st.key === 'delivered' ? t.cta.delivered : t.cta.other;
   const ctaTitle = c.multi ? duo('Хотите такой же', 'автомобиль?') : duo(fill(cta.title[0], { short: c.short }), fill(cta.title[1], { short: c.short }));
-  const alt = `${c.name}${from ? ` ${c.cn.from}` : ''} — ${c.st.label.toLowerCase()}, автомобиль клиента Макс Групп`;
+  const alt = `${c.name}${from ? ` ${c.cn.from}` : ''}, ${c.st.label.toLowerCase()}, автомобиль клиента Макс Групп`;
 
   const deal = () => html`
               ${c.price
@@ -750,7 +756,7 @@ function casePage(ctx, list, c) {
           <div class="casehero__pass">
             <div class="casehero__top">
               ${label(c.cn ? `Кейс · ${c.cn.name}` : 'Кейс · авто под заказ')}
-              <h1 class="casehero__title">${esc(c.name)}&nbsp;<span class="mute">— ${esc(h1Tail(c))}</span></h1>
+              <h1 class="casehero__title">${esc(c.name)},<span class="mute"> ${esc(h1Tail(c))}</span></h1>
               ${route([c.countryName, 'Владивосток', far ? c.clientCity : null], 'route--lg')}
               ${ex.lead ? `<p class="casehero__lead">${tt(ex.lead)}</p>` : ''}
             </div>
@@ -780,12 +786,12 @@ function casePage(ctx, list, c) {
                 : `<h3 class="case-box__title">${c.price ? `${esc(c.priceLabel)}: ${price(c.price)}` : esc(noPriceText)}</h3>`}
               <p class="case-box__text">${typo(priceNote)}</p>
               <div class="btn-row">
-                ${btn('Запросить расчёт на сегодня', R.contacts, { variant: 'dark', size: 'sm', modal: 'request', subject: `Расчёт на сегодня: ${c.name}`, attrs: { 'data-modal-title': `${c.short}: расчёт на сегодня`, 'data-modal-text': 'Оставьте контакты — посчитаем такой же автомобиль по актуальному курсу и ставкам.', 'data-modal-car': c.multi ? null : c.short } })}
+                ${btn('Запросить расчет на сегодня', R.contacts, { variant: 'dark', size: 'sm', modal: 'request', subject: `Расчет на сегодня: ${c.name}`, attrs: { 'data-modal-title': `${c.short}: расчет на сегодня`, 'data-modal-text': 'Оставьте контакты, и мы посчитаем такой же автомобиль по актуальному курсу и ставкам.', 'data-modal-car': c.multi ? null : c.short } })}
               </div>
             </div>
             ${c.grade
               ? note(
-                  `<strong>Аукционная оценка ${esc(c.grade)}</strong>${gradeMeaning ? ` — ${esc(gradeMeaning)}` : ''}.${interior ? ` Салон ${esc(c.specs['Салон'])} — ${esc(interior)}.` : ''} <a class="link" href="${u(R.auctionSheet)}">Как читать аукционный лист</a>`
+                  `<strong>Аукционная оценка ${esc(c.grade)}</strong>${gradeMeaning ? `: ${esc(gradeMeaning)}` : ''}.${interior ? ` Салон ${esc(c.specs['Салон'])}: ${esc(interior)}.` : ''} <a class="link" href="${u(R.auctionSheet)}">Как читать аукционный лист</a>`
                 )
               : ''}
           </div>
@@ -819,7 +825,7 @@ function casePage(ctx, list, c) {
       ? html`
     <section class="section">
       <div class="container">
-        ${sectionHead({ label: 'Похожие кейсы', title: duo('Другие автомобили,', 'которые мы привезли и везём'), aside: sim.length > 4 ? railNav() : '', actions: more(`Все ${list.length} автомобилей`, R.cases) })}
+        ${sectionHead({ label: 'Похожие кейсы', title: duo('Другие автомобили,', 'которые мы привезли и везем'), aside: sim.length > 4 ? railNav() : '', actions: more(`Все ${list.length} автомобилей`, R.cases) })}
         ${rail(sim.map((x, i) => caseCard(x, { i, stack: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
       </div>
     </section>`
@@ -831,7 +837,7 @@ function casePage(ctx, list, c) {
           <div class="split__sticky"${reveal()}>
             ${label('Вопросы и ответы')}
             <h2>${c.multi ? duo('Вопросы', 'о такой поставке') : duo('Вопросы', about(c.short))}</h2>
-            <p class="lead">Цена на сегодня, срок и заказ такого же автомобиля. Не нашли ответ — спросите менеджера.</p>
+            <p class="lead">Цена на сегодня, срок и заказ такого же автомобиля. Не нашли ответ? Спросите менеджера.</p>
             ${more('Как заказать автомобиль', R.howTo)}
             ${more('Все вопросы', R.faq)}
           </div>

@@ -29,15 +29,15 @@ function hero(ctx) {
           <div class="hero__side" data-hero-in style="--i:2">
             <p class="lead">${typo('Максимально прозрачный процесс импорта. Подбираем, проверяем, покупаем и привозим автомобили под ваш запрос и бюджет.')}</p>
             <div class="hero__actions">
-              ${btn('Рассчитать стоимость', R.calculator, { variant: 'light', modal: 'request', subject: 'Расчёт стоимости авто (главная, первый экран)' })}
+              ${btn('Рассчитать стоимость', R.calculator, { variant: 'light', modal: 'request', subject: 'Расчет стоимости авто (главная, первый экран)' })}
               ${btn('Смотреть каталог', R.catalog, { variant: 'ghost', arrow: false })}
             </div>
           </div>
         </div>
         <div class="hero__strip" data-hero-in style="--i:3">
-          <div class="hero__fact"><b>5,0 в ${site.rating.count} отзывах</b><span>Из 2ГИС и Яндекс Карт — у всех высшая оценка</span></div>
-          <div class="hero__fact"><b>Таможня</b><span>Оформление и расчёт пошлин берём на себя</span></div>
-          <div class="hero__fact"><b>Платёжный агент</b><span>Легальная оплата за рубеж с документами</span></div>
+          <div class="hero__fact"><b>5,0 в ${site.rating.count} отзывах</b><span>Из 2ГИС и Яндекс Карт, у всех высшая оценка</span></div>
+          <div class="hero__fact"><b>Таможня</b><span>Оформление и расчет пошлин берем на себя</span></div>
+          <div class="hero__fact"><b>Платежный агент</b><span>Легальная оплата за рубеж с документами</span></div>
           <div class="hero__fact"><b>Под ключ</b><span>От торгов до выдачи ключей в вашем городе</span></div>
           <button class="hero__toggle" type="button" aria-label="Поставить видео на паузу" aria-pressed="false" data-video-toggle>${icon('pause', 'i-pause')}${icon('play-fill', 'i-play')}</button>
         </div>
@@ -65,7 +65,7 @@ function countriesSection(ctx) {
       <div class="container">
         ${sectionHead({
           label: 'Направления',
-          title: duo('Три рынка —', 'одна команда на всех этапах'),
+          title: duo('Три рынка,', 'одна команда на всех этапах'),
           lead: 'Выбираем страну под задачу: японские аукционы для праворульных автомобилей с честным пробегом, Корея для свежих левых рулей, Китай для новых моделей и электромобилей.',
         })}
         <div class="grid grid--3">
@@ -129,7 +129,7 @@ function catalogSection(ctx) {
         ${sectionHead({
           label: 'Каталог',
           title: duo('Автомобили, которые можно', 'заказать прямо сейчас'),
-          lead: 'Примеры с аукционов и площадок с расчётом цены во Владивостоке. Не нашли нужный — подберём под запрос.',
+          lead: 'Примеры с аукционов и площадок с расчетом цены во Владивостоке. Не нашли нужный? Подберем под запрос.',
           aside: html`<div class="tabs" role="tablist" aria-label="Страна" data-tabs>
             ${tabs.map((t, i) => `<button class="tabs__btn" type="button" role="tab" id="katalog-tab-${t.key}" aria-controls="katalog-panel-${t.key}" aria-selected="${i === 0}" data-tab="${t.key}"${i ? ' tabindex="-1"' : ''}>${esc(t.name)}${t.total ? `<small>${t.total}</small>` : ''}</button>`)}
           </div>`,
@@ -142,7 +142,7 @@ function catalogSection(ctx) {
         )}
         <div class="section-foot">
           ${chips(ctx.nav.selections.slice(0, 7), { sm: false })}
-          ${btn(`Весь каталог — ${ctx.carWord(ctx.cars.length)}`, R.catalog, { variant: 'dark' })}
+          ${btn(`Весь каталог: ${ctx.carWord(ctx.cars.length)}`, R.catalog, { variant: 'dark' })}
         </div>
       </div>
     </section>`;
@@ -162,7 +162,7 @@ function stepsSection() {
       <div class="container">
         ${sectionHead({
           label: 'Как мы работаем',
-          title: duo('От заявки до ключей —', 'шесть понятных шагов'),
+          title: duo('От заявки до ключей', 'за шесть понятных шагов'),
           lead: 'Типовой порядок сделки. На каждом шаге менеджер сообщает, где автомобиль и что с ним происходит; порядок оплаты закрепляется в договоре.',
           aside: railNav(),
           actions: more('Подробно о каждом шаге', R.howTo),
@@ -178,14 +178,14 @@ function casesSection(ctx) {
     <section class="section" id="privezennye-avto">
       <div class="container">
         ${sectionHead({
-          label: 'Привезённые авто',
-          title: duo('Авто, которые мы', 'привезли и везём'),
+          label: 'Привезенные авто',
+          title: duo('Авто, которые мы', 'привезли и везем'),
           lead: 'Реальные автомобили наших клиентов: доставленные, в пути и на торгах.',
           aside: railNav(),
         })}
         ${rail(cases.map((c, i) => caseCard(c, { i, stack: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
         <div class="section-foot">
-          <p class="muted" style="max-width:52ch">${typo('Фотографии и цены — из описаний сделок. Цена указана на дату покупки; что в неё входит, подписано в карточке.')}</p>
+          <p class="muted" style="max-width:52ch">${typo('Фотографии и цены взяты из описаний сделок. Цена указана на дату покупки; что в нее входит, подписано в карточке.')}</p>
           ${btn(`Все ${count(ctx.cases.length, ['автомобиль', 'автомобиля', 'автомобилей'])}`, R.cases, { variant: 'dark' })}
         </div>
       </div>
@@ -207,8 +207,8 @@ function creditPicture(banner) {
 }
 
 function servicesSection(ctx) {
-  const main = ctx.services.filter((s) => ['avto-pod-zakaz', 'dileram', 'tamozhennoe-oformlenie', 'platezhnyj-agent'].includes(s.slug));
-  const order = ['avto-pod-zakaz', 'tamozhennoe-oformlenie', 'platezhnyj-agent', 'dileram'];
+  const main = ctx.services.filter((s) => ['avto-pod-zakaz', 'aukciony-yaponii', 'tamozhennoe-oformlenie', 'platezhnyj-agent'].includes(s.slug));
+  const order = ['avto-pod-zakaz', 'aukciony-yaponii', 'tamozhennoe-oformlenie', 'platezhnyj-agent'];
   main.sort((x, y) => order.indexOf(x.slug) - order.indexOf(y.slug));
   const credit = ctx.source.credit;
   return html`
@@ -217,7 +217,7 @@ function servicesSection(ctx) {
         ${sectionHead({
           label: 'Услуги',
           title: duo('Не только подбор:', 'вся инфраструктура импорта'),
-          lead: 'Таможенное оформление и оплату за рубеж берём на себя — вам не нужно искать брокера и способ оплатить инвойс.',
+          lead: 'Таможенное оформление и оплату за рубеж берем на себя: вам не нужно искать брокера и способ оплатить инвойс.',
           actions: more('Все услуги', R.services),
         })}
         <div class="svc-grid">
@@ -250,8 +250,8 @@ function servicesSection(ctx) {
               ${credit.banner.benefits.map((b) => `<span class="badge">${esc(b)}</span>`)}
             </div>
             <div class="credit__foot">
-              ${btn('Подобрать программу', R.service('avtokredit'), { variant: 'primary', modal: 'request', subject: 'Автокредит', attrs: { 'data-modal-title': 'Кредит на авто', 'data-modal-text': 'Оставьте заявку — поможем с одобрением кредита в одном из банков-партнёров.', 'data-modal-label': 'Автокредит' } })}
-              <div class="banks" aria-label="Банки-партнёры">
+              ${btn('Подобрать программу', R.service('avtokredit'), { variant: 'primary', modal: 'request', subject: 'Автокредит', attrs: { 'data-modal-title': 'Кредит на авто', 'data-modal-text': 'Оставьте заявку, и мы поможем с одобрением кредита в одном из банков-партнеров.', 'data-modal-label': 'Автокредит' } })}
+              <div class="banks" aria-label="Банки-партнеры">
                 ${credit.banks.map((b) => `<span>${img({ src: b.logo, alt: b.name, sizes: '120px' })}</span>`)}
               </div>
             </div>
@@ -271,7 +271,7 @@ function reviewsSection(ctx) {
         ${sectionHead({
           label: 'Отзывы',
           title: duo('Нас рекомендуют', 'друзьям и коллегам'),
-          lead: 'Отзывы клиентов из 2ГИС и Яндекс Карт — без правок, с фотографиями полученных автомобилей.',
+          lead: 'Отзывы клиентов из 2ГИС и Яндекс Карт без правок, с фотографиями полученных автомобилей.',
           aside: html`<div class="rating">
             <div class="rating__value">5,0</div>
             <div class="rating__meta">${stars(5)}<span>оценка в каждом из ${site.rating.count} отзывов:<br>${site.rating.twoGisCount} из 2ГИС, ${site.rating.count - site.rating.twoGisCount} с Яндекс Карт</span></div>
@@ -291,32 +291,6 @@ function reviewsSection(ctx) {
     </section>`;
 }
 
-function teamSection(ctx) {
-  return html`
-    <section class="section section--dark" id="komanda">
-      <div class="container">
-        ${sectionHead({
-          label: 'Команда',
-          title: duo('Команда,', 'которая ведёт вашу сделку'),
-          lead: 'Менеджеры помогут подобрать и доставить автомобиль. В отзывах клиенты пишут, что они были на связи и подробно объясняли все этапы.',
-        })}
-        <div class="grid grid--4 grid--keep-2">
-          ${ctx.team.map(
-            (p, i) => html`
-          <article class="person"${reveal(i)}>
-            <div class="person__photo">${img({ src: p.photo, alt: `${p.name} — ${p.role}, Макс Групп`, sizes: '(max-width: 900px) 50vw, 25vw' })}</div>
-            <div class="person__body">
-              <h3 class="person__name">${esc(p.name)}</h3>
-              <span class="person__role">${esc(p.role)}</span>
-              <a class="person__phone" href="tel:${p.tel}">${esc(p.phone)}</a>
-            </div>
-          </article>`
-          )}
-        </div>
-      </div>
-    </section>`;
-}
-
 function deliverySection(ctx) {
   if (!ctx.cities.length) return '';
   const cities = ctx.cities.slice(0, 14);
@@ -324,15 +298,15 @@ function deliverySection(ctx) {
   const col = (list, dup = false) => html`
           <div>
             <div class="cities__head${dup ? ' cities__head--dup' : ''}"><span class="label label--plain">Город</span><span class="label label--plain">Срок</span><span class="label label--plain">Автовоз</span><span></span></div>
-            ${list.map((c) => `<a class="city-row" href="${u(c.url)}"><span class="city-row__name">${esc(c.name)}</span><span class="city-row__val">${esc(c.daysLabel || '—')}</span><span class="city-row__val">${c.priceFrom ? 'от ' + price(c.priceFrom) : 'по запросу'}</span>${icon('arrow')}</a>`)}
+            ${list.map((c) => `<a class="city-row" href="${u(c.url)}"><span class="city-row__name">${esc(c.name)}</span><span class="city-row__val">${esc(c.daysLabel || 'по запросу')}</span><span class="city-row__val">${c.priceFrom ? 'от ' + price(c.priceFrom) : 'по запросу'}</span>${icon('arrow')}</a>`)}
           </div>`;
   return html`
     <section class="section" id="dostavka">
       <div class="container">
         ${sectionHead({
           label: 'Доставка по России',
-          title: duo('Из Владивостока —', 'в любой город страны'),
-          lead: 'Отправляем автомобили автовозом и по железной дороге. Ориентиры по срокам и стоимости — в таблице, точный расчёт пришлёт менеджер.',
+          title: duo('Из Владивостока', 'в любой город страны'),
+          lead: 'Отправляем автомобили автовозом и по железной дороге. Ориентиры по срокам и стоимости собраны в таблице, точный расчет пришлет менеджер.',
           actions: more('Все города и условия', R.delivery),
         })}
         <div class="cities"${reveal()}>
@@ -353,7 +327,7 @@ function videoSection(ctx) {
         ${sectionHead({
           label: 'Видео и соцсети',
           title: duo('Смотрите наши обзоры', 'и подборки авто'),
-          lead: 'Реальные цены, честные обзоры и новости авторынка — в Instagram, Telegram и на YouTube.',
+          lead: 'Реальные цены, честные обзоры и новости авторынка в Instagram, Telegram и на YouTube.',
           aside: railNav(),
           actions: html`
             <a class="btn btn--ghost btn--sm" href="${esc(site.socials.telegram.url)}" target="_blank" rel="noopener">${icon('telegram')} Telegram-канал</a>
@@ -365,7 +339,7 @@ function videoSection(ctx) {
             (v, i) => html`
           <a class="reel" href="${esc(v.url)}" target="_blank" rel="noopener nofollow"${reveal(Math.min(i, 4))}>
             <span class="reel__media">
-              ${img({ src: v.cover, alt: `Видео «${v.title}» — ${v.viewsOnCover} просмотров`, sizes: '(max-width: 900px) 60vw, 18vw' })}
+              ${img({ src: v.cover, alt: `Видео «${v.title}», ${v.viewsOnCover} просмотров`, sizes: '(max-width: 900px) 60vw, 18vw' })}
               <span class="reel__play" aria-hidden="true">${icon('play-fill')}</span>
             </span>
             <span class="reel__title">${esc(v.title)}</span>
@@ -416,7 +390,7 @@ function faqSection() {
           <div class="split__sticky"${reveal()}>
             ${label('Вопросы и ответы')}
             <h2>${duo('До того, как', 'вы решитесь')}</h2>
-            <p class="lead">${typo('Коротко о цене, сроках, оплате и проверке автомобиля. Не нашли ответ — спросите менеджера.')}</p>
+            <p class="lead">${typo('Коротко о цене, сроках, оплате и проверке автомобиля. Не нашли ответ? Спросите менеджера.')}</p>
             ${more('Все вопросы', R.faq)}
           </div>
           <div class="split__body">
@@ -444,7 +418,7 @@ export function homePages(ctx) {
     {
       url: R.home,
       type: 'home',
-      title: 'Авто из Японии, Кореи и Китая под заказ во Владивостоке — Макс Групп',
+      title: 'Авто из Японии, Кореи и Китая под заказ во Владивостоке | Макс Групп',
       description:
         'Авто из Японии, Кореи и Китая под заказ с доставкой по России. Подбор на аукционах, проверка, таможенное оформление во Владивостоке. Рассчитайте цену под ключ.',
       h1: 'Авто из Японии, Кореи и Китая под заказ',
@@ -471,7 +445,6 @@ export function homePages(ctx) {
           reviewsSection(ctx),
           quizSection(ctx, { subject: 'Квиз подбора (главная)' }),
           deliverySection(ctx),
-          teamSection(ctx),
           videoSection(ctx),
           blogSection(ctx),
           faqSection(ctx),
