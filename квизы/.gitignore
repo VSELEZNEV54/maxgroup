@@ -1,0 +1,11 @@
+# страницы собирает node квизы/build.mjs
+/index.html
+/*/index.html
+
+# копии из проекта, build.mjs кладет их сам при сборке
+/assets/fonts/
+/assets/img/*.webp
+/assets/flag-*.svg
+/assets/logo-avatar-round.webp
+/assets/favicon-48.png
+/assets/apple-touch-icon.png

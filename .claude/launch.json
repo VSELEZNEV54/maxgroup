@@ -4,9 +4,21 @@
     {
       "name": "maxgroup-site",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["serve.mjs"],
+      "runtimeArgs": [
+        "serve.mjs"
+      ],
       "port": 4317,
       "autoPort": true
+    },
+    {
+      "name": "maxgroup-quiz",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "serve.mjs",
+        "4321",
+        "квизы"
+      ],
+      "port": 4321
     }
   ]
 }

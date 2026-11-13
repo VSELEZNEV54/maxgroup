@@ -1,0 +1,53 @@
+{
+  "_about": "Фото первого экрана квизов (правки 13.11): реалистичная машина на причале порта, по образцу баннера клиента в Marquiz, но без надписей и логотипов поверх. Шаг 1: квадрат 1024×1024 в Figma (generate_image, gpt-image-2.5-sunburst) по template или prompt. Шаг 2: Figma Weave, Nano Banana Pro 2K, aspect 4:5 дорисовывает небо сверху и причал снизу (на ПК фото на всю правую половину экрана, на телефоне показывается квадрат из середины); у кадра с тремя Stepwgn тем же шагом задний черный заменен на кузов 2015 года по фото заказчика (fix). Сырые PNG кладутся как <file>_raw.png, обработка: python3 квизы/renders.py <папка>, затем node квизы/build.mjs. Картинка подключается к квизу по полю model; alt — запасной вариант, на страницу не ставится. Поле prompt заменяет шаблон целиком.",
+  "size": "1024x1024, затем 4:5",
+  "template": "Photorealistic automotive advertising photograph, square format. A {subject}, painted {paint}, stands on a clean concrete pier of a commercial sea port at golden hour. Front three-quarter view of the car's front-left side, the car's front points toward the left edge of the frame, camera at headlight height, 35mm lens. Behind the car: a large container ship loaded with stacked orange, blue and red shipping containers, port cranes, calm sea, warm low sun near the horizon on the left, clear blue sky with a few soft clouds. The whole car is fully visible, centered horizontally with wide empty margins on both sides, occupying about 66% of the frame width, standing in the lower half of the frame, open sky in the upper third. Japanese-market version with accurate real-world body shape, headlights, grille, bumpers and proportions of this exact model and generation. Realistic paint reflections, sharp details, natural colors. No text, no captions, no logos or badges added on top of the image, no watermark, blank license plate, no people.",
+  "items": [
+    {
+      "file": "scene-stepwgn",
+      "model": "honda-stepwgn",
+      "paint": "deep midnight blue pearl",
+      "subject": "Honda Stepwgn Spada, sixth generation RP6/RP8 (2022–present), boxy seven-seat MPV minivan with sliding rear doors, large dark glossy grille with a chrome bar between slim LED headlights",
+      "alt": true
+    },
+    {
+      "file": "scene-stepwgn-trio",
+      "model": "honda-stepwgn",
+      "paint": "new AIR deep midnight blue pearl, middle Spada 2017 pearl white, oldest Spada 2015 black",
+      "subject": "три Stepwgn по фото заказчика 13.11: впереди новый RP6/RP8 AIR (голубой на фото), в середине RP Spada после рестайлинга 2017 (зеленый), сзади RP Spada 2015 (фиолетовый)",
+      "prompt": "Photorealistic automotive advertising photograph, square format. Three Honda Stepwgn minivans of different years stand in a staggered diagonal row on a clean concrete pier of a commercial sea port at golden hour. All three are shown in front three-quarter view of their front-left side, all facing toward the left edge of the frame, camera at headlight height, 35mm lens. Closest to the camera, at the front left: the newest sixth generation Honda Stepwgn AIR (2022-present) in deep midnight blue pearl, a very boxy upright minivan with a flat vertical nose, slim horizontal LED headlights joined by a thin black horizontal grille band with the Honda logo, a simple flat lower bumper with a wide black horizontal air intake, black alloy wheels, large side windows and sliding rear doors. In the middle, slightly behind it and to the right: the fifth generation Honda Stepwgn Spada after the 2017 facelift in pearl white, with a large chrome grille made of three thick horizontal chrome bars, sharp swept-back LED headlights, a sculpted front bumper with chrome accents and a roof spoiler. Furthest back, on the right: the earlier fifth generation Honda Stepwgn Spada (2015-2017) in glossy black, with a rounder nose, a slim chrome grille bar above a dark mesh grille, projector headlights and a curved chrome strip on the lower bumper. All three cars are fully visible, none cut off by the frame edges, together occupying about 88% of the frame width, standing in the lower half of the frame. Behind the cars: a large container ship loaded with stacked orange, blue and red shipping containers, port cranes, calm sea, warm low sun near the horizon on the left, clear blue sky with a few soft clouds, open sky in the upper third. Japanese-market versions with accurate real-world body shapes, headlights, grilles, bumpers and proportions of these exact models. Realistic paint reflections, sharp details, natural colors. No text, no captions, no logos or badges added on top of the image, no watermark, blank license plates, no people.",
+      "fix": "Nano Banana Pro, вход: этот кадр + фото Stepwgn Spada 2015 заказчика; заменить только задний черный на кузов с фото (одна хромированная планка над сеткой решетки, хромированная дуга внизу бампера), передний синий и белый оставить, 4:5."
+    },
+    {
+      "file": "scene-cx-5",
+      "model": "mazda-cx-5",
+      "paint": "Soul Red Crystal metallic",
+      "subject": "Mazda CX-5, second generation KF (2017–present, facelift), compact five-door SUV with a large dark mesh grille framed by a chrome wing and slim LED headlights"
+    },
+    {
+      "file": "scene-corolla",
+      "model": "toyota-corolla",
+      "paint": "platinum white pearl",
+      "subject": "Toyota Corolla Touring, twelfth generation E210 (2019–present), Japanese-market five-door station wagon with sharp narrow LED headlights and a wide trapezoid lower grille"
+    },
+    {
+      "file": "scene-vezel",
+      "model": "honda-vezel",
+      "paint": "meteoroid grey metallic",
+      "subject": "Honda Vezel, second generation RV (2021–present), compact five-door crossover with a body-colored horizontal-slat front grille, slim LED headlights and a sloping coupe-like roofline"
+    },
+    {
+      "file": "scene-rav4",
+      "model": "toyota-rav4",
+      "paint": "urban khaki grey-green",
+      "subject": "Toyota RAV4, fifth generation XA50 (2019–present), compact five-door SUV with an angular octagonal grille, sharp LED headlights and squared black wheel arches"
+    },
+    {
+      "file": "scene-jimny",
+      "model": "suzuki-jimny",
+      "paint": "jungle green with a black roof",
+      "subject": "Suzuki Jimny, fourth generation JB64 (2018–present): small boxy three-door off-road SUV with round headlights, five-slot black grille and slim black fender flares"
+    }
+  ],
+  "extend_prompt": "Extend this photo to a 4:5 vertical frame (outpainting). Keep the original picture unchanged in the middle: the same car with the same body, color, size and position, the same container ship, cranes, sea, sun and lighting. Add more sky with soft warm clouds at the top and more of the same concrete pier with long evening shadows at the bottom. Photorealistic and seamless, no text, no logos added, blank license plate, no people."
+}

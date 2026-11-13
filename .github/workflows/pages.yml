@@ -35,6 +35,19 @@ jobs:
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           repo="${GITHUB_REPOSITORY#*/}"
           node build.mjs --base="/$repo" --site="https://$owner.github.io/$repo" --noindex --strict
+      # квизы подбора под рекламу: отдельные страницы на относительных путях, лежат в /kvizy/
+      - name: Собрать квизы
+        run: |
+          node квизы/build.mjs
+          out=dist.nosync/kvizy
+          mkdir -p "$out"
+          cp квизы/index.html "$out/"
+          cp -R квизы/assets "$out/"
+          for d in квизы/*/; do
+            d="${d%/}"
+            if [ -f "$d/index.html" ]; then cp -R "$d" "$out/"; fi
+          done
+          find "$out" -name index.html
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist.nosync

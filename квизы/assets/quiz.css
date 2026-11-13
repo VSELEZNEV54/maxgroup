@@ -1,0 +1,519 @@
+/* ==========================================================================
+   Квизы подбора Макс Групп. Токены из design-system/source/00-tokens.css (версия 2):
+   монохром и один синий акцент, Inter Tight, двухтонные заголовки, плитки 4px,
+   кнопки-пилюли без стрелок, поля и строки ответов 10px, текст не меньше 15px.
+   Первый экран светлый, как в квизе клиента: текст слева, фото на половину экрана справа.
+   ========================================================================== */
+
+@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url('fonts/inter-tight-cyrillic-ext.woff2') format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url('fonts/inter-tight-cyrillic.woff2') format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url('fonts/inter-tight-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url('fonts/inter-tight-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+:root {
+  --ink: #0a0c0f;
+  --ink-2: #12151a;
+  --ink-3: #1b1f26;
+  --ink-line: rgba(255, 255, 255, 0.1);
+  --ink-line-2: rgba(255, 255, 255, 0.18);
+  --ink-line-control: rgba(255, 255, 255, 0.4);
+  --paper: #f3f4f5;
+  --paper-2: #eaecee;
+  --card: #ffffff;
+  --line: #e2e5e8;
+  --line-2: #cfd3d8;
+  --line-control: #868d95;
+  --text: #0a0c0f;
+  --text-2: #565d66;
+  --text-3: #687078;
+  --mute: #868d95;
+  --on-dark: rgba(255, 255, 255, 0.95);
+  --on-dark-2: rgba(255, 255, 255, 0.64);
+  --on-dark-3: rgba(255, 255, 255, 0.5);
+  --accent: #005dfa;
+  --accent-hover: #0052e0;
+  --accent-press: #004fd6;
+  --accent-soft: rgba(0, 93, 250, 0.08);
+  --accent-on-dark: #5c9bff;
+  --ok: #17854a;
+  --danger: #cf3232;
+  --danger-soft: rgba(207, 50, 50, 0.09);
+  --wa: #1fa855;
+  --tg: #2aa1da;
+
+  --font: 'Inter Tight', 'Helvetica Neue', Arial, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-sm: clamp(0.9375rem, 0.9286rem + 0.0446vw, 1rem);
+  --fs-body: clamp(1rem, 0.9821rem + 0.0893vw, 1.125rem);
+  --fs-btn: clamp(1rem, 0.9821rem + 0.0893vw, 1.125rem);
+  --fs-lead: clamp(1.125rem, 1.0714rem + 0.2679vw, 1.5rem);
+  --fs-h4: clamp(1.125rem, 1.0536rem + 0.3571vw, 1.625rem);
+  --fs-h3: clamp(1.3125rem, 1.1429rem + 0.8482vw, 2.5rem);
+  --fs-h2: clamp(1.75rem, 1.2rem + 2.75vw, 4.5rem);
+  --fs-hero: clamp(2.125rem, 1.15rem + 4.875vw, 7rem);
+  --fs-value: clamp(1.25rem, 1.1607rem + 0.4464vw, 1.875rem);
+
+  --sp-5: 24px;
+  --sp-6: clamp(1.5rem, 1.3571rem + 0.7143vw, 2.5rem);
+  --sp-7: clamp(2rem, 1.7143rem + 1.4286vw, 4rem);
+  --sp-8: clamp(2.5rem, 2.0714rem + 2.1429vw, 5.5rem);
+  --gutter: clamp(16px, 4vw, 64px);
+  --gap: clamp(0.375rem, 0.3214rem + 0.2679vw, 0.75rem);
+  --header-h: 64px;
+  --tap: 44px;
+
+  --r-xs: 3px;
+  --r-sm: 4px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-full: 999px;
+  --shadow-pop: 0 1px 2px rgba(10, 12, 15, 0.06), 0 12px 32px -8px rgba(10, 12, 15, 0.16);
+  --shadow-float: 0 2px 6px rgba(10, 12, 15, 0.08), 0 24px 64px -16px rgba(10, 12, 15, 0.28);
+
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-slow: 560ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (min-width: 1024px) { :root { --header-h: 76px; } }
+
+/* --- База ------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  font-weight: 450;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--card);
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body[data-state='quiz'] { background: var(--paper); }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+p { margin: 0; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.q-side :focus-visible { outline-color: #fff; }
+svg { flex: none; }
+
+.q-wrap { width: 100%; max-width: 1920px; margin-inline: auto; padding-inline: var(--gutter); }
+.q-mute { color: var(--mute); }
+
+/* --- Кнопки (как на сайте, без стрелок) ------------------------------------- */
+.btn {
+  --btn-bg: var(--ink);
+  --btn-fg: #fff;
+  --btn-bd: transparent;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 26px;
+  border-radius: var(--r-full); border: 1px solid var(--btn-bd);
+  background: var(--btn-bg); color: var(--btn-fg);
+  font-size: var(--fs-btn); font-weight: 500; line-height: 1.1; letter-spacing: -0.005em;
+  text-decoration: none; white-space: nowrap; cursor: pointer; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast);
+}
+.btn svg { width: 20px; height: 20px; }
+.btn:active { transform: scale(0.98); }
+.btn[disabled], .btn.is-loading { opacity: 0.45; pointer-events: none; }
+.btn--sm { min-height: 40px; padding: 0 18px; font-size: var(--fs-sm); }
+.btn--lg { min-height: clamp(56px, 3.25rem + 0.4vw, 64px); padding: 0 34px; }
+.btn--primary { --btn-bg: var(--accent); }
+.btn--primary:hover { --btn-bg: var(--accent-hover); }
+.btn--primary:active { --btn-bg: var(--accent-press); }
+.btn--dark:hover { --btn-bg: var(--ink-3); }
+.btn--ghost { --btn-bg: transparent; --btn-fg: var(--text); --btn-bd: var(--line-2); }
+.btn--ghost:hover { --btn-bd: var(--text); }
+
+/* --- Логотип, телефон, мессенджеры ------------------------------------------- */
+.q-logo { display: inline-flex; color: var(--text); flex: none; }
+.q-logo svg { width: clamp(112px, 8vw, 142px); height: auto; }
+
+.q-contacts { display: flex; align-items: center; gap: clamp(10px, 1.4vw, 20px); }
+.q-phone { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; min-height: var(--tap); }
+.q-phone svg { width: 20px; height: 20px; color: var(--text-2); }
+.q-phone span { display: grid; line-height: 1.25; }
+.q-phone b { font-weight: 500; font-size: var(--fs-body); white-space: nowrap; }
+.q-phone small { font-size: 0.9375rem; color: var(--text-2); white-space: nowrap; }
+.q-socials { display: inline-flex; gap: 6px; }
+.q-soc {
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+/* оригинальные знаки мессенджеров в фирменных цветах */
+.q-soc .q-brand { width: 36px; height: 36px; }
+.q-soc:hover { transform: scale(1.08); }
+.q-soc:active { transform: scale(0.96); }
+@media (pointer: coarse) { .q-soc { width: var(--tap); height: var(--tap); } }
+
+/* --- Первый экран: белый фон, слева текст, справа фото на половину экрана ------ */
+.q-start {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'top' 'media' 'body';
+  background: var(--card);
+  padding-inline: var(--gutter);
+  padding-bottom: var(--sp-7);
+}
+.q-top { grid-area: top; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: var(--header-h); }
+.q-start__media { grid-area: media; position: relative; margin: 8px 0 0; border-radius: var(--r-sm); overflow: hidden; aspect-ratio: 1 / 1; background: var(--paper); }
+.q-start__media img { width: 100%; height: 100%; object-fit: cover; }
+.q-start__body { grid-area: body; padding-top: var(--sp-6); }
+/* на телефоне фото во всю ширину, около половины экрана: из кадра 4:5 виден квадрат вокруг машины,
+   на планшете не выше половины окна (срезается небо и асфальт, машины по бокам не режутся); кнопка сразу под текстом */
+@media (max-width: 1023px) {
+  .q-start__media {
+    aspect-ratio: auto; height: min(100vw, 50vh); height: min(100vw, 50svh);
+    margin: 0 calc(-1 * var(--gutter)); border-radius: 0;
+  }
+  .q-start__media img { object-position: 50% 80%; }
+  .q-start__body { display: flex; flex-direction: column; align-items: flex-start; }
+  .q-start__body .q-cta { order: 1; width: 100%; }
+  .q-start__body .q-perks { order: 2; width: 100%; }
+  .q-start__body .q-bonus { order: 3; }
+}
+
+@media (min-width: 1024px) {
+  .q-start {
+    min-height: 100vh; min-height: 100svh;
+    grid-template-columns: minmax(0, 1fr) 50vw; /* фото ровно правая половина экрана */
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'top media' 'body media';
+    column-gap: clamp(40px, 4vw, 96px);
+    padding: 0 0 0 var(--gutter);
+  }
+  /* фото на всю правую половину экрана от верха до низа; кадры 4:5, машины в середине кадра,
+     поэтому на экранах от 4:5 до 16:9 по половине срезается только небо и асфальт */
+  .q-start__media {
+    position: sticky; top: 0;
+    align-self: start;
+    aspect-ratio: auto;
+    height: 100vh; height: 100svh;
+    margin: 0; border-radius: 0;
+  }
+  .q-start__media img { object-position: 50% 62%; }
+}
+/* окно уже 8:5 (например 1024×768): половина экрана уже кадра 4:5, на всю высоту обрезались бы машины по бокам,
+   поэтому фото 4:5 целиком по центру высоты */
+@media (min-width: 1024px) and (max-aspect-ratio: 8 / 5) {
+  .q-start__media { height: auto; aspect-ratio: 4 / 5; max-height: none; align-self: center; position: relative; }
+}
+
+.q-kicker { display: inline-flex; align-items: center; gap: 10px; font-size: var(--fs-sm); font-weight: 500; color: var(--text-2); margin-bottom: clamp(14px, 1.4vw, 24px); }
+.q-kicker__flags { display: inline-flex; gap: 4px; }
+.q-kicker__flags img { width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 0 0 1px var(--line); }
+
+.q-hero {
+  margin: 0;
+  font-size: clamp(2.25rem, 1.3rem + 3.2vw, 4.75rem);
+  font-weight: 500; line-height: 1; letter-spacing: -0.038em;
+  text-wrap: balance; max-width: 15ch;
+}
+.q-hero__accent { color: var(--accent); }
+.q-lead { margin-top: clamp(16px, 1.6vw, 24px); font-size: var(--fs-lead); line-height: 1.42; letter-spacing: -0.008em; color: var(--text-2); max-width: 32ch; }
+
+.q-perks { list-style: none; margin: var(--sp-6) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--sp-5); }
+.q-perks li { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); font-size: var(--fs-body); font-weight: 500; line-height: 1.3; }
+.q-perks svg { width: 22px; height: 22px; color: var(--accent); margin-top: -1px; }
+@media (max-width: 379px) { .q-perks { grid-template-columns: 1fr; } }
+
+.q-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: var(--sp-6); }
+.q-cta .btn { min-width: 260px; min-height: 64px; font-size: 1.125rem; }
+.q-cta__note { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-sm); color: var(--text-2); }
+.q-cta__note svg { width: 18px; height: 18px; }
+@media (max-width: 599px) {
+  .q-cta .btn { width: 100%; min-width: 0; }
+  .q-cta__note { width: 100%; justify-content: center; }
+}
+.q-bonus { display: inline-flex; align-items: center; gap: 12px; margin-top: var(--sp-5); padding: 12px 18px 12px 14px; border-radius: var(--r-sm); background: var(--paper); font-size: var(--fs-sm); line-height: 1.35; }
+.q-bonus svg { width: 26px; height: 26px; color: var(--accent); }
+.q-bonus b { display: block; font-weight: 500; color: var(--text-2); font-size: 0.9375rem; }
+.q-bonus span { font-weight: 500; }
+
+@media (min-width: 1024px) {
+  /* весь первый экран без прокрутки: размеры и отступы зависят от высоты окна */
+  .q-start__body { align-self: center; padding: clamp(12px, 3vh, 40px) 0 clamp(16px, 4vh, 64px); max-width: 980px; }
+  .q-start .q-kicker { margin-bottom: clamp(10px, 2vh, 24px); }
+  /* «Подберем <модель>» одной строкой, оффер синим в две строки; 3,6vw = ширина колонки / 11,7 em,
+     а самая длинная строка «Подберем Honda Stepwgn» 11,2 em */
+  .q-hero { font-size: clamp(2.25rem, min(3.6vw, 7vh), 5rem); max-width: none; }
+  .q-hero__model, .q-hero__offer { display: block; }
+  .q-start .q-lead { margin-top: clamp(12px, 2.2vh, 24px); }
+  .q-start .q-perks { margin-top: clamp(16px, 3vh, 40px); }
+  .q-start .q-perks li { padding-block: clamp(8px, 1.4vh, 14px); }
+  .q-start .q-cta { margin-top: clamp(16px, 3.4vh, 40px); }
+  .q-start .q-cta .btn { min-height: clamp(64px, 8.6vh, 88px); min-width: clamp(320px, 26vw, 460px); padding: 0 48px; font-size: clamp(1.125rem, 0.95rem + 0.45vw, 1.5rem); }
+  .q-start .q-bonus { margin-top: clamp(12px, 2.4vh, 24px); }
+}
+/* совсем низкое окно: бонус прячем, он повторяется после ответов */
+@media (min-width: 1024px) and (max-height: 660px) { .q-start .q-bonus { display: none; } }
+
+/* шапка: на телефоне только значки, номер прячем в кнопку звонка */
+.q-contacts--start .q-site { margin-left: 4px; }
+@media (max-width: 1279px) { .q-phone small { display: none; } }
+@media (max-width: 767px) {
+  .q-contacts { gap: 6px; }
+  .q-phone { width: 40px; height: 40px; min-height: 0; justify-content: center; border-radius: 50%; background: var(--paper); }
+  .q-phone span, .q-site { display: none; }
+  .q-phone svg { width: 20px; height: 20px; color: var(--text); }
+}
+@media (pointer: coarse) and (max-width: 767px) { .q-phone { width: var(--tap); height: var(--tap); } }
+
+/* --- Экран квиза ------------------------------------------------------------- */
+.q-run { min-height: 100vh; min-height: 100svh; background: var(--paper); }
+.q-bar { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, 0.94); border-bottom: 1px solid var(--line); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.q-bar__in { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: clamp(16px, 3vw, 48px); min-height: var(--header-h); }
+.q-progress { display: grid; gap: 8px; max-width: 520px; width: 100%; justify-self: center; }
+.q-progress__text { font-size: var(--fs-sm); font-weight: 500; color: var(--text-2); line-height: 1.2; }
+.q-progress__track { position: relative; height: 4px; border-radius: 4px; background: var(--paper-2); overflow: hidden; }
+.q-progress__track i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--accent); border-radius: inherit; transition: width var(--dur-slow) var(--ease-out); }
+.q-contacts--bar .q-site { display: none; }
+@media (min-width: 1280px) { .q-contacts--bar .q-site { display: inline-flex; } }
+@media (max-width: 767px) {
+  .q-bar__in { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'logo call' 'prog prog'; row-gap: 6px; padding-block: 8px 12px; }
+  .q-bar .q-logo { grid-area: logo; }
+  .q-bar .q-logo svg { width: 104px; }
+  .q-contacts--bar { grid-area: call; }
+  .q-progress { grid-area: prog; max-width: none; grid-template-columns: auto 1fr; align-items: center; gap: 12px; }
+}
+
+.q-run__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+  padding-block: clamp(20px, 3vw, 56px) var(--sp-8);
+}
+@media (min-width: 1024px) {
+  .q-run__grid { grid-template-columns: minmax(0, 1fr) minmax(320px, 400px); align-items: start; column-gap: clamp(32px, 4vw, 96px); }
+  .q-form { padding-left: clamp(0px, 4vw, 96px); }
+}
+@media (min-width: 1440px) { .q-run__grid { grid-template-columns: minmax(0, 1fr) 420px; } }
+
+/* последний шаг и экран «Заявка принята»: по центру, без сводки */
+body[data-step='contact'] .q-run__grid,
+body[data-step='done'] .q-run__grid { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+body[data-step='contact'] .q-side,
+body[data-step='done'] .q-side { display: none; }
+body[data-step='contact'] .q-form,
+body[data-step='done'] .q-form { width: 100%; max-width: 600px; padding-left: 0; }
+body[data-step='contact'] .q-step--contact > .q-count,
+body[data-step='contact'] .q-step--contact > .q-q,
+body[data-step='contact'] .q-step--contact > .q-hint { text-align: center; margin-inline: auto; }
+
+.q-form { min-width: 0; max-width: 820px; }
+.q-step { animation: q-in var(--dur-slow) var(--ease-out) both; }
+.q-step.is-back { animation-name: q-in-back; }
+@keyframes q-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes q-in-back { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .q-step, .q-done, .q-contact-form { animation: none !important; } .q-progress__track i { transition: none; } }
+
+.q-count { font-size: var(--fs-sm); font-weight: 500; color: var(--accent); margin-bottom: 10px; }
+.q-q { display: block; margin: 0; font-size: clamp(1.625rem, 1.2rem + 1.6vw, 3rem); font-weight: 500; line-height: 1.08; letter-spacing: -0.03em; text-wrap: balance; outline: none; }
+.q-hint { margin-top: 10px; font-size: var(--fs-body); color: var(--text-2); max-width: 56ch; }
+
+/* --- Варианты ответа строками ------------------------------------------------ */
+.q-list { display: grid; gap: 8px; margin-top: var(--sp-6); max-width: 720px; }
+.q-opt {
+  position: relative;
+  display: flex; align-items: center; gap: 14px;
+  min-height: 64px; padding: 12px 18px;
+  background: var(--card); border-radius: var(--r-md);
+  box-shadow: inset 0 0 0 1px var(--line);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: box-shadow var(--dur-fast) var(--ease-out), background-color var(--dur-fast), transform var(--dur-fast) var(--ease-out);
+}
+.q-opt:hover { box-shadow: inset 0 0 0 1px var(--line-control); }
+.q-opt:active { transform: scale(0.995); }
+.q-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.q-opt:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.q-opt:has(input:checked) { box-shadow: inset 0 0 0 2px var(--accent); background: #fbfcff; }
+
+.q-opt__mark {
+  display: grid; place-items: center; width: 24px; height: 24px; flex: none;
+  box-shadow: inset 0 0 0 1.5px var(--line-2); color: transparent;
+  transition: background-color var(--dur-fast), box-shadow var(--dur-fast), color var(--dur-fast);
+}
+.q-opt__mark--radio { border-radius: 50%; }
+.q-opt__mark--checkbox { border-radius: 6px; }
+.q-opt__mark svg { width: 15px; height: 15px; stroke-width: 2.2; }
+.q-opt input:checked ~ .q-opt__mark { background: var(--accent); box-shadow: none; color: #fff; }
+
+.q-opt__swatch { width: 32px; height: 32px; flex: none; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(10, 12, 15, 0.14), inset 0 -6px 10px rgba(0, 0, 0, 0.12), inset 0 5px 8px rgba(255, 255, 255, 0.24); }
+.q-opt__swatch--any { background: repeating-linear-gradient(135deg, var(--paper-2) 0 5px, var(--card) 5px 10px); box-shadow: inset 0 0 0 1px var(--line-2); }
+
+.q-opt__text { display: grid; gap: 2px; min-width: 0; flex: 1; }
+.q-opt__t { font-size: var(--fs-body); font-weight: 500; line-height: 1.25; }
+.q-opt__s { font-size: var(--fs-sm); color: var(--text-2); line-height: 1.3; }
+.q-badge {
+  flex: none; display: inline-flex; align-items: center; min-height: 30px; padding: 4px 10px;
+  border-radius: var(--r-xs); background: var(--accent-soft); color: var(--accent);
+  font-size: 0.9375rem; font-weight: 500; line-height: 1.2; white-space: nowrap;
+}
+/* на узком экране плашка уходит под текст, чтобы не сжимать его */
+@media (max-width: 479px) {
+  .q-opt:has(.q-badge) { flex-wrap: wrap; row-gap: 8px; }
+  .q-opt:has(.q-badge) .q-opt__text { flex-basis: calc(100% - 38px); }
+  .q-opt .q-badge { margin-left: 38px; }
+}
+
+/* --- Последний шаг: мессенджер, затем поля ----------------------------------- */
+.q-msg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: var(--sp-6); }
+@media (min-width: 600px) { .q-msg { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.q-msg__item {
+  position: relative; display: grid; justify-items: center; align-content: center; gap: 10px;
+  min-height: 112px; padding: 16px 10px;
+  background: var(--card); border-radius: var(--r-md); box-shadow: inset 0 0 0 1px var(--line);
+  font-weight: 500; font-size: var(--fs-body); text-align: center;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: box-shadow var(--dur-fast), background-color var(--dur-fast), transform var(--dur-fast) var(--ease-out);
+}
+.q-msg__item input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.q-msg__item:hover { box-shadow: inset 0 0 0 1px var(--line-control); }
+.q-msg__item:active { transform: scale(0.985); }
+.q-msg__item:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.q-msg__item:has(input:checked) { box-shadow: inset 0 0 0 2px var(--accent); background: #fbfcff; }
+.q-msg__icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; color: #fff; }
+.q-msg__icon svg { width: 24px; height: 24px; }
+.q-msg__icon .q-brand { width: 48px; height: 48px; }
+.q-msg__item--call .q-msg__icon { background: var(--ink); }
+.q-msg__item sup { font-size: 0.7em; color: var(--text-3); }
+
+.q-contact-form { display: grid; gap: 16px; margin-top: var(--sp-6); animation: q-rise var(--dur-slow) var(--ease-out) both; }
+@keyframes q-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.q-field { display: grid; gap: 8px; }
+.q-field__label { font-size: var(--fs-sm); font-weight: 500; color: var(--text-2); }
+.q-field__opt { font-weight: 450; color: var(--text-3); margin-left: 4px; }
+.q-field__help { font-size: 0.9375rem; color: var(--text-3); line-height: 1.35; }
+.q-field__control {
+  width: 100%; min-height: 56px; padding: 0 18px;
+  font-size: max(16px, var(--fs-body));
+  background: var(--card); border: 0; border-radius: var(--r-md);
+  box-shadow: inset 0 0 0 1px var(--line-control);
+  transition: box-shadow var(--dur-fast);
+}
+.q-field__control::placeholder { color: var(--text-3); }
+.q-field__control:hover { box-shadow: inset 0 0 0 1px var(--text); }
+.q-field__control:focus { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
+.q-field__err { display: none; font-size: 0.9375rem; color: var(--danger); line-height: 1.3; }
+.is-invalid .q-field__control { box-shadow: inset 0 0 0 2px var(--danger); background: #fff; }
+.is-invalid .q-field__err, .q-field__err--agree.is-shown, .q-field__err--contact.is-shown { display: block; }
+.q-field__err--contact { margin-top: 10px; text-align: center; }
+
+.q-check { display: flex; align-items: flex-start; gap: 12px; margin-top: 4px; font-size: var(--fs-sm); color: var(--text-2); line-height: 1.45; cursor: pointer; position: relative; }
+.q-check input { position: absolute; opacity: 0; width: 24px; height: 24px; margin: 0; }
+.q-check__box { display: grid; place-items: center; width: 24px; height: 24px; flex: none; border-radius: 6px; box-shadow: inset 0 0 0 1.5px var(--line-control); background: #fff; color: transparent; transition: background-color var(--dur-fast), box-shadow var(--dur-fast); }
+.q-check__box svg { width: 16px; height: 16px; stroke-width: 2; }
+.q-check input:checked + .q-check__box { background: var(--accent); box-shadow: none; color: #fff; }
+.q-check input:focus-visible + .q-check__box { outline: 2px solid var(--accent); outline-offset: 3px; }
+.q-check a { color: var(--text); }
+.q-check.is-invalid .q-check__box { box-shadow: inset 0 0 0 2px var(--danger); }
+.q-field__err--agree { margin-top: -8px; padding-left: 36px; }
+.q-note { font-size: 0.9375rem; color: var(--text-3); line-height: 1.4; }
+
+/* --- Навигация ---------------------------------------------------------------- */
+.q-nav { display: flex; align-items: center; gap: 12px; margin-top: var(--sp-7); }
+.q-nav__enter { font-size: 0.9375rem; color: var(--text-3); margin-left: 8px; }
+.q-nav__next { min-width: 200px; }
+.q-nav__next.is-skip { --btn-bg: transparent; --btn-fg: var(--text); --btn-bd: var(--line-2); }
+.q-nav__next.is-skip:hover { --btn-bd: var(--text); }
+body[data-step='contact'] .q-nav { margin-top: var(--sp-6); justify-content: center; }
+body[data-step='contact'] .q-nav__submit { flex: 1; }
+body[data-step='contact'] .q-nav__enter { display: none; }
+@media (max-width: 767px) {
+  .q-run__grid { padding-bottom: 120px; }
+  .q-nav {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 15;
+    margin: 0 !important; padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.96); border-top: 1px solid var(--line);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  }
+  .q-nav__next, .q-nav__submit { flex: 1; min-width: 0; }
+  .q-nav__enter { display: none; }
+  .q-nav .btn--lg { min-height: 56px; padding: 0 22px; }
+}
+@media (hover: none) { .q-nav__enter { display: none; } }
+
+/* телефон: на шаге только вопрос и ответы, без прокрутки до кнопки «Далее» (просьба 13.11).
+   Номер вопроса уже есть над вопросом, в полосе остается только линия прогресса;
+   цвета в две колонки, строки ниже, плашка («Популярный выбор», «Выгоднее») справа в той же строке */
+@media (max-width: 767px) {
+  .q-bar__in { row-gap: 8px; padding-block: 6px 8px; }
+  .q-progress__text { display: none; }
+  .q-progress { grid-template-columns: 1fr; }
+  .q-run__grid { padding-top: 14px; padding-bottom: 90px; }
+  .q-count { margin-bottom: 6px; }
+  .q-q { font-size: 1.5rem; }
+  .q-hint { margin-top: 6px; }
+  .q-list { margin-top: 16px; gap: 6px; }
+  .q-opt { min-height: 50px; padding: 7px 14px; gap: 12px; }
+  .q-opt:has(.q-badge) { flex-wrap: nowrap; }
+  .q-opt:has(.q-badge) .q-opt__text { flex-basis: auto; }
+  .q-opt .q-badge { margin-left: auto; }
+  .q-list[data-group='color'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .q-list[data-group='color'] .q-opt { gap: 10px; padding-inline: 12px; }
+  .q-list[data-group='color'] .q-opt__mark { display: none; }
+  .q-list[data-group='color'] .q-opt:has(input:checked) .q-opt__swatch { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--accent); }
+}
+
+/* --- Заявка принята ----------------------------------------------------------- */
+.q-done { display: grid; justify-items: center; text-align: center; padding-top: clamp(8px, 2vw, 32px); outline: none; animation: q-in var(--dur-slow) var(--ease-out) both; }
+.q-done__mark { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #fff; }
+.q-done__mark svg { width: 32px; height: 32px; stroke-width: 2; }
+.q-done__title { margin: var(--sp-5) 0 0; font-size: clamp(1.75rem, 1.2rem + 2vw, 3.25rem); font-weight: 500; line-height: 1.05; letter-spacing: -0.03em; max-width: 18ch; text-wrap: balance; }
+.q-done__text, .q-done__err { margin-top: 16px; font-size: var(--fs-lead); line-height: 1.42; color: var(--text-2); max-width: 40ch; }
+.q-done__err { color: var(--danger); }
+.q-done__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: var(--sp-6); }
+@media (max-width: 599px) { .q-done__actions .btn { width: 100%; } }
+
+/* --- Сводка справа ------------------------------------------------------------- */
+.q-side { min-width: 0; }
+@media (min-width: 1024px) { .q-side { position: sticky; top: calc(var(--header-h) + 24px); } }
+.q-side__card { background: var(--ink); color: var(--on-dark); border-radius: var(--r-sm); padding: clamp(18px, 1.8vw, 28px); }
+.q-side__title { font-size: var(--fs-h4); font-weight: 500; line-height: 1.22; letter-spacing: -0.012em; }
+.q-sum { margin: 14px 0 0; }
+.q-sum__row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid var(--ink-line); font-size: 0.9375rem; line-height: 1.35; }
+.q-sum__row dt { color: var(--on-dark-2); flex: none; }
+.q-sum__row dd { margin: 0; text-align: right; color: var(--on-dark-3); }
+.q-sum__row.is-set dd { color: var(--on-dark); font-weight: 500; }
+.q-sum__row.is-flash dd { animation: q-flash 900ms var(--ease-out); }
+@keyframes q-flash { 0% { color: var(--accent-on-dark); } 100% {} }
+.q-tipbox { display: flex; gap: 12px; margin-top: 16px; padding: 14px; border-radius: var(--r-sm); background: var(--ink-3); }
+.q-tipbox__ava { width: 40px; height: 40px; border-radius: 50%; flex: none; }
+.q-tipbox__who { display: block; font-size: 0.9375rem; font-weight: 500; color: var(--on-dark-2); line-height: 1.3; }
+.q-tipbox__text { margin-top: 4px; font-size: 0.9375rem; line-height: 1.45; color: var(--on-dark); }
+.q-side__bonus { display: flex; gap: 12px; align-items: flex-start; margin-top: 12px; padding: 14px 16px; border-radius: var(--r-sm); background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font-size: 0.9375rem; line-height: 1.4; font-weight: 500; }
+.q-side__bonus svg { width: 22px; height: 22px; color: var(--accent); }
+
+/* на телефоне и планшете сводки нет: на экране только вопрос, без прокрутки (просьба 13.11) */
+@media (max-width: 1023px) {
+  .q-side { display: none; }
+  .q-side__bonus { display: none; }
+  .q-side__card { background: var(--card); color: var(--text); box-shadow: inset 0 0 0 1px var(--line); }
+  .q-sum__row { border-top-color: var(--line); }
+  .q-sum__row dt { color: var(--text-2); }
+  .q-sum__row dd { color: var(--text-3); }
+  .q-sum__row.is-set dd { color: var(--text); }
+  .q-tipbox { background: var(--paper); }
+  .q-tipbox__who { color: var(--text-2); }
+  .q-tipbox__text { color: var(--text); }
+  .q-side :focus-visible { outline-color: var(--accent); }
+}
+
+/* --- Страница со списком квизов ---------------------------------------------- */
+.q-hub { min-height: 100vh; padding-bottom: var(--sp-8); background: var(--paper); }
+.q-hub__logo { width: 142px; height: auto; color: var(--text); }
+.q-hub__title { margin: var(--sp-6) 0 var(--sp-6); font-size: var(--fs-h2); font-weight: 500; line-height: 1.05; letter-spacing: -0.03em; }
+.q-hub__grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.q-hub__card { display: grid; gap: 6px; padding: 12px 12px 18px; border-radius: var(--r-sm); background: var(--card); box-shadow: inset 0 0 0 1px var(--line); text-decoration: none; transition: box-shadow var(--dur-fast); }
+.q-hub__card:hover { box-shadow: inset 0 0 0 1px var(--line-control); }
+.q-hub__card img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 72%; border-radius: var(--r-xs); margin-bottom: 10px; }
+.q-hub__name { font-size: var(--fs-h4); font-weight: 500; letter-spacing: -0.012em; padding-inline: 4px; }
+.q-hub__meta { font-size: var(--fs-sm); color: var(--text-2); padding-inline: 4px; }
+/* совсем маленькие телефоны (до 680 px в высоту): строки еще ниже */
+@media (max-width: 767px) and (max-height: 680px) { .q-opt { min-height: 46px; padding-block: 5px; } .q-list { gap: 5px; } }
