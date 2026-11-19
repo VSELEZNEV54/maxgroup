@@ -47,7 +47,7 @@ export function howToPages(ctx) {
         { k: 'До Владивостока', v: 'обычно 3-6 недель' },
         { k: 'Оплата', v: 'по договору' },
       ],
-      actions: btn('Начать с расчета', R.calculator, { variant: 'light' }) + btn('Задать вопрос', R.contacts, { variant: 'ghost', arrow: false, modal: 'request', subject: 'Вопрос: как заказать автомобиль' }),
+      actions: btn('Начать с расчета', R.calculator, { variant: 'light' }) + btn('Задать вопрос', R.contacts, { variant: 'ghost', modal: 'request', subject: 'Вопрос: как заказать автомобиль' }),
     })}
 
     <section class="section">

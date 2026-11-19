@@ -5,7 +5,7 @@
 // Город может заменить любой текст общего шаблона (delivery.city) полем "tpl" в своем файле — см. mergeTpl().
 import { html, esc, u, typo, price, num, plural, count } from '../lib/core.mjs';
 import { faqLd, serviceLd, itemListLd } from '../lib/seo.mjs';
-import { icon, label, duo, btn, more, reveal, sectionHead, pageHead, route, fact, caseCard, faqList, step, rail, railNav, ctaBand, seoText, note, img } from '../components/ui.mjs';
+import { icon, label, duo, btn, more, reveal, sectionHead, pageHead, route, fact, carFacts, caseCard, faqList, step, rail, railNav, ctaBand, seoText, note, img } from '../components/ui.mjs';
 import { R } from '../routes.mjs';
 
 const HOME = { name: 'Главная', url: R.home };
@@ -149,14 +149,6 @@ function makeFill(ctx, city) {
 
 // --- подбор данных --------------------------------------------------------------------------------
 
-const truckClass = (car) => {
-  const b = String(car.body || '').toLowerCase();
-  // кей-кары в каталоге — высокие «коробочки» (около 1,8 м), по высоте это старший тариф
-  if (/внедорожник|пикап|микроавтобус|минивэн|минивен|фургон|кей/.test(b)) return 'suv';
-  if (/кроссовер|suv|компактвэн|вэн/.test(b)) return 'crossover';
-  return 'sedan';
-};
-
 /**
  * Примеры авто для городов: разные страны и бюджеты, с поправкой на регион.
  * Берем только автомобили с полной ценой под ключ: без priceIsPartial (цена без утильсбора) и без пометки
@@ -215,7 +207,7 @@ function planExamples(ctx, n) {
       city.slug,
       out
         .map((car) => {
-          const cls = truckClass(car);
+          const cls = car.truckClass;
           const ship = city.truck[cls];
           return { car, cls, ship, total: car.priceRub + ship };
         })
@@ -409,7 +401,7 @@ function tariffSection(ctx, city, t, fill, tpl, g) {
             ${label(`Тарифы · ${g.asOf}`)}
             <h2>${duo(`Автовоз из Владивостока в ${city.nameAcc}:`, 'цена и сроки')}</h2>
             <p class="lead">${show(fill(tpl.tariffLead))}</p>
-            <a class="btn btn--dark" href="${calcHref(city)}">Посчитать авто с доставкой ${icon('arrow', 'i-arrow')}</a>
+            <a class="btn btn--dark" href="${calcHref(city)}">Посчитать авто с доставкой</a>
           </div>
           <div class="split__body dtariff"${reveal(1)}>
             ${tariffTable(city, g)}
@@ -446,8 +438,8 @@ function exampleCard(ctx, city, x, i) {
           <article class="dcar"${reveal(i % 3)}>
             <div class="dcar__media">${car.photos[0] ? img({ src: car.photos[0], alt: `${car.titleYear} ${cn.from} с доставкой в ${city.nameAcc}`, sizes: '(max-width: 720px) 80vw, (max-width: 900px) 50vw, 33vw' }) : ''}</div>
             <div class="dcar__body">
-              <div class="dcar__meta"><span>${esc(cn.navTitle)}</span>${car.year ? `<span>${car.year}</span>` : ''}${car.mileageKm || car.mileageKm === 0 ? `<span>${num(car.mileageKm)}${NB}км</span>` : ''}</div>
               <h3 class="dcar__title"><a href="${u(car.url)}">${esc(car.titleFull)}</a></h3>
+              ${carFacts(car.year, car.mileageKm, car.auctionGrade)}
               <dl class="dcar__sum">
                 <div><dt>Под ключ во Владивостоке</dt><dd>${price(car.priceRub)}</dd></div>
                 <div><dt>Автовоз, ${esc(BODY[cls].short)}</dt><dd>+${NB}${price(ship)}</dd></div>
@@ -691,7 +683,7 @@ function cityPage(ctx, city, idx, baseTpl, g, picks) {
       ],
       actions:
         requestBtn('Рассчитать с доставкой', { variant: 'light', subject, attrs: { 'data-modal-title': `Авто с доставкой в ${city.nameAcc}`, 'data-modal-text': 'Расскажите, какой автомобиль ищете, и мы пришлем варианты и цену под ключ с доставкой.', 'data-modal-label': subject } }) +
-        btn('Тарифы автовоза', '#tarify', { variant: 'ghost', arrow: false }),
+        btn('Тарифы автовоза', '#tarify', { variant: 'ghost' }),
     })}
     ${introSection(ctx, city, t, fill, tpl)}
     ${tariffSection(ctx, city, t, fill, tpl, g)}
@@ -805,7 +797,7 @@ function waysSection(ctx, h, fill) {
         <div class="dways">
           ${h.ways.map(
             (w, i) => html`
-          <article class="dway${w.variant ? ` dway--${w.variant}${w.variant === 'dark' ? ' on-dark' : ''}` : ''}"${reveal(i)}>
+          <article${w.key === 'truck' ? ' id="avtovoz"' : ''} class="dway${w.variant ? ` dway--${w.variant}${w.variant === 'dark' ? ' on-dark' : ''}` : ''}"${reveal(i)}>
             <div class="dway__top">${label(w.label)}${icon(w.icon, 'dway__icon')}</div>
             <div class="dway__head">
               <h3 class="dway__title">${esc(w.title)}</h3>
@@ -955,7 +947,7 @@ function hubPage(ctx, d, g) {
       ],
       actions:
         requestBtn('Рассчитать доставку', { variant: 'light', subject: 'Доставка по России', attrs: { 'data-modal-title': 'Рассчитаем доставку в ваш город', 'data-modal-text': 'Назовите город и автомобиль, и мы пришлем цену и ближайшую дату отправки.', 'data-modal-label': 'Доставка по России' } }) +
-        btn('Города и тарифы', '#goroda', { variant: 'ghost', arrow: false }),
+        btn('Города и тарифы', '#goroda', { variant: 'ghost' }),
     })}
     ${hubTableSection(ctx, h, fill, g, groups)}
     ${waysSection(ctx, h, fill)}

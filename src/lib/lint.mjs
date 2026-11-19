@@ -24,6 +24,14 @@ export function lint(ctx, rendered, outDir) {
     const words = text(main).split(' ').filter(Boolean).length;
     stats.words += words;
 
+    for (const [, , classes, body] of html.matchAll(/<(a|button)\b[^>]*?\sclass="([^"]*)"[^>]*>([\s\S]*?)<\/\1>/g)) {
+      const buttonClasses = classes.split(/\s+/);
+      if (!buttonClasses.includes('btn') || buttonClasses.includes('popular-model__catalog-link')) continue;
+      if (/data-icon="arrow[^"]*"|\bi-arrow\b|[←↑→↓↗↘↙↖]/.test(body)) {
+        errors.push(`${where}: стрелка в кнопке «${text(body)}»`);
+      }
+    }
+
     if (!title) errors.push(`${where}: нет <title>`);
     if (!page.noindex) {
       if (title.length > 72) warnings.push(`${where}: title длиннее 72 знаков (${title.length})`);
@@ -72,7 +80,7 @@ export function lint(ctx, rendered, outDir) {
         if (href !== base && !href.startsWith(base + '/')) { errors.push(`${where}: ссылка мимо базового пути ${base} — ${href}`); continue; }
         href = href.slice(base.length) || '/';
       }
-      if (href.startsWith('/assets/') || /\.(xml|txt|webmanifest|ico|png|json)$/.test(href)) {
+      if (href.startsWith('/assets/') || href.startsWith('/model-media/') || /\.(xml|txt|webmanifest|ico|png|json)$/.test(href)) {
         if (!existsSync(join(outDir, href)) && !/main\.css|\/js\//.test(href) && !/sitemap\.xml|robots\.txt|site\.webmanifest/.test(href)) errors.push(`${where}: нет файла ${href}`);
         continue;
       }

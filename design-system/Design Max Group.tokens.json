@@ -1,0 +1,245 @@
+{
+  "name": "Design Max Group",
+  "snapshot_date": "2026-11-12",
+  "source": "Current local working tree, site version 2",
+  "art_direction": "Ночной порт",
+  "base_tokens": {
+    "--ink": "#0a0c0f",
+    "--ink-2": "#12151a",
+    "--ink-3": "#1b1f26",
+    "--ink-line": "rgba(255, 255, 255, 0.1)",
+    "--ink-line-2": "rgba(255, 255, 255, 0.18)",
+    "--ink-line-control": "rgba(255, 255, 255, 0.4)",
+    "--paper": "#f3f4f5",
+    "--paper-2": "#eaecee",
+    "--card": "#ffffff",
+    "--line": "#e2e5e8",
+    "--line-2": "#cfd3d8",
+    "--line-control": "#868d95",
+    "--text": "#0a0c0f",
+    "--text-2": "#565d66",
+    "--text-3": "#687078",
+    "--mute": "#868d95",
+    "--on-dark": "rgba(255, 255, 255, 0.95)",
+    "--on-dark-2": "rgba(255, 255, 255, 0.64)",
+    "--on-dark-3": "rgba(255, 255, 255, 0.5)",
+    "--accent": "#005dfa",
+    "--accent-hover": "#0052e0",
+    "--accent-press": "#004fd6",
+    "--accent-soft": "rgba(0, 93, 250, 0.08)",
+    "--accent-on-dark": "#5c9bff",
+    "--ok": "#17854a",
+    "--ok-soft": "rgba(23, 133, 74, 0.1)",
+    "--warn": "#b0730a",
+    "--warn-soft": "rgba(176, 115, 10, 0.12)",
+    "--danger": "#cf3232",
+    "--danger-soft": "rgba(207, 50, 50, 0.09)",
+    "--wa": "#1fa855",
+    "--tg": "#2aa1da",
+    "--font": "'Inter Tight', 'Helvetica Neue', Arial, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+    "--fs-min": "0.9375rem",
+    "--fs-xs": "0.9375rem",
+    "--fs-sm": "clamp(0.9375rem, 0.9286rem + 0.0446vw, 1rem)",
+    "--fs-mono": "var(--fs-sm)",
+    "--fs-body": "clamp(1rem, 0.9821rem + 0.0893vw, 1.125rem)",
+    "--fs-btn": "clamp(1rem, 0.9821rem + 0.0893vw, 1.125rem)",
+    "--fs-lead": "clamp(1.125rem, 1.0714rem + 0.2679vw, 1.5rem)",
+    "--fs-h4": "clamp(1.125rem, 1.0536rem + 0.3571vw, 1.625rem)",
+    "--fs-h3": "clamp(1.3125rem, 1.1429rem + 0.8482vw, 2.5rem)",
+    "--fs-h2": "clamp(1.75rem, 1.2rem + 2.75vw, 4.5rem)",
+    "--fs-h1": "clamp(2rem, 1.15rem + 4.25vw, 6.25rem)",
+    "--fs-hero": "clamp(2.125rem, 1.15rem + 4.875vw, 7rem)",
+    "--fs-value": "clamp(1.25rem, 1.1607rem + 0.4464vw, 1.875rem)",
+    "--w-regular": "450",
+    "--w-medium": "500",
+    "--w-semi": "600",
+    "--sp-1": "4px",
+    "--sp-2": "8px",
+    "--sp-3": "12px",
+    "--sp-4": "16px",
+    "--sp-5": "24px",
+    "--sp-6": "clamp(1.5rem, 1.3571rem + 0.7143vw, 2.5rem)",
+    "--sp-7": "clamp(2rem, 1.7143rem + 1.4286vw, 4rem)",
+    "--sp-8": "clamp(2.5rem, 2.0714rem + 2.1429vw, 5.5rem)",
+    "--sp-9": "clamp(3.5rem, 2.7857rem + 3.5714vw, 8.5rem)",
+    "--sp-10": "clamp(4.5rem, 3.5rem + 5vw, 11.5rem)",
+    "--sp-11": "clamp(5.5rem, 4.2143rem + 6.4286vw, 14.5rem)",
+    "--section-y": "clamp(3.5rem, 2.3929rem + 5.5357vw, 11.25rem)",
+    "--section-y-sm": "clamp(2.5rem, 1.8571rem + 3.2143vw, 7rem)",
+    "--head-gap": "clamp(1.5rem, 0.9286rem + 2.8571vw, 5.5rem)",
+    "--gutter": "clamp(16px, 4vw, 64px)",
+    "--container": "1920px",
+    "--container-text": "56ch",
+    "--gap": "clamp(0.375rem, 0.3214rem + 0.2679vw, 0.75rem)",
+    "--header-h": "64px",
+    "--tap": "44px",
+    "--r-xs": "3px",
+    "--r-sm": "4px",
+    "--r-md": "10px",
+    "--r-lg": "16px",
+    "--r-full": "999px",
+    "--shadow-pop": "0 1px 2px rgba(10, 12, 15, 0.06), 0 12px 32px -8px rgba(10, 12, 15, 0.16)",
+    "--shadow-float": "0 2px 6px rgba(10, 12, 15, 0.08), 0 24px 64px -16px rgba(10, 12, 15, 0.28)",
+    "--dur-fast": "160ms",
+    "--dur-base": "280ms",
+    "--dur-slow": "560ms",
+    "--dur-scene": "900ms",
+    "--ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "--ease-inout": "cubic-bezier(0.65, 0, 0.35, 1)",
+    "--ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+    "--z-header": "50",
+    "--z-bar": "55",
+    "--z-drawer": "70",
+    "--z-modal": "80",
+    "--z-toast": "90"
+  },
+  "responsive_overrides": [
+    {
+      "media": "(min-width: 1024px)",
+      "tokens": {
+        "--header-h": "76px"
+      }
+    },
+    {
+      "media": "(min-width: 1920px)",
+      "tokens": {
+        "--header-h": "88px"
+      }
+    }
+  ],
+  "typography": [
+    {
+      "role": "Hero",
+      "token": "--fs-hero",
+      "range_px": "34-112",
+      "line_height": "0.98",
+      "letter_spacing": "-0.038em",
+      "weight": "500"
+    },
+    {
+      "role": "H1",
+      "token": "--fs-h1",
+      "range_px": "32-100",
+      "line_height": "1.02",
+      "letter_spacing": "-0.034em",
+      "weight": "500",
+      "note": "Actual H1 at 320px is min(--fs-h1, 9.4vw) = 30.08px."
+    },
+    {
+      "role": "H2",
+      "token": "--fs-h2",
+      "range_px": "28-72",
+      "line_height": "1.05",
+      "letter_spacing": "-0.030em",
+      "weight": "500"
+    },
+    {
+      "role": "H3",
+      "token": "--fs-h3",
+      "range_px": "21-40",
+      "line_height": "1.12",
+      "letter_spacing": "-0.022em",
+      "weight": "500"
+    },
+    {
+      "role": "H4",
+      "token": "--fs-h4",
+      "range_px": "18-26",
+      "line_height": "1.22",
+      "letter_spacing": "-0.012em",
+      "weight": "500"
+    },
+    {
+      "role": "Lead",
+      "token": "--fs-lead",
+      "range_px": "18-24",
+      "line_height": "1.42",
+      "letter_spacing": "-0.008em",
+      "weight": "450"
+    },
+    {
+      "role": "Текст",
+      "token": "--fs-body",
+      "range_px": "16-18",
+      "line_height": "1.55",
+      "letter_spacing": "normal",
+      "weight": "450"
+    },
+    {
+      "role": "Подпись",
+      "token": "--fs-sm",
+      "range_px": "15-16",
+      "line_height": "по компоненту",
+      "letter_spacing": "normal",
+      "weight": "450 / 500"
+    },
+    {
+      "role": "Кнопка",
+      "token": "--fs-btn",
+      "range_px": "16-18",
+      "line_height": "1.1",
+      "letter_spacing": "-0.005em",
+      "weight": "500"
+    },
+    {
+      "role": "Факт",
+      "token": "--fs-value",
+      "range_px": "20-30",
+      "line_height": "1.15",
+      "letter_spacing": "-0.020em",
+      "weight": "500",
+      "note": "Actual .facts__value size is additionally capped by available column width; it can be below the nominal token minimum."
+    }
+  ],
+  "presentation_adaptation": {
+    "status": "recommendation, not website tokens",
+    "canvas_px": [
+      1920,
+      1080
+    ],
+    "aspect_ratio": "16:9",
+    "safe_margin_px": "80-96",
+    "columns": 12,
+    "column_gap_px": 24,
+    "heading_px": "64-88",
+    "cover_heading_px": "88-112",
+    "body_px": "28-36",
+    "caption_px": "22-24",
+    "dominant_fact_px": "80-120",
+    "powerpoint_conversion": "pt = px * 0.75 only for a 20 x 11.25 inch slide (1920 x 1080 CSS px at 96dpi). For 13.333 x 7.5 inch use pt = px * 0.5."
+  },
+  "assets": {
+    "poster": {
+      "path": "assets/poster.webp",
+      "source": "assets/img/hero/poster.webp"
+    },
+    "bridge": {
+      "path": "assets/bridge.webp",
+      "source": "assets/img/hero/bridge-drive-800.webp"
+    },
+    "detail": {
+      "path": "assets/detail.webp",
+      "source": "assets/img/hero/gclass-close-800.webp"
+    }
+  },
+  "source_sha256": {
+    "src/GUIDE.md": "512c3f598960e9dfab0707714a6311959b7a105931818776ee22f7fd8d9c8bf8",
+    "src/css/00-tokens.css": "65c99523717d2836b9f59025a5f07df51d9527ca2423d85564e1bf17a39d66db",
+    "src/css/10-base.css": "c41ad043b343e78bbc715f7b314528bf91c34be3d5fc083e27c96fa91e61d70e",
+    "src/css/20-layout.css": "4aaba7ac831bb9dd7123edcdeecbf1bf15b59d3635bfbaeee7424e9eed13c1b7",
+    "src/css/30-components.css": "f530e9b509034116712be69c493ee4207f00e440675eedfd355a1cf1c8bdfaf7",
+    "src/css/35-forms.css": "69fa398c537bb7583a91a28f42c0e2786e81f2b660dad309bcd2740b6cc9ed73",
+    "src/css/40-sections.css": "8b0ff5de4c388c9b70c17323720565ac869c384b78e3b6e3c584bda9e97d5bb7",
+    "src/css/41-home.css": "0f4ee0b42a0282e397df13af20a37ef2259f5b595000b0c0f188d358a33e5c9c",
+    "src/lib/icons.mjs": "9c89d98e34cf7a87cd738c8d9351ff4622feef8a02640295fe009526d15a8cef",
+    "src/layout/logo.mjs": "8f35de9be7232a4b1703d2f4edc91e81b264f0adc05b20d811c379da9dbc5389",
+    "src/pages/home.mjs": "ebe79c5c50be83bb699d307168ab6e9adc509a019cf92e37804c957592dc1ac9",
+    "assets/fonts/fonts.css": "d59f070ad02246789ae73ffd61fd969ddf525cf579723ff1974bcd2d817d9ee3"
+  },
+  "notes": [
+    "Base tokens are copied from the first :root block. Responsive header overrides are separate.",
+    "H1 at 320px is min(--fs-h1,9.4vw)=30.08px.",
+    "Website guide is normative; component CSS documents implementation exceptions.",
+    "Existing business claims are intentionally excluded from illustrative slide layouts."
+  ]
+}

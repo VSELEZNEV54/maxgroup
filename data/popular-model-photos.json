@@ -1,0 +1,572 @@
+{
+  "japan/toyota-aqua": {
+    "src": "assets/img/cars/toyota-aqua-2021-1/01.webp"
+  },
+  "japan/toyota-yaris-hybrid": {
+    "src": "assets/img/popular-models/japan/toyota-yaris-hybrid.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_YARIS_HYBRID_G_(6AA-MXPH10-AHXGB).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/toyota-yaris-cross-hybrid": {
+    "src": "assets/img/popular-models/japan/toyota-yaris-cross-hybrid.webp",
+    "author": "TTTNIS",
+    "source": "https://commons.wikimedia.org/wiki/File:2020-2024_Toyota_Yaris_Cross_Hybrid_Z.jpg",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  "japan/toyota-corolla-fielder-hybrid": {
+    "src": "assets/img/popular-models/japan/toyota-corolla-fielder-hybrid.webp",
+    "author": "Mr.choppers",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Toyota_Corolla_Fielder_Hybrid_EX_in_Super_White_II,_front_right.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/toyota-corolla-touring-hybrid": {
+    "src": "assets/img/cars/toyota-corolla-touring-2023-1/01.webp"
+  },
+  "japan/toyota-corolla-cross-hybrid": {
+    "src": "assets/img/popular-models/japan/toyota-corolla-cross-hybrid.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_COROLLA_CROSS_HYBRID_Z_2WD_(6AA-ZVG11-KHXEB)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/toyota-sienta-hybrid": {
+    "src": "assets/img/cars/toyota-sienta-2023-1/01.webp"
+  },
+  "japan/toyota-prius": {
+    "src": "assets/img/popular-models/japan/toyota-prius.webp",
+    "author": "Mr.choppers",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Prius_S_(ZVW51)_in_Thermo-Tech_Lime_Green,_front_left.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "japan/toyota-voxy-hybrid": {
+    "src": "assets/img/popular-models/japan/toyota-voxy-hybrid.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_VOXY_HYBRID_S-G_2WD_(6AA-ZWR90W-BPXSB)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/toyota-raize": {
+    "src": "assets/img/cases/toyota-raize-z-2021.webp"
+  },
+  "japan/toyota-roomy": {
+    "src": "assets/img/popular-models/japan/toyota-roomy.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_ROOMY_CUSTOM_G_(5BA-M900A-GBVE)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/honda-fit-e-hev": {
+    "src": "assets/img/popular-models/japan/honda-fit-e-hev.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_FIT_e%EF%BC%9AHEV_HOME_2WD_(6AA-GR3)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/honda-vezel-e-hev": {
+    "src": "assets/img/cars/honda-vezel-2021-1/01.webp"
+  },
+  "japan/honda-freed-hybrid": {
+    "src": "assets/img/popular-models/japan/honda-freed-hybrid.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_FREED_HYBRID_G%E3%83%BBHonda_SENSING_2WD_(6AA-GB7)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/honda-shuttle-hybrid": {
+    "src": "assets/img/popular-models/japan/honda-shuttle-hybrid.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_SHUTTLE_HYBRID_X_(DAA-GP7)_front.JPG",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  "japan/honda-n-box": {
+    "src": "assets/img/popular-models/japan/honda-n-box.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_N-BOX_Custom_L_(6BA-JF3)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/nissan-note-e-power": {
+    "src": "assets/img/popular-models/japan/nissan-note-e-power.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_NOTE_X_(6AA-E13)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/nissan-serena-e-power": {
+    "src": "assets/img/cars/nissan-serena-2021-1/01.webp"
+  },
+  "japan/nissan-kicks-e-power": {
+    "src": "assets/img/popular-models/japan/nissan-kicks-e-power.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_KICKS_X_Two-Tone_Interior_Edition_(6AA-P15)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/nissan-dayz": {
+    "src": "assets/img/popular-models/japan/nissan-dayz.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_DAYZ_Highway_STAR_X_Pro-PILOT_Edition_(5AA-B44W)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/nissan-x-trail-t32": {
+    "src": "assets/img/cars/nissan-x-trail-2019-1/01.webp"
+  },
+  "japan/mazda-cx-5": {
+    "src": "assets/img/cars/mazda-cx-5-2020-1/01.webp"
+  },
+  "japan/mazda-cx-30": {
+    "src": "assets/img/popular-models/japan/mazda-cx-30.webp",
+    "author": "EurovisionNim",
+    "source": "https://commons.wikimedia.org/wiki/File:Mazda_CX-30_Touring,_2020_front_(cropped).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/mazda-2": {
+    "src": "assets/img/popular-models/japan/mazda-2.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Mazda2_15S_PROACTIVE_S_Package_(6BA-DJLFS)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/subaru-xv": {
+    "src": "assets/img/popular-models/japan/subaru-xv.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Subaru_XV_2.0i-L_EyeSight_(DBA-GT7)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/subaru-forester": {
+    "src": "assets/img/popular-models/japan/subaru-forester.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Subaru_FORESTER_Advance_(5AA-SKE)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/suzuki-jimny": {
+    "src": "assets/img/cars/suzuki-jimny-2024-1/01.webp"
+  },
+  "japan/suzuki-swift": {
+    "src": "assets/img/popular-models/japan/suzuki-swift.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_SWIFT_HYBRID_MG_(5AA-ZC53S-VBGB-M2).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/daihatsu-rocky": {
+    "src": "assets/img/popular-models/japan/daihatsu-rocky.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Daihatsu_Rocky_G_2WD_(5BA-A200S-GBSV)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "japan/mitsubishi-delica-d-5": {
+    "src": "assets/img/popular-models/japan/mitsubishi-delica-d-5.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Mitsubishi_DELICA_D%EF%BC%9A5_G-Power_Package_(3DA-CV1W-LUHFZ)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/chery-tiggo-3x": {
+    "src": "assets/img/popular-models/china/chery-tiggo-3x.webp",
+    "author": "Quzhouliulian",
+    "source": "https://commons.wikimedia.org/wiki/File:Chery_Tiggo_3x_Plus_001.jpg",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  "china/geely-vision-x6": {
+    "src": "assets/img/popular-models/china/geely-vision-x6.webp",
+    "author": "JustAnotherCarDesigner",
+    "source": "https://commons.wikimedia.org/wiki/File:Geely_Vision_X6_Pro_001.jpg",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  "china/geely-coolray": {
+    "src": "assets/img/cars/geely-binyue-2021-1/01.webp"
+  },
+  "china/haval-chitu-jolion": {
+    "src": "assets/img/popular-models/china/haval-chitu-jolion.webp",
+    "author": "Kevauto",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Great-Wall_Haval_Chitu,_front_8.18.23.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/haval-kugou": {
+    "src": "assets/img/popular-models/china/haval-kugou.webp",
+    "author": "Kevauto",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Great-Wall_Haval_Kugou_(Cool_Dog),_front_8.18.23.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/jetta-vs5": {
+    "src": "assets/img/popular-models/china/jetta-vs5.webp",
+    "author": "vipnumber",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Jetta_VS5_white_front.jpg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "china/jetta-vs7": {
+    "src": "assets/img/popular-models/china/jetta-vs7.webp",
+    "author": "Jengtingchen",
+    "source": "https://commons.wikimedia.org/wiki/File:Jetta_VS7_001.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/chevrolet-monza": {
+    "src": "assets/img/popular-models/china/chevrolet-monza.webp",
+    "author": "Jengtingchen",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Monza_001.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/kia-kx3": {
+    "src": "assets/img/popular-models/china/kia-kx3.webp",
+    "author": "Jengtingchen",
+    "source": "https://commons.wikimedia.org/wiki/File:Kia_KX3_II_001.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/hyundai-ix25": {
+    "src": "assets/img/popular-models/china/hyundai-ix25.webp",
+    "author": "Jengtingchen",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_ix25_II_005.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/toyota-corolla": {
+    "src": "assets/img/popular-models/china/toyota-corolla.webp",
+    "author": "Dinkun Chen",
+    "source": "https://commons.wikimedia.org/wiki/File:TOYOTA_COROLLA_SEDAN_(E210)_China_(2).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/toyota-levin": {
+    "src": "assets/img/popular-models/china/toyota-levin.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_GAC-Toyota_Levin_(front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/toyota-corolla-cross": {
+    "src": "assets/img/popular-models/china/toyota-corolla-cross.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_FAW-Toyota_Corolla_Cross_(front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/honda-crider": {
+    "src": "assets/img/popular-models/china/honda-crider.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_GAC-Honda_Crider_180_Turbo_(front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/honda-xr-v": {
+    "src": "assets/img/popular-models/china/honda-xr-v.webp",
+    "author": "メイド理世",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_XR-V_China_(front),_November_7,_2024.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/honda-civic": {
+    "src": "assets/img/popular-models/china/honda-civic.webp",
+    "author": "Dinkun Chen",
+    "source": "https://commons.wikimedia.org/wiki/File:HONDA_CIVIC_SEDAN_(FE,FL)_China_(2).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/nissan-x-trail": {
+    "src": "assets/img/popular-models/china/nissan-x-trail.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_X-TRAIL_20Xi_Leather_Edition_2WD_(5BA-T32)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/nissan-qashqai": {
+    "src": "assets/img/popular-models/china/nissan-qashqai.webp",
+    "author": "Harvey Bold",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Nissan_Qashqai_Acenta_Premium_DIG-T_-_1332cc_1.3_(160PS)_Petrol_-_Red_-_02-2025,_Front.jpg",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  "china/mazda-cx-4": {
+    "src": "assets/img/popular-models/china/mazda-cx-4.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_FAW-Mazda_CX-4_(front).jpg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "china/mazda-cx-30": {
+    "src": "assets/img/popular-models/china/mazda-cx-30.webp",
+    "author": "Dinkun Chen",
+    "source": "https://commons.wikimedia.org/wiki/File:MAZDA_CX-30_China.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/mazda-3": {
+    "src": "assets/img/popular-models/china/mazda-3.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Mazda3_SEDAN_20S_L_Package_2WD_(5BA-BPFP)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/volkswagen-lavida": {
+    "src": "assets/img/popular-models/china/volkswagen-lavida.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_SAIC-Volkswagen_Lavida_(front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/volkswagen-sagitar": {
+    "src": "assets/img/popular-models/china/volkswagen-sagitar.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_FAW-Volkswagen_Sagitar_(front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/volkswagen-magotan": {
+    "src": "assets/img/popular-models/china/volkswagen-magotan.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_FAW-Volkswagen_Magotan_B8_(front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/volkswagen-tharu": {
+    "src": "assets/img/popular-models/china/volkswagen-tharu.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_SAIC-Volkswagen_Tharu_(front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/volkswagen-tiguan-l": {
+    "src": "assets/img/popular-models/china/volkswagen-tiguan-l.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_SAIC-Volkswagen_Tiguan_L_(facelift,_front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/skoda-octavia": {
+    "src": "assets/img/popular-models/china/skoda-octavia.webp",
+    "author": "JustAnotherCarDesigner",
+    "source": "https://commons.wikimedia.org/wiki/File:Skoda_Octavia_Pro_001.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/skoda-karoq": {
+    "src": "assets/img/popular-models/china/skoda-karoq.webp",
+    "author": "User3204",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_SAIC-%C5%A0koda_Karoq_(front).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/audi-q2l": {
+    "src": "assets/img/popular-models/china/audi-q2l.webp",
+    "author": "Dinkun Chen",
+    "source": "https://commons.wikimedia.org/wiki/File:AUDI_Q2L_China_(6).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "china/mercedes-benz-a-class-a180l": {
+    "src": "assets/img/popular-models/china/mercedes-benz-a-class-a180l.webp",
+    "author": "Navigator84",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_A-Class_Z177_01_China_2019-03-14.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/hyundai-avante-elantra": {
+    "src": "assets/img/popular-models/korea/hyundai-avante-elantra.webp",
+    "author": "Ki hoon",
+    "source": "https://commons.wikimedia.org/wiki/File:20200408_Hyundai_AVANTE(7th)_Frontside.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/hyundai-sonata": {
+    "src": "assets/img/cars/hyundai-sonata-2023-1/01.webp"
+  },
+  "korea/hyundai-venue": {
+    "src": "assets/img/popular-models/korea/hyundai-venue.webp",
+    "author": "Ki hoon",
+    "source": "https://commons.wikimedia.org/wiki/File:20190710_hyundai_venue_front_side.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/hyundai-casper": {
+    "src": "assets/img/popular-models/korea/hyundai-casper.webp",
+    "author": "Damian B Oh",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Casper_AX1_Unbleached_Ivory.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/hyundai-veloster": {
+    "src": "assets/img/popular-models/korea/hyundai-veloster.webp",
+    "author": "Ki hoon",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Veloster_(JS)_front_view_(South_Korea).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/hyundai-tucson": {
+    "src": "assets/img/cars/hyundai-tucson-2020-1/01.webp"
+  },
+  "korea/hyundai-kona": {
+    "src": "assets/img/popular-models/korea/hyundai-kona.webp",
+    "author": "Harvey Bold",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Hyundai_Kona_Premium_SE_T-GDi_-_998cc_1.0_(120PS)_Petrol_-_Acid_Yellow_-_02-2025,_Front.jpg",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  "korea/kia-morning": {
+    "src": "assets/img/popular-models/korea/kia-morning.webp",
+    "author": "Ki hoon",
+    "source": "https://commons.wikimedia.org/wiki/File:20200729_Kia_Morning_Front_Side.png",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/kia-ray": {
+    "src": "assets/img/popular-models/korea/kia-ray.webp",
+    "author": "Ki_hoon",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_kia_ray_front-side.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "korea/kia-k3": {
+    "src": "assets/img/popular-models/korea/kia-k3.webp",
+    "author": "Navigator84",
+    "source": "https://commons.wikimedia.org/wiki/File:Kia_K3_BD_01_South_Korea_2018-03-29.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/kia-k5": {
+    "src": "assets/img/cars/kia-k5-2023-1/01.webp"
+  },
+  "korea/kia-seltos": {
+    "src": "assets/img/cars/kia-seltos-2021-1/01.webp"
+  },
+  "korea/kia-sportage": {
+    "src": "assets/img/cars/kia-sportage-2023-1/01.webp"
+  },
+  "korea/kia-niro": {
+    "src": "assets/img/popular-models/korea/kia-niro.webp",
+    "author": "Calreyn88",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Kia_Niro_3_HEV.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/chevrolet-spark": {
+    "src": "assets/img/popular-models/korea/chevrolet-spark.webp",
+    "author": "Kevauto",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Chevrolet_Spark_LT_(M400_facelift)_front_NYIAS_2019.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/chevrolet-trax": {
+    "src": "assets/img/popular-models/korea/chevrolet-trax.webp",
+    "author": "Kevauto",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Chevrolet_Trax_LT_1.4L_front_3.15.19.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/chevrolet-trailblazer": {
+    "src": "assets/img/popular-models/korea/chevrolet-trailblazer.webp",
+    "author": "Mr.choppers",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Chevrolet_Trailblazer_Activ_AWD_in_Mosaic_Black_met.,_front_left.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "korea/chevrolet-malibu": {
+    "src": "assets/img/popular-models/korea/chevrolet-malibu.webp",
+    "author": "Kevauto",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Chevrolet_Malibu_(facelift)_LT,_front_10.19.19.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/chevrolet-equinox": {
+    "src": "assets/img/popular-models/korea/chevrolet-equinox.webp",
+    "author": "Mr.choppers",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Chevrolet_Equinox_LT_AWD_in_Cajun_Red_Tintcoat,_front_right.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "korea/renault-korea-samsung-sm6": {
+    "src": "assets/img/popular-models/korea/renault-korea-samsung-sm6.webp",
+    "author": "Benespit",
+    "source": "https://commons.wikimedia.org/wiki/File:00_samsung_sm6_fl_1.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/renault-korea-samsung-qm6": {
+    "src": "assets/img/popular-models/korea/renault-korea-samsung-qm6.webp",
+    "author": "Benespit",
+    "source": "https://commons.wikimedia.org/wiki/File:0_Samsung_QM6_1.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/renault-korea-samsung-xm3": {
+    "src": "assets/img/popular-models/korea/renault-korea-samsung-xm3.webp",
+    "author": "카이즈유 (Carisyou)",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Samsung_XM3_(front_view).jpg",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+  },
+  "korea/renault-captur": {
+    "src": "assets/img/popular-models/korea/renault-captur.webp",
+    "author": "Vauxford",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Renault_Captur_S_Edition_Front_(1).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/ssangyong-korando": {
+    "src": "assets/img/popular-models/korea/ssangyong-korando.webp",
+    "author": "SmartTalk",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_SsangYong_Korando_(C300)_Front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/ssangyong-tivoli": {
+    "src": "assets/img/popular-models/korea/ssangyong-tivoli.webp",
+    "author": "SmartTalk",
+    "source": "https://commons.wikimedia.org/wiki/File:SsangYong_Tivoli_facelift_(X150)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/mini-cooper": {
+    "src": "assets/img/popular-models/korea/mini-cooper.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_MINI_3door_COOPER_(F56)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/volkswagen-tiguan": {
+    "src": "assets/img/popular-models/korea/volkswagen-tiguan.webp",
+    "author": "Tokumeigakarinoaoshima",
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_TIGUAN_TDI_4MOTION_R-Line_(LDA-5NDFGF)_front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/mercedes-benz-c200d": {
+    "src": "assets/img/popular-models/korea/mercedes-benz-c200d.webp",
+    "author": "M 93",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_C_200_d_(W_205)_%E2%80%93_Frontansicht,_18._Oktober_2015,_Ratingen.jpg",
+    "license": "CC BY-SA 3.0 de",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+  },
+  "korea/bmw-x1": {
+    "src": "assets/img/popular-models/korea/bmw-x1.webp",
+    "author": "Calreyn88",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_BMW_X1_18d_XDrive_XLine_Auto.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "korea/audi-a4": {
+    "src": "assets/img/popular-models/korea/audi-a4.webp",
+    "author": "Vauxford",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Audi_A4_S_Line_35_TDi_S-A_facelift_2.0_Front.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  }
+}

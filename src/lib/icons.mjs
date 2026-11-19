@@ -79,15 +79,15 @@ const FILL = {
   instagram: social.instagram,
   youtube: social.youtube,
   vk: social.vk,
-  // мессенджер MAX — упрощенный знак: скругленный квадрат с буквой M
-  max: 'M6.5 2h11A4.500 4.500 0 0 1 22 6.500v11a4.500 4.500 0 0 1-4.500 4.500h-11A4.500 4.500 0 0 1 2 17.500v-11A4.500 4.500 0 0 1 6.500 2Zm.300 15.500h2.300v-6.300l2.100 4.100h1.600l2.100-4.100v6.300h2.300v-11h-2.400L12 11.600 9.200 6.500H6.800v11Z',
+  // Монохромный знак из https://go.max.ru/brandbook, в координатах остальных иконок.
+  max: readFileSync(new URL('../../assets/img/brand/icon-max.svg', import.meta.url), 'utf8').match(/<path d="([^"]+)"/)[1],
   'star-fill': 'm12 2.800 2.800 5.900 6.400.9-4.700 4.500 1.200 6.400-5.700-3.100-5.700 3.100 1.200-6.400-4.700-4.500 6.400-.9L12 2.800Z',
   'play-fill': 'M8 5v14l11-7L8 5Z',
 };
 
 const fix = (d) => d.replace(/(\d)\.(\d)00\b/g, '$1.$2').replace(/\.010\b/g, '.01');
 
-/** icon('arrow', 'i-arrow') → inline SVG */
+/** Линейные и фирменные иконки. */
 export function icon(name, cls = '', extra = '') {
   const c = cls ? ` class="${cls}"` : '';
   if (FILL[name]) {
@@ -95,7 +95,7 @@ export function icon(name, cls = '', extra = '') {
   }
   const body = LINE[name];
   if (!body) throw new Error(`Нет иконки: ${name}`);
-  return `<svg${c} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"${extra}>${fix(body)}</svg>`;
+  return `<svg${c}${name.startsWith('arrow') ? ' data-icon="' + name + '"' : ''} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"${extra}>${fix(body)}</svg>`;
 }
 
 export const hasIcon = (name) => Boolean(LINE[name] || FILL[name]);

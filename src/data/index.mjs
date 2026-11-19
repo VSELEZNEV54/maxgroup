@@ -3,7 +3,9 @@ import { readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { ROOT, readJson, readText, slugify, groupBy, liters, frontMatter, markdown, fileExists, plural } from '../lib/core.mjs';
 import { R } from '../routes.mjs';
-import { site, source, SITE_TELS } from './site.mjs';
+import { modelParts } from './model-offers.mjs';
+import { generationId, numericGrade } from './generations.mjs';
+import { site, source } from './site.mjs';
 import { countries, countryBySlug } from './countries.mjs';
 import { selections as selectionDefs } from './selections.mjs';
 import { services, serviceGroups } from './services.mjs';
@@ -31,6 +33,14 @@ function ageCategory(raw, breakdown) {
   const made = raw.month ? Date.UTC(raw.year, raw.month - 1, 15) : Date.UTC(raw.year, 6, 1);
   const years = (CALC_DATE - made) / (365.25 * 864e5);
   return years <= 3 ? 'le3' : years <= 5 ? '3to5' : 'gt5';
+}
+
+function truckClass(body) {
+  const b = String(body || '').toLowerCase();
+  // кей-кары в каталоге — высокие «коробочки» (около 1,8 м), по высоте это старший тариф
+  if (/внедорожник|пикап|микроавтобус|минивэн|минивен|фургон|кей/.test(b)) return 'suv';
+  if (/кроссовер|suv|компактвэн|вэн/.test(b)) return 'crossover';
+  return 'sedan';
 }
 
 function normalizeCar(raw) {
@@ -62,7 +72,10 @@ function normalizeCar(raw) {
     country,
     brandSlug,
     modelSlug,
+    generationKey: generationId(brandSlug, modelSlug, { ...raw, country }),
+    gradeValue: numericGrade(raw.auctionGrade),
     countryName: cn?.name,
+    truckClass: truckClass(raw.body),
     title: `${raw.brand} ${raw.model}`,
     titleFull: [raw.brand, raw.model, trim].filter(Boolean).join(' '),
     titleYear: `${raw.brand} ${raw.model} ${raw.year || ''}`.trim(),
@@ -196,6 +209,74 @@ export function priceStats(list) {
   };
 }
 
+// Запись подборки описывает типовую комплектацию. Связь с каталогом ведет к семейству модели в той же стране.
+function loadPopularModels(models) {
+  const photos = readJson('data/popular-model-photos.json');
+  const offers = readJson('data/model-offers.json');
+  const intros = readJson('data/popular-model-descriptions.json');
+  const byName = new Map(models.map((m) => [`${m.country}/${slugify(m.brand + ' ' + m.name)}`, m]));
+  // Название Coolray для Binyue подтверждено в data/content/models/china-geely-binyue.json.
+  const aliases = { 'china/geely-coolray': 'china/geely-binyue' };
+  return readJson('data/popular-models.json').map((row) => {
+    const slug = slugify(row.name);
+    const key = `${row.country}/${slug}`;
+    const family = row.name.replace(/\s+(?:Hybrid|e:HEV|e-Power|\([^()]+\))$/i, '');
+    const model = byName.get(key) || byName.get(aliases[key]) || byName.get(`${row.country}/${slugify(family)}`);
+    const { brand, model: modelName } = modelParts(row.name);
+    const brandSlug = slugify(brand.replace(/ \(Samsung\)$/, ''));
+    const url = R.model(row.country, brandSlug, slugify(modelName));
+    if (!photos[key]?.src || !fileExists(photos[key].src)) throw new Error(`Нет фотографии для ${row.name}`);
+    const entry = { ...row, slug, key, url, pricesUrl: R.modelPrices(url), brand, intro: intros[key], photo: photos[key], offers: offers[key], modelUrl: model?.url };
+    if (model) {
+      (model.popularProfiles ??= []).push(entry);
+      for (const car of model.cars) {
+        if (/Hybrid|e:HEV|e-Power/i.test(row.name) && car.engine?.type !== 'гибрид') continue;
+        if (/e:HEV|e-Power/i.test(row.name) && !/e:HEV|e-Power/i.test(car.trim || '')) continue;
+        car.modelInTop30 = true;
+      }
+    }
+    return entry;
+  });
+}
+
+// В меню сначала идут марки с лотами. Для остальных доступны подбор по стране
+// и модели из подборки заказчика. Счетчики относятся только к реальным лотам.
+function marketBrands(country, lots, directory, profiles) {
+  const brands = new Map();
+  function add(name) {
+    const slug = slugify(name);
+    if (!brands.has(slug)) brands.set(slug, {
+      name, slug, models: [],
+      url: `${R.home}?market=${country}&make=${encodeURIComponent(slug)}#podbor`,
+    });
+    return brands.get(slug);
+  }
+  for (const lot of lots) {
+    const brand = add(lot.name);
+    Object.assign(brand, { url: lot.url, count: lot.count, models: lot.models.map((m) => ({ name: m.name, slug: m.slug })) });
+  }
+  for (const [name, models] of Object.entries(directory)) {
+    const brand = add(name);
+    const known = new Set(brand.models.map((m) => m.slug));
+    for (const model of models) {
+      const slug = slugify(model) || model;
+      if (!known.has(slug)) {
+        brand.models.push({ name: model, slug });
+        known.add(slug);
+      }
+    }
+  }
+  for (const profile of profiles.filter((p) => p.country === country)) {
+    const name = [...brands.values()].filter((b) => profile.name.toLowerCase().startsWith(b.name.toLowerCase() + ' '))
+      .sort((a, b) => b.name.length - a.name.length)[0]?.name || profile.name.split(' ')[0];
+    const brand = add(name);
+    const model = profile.name.slice(name.length).trim().replace(/^\(Samsung\)\s*/i, '');
+    const slug = slugify(model);
+    if (model && !brand.models.some((m) => m.slug === slug)) brand.models.push({ name: model, slug });
+  }
+  return [...brands.values()].sort((a, b) => (b.count || 0) - (a.count || 0) || a.name.localeCompare(b.name, 'ru'));
+}
+
 // --- контекст ---------------------------------------------------------------------------------
 
 export function loadContext(build) {
@@ -250,6 +331,8 @@ export function loadContext(build) {
     }
   }
   const brandsOf = (country) => brands.filter((b) => b.country === country).sort((x, y) => y.count - x.count || x.name.localeCompare(y.name));
+  const popularModels = loadPopularModels(models);
+  const markets = readJson('data/market-brands.json').markets;
 
   const MIN_SLICE = 4; // страновой срез создается, только если в нем есть что показать
   const brandSlugs = new Set(brands.map((b) => b.slug));
@@ -272,9 +355,7 @@ export function loadContext(build) {
   const slicesOf = (country) => slices.filter((x) => x.country === country);
 
   const cases = (source.cases || []).map(normalizeCase);
-  const reviews = (source.reviews || []).map((r, i) => ({ ...r, id: i + 1, photos: (r.photos || []).filter((p) => fileExists(p)) }));
-  // на сайте только Сергей Усов (общий номер) и Владислав Ли, фото сотрудников пока не показываем (решение 12.11.2026)
-  const team = (source.team || []).filter((t) => SITE_TELS.includes(t.tel)).map((t) => ({ ...t, photo: null, role: t.position || 'Менеджер' }));
+  const reviews = (source.reviews || []).map((r, i) => ({ ...r, text: r.excerpt || r.text, id: i + 1, photos: (r.photos || []).filter((p) => fileExists(p)) }));
   const cities = optionalJson('data/cities.json', []).map((c) => ({ ...c, url: R.city(c.slug) }));
   const posts = loadPosts();
   const faq = optionalJson('data/faq.json', []);
@@ -293,11 +374,10 @@ export function loadContext(build) {
       ...cn,
       url: R.country(cn.slug),
       count: cars.filter((c) => c.country === cn.slug).length,
-      brands: brandsOf(cn.slug).slice(0, 12).map((b) => ({ name: b.name, url: b.url, count: b.count })),
+      brands: marketBrands(cn.slug, brandsOf(cn.slug), markets[cn.slug], popularModels),
     })),
     selections: selections.filter((s) => s.count > 0 && s.nav !== false).slice(0, 10).map((s) => ({ name: s.name, url: s.url, count: s.count })),
     serviceGroups: serviceGroups.map((g) => ({ ...g, items: g.items.map((slug) => services.find((s) => s.slug === slug)).filter(Boolean).map((s) => ({ name: s.navName || s.name, url: s.url })) })),
-    servicePromo: { label: 'Калькулятор', title: 'Сколько стоит авто под ключ', text: 'Пошлина, утильсбор, доставка и оформление: расчет за минуту.', cta: 'Рассчитать', url: R.calculator },
     top: [
       { name: 'Калькулятор', url: R.calculator },
       { name: 'Доставка', url: R.delivery },
@@ -307,7 +387,12 @@ export function loadContext(build) {
     companyGroups: [
       { title: 'Компания', items: [{ name: 'О компании', url: R.about }, { name: 'Отзывы клиентов', url: R.reviews }, { name: 'Привезенные авто', url: R.cases }, { name: 'Контакты', url: R.contacts }] },
       { title: 'Полезное', items: [{ name: 'Как заказать автомобиль', url: R.howTo }, { name: 'Блог', url: R.blog }, { name: 'Вопросы и ответы', url: R.faq }, { name: 'Как читать аукционный лист', url: R.auctionSheet }, { name: 'Видео и обзоры', url: R.video }] },
-      { title: 'Доставка', items: [{ name: 'Доставка по России', url: R.delivery }, ...cities.slice(0, 3).map((c) => ({ name: `Доставка в ${c.nameAcc || c.name}`, url: c.url }))] },
+      { title: 'Доставка', items: [
+        { name: 'Доставка по городам', url: R.delivery + '#goroda' },
+        { name: 'Доставка автовозом', url: R.delivery + '#avtovoz' },
+        ...['novosibirsk', 'krasnoyarsk', 'irkutsk', 'ekaterinburg', 'moskva', 'sankt-peterburg']
+          .map((slug) => cities.find((city) => city.slug === slug)).filter(Boolean).map((city) => ({ name: city.name, url: city.url })),
+      ] },
     ],
     companyPromo: { label: 'Офис во Владивостоке', title: site.contacts.street, text: `${site.contacts.office} · ${site.contacts.hours}`, cta: 'Как добраться', url: R.contacts },
     footerCompany: [
@@ -337,6 +422,7 @@ export function loadContext(build) {
     brands,
     brandsOf,
     models,
+    popularModels,
     selections,
     slices,
     slicesOf,
@@ -344,7 +430,7 @@ export function loadContext(build) {
     serviceGroups,
     cases,
     reviews,
-    team,
+    team: [site.salesManager],
     cities,
     posts,
     faq,

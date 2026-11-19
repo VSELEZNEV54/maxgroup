@@ -1,0 +1,132 @@
+{
+  "300": {
+    "source": "https://www.drom.ru/catalog/tank/300/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2026,
+        "to": null,
+        "codes": [],
+        "photo": "generations/tank/300-g1-r1-1342421.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2026,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": null,
+        "codes": [],
+        "photo": "generations/tank/300-g1-r0-1104322.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2023,
+            "fromMonth": 2,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 7,
+            "to": 2026,
+            "toMonth": 6,
+            "codes": []
+          },
+          {
+            "market": "cis",
+            "from": 2023,
+            "fromMonth": 5,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "uae",
+            "from": 2022,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "500": {
+    "source": "https://www.drom.ru/catalog/tank/500/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [],
+        "photo": "generations/tank/500-g1-r1-1291288.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2021,
+        "to": null,
+        "codes": [],
+        "photo": "generations/tank/500-g1-r0-1105140.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2021,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "cis",
+            "from": 2023,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "uae",
+            "from": 2023,
+            "fromMonth": 5,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  }
+}

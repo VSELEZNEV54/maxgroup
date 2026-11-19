@@ -37,18 +37,6 @@
   height: 72px;
   border-radius: var(--r-sm);
   overflow: hidden;
-  background: var(--ink-3);
-  color: #fff;
-  font-size: 1.375rem;
-  font-weight: var(--w-medium);
-}
-
-/* портреты сняты по пояс — увеличиваем, чтобы в аватаре было лицо */
-.quiz__avatar img {
-  width: 190%;
-  max-width: none;
-  height: auto;
-  margin: -26% 0 0 -45%;
 }
 
 .quiz__name {
@@ -102,6 +90,12 @@
   margin-top: 2px;
   color: var(--accent-on-dark);
 }
+
+.quiz-section--light .quiz__expert { background: var(--card); }
+.quiz-section--light .quiz__role { color: var(--text-2); }
+.quiz-section--light .quiz__bubble { background: var(--paper); color: var(--text); }
+.quiz-section--light .quiz__perks { color: var(--text-2); border-color: var(--line); }
+.quiz-section--light .quiz__perks svg { color: var(--accent); }
 
 /* панель с вопросами — светлая, как лист анкеты на темном столе */
 .quiz__panel {
@@ -169,7 +163,7 @@
 }
 
 /* варианты в квизе — на светлой панели, даже внутри темной секции */
-.section--dark .quiz__panel .opt span {
+.quiz-section .quiz__panel .opt span {
   background: var(--paper);
   box-shadow: none;
   color: var(--text);
@@ -177,11 +171,11 @@
   padding: 0 20px;
 }
 
-.section--dark .quiz__panel .opt:hover span {
+.quiz-section .quiz__panel .opt:hover span {
   box-shadow: inset 0 0 0 1px var(--text);
 }
 
-.section--dark .quiz__panel .opt input:checked + span {
+.quiz-section .quiz__panel .opt input:checked + span {
   background: var(--ink);
   color: #fff;
   box-shadow: none;
@@ -233,6 +227,18 @@
   color: #fff;
 }
 
+.quiz__mode {
+  margin-block: var(--sp-5);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.quiz__choice { border: 0; margin: 0; padding: 0; min-width: 0; }
+.quiz__choice .quiz__hint { margin-top: 0; }
+.quiz__fields { display: grid; gap: var(--sp-3); }
+.no-js [data-quiz-bodies][hidden] { display: block !important; }
+.no-js [data-quiz-make][hidden] { display: grid !important; margin-top: var(--sp-4); }
+
 .quiz__free {
   margin-top: 20px;
   max-width: 520px;
@@ -259,15 +265,6 @@
   gap: 8px;
   margin-top: auto;
   padding-top: clamp(24px, 3vw, 40px);
-}
-
-.quiz__back {
-  width: 52px;
-  padding: 0;
-}
-
-.quiz__back svg {
-  transform: rotate(180deg);
 }
 
 .quiz__panel.is-sent {

@@ -3,7 +3,9 @@ import { html, esc, u, a, img, price, priceShort, km, num, liters, typo, count, 
 import { carLd } from '../lib/seo.mjs';
 import { icon, label, duo, btn, more, reveal, sectionHead, crumbs, carCard, ctaBand, specList, ticks, step, note, countryGen } from '../components/ui.mjs';
 import { steps } from '../data/texts.mjs';
+import { popularModelCard, salesManagerCard } from '../components/catalog.mjs';
 import { R } from '../routes.mjs';
+import { selectControl } from '../components/select.mjs';
 
 const HOME = { name: 'Главная', url: R.home };
 const CATALOG = { name: 'Каталог', url: R.catalog };
@@ -56,7 +58,6 @@ function carPage(ctx, car) {
   // описание — до 165 знаков: если не помещается, убираем с конца оценку и цвет
   const desc = fit(165, ...[descParts.length, descParts.length - 1, descParts.length - 2].filter((n) => n > 0).map((n) => plain(`${car.titleYear} ${cn.from} под заказ: ${descParts.slice(0, n).join(', ')}. Цена ${from}${price(car.priceRub)} ${car.priceLabel}.`)));
   car.metaDescription = desc;
-  const manager = ctx.team[car.id.length % ctx.team.length];
   const waText = encodeURIComponent(`Здравствуйте! Интересует ${car.titleYear} за ${num(car.priceRub).replace(/ /g, ' ')} ₽ (${site.url}${car.url})`);
   const wa = site.socials.whatsapp ? `${site.socials.whatsapp.url}?text=${waText}` : null;
   const passing = car.isPassing;
@@ -68,7 +69,6 @@ function carPage(ctx, car) {
   // Тип силовой установки: электромобиль; последовательный гибрид (в расчете заказчика — тариф электромобиля) — series
   // с мощностью электромоторов в ehp; остальные гибриды — parallel с мощностью ДВС в hp.
   const FUEL = car.isElectric ? 'ev' : car.isSeriesHybrid || (car.isHybrid && car.isEvTariff) ? 'series' : car.isHybrid ? 'parallel' : /мягкий гибрид/i.test(eng.subtype || '') ? 'mild' : 'ice';
-  const BODY = /кроссовер/i.test(car.body || '') ? 'crossover' : /внедорожник|минивэн|пикап/i.test(car.body || '') ? 'suv' : 'sedan';
   const calcQuery = [
     ['country', car.country],
     ['price', car.priceInCountry?.amount],
@@ -78,10 +78,10 @@ function carPage(ctx, car) {
     ['cc', FUEL === 'ev' ? null : eng.volumeCc],
     // мощность неизвестна — передаем 0: калькулятор попросит ее указать и не подставит мощность своего примера
     [FUEL === 'ev' || FUEL === 'series' ? 'ehp' : 'hp', eng.powerHp || 0],
-    ['body', BODY !== 'sedan' ? BODY : null],
+    ['body', car.truckClass !== 'sedan' ? car.truckClass : null],
     ['ref', 'car'],
   ].filter(([, v]) => v !== null && v !== undefined && v !== '').map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&amp;');
-  const lotLabel = car.auction?.lot ? `Лот ${car.auction.lot}` : car.source?.listingId ? `ID ${car.source.listingId}` : '';
+  const calculatorUrl = R.calculator + '?' + calcQuery;
   const tags = [
     passing ? '<span class="badge badge--accent">Проходной: 3-5 лет</span>' : '',
     lowFee ? '<span class="badge badge--ok">Льготный утильсбор</span>' : '',
@@ -105,18 +105,24 @@ function carPage(ctx, car) {
     ['Поколение / кузов', car.generation],
     ['Мест', car.seats],
     ['Аукционная оценка', car.auctionGrade],
-    ['Аукцион', car.auction?.house ? `${esc(car.auction.house)}${car.auction.lot ? `, лот ${esc(car.auction.lot)}` : ''}` : null],
     ['Дата торгов', car.auction?.date ? dateRu(car.auction.date) : null],
     ['Страна покупки', `<a class="link" href="${u(R.country(cn.slug))}">${esc(cn.name)}</a>${car.city ? `, ${esc(car.city)}` : ''}`],
-    // названия корейских и китайских площадок не публикуем (решение 12.11.2026), у японских лотов источник — аукционы
-    ['Источник', car.country === 'japan' && car.source?.name ? esc(car.source.name) : cn.source],
   ];
   const photos = car.photos;
   const sim = similar(ctx, car);
-  const cities = ctx.cities.filter((c) => c.priceFrom).slice(0, 8);
+  const destinations = ctx.cities.filter((city) => Number.isFinite(city.truck?.[car.truckClass]));
+  const cities = destinations.slice(0, 8);
+  const telegram = site.socials.telegramManager || site.socials.telegram;
   const subject = `Заявка на ${car.titleYear} (${car.id})`;
-  const cta = (text, variant = 'primary') =>
-    btn(text, R.contacts, { variant, modal: 'request', subject, block: true, attrs: { 'data-modal-title': `${car.titleYear}: узнать подробнее`, 'data-modal-text': 'Оставьте контакты, и менеджер проверит актуальность лота, пришлет аукционный лист или отчет и точный расчет под ключ.', 'data-modal-car': car.titleYear, 'data-modal-label': 'Автомобиль из каталога' } });
+  const cta = (text, size) => btn(text, R.contacts, {
+    modal: 'request', subject, size, block: !size,
+    attrs: {
+      'data-modal-title': 'Заявка на ' + car.titleYear,
+      'data-modal-text': 'Оставьте контакты. Менеджер проверит автомобиль и пришлет расчет до вашего города.',
+      'data-modal-car': [car.titleFull, car.year].filter(Boolean).join(', '),
+      'data-modal-label': 'Автомобиль из каталога',
+    },
+  });
   return {
     url: car.url,
     type: 'car',
@@ -125,6 +131,7 @@ function carPage(ctx, car) {
     h1,
     breadcrumbs: crumbsList,
     bodyClass: 'has-buybar',
+    scripts: ['car-delivery'],
     ogType: 'product',
     ogImage: photos[0] ? photos[0].replace(/^assets\//, '') : undefined,
     priority: 0.6,
@@ -154,7 +161,6 @@ function carPage(ctx, car) {
 
           <aside class="buybox">
             <div class="buybox__card">
-              <div class="car__meta" style="margin-bottom:14px"><span>${cn.code}</span><span>${esc(cn.sourceShort)}</span>${lotLabel ? `<span>${esc(lotLabel)}</span>` : ''}</div>
               <h1 class="buybox__title">${esc(car.titleFull)}<span class="sr-only">, </span><small>${[car.year, car.mileageKm || car.mileageKm === 0 ? km(car.mileageKm) : null, specsShort].filter(Boolean).join(' · ')}</small></h1>
               <div class="buybox__tags">${tags}</div>
               <div class="buybox__price">
@@ -171,24 +177,20 @@ function carPage(ctx, car) {
                 </details>`
                   : ''}
                 ${feeDoubt ? `<div class="buybox__flag">${note(typo(feeDoubt))}</div>` : ''}
+                ${car.priceNotice ? `<p class="breakdown__note">${typo(esc(car.priceNotice))}</p>` : ''}
                 <p class="breakdown__note">${car.priceIsPartial ? 'Утилизационный сбор для этого автомобиля считается по мощности из документов. Менеджер пришлет точную сумму. ' : ''}Расчет предварительный: итог зависит от курса валют на день оплаты и результата торгов. Доставка в ваш город считается отдельно.</p>
               </div>
               <div class="buybox__actions">
-                ${cta('Узнать и забронировать')}
-                <div class="btn-row">
-                  ${wa ? `<a class="btn btn--wa" href="${esc(wa)}" target="_blank" rel="noopener">${icon('whatsapp')} WhatsApp</a>` : ''}
-                  <a class="btn btn--ghost" href="${u(R.calculator)}?${calcQuery}">${icon('calc')} Калькулятор</a>
+                ${cta('Заказать такой автомобиль')}
+                ${btn('Рассчитать стоимость', calculatorUrl, { variant: 'ghost', block: true, modal: 'car-delivery' })}
+                <div class="buybox__socials">
+                  ${wa ? btn('WhatsApp', wa, { variant: 'wa', iconName: 'whatsapp', attrs: { target: '_blank', rel: 'noopener' } }) : ''}
+                  ${telegram ? btn('Telegram', telegram.url, { variant: 'tg', iconName: 'telegram', attrs: { target: '_blank', rel: 'noopener', 'aria-label': telegram.name } }) : ''}
+                  ${site.socials.max ? btn('MAX', site.socials.max.url, { variant: 'ghost', iconName: 'max', attrs: { target: '_blank', rel: 'noopener' } }) : ''}
                 </div>
               </div>
             </div>
-            <div class="manager">
-              <div class="manager__photo" aria-hidden="true">${esc(manager.initials || manager.name.trim()[0])}</div>
-              <div>
-                <div class="manager__name">${esc(manager.name)}</div>
-                <div class="manager__role">Ответит на вопросы по этому автомобилю</div>
-              </div>
-              <a class="manager__phone" href="tel:${manager.tel}">${esc(manager.phone)}</a>
-            </div>
+            ${salesManagerCard(site)}
           </aside>
         </div>
       </div>
@@ -200,7 +202,7 @@ function carPage(ctx, car) {
           <div${reveal()} data-gallery>
             ${label('Характеристики')}
             <h2 class="u-mt-5">${duo(`${car.brand} ${car.model} ${car.year || ''}`.trim(), 'в деталях')}</h2>
-            <p class="lead u-mt-5">${typo(`${car.titleYear} ${cn.from}${car.mileageKm ? ` с пробегом ${num(car.mileageKm)} км` : ''}. ${car.auction?.house ? `Аукцион ${car.auction.house}` : cap(cn.source)}. Перед покупкой проверяем состояние и документы и согласуем ${car.country === 'japan' ? 'ставку' : 'цену покупки'} с вами.`)}</p>
+            <p class="lead u-mt-5">${typo(`${car.titleYear} ${cn.from}${car.mileageKm ? ` с пробегом ${num(car.mileageKm)} км` : ''}. Перед покупкой проверяем состояние и документы и согласуем ${car.country === 'japan' ? 'ставку' : 'цену покупки'} с вами.`)}</p>
             ${car.options?.length ? `<h3 class="h4" style="margin:32px 0 14px">Комплектация и опции</h3><ul class="options">${car.options.slice(0, 28).map((o) => `<li>${esc(o)}</li>`).join('')}</ul>` : ''}
             ${car.auctionSheet
               ? html`<h3 class="h4" style="margin:32px 0 14px">Аукционный лист</h3>
@@ -216,7 +218,10 @@ function carPage(ctx, car) {
               'Оформим таможню, СБКТС и ЭПТС, чтобы автомобиль был готов к постановке на учет',
             ])}</div>
           </div>
-          <div${reveal(1)}>${specList(rows)}</div>
+          <div${reveal(1)}>
+            ${specList(rows)}
+            ${car.modelInTop30 ? model.popularProfiles?.map((entry) => popularModelCard(entry, { embedded: true })) : ''}
+          </div>
         </div>
       </div>
     </section>
@@ -236,7 +241,7 @@ function carPage(ctx, car) {
         <div class="table-wrap">
           <table class="table table--delivery">
             <thead><tr><th>Город</th><th class="num u-hide-mobile">Срок</th><th class="num">Доставка</th><th class="num">${car.priceIsPartial ? 'Итого без утильсбора' : 'Итого'}</th></tr></thead>
-            <tbody>${cities.map((c) => `<tr><td><a href="${u(c.url)}"><strong>${esc(c.name)}</strong></a></td><td class="num u-hide-mobile">${esc(c.daysLabel || 'по запросу')}</td><td class="num">от ${price(c.priceFrom)}</td><td class="num">от ${price(car.priceRub + c.priceFrom)}</td></tr>`)}</tbody>
+            <tbody>${cities.map((c) => `<tr><td><a href="${u(c.url)}"><strong>${esc(c.name)}</strong></a></td><td class="num u-hide-mobile">${esc(c.daysLabel || 'по запросу')}</td><td class="num">от ${price(c.truck[car.truckClass])}</td><td class="num">от ${price(car.priceRub + c.truck[car.truckClass])}</td></tr>`)}</tbody>
           </table>
         </div>
       </div>
@@ -255,9 +260,27 @@ function carPage(ctx, car) {
 
     ${ctaBand(ctx, { subject, title: duo(`Нужен ${car.brand} ${car.model}?`, 'Подберем и привезем'), car: car.titleYear, text: `Проверим актуальность этого лота, пришлем аукционный лист или отчет о состоянии и точный расчет под ключ. Если автомобиль уже продан, найдем такой же.` })}
 
+    <dialog class="modal" id="modal-car-delivery" aria-labelledby="car-delivery-title">
+      <div class="modal__box car-delivery">
+        <button class="modal__close" type="button" aria-label="Закрыть" data-modal-close>${icon('close')}</button>
+        <h2 class="modal__title" id="car-delivery-title">Стоимость с доставкой</h2>
+        <p class="lead">${esc(car.titleFull)}${car.year ? ', ' + car.year : ''}</p>
+        ${selectControl({ id: 'car-delivery-city', label: 'Город доставки', search: true, attributes: { 'data-delivery-city': true },
+          options: html`<option value="vladivostok" data-fee="${price(0)}" data-total="${price(car.priceRub)}">Владивосток (самовывоз)</option>
+            ${destinations.map((city) => `<option value="${esc(city.slug)}" data-fee="${price(city.truck[car.truckClass])}" data-total="${price(car.priceRub + city.truck[car.truckClass])}">${esc(city.name)}</option>`)}` })}
+        <dl class="breakdown" aria-live="polite" aria-atomic="true">
+          <div><dt>Цена во Владивостоке</dt><dd>${price(car.priceRub)}</dd></div>
+          <div><dt>Доставка автовозом</dt><dd data-delivery-fee>${price(0)}</dd></div>
+          <div class="is-total"><dt>${car.priceIsPartial ? 'Итого без утильсбора' : 'Итого'}</dt><dd data-delivery-total>${price(car.priceRub)}</dd></div>
+        </dl>
+        <p class="small muted">Расчет предварительный.${car.priceIsPartial ? ' Утилизационный сбор рассчитаем по документам автомобиля.' : ''}</p>
+        <a class="more" data-delivery-details href="${u(calculatorUrl)}">Подробный калькулятор</a>
+      </div>
+    </dialog>
+
     <div class="buybar">
       <div class="buybar__price">${from}${price(car.priceRub)}<small>${esc(car.priceLabel)}</small></div>
-      ${btn('Узнать подробнее', R.contacts, { size: 'sm', modal: 'request', subject, attrs: { 'data-modal-title': `${car.titleYear}: узнать подробнее`, 'data-modal-car': car.titleYear } })}
+      ${cta('Оставить заявку', 'sm')}
     </div>`,
   };
 }

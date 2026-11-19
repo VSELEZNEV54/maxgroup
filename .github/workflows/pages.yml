@@ -10,6 +10,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # У статического демо нет серверного обработчика наличия. Обновляем снимок каталога.
+  schedule:
+    - cron: '17 */8 * * *'
 
 permissions:
   contents: read
@@ -30,6 +33,15 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Подготовить конвертацию изображений в WebP
+        run: python -m pip install 'Pillow>=11.3,<13'
+      - name: Обновить предложения по моделям
+        run: node tools/refresh-model-offers.mjs
+      - name: Подготовить миниатюры объявлений
+        run: python tools/cache-offer-photos.py
       - name: Собрать сайт под адрес GitHub Pages
         run: |
           owner="${GITHUB_REPOSITORY_OWNER,,}"

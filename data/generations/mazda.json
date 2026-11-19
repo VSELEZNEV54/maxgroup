@@ -1,0 +1,476 @@
+{
+  "cx-5": {
+    "source": "https://www.drom.ru/catalog/mazda/cx-5/",
+    "generations": [
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "KI",
+          "KM"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2026,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "KMYSDP"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/cx-5-1335698.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "KF"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 11,
+            "to": 2026,
+            "toMonth": 4,
+            "codes": [
+              "KF2P",
+              "KF5P",
+              "KFEP"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 9,
+            "to": null,
+            "codes": [
+              "KF"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/cx-5-1156664.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2016,
+        "to": 2022,
+        "codes": [
+          "KF"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 11,
+            "to": 2021,
+            "toMonth": 10,
+            "codes": [
+              "KF2P",
+              "KF5P",
+              "KFEP"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 11,
+            "to": 2021,
+            "toMonth": 9,
+            "codes": [
+              "KF"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/cx-5-1110242.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2014,
+        "to": 2017,
+        "codes": [
+          "KE"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 1,
+            "to": 2016,
+            "toMonth": 12,
+            "codes": [
+              "KE5AW",
+              "KE5FW",
+              "KEEFW",
+              "KE2AW",
+              "KE2FW"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/cx-5-686387.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2011,
+        "to": 2015,
+        "codes": [
+          "KE"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2012,
+            "fromMonth": 2,
+            "to": 2014,
+            "toMonth": 12,
+            "codes": [
+              "KE5AW",
+              "KE5FW",
+              "KEEAW",
+              "KEEFW",
+              "KE2AW",
+              "KE2FW"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/cx-5-29260.webp"
+      }
+    ]
+  },
+  "cx-30": {
+    "source": "https://www.drom.ru/catalog/mazda/cx-30/",
+    "generations": [
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "DMFP",
+          "DM8P",
+          "DM8R",
+          "DM5K3R",
+          "DMEJ3P",
+          "DMEJ3R",
+          "DMEP",
+          "DM",
+          "DM5W76",
+          "DM5W7A"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 3,
+            "to": null,
+            "codes": [
+              "DMFP",
+              "DM8P",
+              "DM8R",
+              "DM5K3R",
+              "DMEJ3P",
+              "DMEJ3R",
+              "DMEP"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 3,
+            "to": null,
+            "codes": [
+              "DM",
+              "DM5W76",
+              "DM5W7A"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/cx-30-1038689.webp"
+      }
+    ]
+  },
+  "2": {
+    "source": "https://www.drom.ru/catalog/mazda/mazda2/",
+    "generations": [
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "DJ"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2023,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "DJLFS",
+              "DJ5AS",
+              "DJ5FS",
+              "DJLAS"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/2-1172817.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "XP210"
+        ],
+        "photo": "generations/mazda/2-1085177.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2023,
+        "codes": [
+          "DJ"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 7,
+            "to": 2023,
+            "toMonth": 1,
+            "codes": [
+              "DJLFS",
+              "DJ5AS",
+              "DJ5FS",
+              "DJLAS"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/2-1085163.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2014,
+        "to": 2019,
+        "codes": [
+          "DJ"
+        ],
+        "photo": "generations/mazda/2-968311.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2010,
+        "to": 2015,
+        "codes": [
+          "DE"
+        ],
+        "photo": "generations/mazda/2-614832.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2007,
+        "to": 2010,
+        "codes": [
+          "DE"
+        ],
+        "photo": "generations/mazda/2-162200.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2005,
+        "to": 2007,
+        "codes": [
+          "DY"
+        ],
+        "photo": "generations/mazda/2-614796.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2002,
+        "to": 2005,
+        "codes": [
+          "DY"
+        ],
+        "photo": "generations/mazda/2-161898.webp"
+      }
+    ]
+  },
+  "cx-4": {
+    "source": "https://www.drom.ru/catalog/mazda/cx-4/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2023,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": 2023,
+            "toMonth": 6,
+            "codes": []
+          }
+        ],
+        "photo": "generations/mazda/cx-4-1085540.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2016,
+        "to": 2019,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 4,
+            "to": 2019,
+            "toMonth": 11,
+            "codes": []
+          }
+        ],
+        "photo": "generations/mazda/cx-4-1085530.webp"
+      }
+    ]
+  },
+  "3": {
+    "source": "https://www.drom.ru/catalog/mazda/mazda3/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2018,
+        "to": null,
+        "codes": [
+          "BP"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "BP"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "BPEP",
+              "BP8P",
+              "BP8R",
+              "BPFJ3P",
+              "BPFJ3R",
+              "BPLK3R",
+              "BPFP",
+              "BP5P"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "BPEP",
+              "BP8P",
+              "BP8R",
+              "BPEK3R",
+              "BPFJ3P",
+              "BPFJ3R",
+              "BPLK3R",
+              "BPFP",
+              "BP5P",
+              "BP5R"
+            ]
+          }
+        ],
+        "photo": "generations/mazda/3-1038687.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2019,
+        "codes": [
+          "BM"
+        ],
+        "photo": "generations/mazda/3-686396.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2016,
+        "codes": [
+          "BM"
+        ],
+        "photo": "generations/mazda/3-1108517.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2011,
+        "to": 2013,
+        "codes": [
+          "BL"
+        ],
+        "photo": "generations/mazda/3-644068.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2008,
+        "to": 2011,
+        "codes": [
+          "BL"
+        ],
+        "photo": "generations/mazda/3-644051.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2006,
+        "to": 2009,
+        "codes": [
+          "BK"
+        ],
+        "photo": "generations/mazda/3-325976.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2003,
+        "to": 2006,
+        "codes": [
+          "BK"
+        ],
+        "photo": "generations/mazda/3-162974.webp"
+      }
+    ]
+  }
+}

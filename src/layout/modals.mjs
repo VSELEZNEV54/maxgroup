@@ -20,7 +20,7 @@ export function modals(ctx) {
       <button class="modal__close" type="button" aria-label="Закрыть" data-modal-close>${icon('close')}</button>
       <div class="lightbox" data-lightbox>
         <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Предыдущее фото" data-lightbox-prev>${icon('arrow')}</button>
-        <img class="lightbox__img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="1" height="1" data-lightbox-img>
+        <img class="lightbox__img" src="data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==" alt="" width="1" height="1" data-lightbox-img>
         <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Следующее фото" data-lightbox-next>${icon('arrow')}</button>
         <div class="lightbox__count mono" data-lightbox-count></div>
       </div>

@@ -1,0 +1,397 @@
+{
+  "forester": {
+    "source": "https://www.drom.ru/catalog/subaru/forester/",
+    "generations": [
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "SL"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2025,
+            "fromMonth": 4,
+            "to": null,
+            "codes": [
+              "SL5",
+              "SLG"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2024,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "SL"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-1260772.webp"
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "SK/S14"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 6,
+            "to": 2025,
+            "toMonth": 4,
+            "codes": [
+              "SK5",
+              "SKE"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 11,
+            "to": 2024,
+            "toMonth": 10,
+            "codes": [
+              "SK"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-1108252.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2018,
+        "to": 2021,
+        "codes": [
+          "SK/S14"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 3,
+            "to": 2021,
+            "toMonth": 6,
+            "codes": [
+              "SK5",
+              "SKE",
+              "SK9"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 3,
+            "to": 2021,
+            "toMonth": 10,
+            "codes": [
+              "SK"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-1087576.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "SJ/S13"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 11,
+            "to": 2018,
+            "toMonth": 4,
+            "codes": [
+              "SJ5",
+              "SJG"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-686406.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2012,
+        "to": 2016,
+        "codes": [
+          "SJ/S13"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2012,
+            "fromMonth": 10,
+            "to": 2015,
+            "toMonth": 10,
+            "codes": [
+              "SJ5",
+              "SJG"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-564271.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2010,
+        "to": 2013,
+        "codes": [
+          "SH/S12"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 10,
+            "to": 2012,
+            "toMonth": 10,
+            "codes": [
+              "SH9",
+              "SH5",
+              "SHJ"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-562173.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2007,
+        "to": 2010,
+        "codes": [
+          "SH/S12"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 12,
+            "to": 2010,
+            "toMonth": 9,
+            "codes": [
+              "SH5"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-805391.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2005,
+        "to": 2008,
+        "codes": [
+          "SG/S11"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 1,
+            "to": 2007,
+            "toMonth": 11,
+            "codes": [
+              "SG5",
+              "SG9"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-377264.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2002,
+        "to": 2005,
+        "codes": [
+          "SG/S11"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 2,
+            "to": 2004,
+            "toMonth": 12,
+            "codes": [
+              "SG5",
+              "SG9"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-562059.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1999,
+        "to": 2002,
+        "codes": [
+          "SF/S10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 12,
+            "to": 2002,
+            "toMonth": 1,
+            "codes": [
+              "SF5",
+              "SF9"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-377886.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1997,
+        "to": 2000,
+        "codes": [
+          "SF/S10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 2,
+            "to": 1999,
+            "toMonth": 12,
+            "codes": [
+              "SF5",
+              "SF9"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/forester-377891.webp"
+      }
+    ]
+  },
+  "xv": {
+    "source": "https://www.drom.ru/catalog/subaru/xv/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2020,
+        "to": 2023,
+        "codes": [
+          "GT/G24"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 11,
+            "codes": [
+              "GT3",
+              "GTE"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2023,
+            "toMonth": 10,
+            "codes": [
+              "GT"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/xv-1248229.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2017,
+        "to": 2021,
+        "codes": [
+          "GT/G24"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 3,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": [
+              "GTE",
+              "GT3",
+              "GT7"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/xv-707571.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2017,
+        "codes": [
+          "GP/G33"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 10,
+            "to": 2017,
+            "toMonth": 4,
+            "codes": [
+              "GPE",
+              "GP7"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/xv-700470.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2011,
+        "to": 2016,
+        "codes": [
+          "GP/G33"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 9,
+            "to": 2015,
+            "toMonth": 9,
+            "codes": [
+              "GPE",
+              "GP7"
+            ]
+          }
+        ],
+        "photo": "generations/subaru/xv-842143.webp"
+      }
+    ]
+  }
+}

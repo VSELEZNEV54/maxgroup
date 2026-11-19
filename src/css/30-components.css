@@ -2,6 +2,15 @@
    Компоненты
    ========================================================================== */
 
+.sales-portrait {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.55);
+  transform-origin: 55% 10%;
+}
+
 /* --- Кнопки ---------------------------------------------------------------- */
 
 .btn {
@@ -36,10 +45,6 @@
   height: 16px;
   flex: none;
   transition: transform var(--dur-base) var(--ease-out);
-}
-
-.btn:hover svg.i-arrow {
-  transform: translateX(4px);
 }
 
 .btn:active {
@@ -149,14 +154,12 @@
   font-size: 1rem;
 }
 
-/* кнопка во всю ширину не распирает узкий контейнер: длинная подпись переносится по центру */
+/* Подпись занимает одну строку, в том числе у полноширинной кнопки. */
 .btn--block {
   display: flex;
   width: 100%;
   min-width: 0;
   padding-block: 10px;
-  white-space: normal;
-  text-wrap: balance;
 }
 
 .btn-row {
@@ -517,17 +520,6 @@ a.card:hover .label {
   padding: 16px 18px 18px;
 }
 
-.car__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 10px;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-
 .car__title {
   font-size: 1.25rem;
   font-weight: var(--w-medium);
@@ -560,20 +552,26 @@ a.card:hover .label {
 
 .car__foot {
   display: flex;
-  align-items: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 4px 8px;
   margin-top: auto;
   padding-top: 14px;
   border-top: 1px solid var(--line);
 }
 
 .car__price {
-  font-size: 1.375rem;
+  flex: 1 1 min-content;
+  font-size: 1.5rem;
   font-weight: var(--w-medium);
   line-height: 1.05;
-  letter-spacing: -0.025em;
-  white-space: nowrap;
+  letter-spacing: -0.015em;
+}
+
+.car__price,
+.popular-model__price strong {
+  word-spacing: 0.1em;
 }
 
 .car__price small {
@@ -582,6 +580,7 @@ a.card:hover .label {
   font-size: 0.75rem;
   font-weight: var(--w-regular);
   letter-spacing: 0;
+  word-spacing: normal;
   color: var(--text-3);
   white-space: normal;
 }
@@ -607,9 +606,26 @@ a.card:hover .label {
   height: 14px;
 }
 
-.car:hover .car__go {
+.car__foot .car__go {
+  position: relative;
+  z-index: 3; /* Над растянутой ссылкой названия. */
+  width: 44px;
+  height: 44px;
+  margin-inline-start: auto;
+}
+
+.car__foot .car__go svg {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.car:is(:hover, :focus-within) .car__go {
   background: var(--accent);
   color: #fff;
+}
+
+.car:is(:hover, :focus-within) .car__go svg {
   transform: rotate(-45deg);
 }
 
@@ -993,7 +1009,9 @@ a.card:hover .label {
   color: var(--text);
 }
 
-.tabs__btn[aria-selected='true'] {
+.tabs__btn[aria-selected='true'],
+.tabs__btn[aria-pressed='true'],
+.no-js [data-home-country='all'] {
   background: var(--ink);
   color: #fff;
 }
@@ -1019,6 +1037,7 @@ a.card:hover .label {
   grid-auto-columns: var(--rail-col, minmax(280px, 24%));
   gap: var(--gap);
   overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: var(--gutter);
@@ -1033,6 +1052,11 @@ a.card:hover .label {
 
 .rail__track > * {
   scroll-snap-align: start;
+}
+
+/* Сдвиг еще не показанных карточек увеличил бы высоту прокрутки всей ленты. */
+.js .rail__track > [data-reveal] {
+  transform: none;
 }
 
 .rail__nav {
@@ -2222,9 +2246,11 @@ html:has(dialog[open]) {
 /* --- Бегущая строка марок --------------------------------------------------------------------------------------------- */
 
 .marquee {
+  --fade: min(4vw, var(--sp-7));
+  --marquee-mask: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: var(--marquee-mask);
+  -webkit-mask-image: var(--marquee-mask);
 }
 
 .marquee__track {
@@ -2239,32 +2265,35 @@ html:has(dialog[open]) {
 }
 
 .marquee__group {
+  --mark-size: clamp(34px, 3.25vw, 52px);
+  --mark-gap: clamp(48px, 6vw, 104px);
   display: flex;
   align-items: center;
-  gap: clamp(40px, 5.2vw, 88px);
-  padding-right: clamp(40px, 5.2vw, 88px);
+  gap: var(--mark-gap);
+  padding-inline: calc(var(--mark-gap) / 2);
 }
 
 .marquee__item {
-  display: inline-flex;
+  display: flex;
+  flex: none;
   align-items: center;
-  gap: 12px;
-  color: var(--mute);
-  font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem);
-  font-weight: var(--w-medium);
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  transition: color var(--dur-base) var(--ease-out);
+  justify-content: center;
+  min-width: 44px;
+  height: calc(1.3 * var(--mark-size));
 }
 
-.marquee__item svg {
-  width: clamp(28px, 2.6vw, 40px);
-  height: clamp(28px, 2.6vw, 40px);
+.marquee__item img {
+  width: calc(var(--mark-size) * var(--mark-width));
+  max-width: none;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: opacity var(--dur-fast) var(--ease-out);
 }
 
-.marquee__item:hover {
-  color: var(--text);
-}
+.marquee__item:is(:hover, :focus-visible) img { opacity: 1; }
 
 @keyframes marquee {
   to { transform: translateX(-50%); }

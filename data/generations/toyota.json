@@ -1,0 +1,4068 @@
+{
+  "prius": {
+    "source": "https://www.drom.ru/catalog/toyota/prius/",
+    "generations": [
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "XW60",
+          "ZVW60/MXWH60"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "MXWH60",
+              "MXWH65",
+              "ZVW60",
+              "ZVW65"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-1111001.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2023,
+        "codes": [
+          "XW50",
+          "ZVW50"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 11,
+            "to": 2023,
+            "toMonth": 1,
+            "codes": [
+              "ZVW51",
+              "ZVW55"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-998231.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "XW50",
+          "ZVW50"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 9,
+            "to": 2018,
+            "toMonth": 11,
+            "codes": [
+              "ZVW50",
+              "ZVW51",
+              "ZVW55"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-677821.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2011,
+        "to": 2016,
+        "codes": [
+          "XW30",
+          "ZVW30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 12,
+            "to": 2015,
+            "toMonth": 11,
+            "codes": [
+              "ZVW30"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-594511.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2009,
+        "to": 2012,
+        "codes": [
+          "XW30",
+          "ZVW30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2009,
+            "fromMonth": 1,
+            "to": 2011,
+            "toMonth": 11,
+            "codes": [
+              "ZVW30"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-594573.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2005,
+        "to": 2011,
+        "codes": [
+          "NHW20",
+          "XW20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 11,
+            "to": 2011,
+            "toMonth": 12,
+            "codes": [
+              "NHW20"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-699958.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2003,
+        "to": 2005,
+        "codes": [
+          "NHW20",
+          "XW20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 9,
+            "to": 2005,
+            "toMonth": 10,
+            "codes": [
+              "NHW20"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-509395.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2000,
+        "to": 2003,
+        "codes": [
+          "NHW11",
+          "XW11"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 5,
+            "to": 2003,
+            "toMonth": 8,
+            "codes": [
+              "NHW11"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-245684.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1997,
+        "to": 2000,
+        "codes": [
+          "NHW10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 10,
+            "to": 2000,
+            "toMonth": 4,
+            "codes": [
+              "NHW10"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/prius-509241.webp"
+      }
+    ]
+  },
+  "aqua": {
+    "source": "https://www.drom.ru/catalog/toyota/aqua/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "MXPK11",
+          "MXPK13",
+          "MXPK16",
+          "MXPK18"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2025,
+            "fromMonth": 9,
+            "to": null,
+            "codes": [
+              "MXPK11",
+              "MXPK13",
+              "MXPK16",
+              "MXPK18"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/aqua-1291658.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2021,
+        "to": 2025,
+        "codes": [
+          "MXPK10",
+          "MXPK11",
+          "MXPK15",
+          "MXPK16"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 7,
+            "to": 2025,
+            "toMonth": 8,
+            "codes": [
+              "MXPK10",
+              "MXPK11",
+              "MXPK15",
+              "MXPK16"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/aqua-1022880.webp"
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2017,
+        "to": 2021,
+        "codes": [
+          "P10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 6,
+            "to": 2021,
+            "toMonth": 6,
+            "codes": [
+              "NHP10",
+              "NHP10H"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/aqua-726285.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2014,
+        "to": 2017,
+        "codes": [
+          "P10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2014,
+            "fromMonth": 12,
+            "to": 2017,
+            "toMonth": 5,
+            "codes": [
+              "NHP10"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/aqua-726264.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2011,
+        "to": 2014,
+        "codes": [
+          "P10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 11,
+            "to": 2014,
+            "toMonth": 11,
+            "codes": [
+              "NHP10"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/aqua-491321.webp"
+      }
+    ]
+  },
+  "corolla-touring": {
+    "source": "https://www.drom.ru/catalog/toyota/corolla/",
+    "generations": [
+      {
+        "id": "g12-r1",
+        "label": "12 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "E210"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "MZEA17W",
+              "ZWE215W",
+              "ZWE219W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-touring-1095239.webp"
+      },
+      {
+        "id": "g12-r0",
+        "label": "12 поколение",
+        "from": 2019,
+        "to": 2022,
+        "codes": [
+          "E210"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "NRE210W",
+              "ZRE212W",
+              "ZWE211W",
+              "ZWE214W",
+              "MZEA12W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-touring-916237.webp"
+      }
+    ]
+  },
+  "rav4": {
+    "source": "https://www.drom.ru/catalog/toyota/rav4/",
+    "generations": [
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "XA60"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2025,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "AXAN64",
+              "AXAP64"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "AXAH64",
+              "MXAH60",
+              "MXAH62",
+              "MXAH65"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/rav4-1338533.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2018,
+        "to": null,
+        "codes": [
+          "XA50"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 3,
+            "to": 2025,
+            "toMonth": 11,
+            "codes": [
+              "AXAH52",
+              "AXAH54",
+              "MXAA52",
+              "MXAA54",
+              "AXAP54"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": 2025,
+            "toMonth": 11,
+            "codes": [
+              "AXAH52",
+              "AXAH54",
+              "MXAA52",
+              "MXAA54"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/rav4-1113265.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "XA40"
+        ],
+        "photo": "generations/toyota/rav4-699939.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2012,
+        "to": 2015,
+        "codes": [
+          "XA40"
+        ],
+        "photo": "generations/toyota/rav4-241064.webp"
+      },
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 2010,
+        "to": 2013,
+        "codes": [
+          "XA30"
+        ],
+        "photo": "generations/toyota/rav4-839363.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2008,
+        "to": 2016,
+        "codes": [
+          "XA30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2008,
+            "fromMonth": 9,
+            "to": 2016,
+            "toMonth": 7,
+            "codes": [
+              "ACA31W",
+              "ACA36W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/rav4-839503.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2005,
+        "to": 2008,
+        "codes": [
+          "XA30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 11,
+            "to": 2008,
+            "toMonth": 8,
+            "codes": [
+              "ACA31W",
+              "ACA36W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/rav4-839534.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2003,
+        "to": 2005,
+        "codes": [
+          "CA20",
+          "CA20W",
+          "XA20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 8,
+            "to": 2005,
+            "toMonth": 10,
+            "codes": [
+              "ACA21W",
+              "ZCA26W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 8,
+            "to": 2005,
+            "toMonth": 10,
+            "codes": [
+              "ACA20W",
+              "ZCA25W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/rav4-482355.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2000,
+        "to": 2003,
+        "codes": [
+          "CA20",
+          "CA20W",
+          "XA20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 5,
+            "to": 2003,
+            "toMonth": 7,
+            "codes": [
+              "ACA21W",
+              "ZCA26W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 5,
+            "to": 2003,
+            "toMonth": 7,
+            "codes": [
+              "ACA20W",
+              "ZCA25W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/rav4-670313.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1997,
+        "to": 2000,
+        "codes": [
+          "XA10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 9,
+            "to": 2000,
+            "toMonth": 4,
+            "codes": [
+              "SXA11G",
+              "SXA11W",
+              "SXA16G"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 9,
+            "to": 2000,
+            "toMonth": 4,
+            "codes": [
+              "SXA10G",
+              "SXA10W",
+              "SXA15G"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 9,
+            "to": 2000,
+            "toMonth": 4,
+            "codes": [
+              "SXA10C"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/rav4-756832.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1994,
+        "to": 1998,
+        "codes": [
+          "XA10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 4,
+            "to": 1997,
+            "toMonth": 8,
+            "codes": [
+              "SXA11G",
+              "SXA11W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1994,
+            "fromMonth": 5,
+            "to": 1997,
+            "toMonth": 8,
+            "codes": [
+              "SXA10G",
+              "SXA10W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/rav4-899848.webp"
+      }
+    ]
+  },
+  "harrier": {
+    "source": "https://www.drom.ru/catalog/toyota/harrier/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "XU80"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 4,
+            "to": null,
+            "codes": [
+              "AXUH80",
+              "AXUH85",
+              "MXUA80",
+              "MXUA85",
+              "AXUP85"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "AXUH80",
+              "AXUH85",
+              "MXUA80"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/harrier-952193.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2017,
+        "to": 2020,
+        "codes": [
+          "XU60"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 6,
+            "to": 2020,
+            "toMonth": 5,
+            "codes": [
+              "AVU65W",
+              "ASU60W",
+              "ASU65W",
+              "ZSU60W",
+              "ZSU65W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/harrier-721896.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2017,
+        "codes": [
+          "XU60"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 12,
+            "to": 2017,
+            "toMonth": 5,
+            "codes": [
+              "AVU65W",
+              "ZSU60W",
+              "ZSU65W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/harrier-35438.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2003,
+        "to": 2013,
+        "codes": [
+          "XU30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 2,
+            "to": 2013,
+            "toMonth": 7,
+            "codes": [
+              "ACU30W",
+              "ACU35W",
+              "MCU30W",
+              "MCU31W",
+              "MCU35W",
+              "MCU36W",
+              "MHU38W",
+              "GSU30W",
+              "GSU31W",
+              "GSU35W",
+              "GSU36W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/harrier-20577.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2000,
+        "to": 2003,
+        "codes": [
+          "XU10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 11,
+            "to": 2003,
+            "toMonth": 1,
+            "codes": [
+              "ACU10W",
+              "ACU15W",
+              "MCU10W",
+              "MCU15W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/harrier-759435.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1997,
+        "to": 2000,
+        "codes": [
+          "XU10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 12,
+            "to": 2000,
+            "toMonth": 10,
+            "codes": [
+              "MCU10W",
+              "MCU15W",
+              "SXU10W",
+              "SXU15W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/harrier-759433.webp"
+      }
+    ]
+  },
+  "alphard": {
+    "source": "https://www.drom.ru/catalog/toyota/alphard/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "H40"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2023,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "AGH40W",
+              "AGH45W",
+              "AAHH40W",
+              "AAHH45W",
+              "AAHP45W"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "AAHH45"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "AAHH45"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/alphard-1250025.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2017,
+        "to": 2023,
+        "codes": [
+          "H30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 12,
+            "to": 2023,
+            "toMonth": 5,
+            "codes": [
+              "AGH30W",
+              "AGH35W",
+              "GGH30W",
+              "GGH35W",
+              "AYH30W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/alphard-778588.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2015,
+        "to": 2018,
+        "codes": [
+          "H30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 1,
+            "to": 2017,
+            "toMonth": 12,
+            "codes": [
+              "AYH30W",
+              "AGH30W",
+              "AGH35W",
+              "GGH30W",
+              "GGH35W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/alphard-700654.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2011,
+        "to": 2015,
+        "codes": [
+          "H20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 9,
+            "to": 2015,
+            "toMonth": 1,
+            "codes": [
+              "ATH20W",
+              "ANH20W",
+              "ANH25W",
+              "GGH20W",
+              "GGH25W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/alphard-729470.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2008,
+        "to": 2011,
+        "codes": [
+          "H20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2008,
+            "fromMonth": 5,
+            "to": 2011,
+            "toMonth": 10,
+            "codes": [
+              "ANH20W",
+              "ANH25W",
+              "GGH20W",
+              "GGH25W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/alphard-765778.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2005,
+        "to": 2008,
+        "codes": [
+          "H10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 4,
+            "to": 2008,
+            "toMonth": 5,
+            "codes": [
+              "ATH10W",
+              "MNH10W",
+              "MNH15W",
+              "ANH10W",
+              "ANH15W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/alphard-495815.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2002,
+        "to": 2005,
+        "codes": [
+          "H10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 5,
+            "to": 2005,
+            "toMonth": 3,
+            "codes": [
+              "ATH10W",
+              "ANH10W",
+              "ANH15W",
+              "MNH10W",
+              "MNH15W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/alphard-495773.webp"
+      }
+    ]
+  },
+  "land-cruiser-prado": {
+    "source": "https://www.drom.ru/catalog/toyota/land_cruiser_prado/",
+    "generations": [
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "J250"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2023,
+            "fromMonth": 8,
+            "to": null,
+            "codes": [
+              "TRJ250W",
+              "GDJ250W"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "TJH250"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-1198755.webp"
+      },
+      {
+        "id": "g4-r2",
+        "label": "4 поколение, 2-й рестайлинг",
+        "from": 2017,
+        "to": 2024,
+        "codes": [
+          "J150"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 9,
+            "to": 2023,
+            "toMonth": 8,
+            "codes": [
+              "TRJ150W",
+              "GDJ150W",
+              "GDJ151W"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2017,
+            "fromMonth": 9,
+            "to": 2020,
+            "toMonth": 6,
+            "codes": [
+              "GRJ152L"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-755758.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2013,
+        "to": 2017,
+        "codes": [
+          "J150"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 9,
+            "to": 2017,
+            "toMonth": 8,
+            "codes": [
+              "GRJ150W",
+              "GRJ151W",
+              "TRJ150W",
+              "GDJ150W",
+              "GDJ151W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-1039647.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2009,
+        "to": 2013,
+        "codes": [
+          "J150"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2009,
+            "fromMonth": 9,
+            "to": 2013,
+            "toMonth": 8,
+            "codes": [
+              "GRJ150W",
+              "GRJ151W",
+              "TRJ150W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-540939.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2002,
+        "to": 2009,
+        "codes": [
+          "J120"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 10,
+            "to": 2009,
+            "toMonth": 8,
+            "codes": [
+              "GRJ120W",
+              "GRJ121W",
+              "TRJ120W",
+              "KDJ120W",
+              "KDJ121W",
+              "RZJ120W",
+              "VZJ120W",
+              "VZJ121W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 10,
+            "to": 2009,
+            "toMonth": 8,
+            "codes": [
+              "TRJ125W",
+              "KDJ125W",
+              "RZJ125W",
+              "VZJ125W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-489788.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 1999,
+        "to": 2002,
+        "codes": [
+          "J95",
+          "J90"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 6,
+            "to": 2002,
+            "toMonth": 9,
+            "codes": [
+              "RZJ95W",
+              "VZJ95W",
+              "KDJ95W",
+              "KZJ95W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 6,
+            "to": 2002,
+            "toMonth": 9,
+            "codes": [
+              "RZJ90W",
+              "VZJ90W",
+              "KDJ90W",
+              "KZJ90W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-489955.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1996,
+        "to": 1999,
+        "codes": [
+          "J95",
+          "J90"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1996,
+            "fromMonth": 5,
+            "to": 1999,
+            "toMonth": 5,
+            "codes": [
+              "RZJ95W",
+              "VZJ95W",
+              "KZJ95W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1996,
+            "fromMonth": 5,
+            "to": 1999,
+            "toMonth": 5,
+            "codes": [
+              "RZJ90W",
+              "VZJ90W",
+              "KZJ90W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-764427.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1993,
+        "to": 1996,
+        "codes": [
+          "J70"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 5,
+            "to": 1996,
+            "toMonth": 4,
+            "codes": [
+              "KZJ78G",
+              "KZJ78W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 5,
+            "to": 1996,
+            "toMonth": 4,
+            "codes": [
+              "KZJ71G",
+              "KZJ71W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-490906.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1989,
+        "to": 1993,
+        "codes": [
+          "J70"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1989,
+            "fromMonth": 10,
+            "to": 1993,
+            "toMonth": 4,
+            "codes": [
+              "LJ78G",
+              "LJ78W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1989,
+            "fromMonth": 10,
+            "to": 1993,
+            "toMonth": 4,
+            "codes": [
+              "LJ71G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/land-cruiser-prado-491096.webp"
+      }
+    ]
+  },
+  "yaris-cross": {
+    "source": "https://www.drom.ru/catalog/toyota/yaris_cross/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "XP210"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "MXPB10",
+              "MXPB15",
+              "MXPJ10",
+              "MXPJ15"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/yaris-cross-1180008.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "XP210"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 4,
+            "to": 2023,
+            "toMonth": 12,
+            "codes": [
+              "MXPB10",
+              "MXPB15",
+              "MXPJ10",
+              "MXPJ15"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/yaris-cross-969499.webp"
+      }
+    ]
+  },
+  "sienta": {
+    "source": "https://www.drom.ru/catalog/toyota/sienta/",
+    "generations": [
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "MXPC10G",
+          "MXPL10G",
+          "MXPL15G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 8,
+            "to": null,
+            "codes": [
+              "MXPC10G",
+              "MXPL10G",
+              "MXPL15G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/sienta-1088144.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2022,
+        "codes": [
+          "XP170"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 7,
+            "codes": [
+              "NCP175G",
+              "NSP170G",
+              "NSP172G",
+              "NHP170G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/sienta-841180.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2015,
+        "to": 2018,
+        "codes": [
+          "XP170"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 7,
+            "to": 2018,
+            "toMonth": 8,
+            "codes": [
+              "NHP170G",
+              "NCP175G",
+              "NSP170G",
+              "NSP172G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/sienta-699937.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2006,
+        "to": 2015,
+        "codes": [
+          "NCP80"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2006,
+            "fromMonth": 5,
+            "to": 2015,
+            "toMonth": 6,
+            "codes": [
+              "NCP85G",
+              "NCP81G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/sienta-552326.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2003,
+        "to": 2006,
+        "codes": [
+          "NCP80"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 9,
+            "to": 2006,
+            "toMonth": 4,
+            "codes": [
+              "NCP81G",
+              "NCP85G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/sienta-552466.webp"
+      }
+    ]
+  },
+  "camry": {
+    "source": "https://www.drom.ru/catalog/toyota/camry/",
+    "generations": [
+      {
+        "id": "g10-r1",
+        "label": "10 поколение, рестайлинг",
+        "from": 2026,
+        "to": null,
+        "codes": [
+          "XV80"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2026,
+            "fromMonth": 8,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/toyota/camry-1354992.webp"
+      },
+      {
+        "id": "g10-r0",
+        "label": "10 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "XV80"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 11,
+            "to": 2026,
+            "toMonth": 7,
+            "codes": [
+              "AXVH80",
+              "MXVA80",
+              "MXVH80"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "AXVA80"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-1322719.webp"
+      },
+      {
+        "id": "g9-r1",
+        "label": "9 поколение, рестайлинг",
+        "from": 2020,
+        "to": 2024,
+        "codes": [
+          "XV70"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 11,
+            "to": 2024,
+            "toMonth": 2,
+            "codes": [
+              "AXVA70",
+              "AXVH70",
+              "MXV71"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 2,
+            "to": 2023,
+            "toMonth": 12,
+            "codes": [
+              "AXVH70",
+              "AXVH75"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 11,
+            "to": 2021,
+            "toMonth": 2,
+            "codes": [
+              "ASV70",
+              "AXVH71"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-1243862.webp"
+      },
+      {
+        "id": "g8-r2",
+        "label": "8 поколение, 2-й рестайлинг",
+        "from": 2017,
+        "to": 2018,
+        "codes": [
+          "XV55"
+        ],
+        "photo": "generations/toyota/camry-708625.webp"
+      },
+      {
+        "id": "g9-r0",
+        "label": "9 поколение",
+        "from": 2017,
+        "to": 2021,
+        "codes": [
+          "XV70"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 1,
+            "to": 2021,
+            "toMonth": 1,
+            "codes": [
+              "AXVH70",
+              "AXVH75"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2017,
+            "fromMonth": 1,
+            "to": 2020,
+            "toMonth": 11,
+            "codes": [
+              "ASV70",
+              "AXVH71"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-803542.webp"
+      },
+      {
+        "id": "g8-r1",
+        "label": "8 поколение, рестайлинг",
+        "from": 2014,
+        "to": 2017,
+        "codes": [
+          "XV50",
+          "XV55"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2014,
+            "fromMonth": 9,
+            "to": 2017,
+            "toMonth": 6,
+            "codes": [
+              "AVV50"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-700052.webp"
+      },
+      {
+        "id": "g8-r0",
+        "label": "8 поколение",
+        "from": 2011,
+        "to": 2014,
+        "codes": [
+          "XV50"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 8,
+            "to": 2014,
+            "toMonth": 8,
+            "codes": [
+              "AVV50"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-413444.webp"
+      },
+      {
+        "id": "g7-r1",
+        "label": "7 поколение, рестайлинг",
+        "from": 2009,
+        "to": 2011,
+        "codes": [
+          "XV40"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2009,
+            "fromMonth": 1,
+            "to": 2011,
+            "toMonth": 8,
+            "codes": [
+              "ACV40",
+              "ACV45"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2009,
+            "fromMonth": 6,
+            "to": 2011,
+            "toMonth": 9,
+            "codes": [
+              "AHV41",
+              "ASV40"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-467643.webp"
+      },
+      {
+        "id": "g7-r0",
+        "label": "7 поколение",
+        "from": 2006,
+        "to": 2009,
+        "codes": [
+          "XV40"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2006,
+            "fromMonth": 1,
+            "to": 2008,
+            "toMonth": 12,
+            "codes": [
+              "ACV40",
+              "ACV45"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-21406.webp"
+      },
+      {
+        "id": "g6-r1",
+        "label": "6 поколение, рестайлинг",
+        "from": 2004,
+        "to": 2006,
+        "codes": [
+          "XV30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2004,
+            "fromMonth": 7,
+            "to": 2006,
+            "toMonth": 7,
+            "codes": [
+              "ACV30",
+              "ACV35"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-756634.webp"
+      },
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2001,
+        "to": 2004,
+        "codes": [
+          "XV30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2001,
+            "fromMonth": 6,
+            "to": 2004,
+            "toMonth": 6,
+            "codes": [
+              "ACV30",
+              "ACV35"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-1324100.webp"
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 1999,
+        "to": 2002,
+        "codes": [
+          "XV20"
+        ],
+        "photo": "generations/toyota/camry-810327.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 1996,
+        "to": 1998,
+        "codes": [
+          "V40"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1996,
+            "fromMonth": 5,
+            "to": 1998,
+            "toMonth": 6,
+            "codes": [
+              "SV40",
+              "SV41",
+              "SV42",
+              "SV43",
+              "CV40",
+              "CV43"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-700053.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 1996,
+        "to": 2001,
+        "codes": [
+          "XV20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 8,
+            "to": 2001,
+            "toMonth": 8,
+            "codes": [
+              "MCV21",
+              "SXV20",
+              "SXV25"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-1242930.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 1992,
+        "to": 1994,
+        "codes": [
+          "V30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1992,
+            "fromMonth": 6,
+            "to": 1994,
+            "toMonth": 6,
+            "codes": [
+              "SV30",
+              "SV32",
+              "SV33",
+              "SV35",
+              "CV30"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-756053.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 1991,
+        "to": 1996,
+        "codes": [
+          "V40",
+          "XV10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1994,
+            "fromMonth": 7,
+            "to": 1996,
+            "toMonth": 4,
+            "codes": [
+              "SV40",
+              "SV41",
+              "SV42",
+              "SV43",
+              "CV40",
+              "CV43"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-700054.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 1990,
+        "to": 1997,
+        "codes": [
+          "XV10",
+          "V30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1990,
+            "fromMonth": 7,
+            "to": 1992,
+            "toMonth": 5,
+            "codes": [
+              "CV30",
+              "SV30",
+              "SV32",
+              "SV33",
+              "SV35"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-212899.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1986,
+        "to": 1991,
+        "codes": [
+          "V20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1986,
+            "fromMonth": 8,
+            "to": 1990,
+            "toMonth": 6,
+            "codes": [
+              "SV20",
+              "SV21",
+              "SV22",
+              "SV25",
+              "CV20"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-1084063.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1984,
+        "to": 1986,
+        "codes": [
+          "V10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1984,
+            "fromMonth": 6,
+            "to": 1986,
+            "toMonth": 8,
+            "codes": [
+              "SV10",
+              "SV11",
+              "SV12",
+              "CV10"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-963186.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1979,
+        "to": 1984,
+        "codes": [
+          "V10",
+          "A40/50"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1982,
+            "fromMonth": 3,
+            "to": 1984,
+            "toMonth": 5,
+            "codes": [
+              "SV10",
+              "SV11",
+              "CV10"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 12,
+            "to": 1982,
+            "toMonth": 2,
+            "codes": [
+              "RA55",
+              "RA56",
+              "TA41",
+              "TA46",
+              "TA57"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/camry-1242409.webp"
+      }
+    ]
+  },
+  "highlander": {
+    "source": "https://www.drom.ru/catalog/toyota/highlander/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "XU70"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 4,
+            "to": null,
+            "codes": [
+              "AXUH70",
+              "AXUH78",
+              "SXUA75"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2026,
+            "fromMonth": 4,
+            "to": null,
+            "codes": [
+              "AXUH78R"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/highlander-1326706.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2021,
+        "codes": [
+          "XU50"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 3,
+            "to": 2021,
+            "toMonth": 5,
+            "codes": [
+              "ASU50",
+              "ASU55",
+              "GSU55"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/highlander-1212379.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2017,
+        "codes": [
+          "XU50"
+        ],
+        "photo": "generations/toyota/highlander-222651.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2010,
+        "to": 2013,
+        "codes": [
+          "XU40"
+        ],
+        "photo": "generations/toyota/highlander-522778.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2007,
+        "to": 2010,
+        "codes": [
+          "XU40"
+        ],
+        "photo": "generations/toyota/highlander-522831.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2003,
+        "to": 2007,
+        "codes": [
+          "XU20"
+        ],
+        "photo": "generations/toyota/highlander-697224.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2000,
+        "to": 2003,
+        "codes": [
+          "XU20"
+        ],
+        "photo": "generations/toyota/highlander-220487.webp"
+      }
+    ]
+  },
+  "yaris-hybrid": {
+    "source": "https://www.drom.ru/catalog/toyota/yaris/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "MXPH14",
+          "MXPH17"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "MXPH14",
+              "MXPH17"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/yaris-hybrid-1180001.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2020,
+        "to": 2023,
+        "codes": [
+          "MXPH10",
+          "MXPH15"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": 2023,
+            "toMonth": 12,
+            "codes": [
+              "MXPH10",
+              "MXPH15"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/yaris-hybrid-921281.webp"
+      }
+    ]
+  },
+  "yaris-cross-hybrid": {
+    "source": "https://www.drom.ru/catalog/toyota/yaris_cross/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "MXPJ10",
+          "MXPJ15"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "MXPJ10",
+              "MXPJ15"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/yaris-cross-hybrid-1180008.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": 2023,
+        "codes": [
+          "MXPJ10",
+          "MXPJ15"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2023,
+            "toMonth": 12,
+            "codes": [
+              "MXPJ10",
+              "MXPJ15"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/yaris-cross-hybrid-969499.webp"
+      }
+    ]
+  },
+  "corolla-fielder-hybrid": {
+    "source": "https://www.drom.ru/catalog/toyota/corolla_fielder/",
+    "generations": [
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 2017,
+        "to": 2025,
+        "codes": [
+          "NKE165G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 10,
+            "to": 2025,
+            "toMonth": 10,
+            "codes": [
+              "NKE165G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-fielder-hybrid-760896.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2017,
+        "codes": [
+          "NKE165G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 4,
+            "to": 2017,
+            "toMonth": 9,
+            "codes": [
+              "NKE165G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-fielder-hybrid-699962.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2015,
+        "codes": [
+          "NKE165G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 8,
+            "to": 2015,
+            "toMonth": 3,
+            "codes": [
+              "NKE165G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-fielder-hybrid-475385.webp"
+      }
+    ]
+  },
+  "corolla-touring-hybrid": {
+    "source": "https://www.drom.ru/catalog/toyota/corolla/",
+    "generations": [
+      {
+        "id": "g12-r1",
+        "label": "12 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "ZWE219W",
+          "ZWE215W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "ZWE219W",
+              "ZWE215W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-touring-1095239.webp"
+      },
+      {
+        "id": "g12-r0",
+        "label": "12 поколение",
+        "from": 2019,
+        "to": 2022,
+        "codes": [
+          "ZWE211W",
+          "ZWE214W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "ZWE211W",
+              "ZWE214W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-touring-916237.webp"
+      }
+    ]
+  },
+  "corolla-cross-hybrid": {
+    "source": "https://www.drom.ru/catalog/toyota/corolla_cross/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "ZVG13",
+          "ZVG16",
+          "MXGH15"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2025,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "ZVG13",
+              "ZVG16",
+              "MXGH15"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-cross-hybrid-1271858.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2021,
+        "to": 2025,
+        "codes": [
+          "ZVG11",
+          "ZVG13",
+          "ZVG15",
+          "ZVG16"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 9,
+            "to": 2025,
+            "toMonth": 4,
+            "codes": [
+              "ZVG11",
+              "ZVG13",
+              "ZVG15",
+              "ZVG16"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-cross-hybrid-1028654.webp"
+      }
+    ]
+  },
+  "sienta-hybrid": {
+    "source": "https://www.drom.ru/catalog/toyota/sienta/",
+    "generations": [
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "MXPL10G",
+          "MXPL15G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 8,
+            "to": null,
+            "codes": [
+              "MXPL10G",
+              "MXPL15G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/sienta-hybrid-1088144.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2022,
+        "codes": [
+          "NHP170G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 7,
+            "codes": [
+              "NHP170G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/sienta-hybrid-841180.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2015,
+        "to": 2018,
+        "codes": [
+          "NHP170G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 7,
+            "to": 2018,
+            "toMonth": 8,
+            "codes": [
+              "NHP170G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/sienta-hybrid-699937.webp"
+      }
+    ]
+  },
+  "voxy-hybrid": {
+    "source": "https://www.drom.ru/catalog/toyota/voxy/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "ZWR90W",
+          "ZWR95W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "ZWR90W",
+              "ZWR95W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/voxy-hybrid-1052111.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2017,
+        "to": 2021,
+        "codes": [
+          "ZWR80W",
+          "ZWR80G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 7,
+            "to": 2021,
+            "toMonth": 12,
+            "codes": [
+              "ZWR80W",
+              "ZWR80G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/voxy-hybrid-729738.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2014,
+        "to": 2017,
+        "codes": [
+          "ZWR80G",
+          "ZWR80W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2014,
+            "fromMonth": 2,
+            "to": 2017,
+            "toMonth": 6,
+            "codes": [
+              "ZWR80G",
+              "ZWR80W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/voxy-hybrid-709088.webp"
+      }
+    ]
+  },
+  "raize": {
+    "source": "https://www.drom.ru/catalog/toyota/raize/",
+    "generations": [
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "A210A",
+          "A202A",
+          "A200A",
+          "A201A"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "A210A",
+              "A202A",
+              "A200A",
+              "A201A"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/raize-925139.webp"
+      }
+    ]
+  },
+  "roomy": {
+    "source": "https://www.drom.ru/catalog/toyota/roomy/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "M900A",
+          "M910A"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": null,
+            "codes": [
+              "M900A",
+              "M910A"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/roomy-971724.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2016,
+        "to": 2020,
+        "codes": [
+          "M900A",
+          "M910A"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 11,
+            "to": 2020,
+            "toMonth": 8,
+            "codes": [
+              "M900A",
+              "M910A"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/roomy-971816.webp"
+      }
+    ]
+  },
+  "corolla": {
+    "source": "https://www.drom.ru/catalog/toyota/corolla/",
+    "generations": [
+      {
+        "id": "g12-r2",
+        "label": "12 поколение, 2-й рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "E210"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 12,
+            "to": null,
+            "codes": [
+              "MZE211",
+              "ZWE219"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1310397.webp"
+      },
+      {
+        "id": "g12-r1",
+        "label": "12 поколение, рестайлинг",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "E210"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 7,
+            "to": 2026,
+            "toMonth": 1,
+            "codes": [
+              "MZEA11",
+              "NRE210",
+              "ZWE211",
+              "ZWE219"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "MZEA17",
+              "ZWE215",
+              "ZWE219"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "ZWE219H",
+              "MZEA12H"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "MZEA17W",
+              "ZWE215W",
+              "ZWE219W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1288052.webp"
+      },
+      {
+        "id": "g12-r0",
+        "label": "12 поколение",
+        "from": 2018,
+        "to": 2022,
+        "codes": [
+          "E210"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 11,
+            "to": 2020,
+            "toMonth": 7,
+            "codes": [
+              "NRE210",
+              "ZWE211"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "NRE210",
+              "ZRE212",
+              "ZWE211",
+              "ZWE214"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 3,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "NRE210H",
+              "NRE214H",
+              "ZWE211H",
+              "ZWE213H"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "NRE210W",
+              "ZRE212W",
+              "ZWE211W",
+              "ZWE214W",
+              "MZEA12W"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1193126.webp"
+      },
+      {
+        "id": "g11-r1",
+        "label": "11 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2022,
+        "codes": [
+          "E180"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 3,
+            "to": 2022,
+            "toMonth": 3,
+            "codes": [
+              "NRE180",
+              "ZRE181",
+              "ZRE182",
+              "ZWE180"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1196177.webp"
+      },
+      {
+        "id": "g11-r0",
+        "label": "11 поколение",
+        "from": 2012,
+        "to": 2018,
+        "codes": [
+          "E170",
+          "E180"
+        ],
+        "photo": "generations/toyota/corolla-747420.webp"
+      },
+      {
+        "id": "g10-r1",
+        "label": "10 поколение, рестайлинг",
+        "from": 2010,
+        "to": 2013,
+        "codes": [
+          "E140",
+          "E150"
+        ],
+        "photo": "generations/toyota/corolla-466988.webp"
+      },
+      {
+        "id": "g10-r0",
+        "label": "10 поколение",
+        "from": 2006,
+        "to": 2010,
+        "codes": [
+          "E140",
+          "E150"
+        ],
+        "photo": "generations/toyota/corolla-453811.webp"
+      },
+      {
+        "id": "g9-r2",
+        "label": "9 поколение, 2-й рестайлинг",
+        "from": 2004,
+        "to": 2006,
+        "codes": [
+          "E120"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2004,
+            "fromMonth": 4,
+            "to": 2006,
+            "toMonth": 10,
+            "codes": [
+              "NZE120",
+              "NZE121",
+              "NZE124",
+              "ZZE122",
+              "ZZE124"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-710526.webp"
+      },
+      {
+        "id": "g9-r1",
+        "label": "9 поколение, рестайлинг",
+        "from": 2002,
+        "to": 2007,
+        "codes": [
+          "E120"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 9,
+            "to": 2004,
+            "toMonth": 3,
+            "codes": [
+              "CE121",
+              "NZE120",
+              "NZE121",
+              "NZE124",
+              "ZZE122",
+              "ZZE124"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-414906.webp"
+      },
+      {
+        "id": "g9-r0",
+        "label": "9 поколение",
+        "from": 2000,
+        "to": 2007,
+        "codes": [
+          "E120",
+          "E130"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 8,
+            "to": 2002,
+            "toMonth": 8,
+            "codes": [
+              "CE121",
+              "NZE120",
+              "NZE121",
+              "NZE124",
+              "ZZE122",
+              "ZZE124"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-968268.webp"
+      },
+      {
+        "id": "g7-r3",
+        "label": "7 поколение, 3-й рестайлинг",
+        "from": 1997,
+        "to": 2000,
+        "codes": [
+          "E100"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 5,
+            "to": 2000,
+            "toMonth": 7,
+            "codes": [
+              "AE100G",
+              "AE101G",
+              "AE104G",
+              "CE100G",
+              "CE101G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-425860.webp"
+      },
+      {
+        "id": "g8-r1",
+        "label": "8 поколение, рестайлинг",
+        "from": 1997,
+        "to": 2001,
+        "codes": [
+          "E110"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 4,
+            "to": 2000,
+            "toMonth": 7,
+            "codes": [
+              "AE110",
+              "AE111",
+              "AE114",
+              "EE111",
+              "CE110",
+              "CE114"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-460961.webp"
+      },
+      {
+        "id": "g7-r2",
+        "label": "7 поколение, 2-й рестайлинг",
+        "from": 1995,
+        "to": 1997,
+        "codes": [
+          "E100"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 5,
+            "to": 1997,
+            "toMonth": 4,
+            "codes": [
+              "AE100G",
+              "AE101G",
+              "AE104G",
+              "CE100G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-755963.webp"
+      },
+      {
+        "id": "g8-r0",
+        "label": "8 поколение",
+        "from": 1995,
+        "to": 2000,
+        "codes": [
+          "E110"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 5,
+            "to": 1997,
+            "toMonth": 3,
+            "codes": [
+              "AE110",
+              "AE111",
+              "AE114",
+              "EE111",
+              "CE110",
+              "CE114"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-748792.webp"
+      },
+      {
+        "id": "g7-r1",
+        "label": "7 поколение, рестайлинг",
+        "from": 1993,
+        "to": 1997,
+        "codes": [
+          "E100"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 5,
+            "to": 1995,
+            "toMonth": 4,
+            "codes": [
+              "AE100",
+              "AE101",
+              "AE104",
+              "EE101",
+              "CE100",
+              "CE104"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 5,
+            "to": 1995,
+            "toMonth": 4,
+            "codes": [
+              "AE100G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-755770.webp"
+      },
+      {
+        "id": "g7-r0",
+        "label": "7 поколение",
+        "from": 1991,
+        "to": 2002,
+        "codes": [
+          "E100"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1991,
+            "fromMonth": 6,
+            "to": 1993,
+            "toMonth": 4,
+            "codes": [
+              "AE100",
+              "AE101",
+              "AE104",
+              "EE101",
+              "CE100",
+              "CE104"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1991,
+            "fromMonth": 9,
+            "to": 2002,
+            "toMonth": 6,
+            "codes": [
+              "AE109V",
+              "CE102G",
+              "CE107V",
+              "CE105V",
+              "CE106V",
+              "EE106V",
+              "EE107V",
+              "CE109V",
+              "EE104G",
+              "EE102V",
+              "EE103V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1991,
+            "fromMonth": 9,
+            "to": 1993,
+            "toMonth": 4,
+            "codes": [
+              "AE100G",
+              "EE108G",
+              "CE108G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-746025.webp"
+      },
+      {
+        "id": "g6-r1",
+        "label": "6 поколение, рестайлинг",
+        "from": 1989,
+        "to": 1991,
+        "codes": [
+          "E90"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1989,
+            "fromMonth": 5,
+            "to": 1991,
+            "toMonth": 5,
+            "codes": [
+              "AE91",
+              "AE92",
+              "AE95",
+              "EE90",
+              "CE90",
+              "CE95"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-575231.webp"
+      },
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 1987,
+        "to": 1994,
+        "codes": [
+          "E90"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1987,
+            "fromMonth": 5,
+            "to": 1989,
+            "toMonth": 4,
+            "codes": [
+              "AE91",
+              "AE92",
+              "AE95",
+              "EE90",
+              "CE90"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1987,
+            "fromMonth": 8,
+            "to": 1991,
+            "toMonth": 9,
+            "codes": [
+              "AE91G",
+              "EE97G",
+              "CE97G"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1987,
+            "fromMonth": 8,
+            "to": 1991,
+            "toMonth": 9,
+            "codes": [
+              "EE96V",
+              "EE98V",
+              "CE96V"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-755888.webp"
+      },
+      {
+        "id": "g4-r2",
+        "label": "4 поколение, 2-й рестайлинг",
+        "from": 1985,
+        "to": 1987,
+        "codes": [
+          "KE73G",
+          "KE72V",
+          "KE74V",
+          "CE71V",
+          "CE72G"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1985,
+            "fromMonth": 8,
+            "to": 1987,
+            "toMonth": 8,
+            "codes": [
+              "KE73G",
+              "KE72V",
+              "KE74V",
+              "CE71V",
+              "CE72G"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1154382.webp"
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 1985,
+        "to": 1987,
+        "codes": [
+          "E80"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1985,
+            "fromMonth": 5,
+            "to": 1987,
+            "toMonth": 4,
+            "codes": [
+              "AE81",
+              "AE82",
+              "EE80",
+              "CE80"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1985,
+            "fromMonth": 5,
+            "to": 1987,
+            "toMonth": 4,
+            "codes": [
+              "AE81",
+              "AE82"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1153980.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 1983,
+        "to": 1987,
+        "codes": [
+          "E80"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1983,
+            "fromMonth": 5,
+            "to": 1985,
+            "toMonth": 4,
+            "codes": [
+              "AE80",
+              "AE81",
+              "AE82",
+              "CE80"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1983,
+            "fromMonth": 5,
+            "to": 1985,
+            "toMonth": 4,
+            "codes": [
+              "AE81",
+              "AE82",
+              "CE80"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-569764.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 1981,
+        "to": 1985,
+        "codes": [
+          "E70"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1981,
+            "fromMonth": 8,
+            "to": 1983,
+            "toMonth": 4,
+            "codes": [
+              "AE70",
+              "KE70",
+              "TE71",
+              "CE70"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1982,
+            "fromMonth": 5,
+            "to": 1985,
+            "toMonth": 7,
+            "codes": [
+              "KE73G",
+              "KE72V",
+              "TE74V",
+              "CE71V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1981,
+            "fromMonth": 8,
+            "to": 1983,
+            "toMonth": 4,
+            "codes": [
+              "AE70",
+              "KE70",
+              "TE71"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1981,
+            "fromMonth": 8,
+            "to": 1983,
+            "toMonth": 4,
+            "codes": [
+              "AE70",
+              "KE70"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-925913.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 1979,
+        "to": 1983,
+        "codes": [
+          "E70"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 3,
+            "to": 1981,
+            "toMonth": 7,
+            "codes": [
+              "AE70",
+              "KE70",
+              "TE71"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 8,
+            "to": 1982,
+            "toMonth": 4,
+            "codes": [
+              "KE71V",
+              "TE73V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 3,
+            "to": 1981,
+            "toMonth": 7,
+            "codes": [
+              "AE70",
+              "KE70",
+              "TE70",
+              "TE71"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 3,
+            "to": 1983,
+            "toMonth": 4,
+            "codes": [
+              "KE70"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 3,
+            "to": 1981,
+            "toMonth": 7,
+            "codes": [
+              "AE70",
+              "KE70",
+              "TE70"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-925948.webp"
+      },
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 1978,
+        "to": 1979,
+        "codes": [
+          "E50",
+          "E30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1978,
+            "fromMonth": 5,
+            "to": 1979,
+            "toMonth": 2,
+            "codes": [
+              "TE50",
+              "KE55",
+              "TE56"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1978,
+            "fromMonth": 5,
+            "to": 1979,
+            "toMonth": 7,
+            "codes": [
+              "KE36V",
+              "TE36V"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1154684.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 1976,
+        "to": 1979,
+        "codes": [
+          "E50",
+          "E30"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1977,
+            "fromMonth": 1,
+            "to": 1978,
+            "toMonth": 4,
+            "codes": [
+              "KE50",
+              "TE50",
+              "TE51",
+              "TE52",
+              "KE55",
+              "TE56"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1977,
+            "fromMonth": 1,
+            "to": 1978,
+            "toMonth": 4,
+            "codes": [
+              "KE36V",
+              "TE36V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1977,
+            "fromMonth": 1,
+            "to": 1978,
+            "toMonth": 4,
+            "codes": [
+              "KE50",
+              "TE50",
+              "TE52",
+              "KE55"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1977,
+            "fromMonth": 1,
+            "to": 1979,
+            "toMonth": 2,
+            "codes": [
+              "KE50",
+              "TE50",
+              "TE51",
+              "TE52",
+              "KE55",
+              "TE56"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1976,
+            "fromMonth": 1,
+            "to": 1979,
+            "toMonth": 2,
+            "codes": [
+              "KE50",
+              "TE50",
+              "TE51",
+              "TE52",
+              "KE55",
+              "TE55",
+              "TE56"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1154383.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 1974,
+        "to": 1979,
+        "codes": [
+          "E30",
+          "E50"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1974,
+            "fromMonth": 4,
+            "to": 1976,
+            "toMonth": 12,
+            "codes": [
+              "KE30",
+              "TE30",
+              "TE31"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1974,
+            "fromMonth": 4,
+            "to": 1976,
+            "toMonth": 12,
+            "codes": [
+              "KE36V",
+              "TE36V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1974,
+            "fromMonth": 4,
+            "to": 1976,
+            "toMonth": 12,
+            "codes": [
+              "KE35",
+              "TE35",
+              "TE37"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1143486.webp"
+      },
+      {
+        "id": "g2-r2",
+        "label": "2 поколение, 2-й рестайлинг",
+        "from": 1972,
+        "to": 1977,
+        "codes": [
+          "E20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1972,
+            "fromMonth": 8,
+            "to": 1975,
+            "toMonth": 11,
+            "codes": [
+              "KE20",
+              "TE20",
+              "TE21"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1972,
+            "fromMonth": 8,
+            "to": 1977,
+            "toMonth": 12,
+            "codes": [
+              "KE26V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1972,
+            "fromMonth": 8,
+            "to": 1974,
+            "toMonth": 3,
+            "codes": []
+          }
+        ],
+        "photo": "generations/toyota/corolla-1155232.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 1971,
+        "to": 1972,
+        "codes": [
+          "E20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1971,
+            "fromMonth": 8,
+            "to": 1972,
+            "toMonth": 7,
+            "codes": [
+              "KE20",
+              "TE20"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1971,
+            "fromMonth": 8,
+            "to": 1972,
+            "toMonth": 7,
+            "codes": [
+              "KE25",
+              "TE25"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1155086.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1970,
+        "to": 1978,
+        "codes": [
+          "E20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1970,
+            "fromMonth": 5,
+            "to": 1971,
+            "toMonth": 7,
+            "codes": [
+              "KE20"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1970,
+            "fromMonth": 5,
+            "to": 1971,
+            "toMonth": 7,
+            "codes": [
+              "KE26V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1970,
+            "fromMonth": 5,
+            "to": 1971,
+            "toMonth": 7,
+            "codes": [
+              "KE25",
+              "TE25"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1141587.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1969,
+        "to": 1970,
+        "codes": [
+          "E10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1969,
+            "fromMonth": 2,
+            "to": 1970,
+            "toMonth": 4,
+            "codes": [
+              "KE10",
+              "KE11"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1969,
+            "fromMonth": 2,
+            "to": 1970,
+            "toMonth": 4,
+            "codes": [
+              "KE16V",
+              "KE18V"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-1144958.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1966,
+        "to": 1970,
+        "codes": [
+          "E10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1967,
+            "fromMonth": 5,
+            "to": 1969,
+            "toMonth": 1,
+            "codes": [
+              "KE10"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1967,
+            "fromMonth": 5,
+            "to": 1969,
+            "toMonth": 1,
+            "codes": [
+              "KE16V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1968,
+            "fromMonth": 3,
+            "to": 1970,
+            "toMonth": 4,
+            "codes": [
+              "KE15",
+              "KE17"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1966,
+            "fromMonth": 10,
+            "to": 1969,
+            "toMonth": 1,
+            "codes": [
+              "KE10"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-746455.webp"
+      }
+    ]
+  },
+  "levin": {
+    "source": "https://www.drom.ru/catalog/toyota/levin/",
+    "generations": [
+      {
+        "id": "g12-r2",
+        "label": "12 поколение, 2-й рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "E210"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 12,
+            "to": null,
+            "codes": [
+              "MZEH12",
+              "ZWE211"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/levin-1310417.webp"
+      },
+      {
+        "id": "g12-r1",
+        "label": "12 поколение, рестайлинг",
+        "from": 2022,
+        "to": 2025,
+        "codes": [
+          "E210"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 9,
+            "to": 2025,
+            "toMonth": 11,
+            "codes": [
+              "E210",
+              "MZEH12",
+              "NRE210",
+              "ZWE219"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/levin-1133675.webp"
+      },
+      {
+        "id": "g11-r2",
+        "label": "11 поколение, 2-й рестайлинг",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "E180"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 3,
+            "to": null,
+            "codes": [
+              "ZWE183"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/levin-1133916.webp"
+      },
+      {
+        "id": "g12-r0",
+        "label": "12 поколение",
+        "from": 2019,
+        "to": 2022,
+        "codes": [
+          "E210"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 8,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "E210",
+              "MZEH12",
+              "NRE210",
+              "ZWE211"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/levin-1133795.webp"
+      }
+    ]
+  },
+  "corolla-cross": {
+    "source": "https://www.drom.ru/catalog/toyota/corolla_cross/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "MXGA10",
+          "MXGH10"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "MXGA10",
+              "MXGH10"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2025,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "MXGH15",
+              "ZVG13",
+              "ZVG16"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-cross-1355098.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": 2025,
+        "codes": [
+          "MXGA10",
+          "MXGH10"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 1,
+            "to": 2025,
+            "toMonth": 5,
+            "codes": [
+              "MXGA10",
+              "MXGH10"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 9,
+            "to": 2025,
+            "toMonth": 4,
+            "codes": [
+              "ZSG10",
+              "MXGA10",
+              "ZVG11",
+              "ZVG13",
+              "ZVG15",
+              "ZVG16"
+            ]
+          }
+        ],
+        "photo": "generations/toyota/corolla-cross-1233698.webp"
+      }
+    ]
+  }
+}

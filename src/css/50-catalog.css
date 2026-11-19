@@ -2,192 +2,232 @@
    Каталог: листинги, фильтры, карточка автомобиля
    ========================================================================== */
 
-/* --- Панель фильтров ------------------------------------------------------------ */
+/* Шапка листинга. Кегль обычного текста и короткий лид на всех уровнях каталога. */
+.page-head.catalog-head {
+  padding-top: calc(var(--header-h) + var(--sp-4));
+  padding-bottom: var(--sp-5);
+}
+.catalog-head .page-head__grid { margin-top: var(--sp-4); }
+.catalog-head .lead {
+  max-width: 72ch;
+  font-size: var(--fs-body);
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+.catalog-head h1 + .lead { margin-top: var(--sp-2); }
 
+/* Форма каталога */
+:is([data-catalog-list], [data-server-catalog]) { --catalog-control: 46px; }
 .filters {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  margin-inline: calc(var(--gutter) * -1);
-  padding: 10px var(--gutter);
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  -webkit-backdrop-filter: saturate(1.4) blur(16px);
-  backdrop-filter: saturate(1.4) blur(16px);
-  transition: top var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  padding: clamp(14px, 1.4vw, 24px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--card);
 }
-
-.section--white .filters {
-  background: color-mix(in srgb, var(--card) 92%, transparent);
+.filters__panel { display: grid; gap: var(--sp-3); }
+.filters__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--sp-3) var(--sp-4);
 }
-
-/* когда шапка видна — панель встает под нее */
-.header:not(.is-hidden) ~ main .filters {
-  top: var(--header-h);
-}
-
-.filters.is-stuck {
-  box-shadow: 0 1px 0 var(--line);
-}
-
-.filters__row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-@media (min-width: 1101px) {
-  .filters__row {
-    flex-wrap: wrap;
-    overflow: visible;
-  }
-}
-
-.filters__row::-webkit-scrollbar {
-  display: none;
-}
-
-.filter {
-  position: relative;
-  flex: none;
-}
-
-.filter select {
-  appearance: none;
-  height: 44px;
-  max-width: 184px;
-  padding: 0 34px 0 14px;
-  border: 0;
-  border-radius: var(--r-full);
-  background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%230a0c0f' stroke-width='1.5'%3E%3Cpath d='m3.5 6 4.5 4.5L12.5 6'/%3E%3C/svg%3E") right 12px center / 14px no-repeat;
-  text-overflow: ellipsis;
-  font-size: 0.9375rem;
-  font-weight: var(--w-medium);
-  color: var(--text);
-  cursor: pointer;
-  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
-    box-shadow var(--dur-fast) var(--ease-out);
-}
-
-.section--white .filter select {
-  background-color: var(--paper);
-}
-
-.filter select:hover {
-  box-shadow: inset 0 0 0 1px var(--line-2);
-}
-
-.filter select:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.filter.is-active select {
-  background-color: var(--ink);
-  color: #fff;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='m3.5 6 4.5 4.5L12.5 6'/%3E%3C/svg%3E");
-}
-
-.filter select option {
-  color: var(--ink);
-  background: #fff;
-}
-
-.filters__reset {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 44px;
-  padding: 0 14px;
-  border-radius: var(--r-full);
+.filters .field, .filters .field__control, .catalog-select { min-width: 0; }
+.filters .field__label { margin-bottom: var(--sp-1); }
+.filters .field__control { height: var(--catalog-control); }
+.filter-range { margin: 0; padding: 0; border: 0; }
+.filter-range legend { padding: 0; }
+.filter-range__inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.filter-range__inputs input:first-child { border-radius: var(--r-md) 0 0 var(--r-md); }
+.filter-range__inputs input:last-child { margin-left: -1px; border-radius: 0 var(--r-md) var(--r-md) 0; }
+.filter-range__inputs input:focus { position: relative; z-index: 1; }
+.filters__footer, .filters__actions { display: flex; align-items: start; gap: var(--sp-3); }
+.filters__actions { align-items: center; margin-left: auto; }
+.filters__actions .btn { min-height: var(--catalog-control); padding-block: var(--sp-2); }
+.filters__extra { flex: 1; min-width: 0; }
+.filters__extra summary, .filters__reset {
+  width: fit-content;
+  padding-block: var(--sp-3);
+  font-size: var(--fs-sm);
   color: var(--text-2);
-  font-size: 0.875rem;
-  white-space: nowrap;
-  transition: color var(--dur-fast) var(--ease-out);
+  cursor: pointer;
 }
-
-.filters__reset:hover {
-  color: var(--danger);
-}
-
-.filters__reset svg {
-  width: 12px;
-  height: 12px;
-}
-
-.filters__spacer {
-  flex: 1 1 auto;
-  min-width: 8px;
-}
-
-/* сортировка всегда у правого края — и когда фильтры не помещаются в одну строку */
-.filters__row > .filter:last-child {
-  margin-left: auto;
-}
-
-/* без JS фильтры не работают — все автомобили и так на странице */
-.no-js .filters {
-  display: none;
-}
-
-@media (max-width: 720px) {
-  /* 16px — iOS не увеличивает страницу при фокусе на поле */
-  .filter select {
-    font-size: 1rem;
-  }
-}
-
-/* до 1100px фильтры — одна прокручиваемая лента */
-@media (max-width: 1100px) {
-  /* «Сбросить» и выбранные фильтры — в начале ленты, справа лента уходит в прозрачность: ее можно листать */
-  .filters__reset {
-    order: -2;
-    background: var(--card);
-  }
-
-  .filter.is-active {
-    order: -1;
-  }
-
-  .filters__row > .filter:last-child {
-    margin-left: 0;
-  }
-
-  .filters__row {
-    padding-right: 28px;
-    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
-    mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
-  }
-}
+.filters__extra summary:hover, .filters__reset:hover { color: var(--accent); }
+.filters__extra[open] .filters__grid { margin-block: var(--sp-2); }
+.filters__toggle { display: flex; align-items: center; width: 100%; gap: var(--sp-2); font-weight: var(--w-medium); }
+.filters__toggle > svg { width: 20px; height: 20px; }
+.filters__toggle .filters__caret { width: 16px; height: 16px; margin-left: auto; }
+.filters__toggle[aria-expanded=true] .filters__caret { transform: rotate(180deg); }
+.filters__badge { padding: 1px 8px; border-radius: var(--r-full); background: var(--accent-soft); color: var(--accent); font-size: var(--fs-xs); }
+.no-js .filters, .no-js .catalog-select--sort { display: none; }
+.no-js [data-server-catalog] :is(.filters, .catalog-select--sort) { display: block; }
 
 .results-head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: 8px 24px;
-  margin: 18px 0 14px;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-4);
+  margin: var(--sp-3) 0;
 }
-
 .results-head__count {
   font-size: var(--fs-h4);
   font-weight: var(--w-medium);
   letter-spacing: -0.015em;
 }
-
-.results-head__count small {
-  margin-left: 10px;
-  font-size: 0.875rem;
-  font-weight: var(--w-regular);
-  letter-spacing: 0;
-  color: var(--text-3);
+.catalog-select { position: relative; }
+.catalog-select__input-wrap { position: relative; }
+.catalog-select__input-wrap .catalog-select__logo,
+.catalog-select__input-wrap .catalog-select__caret { position: absolute; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.catalog-select__input-wrap .catalog-select__logo { left: var(--sp-3); }
+.catalog-select__input-wrap .catalog-select__caret { right: var(--sp-4); }
+.catalog-select__input { padding-inline: var(--sp-3) var(--sp-7); text-overflow: ellipsis; }
+.catalog-select__logo:not([hidden]) + .catalog-select__input { padding-left: calc(var(--sp-3) + 32px + var(--sp-2)); }
+.catalog-select.is-open .catalog-select__input-wrap .catalog-select__caret { transform: translateY(-50%) rotate(180deg); }
+.catalog-select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding-inline: var(--sp-3);
+  cursor: pointer;
+  text-align: left;
+}
+.catalog-select__value { display: flex; align-items: center; min-width: 0; gap: var(--sp-2); }
+.catalog-select__value .catalog-select__text { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.catalog-select__caret, .catalog-select__symbol { flex: none; width: 16px; height: 16px; color: var(--text-2); }
+.catalog-select [aria-expanded=true] { border-color: var(--accent); }
+.catalog-select__trigger[aria-expanded=true] .catalog-select__caret { transform: rotate(180deg); }
+.catalog-select :is(.catalog-select__trigger, .catalog-select__input):disabled { color: var(--text-3); background: var(--paper); cursor: default; }
+.catalog-select__logo { flex: none; width: 32px; height: 22px; object-fit: contain; }
+.catalog-select__menu {
+  position: absolute;
+  z-index: 8;
+  inset: calc(100% + 5px) 0 auto;
+  max-height: min(420px, 58vh, var(--menu-space, 420px));
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--sp-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--card);
+  box-shadow: var(--shadow-pop);
+}
+.catalog-select.is-open { z-index: 9; }
+.catalog-select.opens-up .catalog-select__menu { top: auto; bottom: calc(var(--trigger-height) + 5px); }
+.catalog-select__option {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 42px;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  color: var(--text);
+  font-size: var(--fs-body);
+  line-height: 1.3;
+}
+.catalog-select__option.is-active, .catalog-select__option:hover { background: var(--paper); }
+.catalog-select__option.is-popular { font-weight: var(--w-semi); }
+.catalog-select__option.is-popular + .catalog-select__option:not(.is-popular),
+.catalog-select__option + .catalog-select__custom { border-top: 1px solid var(--line); }
+.catalog-select__custom, .catalog-select__text { overflow-wrap: anywhere; }
+.catalog-select__empty { padding: var(--sp-3); color: var(--text-2); font-size: var(--fs-sm); }
+.catalog-select__option[aria-selected=true] { background: var(--accent-soft); color: var(--accent-press); }
+.catalog-select__option[aria-selected=true]::after {
+  content: '';
+  width: 7px;
+  height: 12px;
+  margin: -3px var(--sp-1) 0 auto;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.catalog-select--sort .catalog-select__trigger { width: auto; min-height: 40px; height: auto; padding-block: var(--sp-2); gap: var(--sp-2); font-size: var(--fs-sm); }
+.catalog-select--sort .catalog-select__menu { left: auto; min-width: max-content; }
+.catalog-select--sort .catalog-select__option { font-size: var(--fs-sm); }
+.catalog-select--generation .catalog-select__menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* В WebKit строки auto могут сжаться до max-height меню, даже когда фото выше строки. */
+  grid-auto-rows: max-content;
+  align-content: start;
+  gap: var(--sp-2);
+  left: auto;
+  width: min(580px, calc(100vw - 2 * var(--gutter)));
+  max-height: min(540px, 62vh, var(--menu-space, 540px));
+  padding: var(--sp-2);
+}
+.catalog-select--generation .catalog-select__option:first-child { grid-column: 1 / -1; }
+.catalog-select__generation {
+  display: block;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper);
+}
+.catalog-select__photo { display: block; width: 100%; height: 100%; object-fit: contain; }
+.catalog-select__caption {
+  --caption-fade: var(--sp-5);
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--sp-2);
+  padding: var(--sp-3) var(--sp-3) var(--caption-fade);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ink) 82%, transparent), color-mix(in srgb, var(--ink) 62%, transparent) calc(100% - var(--caption-fade)), transparent);
+  color: var(--card);
+  pointer-events: none;
+}
+.catalog-select__years { font-size: var(--fs-body); font-weight: var(--w-semi); }
+.catalog-select__edition, .catalog-select__codes { font-size: var(--fs-xs); }
+.catalog-select__edition { flex-basis: 100%; }
+.catalog-select__codes { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.catalog-select__generation:is(.is-active, :hover, [aria-selected=true]) { outline: 2px solid var(--accent); outline-offset: -2px; }
+.catalog-select__generation[aria-selected=true]::after {
+  position: absolute;
+  bottom: 10px;
+  right: 8px;
+  box-shadow: 0 0 0 4px var(--accent);
+  background: var(--accent);
+  color: white;
 }
 
-.cars-grid .car[hidden],
-.cars-grid .promo-tile[hidden] {
-  display: none;
+@media (min-width: 601px) and (max-width: 800px) {
+  .filters__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .catalog-select--generation .catalog-select__menu { left: 0; right: auto; max-width: calc(100vw - 2 * var(--gutter) - 38px); }
+}
+@media (max-width: 600px) {
+  .page-head.catalog-head { padding-bottom: var(--sp-4); }
+  .catalog-head .page-head__grid { margin-top: var(--sp-3); }
+  .filters { padding: 0; }
+  .filters__toggle { padding: var(--sp-3) var(--sp-4); min-height: 46px; }
+  .filters__panel { padding: 0 var(--sp-3) var(--sp-3); }
+  .filters__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3) var(--sp-2); }
+  .filters__grid > .catalog-select--generation, .filters__grid > .filter-range { grid-column: 1 / -1; }
+  .filters__footer { display: grid; gap: var(--sp-2); }
+  .filters__actions { width: 100%; }
+  .filters__actions .btn { flex: 1; }
+  .catalog-select--generation .catalog-select__menu { width: 100%; }
+  .catalog-select__caption { --caption-fade: var(--sp-4); row-gap: 0; padding: var(--sp-2) var(--sp-2) var(--caption-fade); }
+  .catalog-select__years { font-size: var(--fs-sm); }
+  .filters .catalog-select--model .catalog-select__menu { left: auto; min-width: 100%; width: max-content; max-width: calc(100vw - 2 * var(--gutter) - 30px); }
+  .catalog-select--sort .catalog-select__trigger { padding-inline: var(--sp-2); }
+}
+@media (max-width: 480px) {
+  .filters__grid > :is(.catalog-select--brand, .catalog-select--model) { grid-column: 1 / -1; }
+  .filters .catalog-select--model .catalog-select__menu { width: 100%; }
+}
+@media (max-width: 375px) {
+  .results-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-2); }
+  .catalog-select--sort { justify-self: end; max-width: 100%; }
+  .catalog-select--sort .catalog-select__trigger { max-width: 100%; }
+  .catalog-select--sort .catalog-select__symbol { display: none; }
+  .catalog-select--generation .catalog-select__menu { grid-template-columns: minmax(0, 1fr); }
 }
 
 .cars-more {
@@ -196,7 +236,7 @@
   margin-top: clamp(20px, 2.4vw, 36px);
 }
 
-/* плитка-заявка внутри сетки каталога */
+/* Плитка-заявка в подборке привезенных автомобилей. */
 .promo-tile {
   display: flex;
   flex-direction: column;
@@ -232,63 +272,8 @@
   max-width: 44ch;
 }
 
-/* Плитка-заявка занимает остаток последнего ряда, чтобы в сетке не оставалось пустых ячеек.
-   С JS место и ширину задает catalog.js (сетка помечена data-ready); без JS и на страницах без фильтров
-   плитка стоит последней, и ширина считается по ее номеру в сетке. */
-.promo-tile--row {
-  flex-direction: row;
-  align-items: center;
-  min-height: 0;
-}
-
-.promo-tile--row > div {
-  max-width: 62ch;
-}
-
-/* широкая плитка (несколько колонок): кнопка по ширине текста, а не во всю плитку */
-.promo-tile--wide {
-  align-items: flex-start;
-}
-
-@media (min-width: 1181px) {
-  .cars-grid:not([data-ready]) > .promo-tile:nth-child(4n + 2) { grid-column: span 3; align-items: flex-start; }
-  .cars-grid:not([data-ready]) > .promo-tile:nth-child(4n + 3) { grid-column: span 2; align-items: flex-start; }
-
-  .cars-grid:not([data-ready]) > .promo-tile:nth-child(4n + 1) {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    align-items: center;
-    min-height: 0;
-  }
-}
-
-@media (min-width: 901px) and (max-width: 1180px) {
-  .cars-grid:not([data-ready]) > .promo-tile:nth-child(3n + 2) { grid-column: span 2; align-items: flex-start; }
-
-  .cars-grid:not([data-ready]) > .promo-tile:nth-child(3n + 1) {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    align-items: center;
-    min-height: 0;
-  }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {
-  .cars-grid:not([data-ready]) > .promo-tile:nth-child(2n + 1) {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    align-items: center;
-    min-height: 0;
-  }
-}
-
-@media (max-width: 720px) {
-  .promo-tile--row,
-  .cars-grid > .promo-tile {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
+/* Отступ между последней карточкой и квизом задает сама секция квиза. */
+[data-catalog-quiz]:has(+ .quiz-section:not([hidden])) { padding-bottom: 0; }
 
 /* Листинг на телефоне — в две колонки с компактной карточкой: список из 24 автомобилей вдвое короче.
    Характеристики остаются на странице автомобиля; в карточке — фото, год, пробег, название и цена.
@@ -303,19 +288,13 @@
     padding: 10px 12px 12px;
   }
 
-  .cars-grid--duo .car__meta {
-    gap: 2px 8px;
-    font-size: 0.625rem;
-  }
-
   .cars-grid--duo .car__title {
     font-size: 0.9375rem;
     line-height: 1.2;
     letter-spacing: -0.012em;
   }
 
-  .cars-grid--duo .car__specs,
-  .cars-grid--duo .car__go {
+  .cars-grid--duo .car__specs:not(.car__facts) {
     display: none;
   }
 
@@ -324,7 +303,7 @@
   }
 
   .cars-grid--duo .car__price {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
   }
 
   .cars-grid--duo .car__price small {
@@ -350,10 +329,19 @@
     bottom: 6px;
   }
 
-  .cars-grid > .promo-tile {
-    grid-column: 1 / -1;
-    min-height: 0;
+}
+
+/* В узкой колонке сумма занимает целую строку, а стрелка стоит рядом с подписью к цене. */
+@media (max-width: 400px) {
+  .cars-grid--duo .car__foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 3px 6px;
   }
+
+  .cars-grid--duo .car__price { display: contents; }
+  .cars-grid--duo .car__amount { grid-column: 1 / -1; }
+  .cars-grid--duo .car__price small { margin-top: 0; }
 }
 
 /* заглушка пустого результата: заголовок-абзац вместо h3, чтобы не попадать в структуру каждой страницы */
@@ -712,12 +700,28 @@
 
 .buybox__actions .btn {
   min-width: 0;
-  white-space: normal;
 }
 
-.buybox__actions .btn-row > * {
-  flex: 1 1 0;
+.buybox__socials {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+  container: car-contacts / inline-size;
 }
+
+.buybox__socials .btn {
+  gap: var(--sp-2);
+  padding-inline: var(--sp-1);
+  white-space: nowrap;
+}
+
+@container car-contacts (max-width: 340px) {
+  .buybox__socials .btn { flex-direction: column; gap: var(--sp-1); }
+}
+
+.car-delivery { display: grid; gap: var(--sp-5); }
+.car-delivery .breakdown { margin: 0; }
+.car-delivery .more { justify-self: start; }
 
 /* нейтральная врезка под расчетом: утильсбор зависит от мощности по документам */
 .buybox__flag {
@@ -751,13 +755,6 @@
   color: #fff;
   font-size: 1.125rem;
   font-weight: var(--w-medium);
-}
-
-.manager__photo img {
-  width: 190%;
-  max-width: none;
-  height: auto;
-  margin: -26% 0 0 -45%;
 }
 
 .manager__name {
@@ -989,24 +986,4 @@
 .sheet__cap svg {
   width: 14px;
   height: 14px;
-}
-
-/* верхние теги листинга на телефоне — одной прокручиваемой строкой, чтобы карточки были ближе */
-@media (max-width: 720px) {
-  .chips-rail {
-    margin-inline: calc(var(--gutter) * -1);
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .chips-rail::-webkit-scrollbar {
-    display: none;
-  }
-
-  .chips-rail .chips {
-    flex-wrap: nowrap;
-    width: max-content;
-    padding-inline: var(--gutter);
-  }
 }

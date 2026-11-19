@@ -224,7 +224,7 @@ main {
   z-index: var(--z-header);
   height: var(--header-h);
   color: var(--text);
-  transition: transform var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out),
+  transition: background-color var(--dur-base) var(--ease-out),
     color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
 }
 
@@ -237,7 +237,13 @@ main {
   -webkit-backdrop-filter: saturate(1.4) blur(18px);
   backdrop-filter: saturate(1.4) blur(18px);
   border-bottom: 1px solid var(--line);
-  transition: opacity var(--dur-base) var(--ease-out);
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+
+.header:has(.nav__item.is-open)::before {
+  background: var(--card);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .header__inner {
@@ -248,31 +254,18 @@ main {
   height: 100%;
 }
 
-/* поверх темного первого экрана: прозрачная, светлый текст */
-.header--over:not(.is-stuck):not(.is-open) {
+/* Над темным первым экраном шапка прозрачна, пока скрипт отслеживает положение страницы. */
+.js .header--over:not(.is-stuck):not(.is-open):not(:has(.nav__item.is-open)) {
   color: #fff;
 }
 
-.header--over:not(.is-stuck):not(.is-open)::before {
+.js .header--over:not(.is-stuck):not(.is-open):not(:has(.nav__item.is-open))::before {
   opacity: 0;
-}
-
-.header.is-hidden:not(.is-open) {
   transform: translateY(-100%);
-}
-
-/* спрятанная при прокрутке шапка возвращается, когда фокус с клавиатуры попадает внутрь нее */
-.header.is-hidden:has(:focus-visible) {
-  transform: none;
 }
 
 .header-spacer {
   height: var(--header-h);
-}
-
-/* без JavaScript шапка не «прилипает»: прозрачная светлая шапка не должна ехать поверх светлых секций */
-.no-js .header {
-  position: absolute;
 }
 
 .logo {
@@ -292,7 +285,7 @@ main {
   transition: color var(--dur-base) var(--ease-out);
 }
 
-.header--over:not(.is-stuck):not(.is-open) .logo__mark,
+.js .header--over:not(.is-stuck):not(.is-open):not(:has(.nav__item.is-open)) .logo__mark,
 .footer .logo__mark {
   color: #fff;
 }
@@ -326,7 +319,7 @@ main {
   transition: background-color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
 }
 
-.nav__link svg {
+.nav__link:not(.btn) svg {
   flex: none;
   width: 12px;
   height: 12px;
@@ -334,14 +327,23 @@ main {
   transition: transform var(--dur-base) var(--ease-out);
 }
 
-.nav__link:hover,
-.nav__item.is-open > .nav__link,
-.nav__link[aria-current='page'] {
+.nav__link:not(.btn):is(:hover, [aria-current='page']),
+.nav__item.is-open > .nav__link:not(.btn) {
   background: color-mix(in srgb, currentColor 9%, transparent);
 }
 
-.nav__item.is-open > .nav__link svg {
+.nav__item.is-open > .nav__link:not(.btn) svg {
   transform: rotate(180deg);
+}
+
+.nav__item.is-open > .btn--primary,
+.header .btn--primary[aria-current='page'] {
+  --btn-bg: var(--accent-press);
+}
+
+.header .header__catalog-mobile,
+.header__phone a svg {
+  display: none;
 }
 
 .header__side {
@@ -372,7 +374,7 @@ main {
   opacity: 0.7;
 }
 
-.header__phone span {
+.header__phone > span {
   font-size: 0.75rem;
   opacity: 0.6;
   white-space: nowrap;
@@ -406,7 +408,7 @@ main {
   color: var(--card);
 }
 
-.header--over:not(.is-stuck):not(.is-open) .icon-btn:hover,
+.js .header--over:not(.is-stuck):not(.is-open):not(:has(.nav__item.is-open)) .icon-btn:hover,
 .on-dark .icon-btn:hover,
 .section--dark .icon-btn:hover,
 .footer .icon-btn:hover {
@@ -459,7 +461,7 @@ main {
 }
 
 @media (max-width: 1439px) {
-  .header__phone span {
+  .header__phone > span {
     display: none;
   }
 
@@ -533,6 +535,11 @@ main {
     display: none;
   }
 
+  .header .header__catalog-mobile {
+    display: inline-flex;
+    min-height: 44px;
+  }
+
   .burger {
     display: inline-grid;
   }
@@ -558,6 +565,44 @@ main {
 
   .logo svg {
     height: 28px;
+  }
+}
+
+@media (max-width: 440px) {
+  .header__inner,
+  .header__side {
+    gap: var(--sp-1);
+  }
+
+  .header .header__catalog-mobile {
+    padding-inline: var(--sp-2);
+  }
+}
+
+@media (max-width: 389px) {
+  .header__inner,
+  .header__side {
+    gap: var(--sp-2);
+  }
+
+  .header__phone a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+    border-radius: var(--r-full);
+  }
+
+  .header__phone a svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+
+  .header__phone a span {
+    display: none;
   }
 }
 
@@ -600,6 +645,71 @@ main {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+#mega-catalog .mega__inner {
+  --catalog-column-gap: clamp(40px, 4vw, 72px);
+  column-gap: var(--catalog-column-gap);
+}
+
+#mega-catalog .mega__col {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: start;
+}
+
+#mega-catalog .mega__col--country {
+  grid-template-rows: auto auto 1fr auto;
+}
+
+#mega-catalog .mega__col + .mega__col::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(var(--catalog-column-gap) / -2);
+  border-inline-start: 1px solid var(--line);
+}
+
+.catalog-top-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding: 9px var(--sp-3);
+  margin-bottom: var(--sp-3);
+  border-radius: var(--r-sm);
+  background: var(--accent-soft);
+  color: var(--accent-press);
+  font-size: .9375rem;
+  font-weight: var(--w-medium);
+  line-height: 1.25;
+}
+
+.catalog-top-link small {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-2);
+  font-size: .8125rem;
+  font-weight: var(--w-regular);
+}
+
+.catalog-top-link svg { width: 16px; height: 16px; flex: none; }
+.catalog-top-link:is(:hover, :focus-visible, [aria-current='page']) { background: var(--accent); color: white; }
+.catalog-top-link:is(:hover, :focus-visible, [aria-current='page']) small { color: inherit; }
+
+.country-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.country-label__flag {
+  width: 1.15em;
+  height: 1.15em;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .mega__col {
   min-width: 0;
 }
@@ -632,6 +742,15 @@ main {
   gap: 2px 16px;
 }
 
+.mega__list--makes {
+  max-height: clamp(205px, 40vh, 350px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+  padding-inline-end: var(--sp-2);
+}
+
 .mega__list--1 {
   grid-template-columns: minmax(0, 1fr);
 }
@@ -660,6 +779,7 @@ main {
 
 .mega__all {
   display: inline-flex;
+  justify-self: start;
   margin-top: 14px;
   font-size: 0.875rem;
 }
@@ -709,6 +829,10 @@ main {
 
 .drawer__nav > li {
   border-bottom: 1px solid var(--line);
+}
+
+.drawer__catalog-section + .drawer__catalog-section {
+  margin-block-start: var(--sp-2);
 }
 
 .drawer__nav > li > a,
@@ -765,6 +889,15 @@ main {
   font-weight: var(--w-medium);
   grid-column: 1 / -1;
 }
+
+.drawer__sub small {
+  margin-left: var(--sp-2);
+  font: var(--fs-mono) var(--font-mono);
+  color: var(--text-3);
+}
+
+.drawer__makes { grid-column: 1 / -1; }
+.drawer__makes > summary { font-size: var(--fs-body); }
 
 .drawer__foot {
   display: grid;
@@ -1031,24 +1164,24 @@ main {
   gap: 8px 24px;
 }
 
-.footer__note {
+.footer__bottom {
   flex-basis: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--sp-3) var(--sp-6);
+}
+
+.footer__note {
   max-width: 110ch;
 }
 
-/* гигантская подпись бренда во всю ширину — типографическая «печать» в конце страницы */
-.footer__wordmark {
-  display: block;
-  margin: 8px calc(var(--gutter) * -0.25) -0.17em;
-  font-size: clamp(3.5rem, 15.6vw, 19rem);
-  font-weight: var(--w-semi);
-  line-height: 0.82;
-  letter-spacing: -0.055em;
-  white-space: nowrap;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.16);
-  user-select: none;
-  pointer-events: none;
+.footer__credit {
+  justify-self: end;
+}
+
+body:has(.cookie:not([hidden])) .footer__legal {
+  padding-block-end: var(--sp-9);
 }
 
 @media (max-width: 1100px) {
@@ -1069,14 +1202,24 @@ main {
   .footer__contacts {
     grid-template-columns: minmax(0, 1fr);
   }
-
-  .footer {
-    padding-bottom: 72px;
-  }
 }
 
 /* телефон: разделы футера — аккордеон (ссылки остаются в разметке), иначе футер занимает три экрана */
 @media (max-width: 720px) {
+  .footer {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .footer__bottom {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .footer__credit {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
   .footer__cols {
     grid-template-columns: minmax(0, 1fr);
     gap: 0;

@@ -1,0 +1,8 @@
+{% load wagtailimages_tags %}
+<section class="section"><figure class="container">
+  {% if value.poster %}{% image value.poster width-960 as cover %}{% endif %}
+  <video controls playsinline preload="none" aria-label="{{ value.title }}"{% if cover %} poster="{{ cover.url }}"{% endif %}>
+    <source src="{{ value.video.url }}">
+  </video>
+  <figcaption>{{ value.title }}</figcaption>
+</figure></section>

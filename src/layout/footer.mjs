@@ -1,4 +1,4 @@
-// Футер: контакты, полная перелинковка по разделам, реквизиты, типографическая подпись.
+// Футер: контакты, полная перелинковка по разделам, реквизиты.
 import { html, esc, u } from '../lib/core.mjs';
 import { icon } from '../lib/icons.mjs';
 import { logo } from './logo.mjs';
@@ -18,6 +18,7 @@ export function socialButtons(site, keys = ['telegram', 'whatsapp', 'max', 'inst
 export function footer(ctx) {
   const { site, nav, build } = ctx;
   const c = site.contacts;
+  const legal = site.legal;
   const year = build.year;
   // На телефоне колонки сворачиваются в аккордеон (js/main.js, [data-footer-toggle]); без JS и на десктопе списки раскрыты.
   let colN = 0;
@@ -45,7 +46,7 @@ export function footer(ctx) {
             <div class="footer__contact">
               <dt class="label">Телефон</dt>
               <dd>
-                ${c.phones.slice(0, 2).map((p) => `<a href="tel:${p.tel}">${esc(p.label)}</a>${p.person ? `<small>${esc(p.person)}</small>` : ''}`).join('<br>')}
+                ${c.phones.slice(0, 2).map((p) => `<a href="tel:${p.tel}">${esc(p.label)}</a>${p.department ? `<small>${esc(p.department)}</small>` : ''}`).join('<br>')}
               </dd>
             </div>
             <div class="footer__contact">
@@ -59,7 +60,7 @@ export function footer(ctx) {
               <dt class="label">Связь</dt>
               <dd>
                 ${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : `<a href="${u('/kontakty/')}">Все контакты</a>`}
-                <small><a href="${u('/kontakty/#kak-dobratsya')}">Как добраться</a> · <a href="${u('/kontakty/#rekvizity')}">Реквизиты</a></small>
+                <small><a href="${u('/kontakty/#kak-dobratsya')}">Как добраться</a></small>
               </dd>
             </div>
           </dl>
@@ -69,7 +70,7 @@ export function footer(ctx) {
           ${nav.countries.map((cn) =>
             col(
               cn.navTitle,
-              cn.brands.slice(0, 8).map((b) => ({ name: `${b.name} ${cn.from}`, url: b.url })),
+              cn.brands.filter((b) => b.count).slice(0, 8).map((b) => ({ name: `${b.name} ${cn.from}`, url: b.url })),
               { name: `Все авто ${cn.from}`, url: cn.url }
             )
           )}
@@ -83,14 +84,21 @@ export function footer(ctx) {
         </nav>
 
         <div class="footer__legal">
-          <div>© ${year} ${esc(site.legal?.name || site.name)}${site.legal?.inn ? ` · ИНН ${esc(site.legal.inn)}` : ''}${site.legal?.ogrn ? ` · ${esc(site.legal.ogrnLabel || 'ОГРН')} ${esc(site.legal.ogrn)}` : ''}</div>
+          <div class="footer__owner">
+            <div>© ${year} ${esc(legal.name)}, владелец сайта</div>
+            <div>ИНН ${esc(legal.inn)} · КПП ${esc(legal.kpp)} · ОГРН ${esc(legal.ogrn)}</div>
+            <div>Юридический адрес · ${esc(legal.address)}</div>
+          </div>
           <div class="footer__legal-links">
+            <a href="${u('/kontakty/#rekvizity')}">Реквизиты компании</a>
             <a href="${u('/politika-konfidencialnosti/')}">Политика конфиденциальности</a>
             <a href="${u('/karta-sajta/')}">Карта сайта</a>
           </div>
-          <p class="footer__note">Информация на сайте носит справочный характер и не является публичной офертой (ст. 437 ГК РФ). Итоговая стоимость автомобиля зависит от курса валют, результатов торгов и действующих таможенных ставок и уточняется у менеджера перед оформлением сделки.${site.socials.instagram ? ' Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещенной в РФ.' : ''}</p>
+          <div class="footer__bottom">
+            <p class="footer__note">Информация на сайте носит справочный характер и не является публичной офертой (ст. 437 ГК РФ). Итоговая стоимость автомобиля зависит от курса валют, результатов торгов и действующих таможенных ставок и уточняется у менеджера перед оформлением сделки.${site.socials.instagram ? ' Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещенной в РФ.' : ''}</p>
+            <a id="site-credit" class="footer__credit" href="https://t.me/moon_dsgn_sales" target="_blank" rel="noopener">Создание и продвижение сайта</a>
+          </div>
         </div>
       </div>
-      <div class="container"><span class="footer__wordmark" aria-hidden="true">Макс Групп</span></div>
     </footer>`;
 }

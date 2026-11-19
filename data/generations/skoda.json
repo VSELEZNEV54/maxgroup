@@ -1,0 +1,148 @@
+{
+  "octavia": {
+    "source": "https://www.drom.ru/catalog/skoda/octavia/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "A8"
+        ],
+        "photo": "generations/skoda/octavia-1187636.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "A8"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/skoda/octavia-925541.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2020,
+        "codes": [
+          "A7"
+        ],
+        "photo": "generations/skoda/octavia-1091220.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2012,
+        "to": 2017,
+        "codes": [
+          "A7"
+        ],
+        "photo": "generations/skoda/octavia-138690.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2008,
+        "to": 2013,
+        "codes": [
+          "A5"
+        ],
+        "photo": "generations/skoda/octavia-27985.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2004,
+        "to": 2009,
+        "codes": [
+          "A5"
+        ],
+        "photo": "generations/skoda/octavia-634336.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2000,
+        "to": 2010,
+        "codes": [
+          "A4"
+        ],
+        "photo": "generations/skoda/octavia-798515.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1996,
+        "to": 2000,
+        "codes": [
+          "A4"
+        ],
+        "photo": "generations/skoda/octavia-550004.webp"
+      },
+      {
+        "id": "g0-r0",
+        "label": "Первый выпуск",
+        "from": 1959,
+        "to": 1971,
+        "codes": [
+          "703C",
+          "704",
+          "993C",
+          "702",
+          "703",
+          "985",
+          "993",
+          "995",
+          "999"
+        ],
+        "photo": "generations/skoda/octavia-1067452.webp"
+      }
+    ]
+  },
+  "karoq": {
+    "source": "https://www.drom.ru/catalog/skoda/karoq/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "NU7"
+        ],
+        "photo": "generations/skoda/karoq-1044223.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2017,
+        "to": null,
+        "codes": [
+          "NU7"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2017,
+            "fromMonth": 5,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/skoda/karoq-910886.webp"
+      }
+    ]
+  }
+}

@@ -1,0 +1,608 @@
+{
+  "tiguan-l": {
+    "source": "https://www.drom.ru/catalog/volkswagen/tiguan_l/",
+    "generations": [
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2024,
+            "fromMonth": 4,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/tiguan-l-1205387.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2020,
+        "to": 2024,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 10,
+            "to": 2024,
+            "toMonth": 6,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/tiguan-l-1183105.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2016,
+        "to": 2020,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 1,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/tiguan-l-1307946.webp"
+      }
+    ]
+  },
+  "lavida": {
+    "source": "https://www.drom.ru/catalog/volkswagen/lavida/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2025,
+        "to": null,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 11,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/lavida-1312770.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2022,
+        "to": 2025,
+        "codes": [
+          "0C"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 4,
+            "to": 2025,
+            "toMonth": 11,
+            "codes": [
+              "0C"
+            ]
+          }
+        ],
+        "photo": "generations/volkswagen/lavida-1158772.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2018,
+        "to": 2023,
+        "codes": [
+          "0C"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 4,
+            "to": 2023,
+            "toMonth": 3,
+            "codes": [
+              "0C"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 8,
+            "to": 2023,
+            "toMonth": 3,
+            "codes": [
+              "0C"
+            ]
+          }
+        ],
+        "photo": "generations/volkswagen/lavida-1158978.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2018,
+        "codes": [],
+        "photo": "generations/volkswagen/lavida-2015.webp",
+        "source": "https://www.autohome.com.cn/news/201507/876803.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2015,
+            "to": 2018,
+            "codes": [],
+            "fromMonth": 7,
+            "toMonth": 5
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2012,
+        "to": 2015,
+        "codes": [],
+        "photo": "generations/volkswagen/lavida-2012.webp",
+        "source": "https://www.autohome.com.cn/info/201208/382398.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2012,
+            "to": 2015,
+            "codes": [],
+            "fromMonth": 8,
+            "toMonth": 7
+          }
+        ],
+        "photoSource": "https://price.pcauto.com.cn/image/sg3225-m21823-wg-0-0.html"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2008,
+        "to": 2012,
+        "codes": [],
+        "photo": "generations/volkswagen/lavida-2008.webp",
+        "source": "https://www.autohome.com.cn/news/200806/40962.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2008,
+            "to": 2012,
+            "codes": [],
+            "fromMonth": 6,
+            "toMonth": 8
+          }
+        ],
+        "photoSource": "https://www.autohome.com.cn/news/201203/303722.html"
+      }
+    ]
+  },
+  "sagitar": {
+    "source": "https://www.drom.ru/catalog/volkswagen/sagitar/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение, Sagitar L",
+        "from": 2025,
+        "to": null,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 9,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/sagitar-l-1297230.webp",
+        "source": "https://www.drom.ru/catalog/volkswagen/sagitar_l/g_2025_23442/"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "Mk3"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 6,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/sagitar-1206925.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2019,
+        "to": 2022,
+        "codes": [
+          "Mk3"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 1,
+            "to": 2022,
+            "toMonth": 6,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/sagitar-1295857.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2019,
+        "codes": [],
+        "photo": "generations/volkswagen/sagitar-2015.webp",
+        "source": "https://www.autohome.com.cn/news/201503/865064.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2015,
+            "to": 2019,
+            "codes": [],
+            "fromMonth": 3,
+            "toMonth": 1
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2012,
+        "to": 2015,
+        "codes": [],
+        "photo": "generations/volkswagen/sagitar-2012.webp",
+        "source": "https://www.autohome.com.cn/news/201203/303722.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2012,
+            "to": 2015,
+            "codes": [],
+            "fromMonth": 3,
+            "toMonth": 3
+          }
+        ],
+        "photoSource": "https://price.pcauto.com.cn/image/sg1633-m19678-wg-0-0.html"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2006,
+        "to": 2012,
+        "codes": [],
+        "photo": "generations/volkswagen/sagitar-2006.webp",
+        "source": "https://www.autohome.com.cn/news/200604/13359.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2006,
+            "to": 2012,
+            "codes": [],
+            "fromMonth": 4,
+            "toMonth": 3
+          }
+        ],
+        "photoSource": "https://auto.sohu.com/20060116/n241454855.shtml"
+      }
+    ]
+  },
+  "magotan": {
+    "source": "https://www.drom.ru/catalog/volkswagen/magotan/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "B9"
+        ],
+        "photo": "generations/volkswagen/magotan-2024.webp",
+        "source": "https://www.autohome.com.cn/new/news/202407/1298262.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2024,
+            "to": null,
+            "codes": [
+              "B9"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "B8"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 2,
+            "to": null,
+            "codes": [
+              "B8"
+            ]
+          }
+        ],
+        "photo": "generations/volkswagen/magotan-1147127.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2016,
+        "to": 2019,
+        "codes": [
+          "B8"
+        ],
+        "photo": "generations/volkswagen/magotan-2016.webp",
+        "source": "https://www.autohome.com.cn/new/news/202407/1298262.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "to": 2019,
+            "codes": [
+              "B8"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2011,
+        "to": 2016,
+        "codes": [
+          "B7"
+        ],
+        "photo": "generations/volkswagen/magotan-2011.webp",
+        "source": "https://www.autohome.com.cn/new/news/202407/1298262.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2011,
+            "to": 2016,
+            "codes": [
+              "B7"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2007,
+        "to": 2011,
+        "codes": [
+          "B6"
+        ],
+        "photo": "generations/volkswagen/magotan-2007.webp",
+        "source": "https://www.autohome.com.cn/new/news/202407/1298262.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2007,
+            "to": 2011,
+            "codes": [
+              "B6"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "tharu": {
+    "source": "https://www.drom.ru/catalog/volkswagen/tharu/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2023,
+        "to": 2025,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 3,
+            "to": 2025,
+            "toMonth": 4,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/tharu-1205443.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2018,
+        "to": 2023,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 3,
+            "to": 2023,
+            "toMonth": 3,
+            "codes": []
+          }
+        ],
+        "photo": "generations/volkswagen/tharu-895681.webp"
+      }
+    ]
+  },
+  "tiguan": {
+    "source": "https://www.drom.ru/catalog/volkswagen/tiguan/",
+    "generations": [
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "Mk 3"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 7,
+            "to": null,
+            "codes": [
+              "CT15",
+              "CT20"
+            ]
+          }
+        ],
+        "photo": "generations/volkswagen/tiguan-1237916.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2020,
+        "to": 2025,
+        "codes": [
+          "Mk 2"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 7,
+            "to": 2025,
+            "toMonth": 3,
+            "codes": [
+              "AD1"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 5,
+            "to": 2024,
+            "toMonth": 10,
+            "codes": [
+              "5NDNFF",
+              "5NDNNF",
+              "5NDPC"
+            ]
+          }
+        ],
+        "photo": "generations/volkswagen/tiguan-1287242.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2016,
+        "to": 2021,
+        "codes": [
+          "Mk 2"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 11,
+            "to": 2021,
+            "toMonth": 4,
+            "codes": [
+              "5NCZD",
+              "5NCZE",
+              "5NDFGF"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 1,
+            "to": 2020,
+            "toMonth": 11,
+            "codes": [
+              "AD1"
+            ]
+          }
+        ],
+        "photo": "generations/volkswagen/tiguan-1056491.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2011,
+        "to": 2019,
+        "codes": [
+          "NF"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 11,
+            "to": 2016,
+            "toMonth": 12,
+            "codes": [
+              "5NCCZ",
+              "5NCTH"
+            ]
+          }
+        ],
+        "photo": "generations/volkswagen/tiguan-381440.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2006,
+        "to": 2011,
+        "codes": [
+          "NF"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2008,
+            "fromMonth": 9,
+            "to": 2011,
+            "toMonth": 10,
+            "codes": [
+              "5NCAW",
+              "5NCCZ"
+            ]
+          }
+        ],
+        "photo": "generations/volkswagen/tiguan-1130036.webp"
+      }
+    ]
+  }
+}

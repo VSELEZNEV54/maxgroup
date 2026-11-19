@@ -1,0 +1,234 @@
+{
+  "tanto": {
+    "source": "https://www.drom.ru/catalog/daihatsu/tanto/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "LA650S",
+          "LA660S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 8,
+            "to": null,
+            "codes": [
+              "LA650S",
+              "LA660S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/tanto-1088135.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2019,
+        "to": 2022,
+        "codes": [
+          "LA650S",
+          "LA660S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 6,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "LA650S",
+              "LA660S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/tanto-1088142.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "LA600S",
+          "LA610S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 12,
+            "to": 2019,
+            "toMonth": 6,
+            "codes": [
+              "LA600S",
+              "LA610S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/tanto-644614.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2015,
+        "codes": [
+          "LA600S",
+          "LA610S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 10,
+            "to": 2015,
+            "toMonth": 11,
+            "codes": [
+              "LA600S",
+              "LA610S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/tanto-707502.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2007,
+        "to": 2013,
+        "codes": [
+          "L375S",
+          "L385S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 12,
+            "to": 2013,
+            "toMonth": 9,
+            "codes": [
+              "L375S",
+              "L385S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/tanto-21848.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2003,
+        "to": 2007,
+        "codes": [
+          "L350S",
+          "L360S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 11,
+            "to": 2007,
+            "toMonth": 11,
+            "codes": [
+              "L350S",
+              "L360S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/tanto-707501.webp"
+      }
+    ]
+  },
+  "rocky": {
+    "source": "https://www.drom.ru/catalog/daihatsu/rocky/",
+    "generations": [
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "A210S",
+          "A202S",
+          "A200S",
+          "A201S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": null,
+            "codes": [
+              "A210S",
+              "A202S",
+              "A200S",
+              "A201S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/rocky-925054.webp"
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 1993,
+        "to": 2002,
+        "codes": [],
+        "photo": "generations/daihatsu/rocky-1038767.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1987,
+        "to": 1997,
+        "codes": [
+          "F300S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 8,
+            "to": 1997,
+            "toMonth": 3,
+            "codes": [
+              "F300S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/rocky-630359.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1984,
+        "to": 1993,
+        "codes": [
+          "F300S"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1990,
+            "fromMonth": 6,
+            "to": 1993,
+            "toMonth": 7,
+            "codes": [
+              "F300S"
+            ]
+          }
+        ],
+        "photo": "generations/daihatsu/rocky-630363.webp"
+      }
+    ]
+  }
+}

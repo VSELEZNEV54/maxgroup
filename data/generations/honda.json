@@ -1,0 +1,2628 @@
+{
+  "fit": {
+    "source": "https://www.drom.ru/catalog/honda/fit/",
+    "generations": [
+      {
+        "id": "g4-r2",
+        "label": "4 поколение, 2-й рестайлинг",
+        "from": 2026,
+        "to": null,
+        "codes": [
+          "GS"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2026,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "GS4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-1321526.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "GR",
+          "GS"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 8,
+            "to": null,
+            "codes": [
+              "GS4",
+              "GS5",
+              "GS6",
+              "GS7",
+              "GR3",
+              "GR4",
+              "GR6",
+              "GR8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-1096378.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "GR",
+          "GS"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 10,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "GR3",
+              "GR4",
+              "GR6",
+              "GR8",
+              "GR1",
+              "GR2",
+              "GR5",
+              "GR7"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "GS4",
+              "GS5"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-1104226.webp"
+      },
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 2017,
+        "to": 2020,
+        "codes": [
+          "GP",
+          "GK"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 6,
+            "to": 2020,
+            "toMonth": 1,
+            "codes": [
+              "GP5",
+              "GP6",
+              "GK3",
+              "GK4",
+              "GK5",
+              "GK6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-821682.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2020,
+        "codes": [
+          "GK",
+          "GP"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 9,
+            "to": 2017,
+            "toMonth": 5,
+            "codes": [
+              "GP5",
+              "GP6",
+              "GK3",
+              "GK4",
+              "GK5",
+              "GK6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-693367.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2017,
+        "codes": [
+          "GK",
+          "GP"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 8,
+            "to": 2015,
+            "toMonth": 8,
+            "codes": [
+              "GP5",
+              "GP6",
+              "GK3",
+              "GK4",
+              "GK5",
+              "GK6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-466312.webp"
+      },
+      {
+        "id": "g2-r2",
+        "label": "2 поколение, 2-й рестайлинг",
+        "from": 2012,
+        "to": 2013,
+        "codes": [
+          "GE",
+          "GP"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2012,
+            "fromMonth": 5,
+            "to": 2013,
+            "toMonth": 8,
+            "codes": [
+              "GP1",
+              "GP4",
+              "GE6",
+              "GE7",
+              "GE8",
+              "GE9"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-819698.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2010,
+        "to": 2015,
+        "codes": [
+          "GE",
+          "GP"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 10,
+            "to": 2012,
+            "toMonth": 4,
+            "codes": [
+              "GP1",
+              "GE6",
+              "GE7",
+              "GE8",
+              "GE9"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-479676.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2007,
+        "to": 2012,
+        "codes": [
+          "GE"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 10,
+            "to": 2010,
+            "toMonth": 9,
+            "codes": [
+              "GE6",
+              "GE7",
+              "GE8",
+              "GE9"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-795549.webp"
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2005,
+        "to": 2007,
+        "codes": [
+          "GD"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 12,
+            "to": 2007,
+            "toMonth": 9,
+            "codes": [
+              "GD1",
+              "GD2",
+              "GD3",
+              "GD4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-465201.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2004,
+        "to": 2005,
+        "codes": [
+          "GD"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2004,
+            "fromMonth": 6,
+            "to": 2005,
+            "toMonth": 11,
+            "codes": [
+              "GD3",
+              "GD4",
+              "GD1",
+              "GD2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-465197.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2001,
+        "to": 2008,
+        "codes": [
+          "GD"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2001,
+            "fromMonth": 6,
+            "to": 2004,
+            "toMonth": 5,
+            "codes": [
+              "GD3",
+              "GD4",
+              "GD1",
+              "GD2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-795531.webp"
+      }
+    ]
+  },
+  "vezel": {
+    "source": "https://www.drom.ru/catalog/honda/vezel/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "RV4",
+          "RV5",
+          "RV6"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 3,
+            "to": null,
+            "codes": [
+              "RV4",
+              "RV5",
+              "RV6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/vezel-1191380.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "RV5",
+          "RV6",
+          "RV3",
+          "RV4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 2,
+            "to": 2024,
+            "toMonth": 3,
+            "codes": [
+              "RV5",
+              "RV6",
+              "RV3",
+              "RV4"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 2,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/vezel-997135.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2022,
+        "codes": [
+          "RU3",
+          "RU4",
+          "RU1",
+          "RU2"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 2,
+            "to": 2021,
+            "toMonth": 3,
+            "codes": [
+              "RU3",
+              "RU4",
+              "RU1",
+              "RU2"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 2,
+            "to": 2022,
+            "toMonth": 10,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/vezel-787227.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2013,
+        "to": 2019,
+        "codes": [
+          "RU3",
+          "RU4",
+          "RU1",
+          "RU2"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 12,
+            "to": 2018,
+            "toMonth": 1,
+            "codes": [
+              "RU3",
+              "RU4",
+              "RU1",
+              "RU2"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2013,
+            "fromMonth": 12,
+            "to": 2019,
+            "toMonth": 5,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/vezel-682715.webp"
+      }
+    ]
+  },
+  "freed": {
+    "source": "https://www.drom.ru/catalog/honda/freed/",
+    "generations": [
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "GT1",
+          "GT2",
+          "GT3",
+          "GT4",
+          "GT5",
+          "GT6",
+          "GT7",
+          "GT8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "GT1",
+              "GT2",
+              "GT3",
+              "GT4",
+              "GT5",
+              "GT6",
+              "GT7",
+              "GT8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-1210473.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2024,
+        "codes": [
+          "GB5",
+          "GB6",
+          "GB7",
+          "GB8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 8,
+            "to": 2024,
+            "toMonth": 5,
+            "codes": [
+              "GB5",
+              "GB6",
+              "GB7",
+              "GB8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-914471.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2016,
+        "to": 2019,
+        "codes": [
+          "GB7",
+          "GB8",
+          "GB5",
+          "GB6"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 9,
+            "to": 2019,
+            "toMonth": 9,
+            "codes": [
+              "GB7",
+              "GB8",
+              "GB5",
+              "GB6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-692589.webp"
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2014,
+        "to": 2016,
+        "codes": [
+          "GP3",
+          "GB3",
+          "GB4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 8,
+            "codes": [
+              "GP3",
+              "GB3",
+              "GB4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-586869.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2011,
+        "to": 2014,
+        "codes": [
+          "GP3",
+          "GB3",
+          "GB4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 10,
+            "to": 2014,
+            "toMonth": 3,
+            "codes": [
+              "GP3",
+              "GB3",
+              "GB4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-586850.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2008,
+        "to": 2011,
+        "codes": [
+          "GB3",
+          "GB4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2008,
+            "fromMonth": 5,
+            "to": 2011,
+            "toMonth": 9,
+            "codes": [
+              "GB3",
+              "GB4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-586769.webp"
+      }
+    ]
+  },
+  "stepwgn": {
+    "source": "https://www.drom.ru/catalog/honda/stepwgn/",
+    "generations": [
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "RP6",
+          "RP7",
+          "RP8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "RP6",
+              "RP7",
+              "RP8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-1073320.webp"
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2017,
+        "to": 2021,
+        "codes": [
+          "RP5",
+          "RP1",
+          "RP2",
+          "RP3",
+          "RP4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 9,
+            "to": 2021,
+            "toMonth": 12,
+            "codes": [
+              "RP5",
+              "RP1",
+              "RP2",
+              "RP3",
+              "RP4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-758811.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2015,
+        "to": 2017,
+        "codes": [
+          "RP1",
+          "RP2",
+          "RP3",
+          "RP4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 4,
+            "to": 2017,
+            "toMonth": 8,
+            "codes": [
+              "RP1",
+              "RP2",
+              "RP3",
+              "RP4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-524638.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2012,
+        "to": 2015,
+        "codes": [
+          "RK1",
+          "RK2",
+          "RK3",
+          "RK4",
+          "RK5",
+          "RK6",
+          "RK7"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2012,
+            "fromMonth": 4,
+            "to": 2015,
+            "toMonth": 3,
+            "codes": [
+              "RK1",
+              "RK2",
+              "RK3",
+              "RK4",
+              "RK5",
+              "RK6",
+              "RK7"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-524601.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2009,
+        "to": 2012,
+        "codes": [
+          "RK1",
+          "RK2",
+          "RK3",
+          "RK4",
+          "RK5",
+          "RK6",
+          "RK7"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2009,
+            "fromMonth": 10,
+            "to": 2012,
+            "toMonth": 3,
+            "codes": [
+              "RK1",
+              "RK2",
+              "RK3",
+              "RK4",
+              "RK5",
+              "RK6",
+              "RK7"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-524613.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2007,
+        "to": 2009,
+        "codes": [
+          "RG1",
+          "RG2",
+          "RG3",
+          "RG4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 11,
+            "to": 2009,
+            "toMonth": 9,
+            "codes": [
+              "RG1",
+              "RG2",
+              "RG3",
+              "RG4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-524506.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2005,
+        "to": 2007,
+        "codes": [
+          "RG1",
+          "RG2",
+          "RG3",
+          "RG4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 5,
+            "to": 2007,
+            "toMonth": 10,
+            "codes": [
+              "RG1",
+              "RG2",
+              "RG3",
+              "RG4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-524551.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2003,
+        "to": 2005,
+        "codes": [
+          "RF3",
+          "RF4",
+          "RF5",
+          "RF6",
+          "RF7",
+          "RF8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 6,
+            "to": 2005,
+            "toMonth": 4,
+            "codes": [
+              "RF3",
+              "RF4",
+              "RF5",
+              "RF6",
+              "RF7",
+              "RF8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-524414.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2001,
+        "to": 2003,
+        "codes": [
+          "RF3",
+          "RF4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2001,
+            "fromMonth": 4,
+            "to": 2003,
+            "toMonth": 5,
+            "codes": [
+              "RF3",
+              "RF4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-524418.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1999,
+        "to": 2001,
+        "codes": [
+          "RF1",
+          "RF2"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 5,
+            "to": 2001,
+            "toMonth": 3,
+            "codes": [
+              "RF1",
+              "RF2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-523947.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1996,
+        "to": 1999,
+        "codes": [
+          "RF1",
+          "RF2"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1996,
+            "fromMonth": 5,
+            "to": 1999,
+            "toMonth": 4,
+            "codes": [
+              "RF1",
+              "RF2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/stepwgn-523952.webp"
+      }
+    ]
+  },
+  "n-box": {
+    "source": "https://www.drom.ru/catalog/honda/n-box/",
+    "generations": [
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2026,
+        "to": null,
+        "codes": [
+          "JF5",
+          "JF6"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2026,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "JF5",
+              "JF6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/n-box-1339323.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2023,
+        "to": 2026,
+        "codes": [
+          "JF5",
+          "JF6"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2023,
+            "fromMonth": 8,
+            "to": 2026,
+            "toMonth": 6,
+            "codes": [
+              "JF5",
+              "JF6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/n-box-1152024.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2020,
+        "to": 2023,
+        "codes": [
+          "JF3/4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 11,
+            "to": 2023,
+            "toMonth": 9,
+            "codes": [
+              "JF3",
+              "JF4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/n-box-990153.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2017,
+        "to": 2020,
+        "codes": [
+          "JF3/4"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 5,
+            "to": 2020,
+            "toMonth": 11,
+            "codes": [
+              "JF3",
+              "JF4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/n-box-807697.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2017,
+        "codes": [
+          "JF1/2"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 2,
+            "to": 2017,
+            "toMonth": 8,
+            "codes": [
+              "JF1",
+              "JF2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/n-box-676448.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2011,
+        "to": 2015,
+        "codes": [
+          "JF1/2"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 12,
+            "to": 2015,
+            "toMonth": 1,
+            "codes": [
+              "JF1",
+              "JF2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/n-box-807719.webp"
+      }
+    ]
+  },
+  "cr-v": {
+    "source": "https://www.drom.ru/catalog/honda/cr-v/",
+    "generations": [
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "RS"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 7,
+            "to": null,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 2,
+            "to": null,
+            "codes": [
+              "RS5",
+              "RS6",
+              "ZC8"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2022,
+            "fromMonth": 7,
+            "to": null,
+            "codes": [
+              "RS"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-1084305.webp"
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2023,
+        "codes": [
+          "RM",
+          "RW"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": []
+          },
+          {
+            "market": "korea",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2023,
+            "toMonth": 4,
+            "codes": [
+              "RW"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-916827.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2016,
+        "to": 2023,
+        "codes": [
+          "RM",
+          "RT",
+          "RW"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 10,
+            "to": 2020,
+            "toMonth": 7,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 6,
+            "to": 2022,
+            "toMonth": 8,
+            "codes": [
+              "RT5",
+              "RT6",
+              "RW1",
+              "RW2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-709883.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2014,
+        "to": 2018,
+        "codes": [
+          "RE",
+          "RM"
+        ],
+        "photo": "generations/honda/cr-v-419055.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2011,
+        "to": 2016,
+        "codes": [
+          "RE",
+          "RM"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 12,
+            "to": 2016,
+            "toMonth": 8,
+            "codes": [
+              "RM1",
+              "RM4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-1119464.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2009,
+        "to": 2012,
+        "codes": [
+          "RE",
+          "RE5"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2009,
+            "fromMonth": 9,
+            "to": 2011,
+            "toMonth": 11,
+            "codes": [
+              "RE3",
+              "RE4"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2009,
+            "fromMonth": 9,
+            "to": 2012,
+            "toMonth": 8,
+            "codes": [
+              "RE"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-953466.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2006,
+        "to": 2010,
+        "codes": [
+          "RE"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2006,
+            "fromMonth": 10,
+            "to": 2009,
+            "toMonth": 8,
+            "codes": [
+              "RE3",
+              "RE4"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2007,
+            "fromMonth": 3,
+            "to": 2009,
+            "toMonth": 8,
+            "codes": [
+              "RE"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-953444.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2004,
+        "to": 2006,
+        "codes": [
+          "RD"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2004,
+            "fromMonth": 9,
+            "to": 2006,
+            "toMonth": 9,
+            "codes": [
+              "RD6",
+              "RD7"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-693884.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2001,
+        "to": 2005,
+        "codes": [
+          "RD"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2001,
+            "fromMonth": 9,
+            "to": 2004,
+            "toMonth": 8,
+            "codes": [
+              "RD4",
+              "RD5"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-693883.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1998,
+        "to": 2001,
+        "codes": [
+          "RD"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1998,
+            "fromMonth": 12,
+            "to": 2001,
+            "toMonth": 8,
+            "codes": [
+              "RD1",
+              "RD2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-552495.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1995,
+        "to": 1999,
+        "codes": [
+          "RD"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 10,
+            "to": 1998,
+            "toMonth": 11,
+            "codes": [
+              "RD1"
+            ]
+          }
+        ],
+        "photo": "generations/honda/cr-v-536777.webp"
+      }
+    ]
+  },
+  "fit-e-hev": {
+    "source": "https://www.drom.ru/catalog/honda/fit/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "GR3",
+          "GR6",
+          "GR4",
+          "GR8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2022,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "GR3",
+              "GR6",
+              "GR4",
+              "GR8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-e-hev-1096378.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2020,
+        "to": 2022,
+        "codes": [
+          "GR3",
+          "GR6",
+          "GR4",
+          "GR8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "GR3",
+              "GR6",
+              "GR4",
+              "GR8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/fit-e-hev-923829.webp"
+      }
+    ]
+  },
+  "vezel-e-hev": {
+    "source": "https://www.drom.ru/catalog/honda/vezel/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "RV5",
+          "RV6"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 4,
+            "to": null,
+            "codes": [
+              "RV5",
+              "RV6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/vezel-e-hev-1191380.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2021,
+        "to": 2024,
+        "codes": [
+          "RV5",
+          "RV6"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 4,
+            "to": 2024,
+            "toMonth": 3,
+            "codes": [
+              "RV5",
+              "RV6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/vezel-e-hev-997135.webp"
+      }
+    ]
+  },
+  "freed-hybrid": {
+    "source": "https://www.drom.ru/catalog/honda/freed/",
+    "generations": [
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "GT5",
+          "GT6",
+          "GT7",
+          "GT8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "GT5",
+              "GT6",
+              "GT7",
+              "GT8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-hybrid-1210473.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2024,
+        "codes": [
+          "GB7",
+          "GB8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 10,
+            "to": 2024,
+            "toMonth": 5,
+            "codes": [
+              "GB7",
+              "GB8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-hybrid-914471.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2016,
+        "to": 2019,
+        "codes": [
+          "GB7",
+          "GB8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 9,
+            "to": 2019,
+            "toMonth": 9,
+            "codes": [
+              "GB7",
+              "GB8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-hybrid-692589.webp"
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2014,
+        "to": 2016,
+        "codes": [
+          "GP3"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 8,
+            "codes": [
+              "GP3"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-hybrid-586869.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2011,
+        "to": 2014,
+        "codes": [
+          "GP3"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2011,
+            "fromMonth": 10,
+            "to": 2014,
+            "toMonth": 3,
+            "codes": [
+              "GP3"
+            ]
+          }
+        ],
+        "photo": "generations/honda/freed-hybrid-586850.webp"
+      }
+    ]
+  },
+  "shuttle-hybrid": {
+    "source": "https://www.drom.ru/catalog/honda/shuttle/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2022,
+        "codes": [
+          "GP7",
+          "GP8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 5,
+            "to": 2022,
+            "toMonth": 8,
+            "codes": [
+              "GP7",
+              "GP8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/shuttle-hybrid-894516.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "GP7",
+          "GP8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 5,
+            "to": 2019,
+            "toMonth": 4,
+            "codes": [
+              "GP7",
+              "GP8"
+            ]
+          }
+        ],
+        "photo": "generations/honda/shuttle-hybrid-847104.webp"
+      }
+    ]
+  },
+  "crider": {
+    "source": "https://www.drom.ru/catalog/honda/crider/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2021,
+        "to": 2026,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 4,
+            "to": 2026,
+            "toMonth": 2,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/crider-1119793.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2018,
+        "to": 2021,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 9,
+            "to": 2021,
+            "toMonth": 12,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/crider-1119775.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2018,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2015,
+            "fromMonth": 12,
+            "to": 2018,
+            "toMonth": 12,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/crider-1119767.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2013,
+        "to": 2015,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2013,
+            "fromMonth": 6,
+            "to": 2015,
+            "toMonth": 12,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/crider-1119758.webp"
+      }
+    ]
+  },
+  "xr-v": {
+    "source": "https://www.drom.ru/catalog/honda/xr-v/",
+    "generations": [
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 7,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/xr-v-1166097.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2022,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 6,
+            "to": 2022,
+            "toMonth": 7,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/xr-v-1166081.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2014,
+        "to": 2019,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2014,
+            "fromMonth": 11,
+            "to": 2019,
+            "toMonth": 6,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/xr-v-1166065.webp"
+      }
+    ]
+  },
+  "civic": {
+    "source": "https://www.drom.ru/catalog/honda/civic/",
+    "generations": [
+      {
+        "id": "g11-r1",
+        "label": "11 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "FL",
+          "FE"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 3,
+            "to": null,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 8,
+            "to": null,
+            "codes": [
+              "FL1",
+              "FL4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-1353735.webp"
+      },
+      {
+        "id": "g11-r0",
+        "label": "11 поколение",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "FE",
+          "FL"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 11,
+            "to": null,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 6,
+            "to": 2024,
+            "toMonth": 8,
+            "codes": [
+              "FL4",
+              "FL1"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-1034347.webp"
+      },
+      {
+        "id": "g10-r1",
+        "label": "10 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2022,
+        "codes": [
+          "FC",
+          "FK",
+          "FK7"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 8,
+            "to": 2021,
+            "toMonth": 8,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 8,
+            "to": 2022,
+            "toMonth": 11,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": 2020,
+            "toMonth": 8,
+            "codes": [
+              "FC1"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": 2021,
+            "toMonth": 7,
+            "codes": [
+              "FK7"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-1036515.webp"
+      },
+      {
+        "id": "g10-r0",
+        "label": "10 поколение",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "FK",
+          "FC"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2015,
+            "fromMonth": 9,
+            "to": 2019,
+            "toMonth": 4,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 1,
+            "to": 2019,
+            "toMonth": 12,
+            "codes": [
+              "FC1"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 1,
+            "to": 2019,
+            "toMonth": 12,
+            "codes": [
+              "FK7"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-1036456.webp"
+      },
+      {
+        "id": "g9-r1",
+        "label": "9 поколение, рестайлинг",
+        "from": 2013,
+        "to": 2017,
+        "codes": [
+          "FK",
+          "FB"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2014,
+            "fromMonth": 6,
+            "to": 2016,
+            "toMonth": 3,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/civic-819916.webp"
+      },
+      {
+        "id": "g9-r0",
+        "label": "9 поколение",
+        "from": 2011,
+        "to": 2015,
+        "codes": [
+          "FK",
+          "FB"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2011,
+            "fromMonth": 1,
+            "to": 2014,
+            "toMonth": 5,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/civic-1293503.webp"
+      },
+      {
+        "id": "g8-r1",
+        "label": "8 поколение, рестайлинг",
+        "from": 2008,
+        "to": 2012,
+        "codes": [
+          "FK",
+          "FN",
+          "FD"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2008,
+            "fromMonth": 2,
+            "to": 2011,
+            "toMonth": 8,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2008,
+            "fromMonth": 9,
+            "to": 2010,
+            "toMonth": 12,
+            "codes": [
+              "FD3",
+              "FD1",
+              "FD2"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2009,
+            "fromMonth": 11,
+            "to": 2012,
+            "toMonth": 6,
+            "codes": [
+              "FN2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-789633.webp"
+      },
+      {
+        "id": "g8-r0",
+        "label": "8 поколение",
+        "from": 2005,
+        "to": 2009,
+        "codes": [
+          "FN",
+          "FK",
+          "FD"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2005,
+            "fromMonth": 9,
+            "to": 2009,
+            "toMonth": 5,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 9,
+            "to": 2008,
+            "toMonth": 8,
+            "codes": [
+              "FD3",
+              "FD1",
+              "FD2"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-482277.webp"
+      },
+      {
+        "id": "g7-r1",
+        "label": "7 поколение, рестайлинг",
+        "from": 2003,
+        "to": 2006,
+        "codes": [
+          "EU",
+          "EV",
+          "EN",
+          "ES",
+          "EP"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2003,
+            "fromMonth": 9,
+            "to": 2006,
+            "toMonth": 3,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 9,
+            "to": 2005,
+            "toMonth": 8,
+            "codes": [
+              "ES9",
+              "EN2"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 9,
+            "to": 2005,
+            "toMonth": 8,
+            "codes": [
+              "EU4",
+              "EU3"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-693982.webp"
+      },
+      {
+        "id": "g7-r0",
+        "label": "7 поколение",
+        "from": 2000,
+        "to": 2004,
+        "codes": [
+          "EM",
+          "EU",
+          "EN",
+          "ES",
+          "EP"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2001,
+            "fromMonth": 2,
+            "to": 2004,
+            "toMonth": 2,
+            "codes": [
+              "EN2",
+              "ES9"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 9,
+            "to": 2003,
+            "toMonth": 8,
+            "codes": [
+              "EU1",
+              "EU2",
+              "EU3",
+              "EU4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-549128.webp"
+      },
+      {
+        "id": "g6-r1",
+        "label": "6 поколение, рестайлинг",
+        "from": 1998,
+        "to": 2001,
+        "codes": [
+          "EJ",
+          "EK",
+          "EN1"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 2,
+            "to": 2001,
+            "toMonth": 1,
+            "codes": [
+              "EN1"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1998,
+            "fromMonth": 9,
+            "to": 2000,
+            "toMonth": 8,
+            "codes": [
+              "EK2",
+              "EK3",
+              "EK4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-1073094.webp"
+      },
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 1995,
+        "to": 2000,
+        "codes": [
+          "MB",
+          "MC",
+          "EJ",
+          "MA",
+          "EK"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1998,
+            "fromMonth": 6,
+            "to": 1999,
+            "toMonth": 1,
+            "codes": [
+              "EJ7"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1996,
+            "fromMonth": 1,
+            "to": 1998,
+            "toMonth": 12,
+            "codes": [
+              "EJ7"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 9,
+            "to": 1998,
+            "toMonth": 8,
+            "codes": [
+              "EK2",
+              "EK3",
+              "EK4"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-900287.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 1991,
+        "to": 1995,
+        "codes": [
+          "EJ",
+          "MK5",
+          "EG",
+          "EH"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 2,
+            "to": 1995,
+            "toMonth": 12,
+            "codes": [
+              "EJ1"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1991,
+            "fromMonth": 9,
+            "to": 1995,
+            "toMonth": 8,
+            "codes": [
+              "EG3",
+              "EG4",
+              "EG6"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-552901.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 1989,
+        "to": 1991,
+        "codes": [
+          "ED",
+          "EE",
+          "EF",
+          "EC"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1989,
+            "fromMonth": 9,
+            "to": 1991,
+            "toMonth": 8,
+            "codes": [
+              "EF1",
+              "EF2",
+              "EF3",
+              "EF5"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1989,
+            "fromMonth": 9,
+            "to": 1991,
+            "toMonth": 8,
+            "codes": [
+              "EF1",
+              "EF2",
+              "EF3",
+              "EF9"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-991386.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 1987,
+        "to": 1989,
+        "codes": [
+          "ED",
+          "EF",
+          "EC"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1987,
+            "fromMonth": 9,
+            "to": 1989,
+            "toMonth": 8,
+            "codes": [
+              "EF2",
+              "EF3",
+              "EF4",
+              "EF5"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1987,
+            "fromMonth": 9,
+            "to": 1989,
+            "toMonth": 8,
+            "codes": [
+              "EF1",
+              "EF2",
+              "EF3"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-480234.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 1985,
+        "to": 1987,
+        "codes": [
+          "AJ",
+          "AK",
+          "AU",
+          "AG",
+          "AH",
+          "AT"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1985,
+            "fromMonth": 9,
+            "to": 1987,
+            "toMonth": 8,
+            "codes": [
+              "AU"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1985,
+            "fromMonth": 9,
+            "to": 1987,
+            "toMonth": 8,
+            "codes": [
+              "AG",
+              "AH",
+              "AT"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-1198658.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 1983,
+        "to": 1987,
+        "codes": [
+          "AJ",
+          "AK",
+          "AU",
+          "AF",
+          "AS",
+          "AG",
+          "AH",
+          "AL",
+          "AT"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1983,
+            "fromMonth": 10,
+            "to": 1985,
+            "toMonth": 8,
+            "codes": [
+              "AJ",
+              "AK",
+              "AU"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1983,
+            "fromMonth": 9,
+            "to": 1985,
+            "toMonth": 8,
+            "codes": [
+              "AG",
+              "AH",
+              "AT"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-991348.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 1980,
+        "to": 1983,
+        "codes": [
+          "SS",
+          "WC",
+          "SL"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1981,
+            "fromMonth": 10,
+            "to": 1983,
+            "toMonth": 9,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 1981,
+            "fromMonth": 10,
+            "to": 1983,
+            "toMonth": 8,
+            "codes": []
+          }
+        ],
+        "photo": "generations/honda/civic-1198683.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1979,
+        "to": 1981,
+        "codes": [
+          "ST",
+          "SS",
+          "VC",
+          "WD",
+          "WC",
+          "SL",
+          "SR"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1980,
+            "fromMonth": 9,
+            "to": 1981,
+            "toMonth": 9,
+            "codes": [
+              "ST"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 9,
+            "to": 1981,
+            "toMonth": 9,
+            "codes": [
+              "SS",
+              "ST"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 10,
+            "to": 1981,
+            "toMonth": 9,
+            "codes": [
+              "WD"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1979,
+            "fromMonth": 7,
+            "to": 1981,
+            "toMonth": 9,
+            "codes": [
+              "SL",
+              "SR"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-1198691.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1972,
+        "to": 1979,
+        "codes": [
+          "SB",
+          "SF"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1973,
+            "fromMonth": 12,
+            "to": 1979,
+            "toMonth": 6,
+            "codes": [
+              "SE"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1977,
+            "fromMonth": 9,
+            "to": 1979,
+            "toMonth": 6,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 1974,
+            "fromMonth": 11,
+            "to": 1979,
+            "toMonth": 6,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 1972,
+            "fromMonth": 7,
+            "to": 1978,
+            "toMonth": 6,
+            "codes": [
+              "SB1"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1972,
+            "fromMonth": 9,
+            "to": 1979,
+            "toMonth": 6,
+            "codes": [
+              "SB1"
+            ]
+          }
+        ],
+        "photo": "generations/honda/civic-1072879.webp"
+      }
+    ]
+  }
+}

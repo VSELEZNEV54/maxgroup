@@ -1,0 +1,120 @@
+{
+  "song-plus": {
+    "source": "https://www.drom.ru/catalog/byd/song_plus/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2023,
+        "to": 2025,
+        "codes": [],
+        "photo": "generations/byd/song-plus-g1-r1-1184046.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 6,
+            "to": 2025,
+            "toMonth": 12,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": 2023,
+        "codes": [],
+        "photo": "generations/byd/song-plus-g1-r0-1101976.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2023,
+            "toMonth": 6,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "han": {
+    "source": "https://www.drom.ru/catalog/byd/han/",
+    "generations": [
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2026,
+        "to": null,
+        "codes": [],
+        "photo": "generations/byd/han-g2-r0-1361846.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2026,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "photo": "generations/byd/han-g1-r2-1283125.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2024,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [],
+        "photo": "generations/byd/han-g1-r1-1283065.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 4,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": 2022,
+        "codes": [],
+        "photo": "generations/byd/han-g1-r0-1056139.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 1,
+            "to": 2022,
+            "toMonth": 3,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  }
+}

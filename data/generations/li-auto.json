@@ -1,0 +1,95 @@
+{
+  "l6": {
+    "source": "https://www.drom.ru/catalog/li/l6/",
+    "generations": [
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "photo": "generations/li-auto/l6-g1-r0-1262757.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2025,
+            "fromMonth": 5,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2024,
+            "fromMonth": 3,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "l7": {
+    "source": "https://www.drom.ru/catalog/li/l7/",
+    "generations": [
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [],
+        "photo": "generations/li-auto/l7-g1-r0-1262712.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2025,
+            "fromMonth": 5,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "l9": {
+    "source": "https://www.drom.ru/catalog/li/l9/",
+    "generations": [
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [],
+        "photo": "generations/li-auto/l9-g1-r0-1336821.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2025,
+            "fromMonth": 5,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 6,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  }
+}

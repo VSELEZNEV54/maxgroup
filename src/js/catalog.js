@@ -1,245 +1,314 @@
-/* Каталог: фильтры, сортировка и «показать еще» поверх карточек, уже отрисованных в HTML */
-(function () {
+// Одна форма для статических карточек и обновляемых предложений модели.
+(() => {
   'use strict';
 
-  var grid = document.querySelector('[data-cars]');
-  if (!grid) return;
-
-  var cards = Array.prototype.slice.call(grid.querySelectorAll('.car'));
-  var extras = Array.prototype.slice.call(grid.querySelectorAll('[data-grid-extra]'));
-  var bar = document.querySelector('[data-filters]');
-  var row = bar ? bar.querySelector('.filters__row') : null;
-  var selects = bar ? Array.prototype.slice.call(bar.querySelectorAll('[data-filter]')) : [];
-  var sortSel = bar ? bar.querySelector('[data-sort]') : null;
-  var resetBtn = bar ? bar.querySelector('[data-filters-reset]') : null;
-  var countEl = document.querySelector('[data-results-count]');
-  var moreBtn = document.querySelector('[data-cars-more]');
-  var emptyEl = document.querySelector('[data-cars-empty]');
-  var pageSize = parseInt(grid.dataset.pageSize || '24', 10);
-  var shown = pageSize;
-  var total = cards.length;
-
-  var NUMERIC = {
-    'price-max': function (c, v) { return +c.dataset.price <= v; },
-    'price-min': function (c, v) { return +c.dataset.price >= v; },
-    'year-min': function (c, v) { return +c.dataset.year >= v; },
-    'year-max': function (c, v) { return +c.dataset.year <= v; },
-    'mileage-max': function (c, v) { return c.dataset.mileage !== undefined && +c.dataset.mileage <= v; },
-    // 160 — порог льготного утильсбора: гибриды и авто со спорной мощностью в него не попадают (data-low ставит шаблон)
-    'hp-max': function (c, v) { return v === 160 ? c.dataset.low === '1' : c.dataset.hp !== undefined && +c.dataset.hp <= v; },
+  const carCount = new Intl.PluralRules('ru');
+  const carWords = { one: 'автомобиль', few: 'автомобиля', many: 'автомобилей', other: 'автомобилей' };
+  const count = (n) => n + ' ' + carWords[carCount.select(n)];
+  const digits = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 });
+  const sorts = {
+    popular: ['popular', -1], 'price-asc': ['price', 1], 'price-desc': ['price', -1],
+    'grade-desc': ['grade', -1], 'grade-asc': ['grade', 1], 'year-desc': ['year', -1], 'mileage-asc': ['mileage', 1],
   };
+  const dependentFilters = { country: ['brand', 'model', 'generation'], brand: ['model', 'generation'], model: ['generation'] };
 
-  function plural(n, f) {
-    var a = n % 10, b = n % 100;
-    if (a === 1 && b !== 11) return f[0];
-    if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return f[1];
-    return f[2];
-  }
-
-  /* Проходит ли карточка фильтры. oKey/oVal — «что будет, если в фильтре oKey выбрать oVal»: так считаются доступные варианты. */
-  function matches(card, oKey, oVal) {
-    for (var i = 0; i < selects.length; i++) {
-      var s = selects[i];
-      var key = s.dataset.filter;
-      var v = key === oKey ? oVal : s.value;
-      if (!v) continue;
-      if (NUMERIC[key]) { if (!NUMERIC[key](card, +v)) return false; }
-      else if ((card.dataset[key] || '') !== v) return false;
+  function customOption(field, value) {
+    let option = Array.from(field.options).find((o) => o.hasAttribute('data-custom') && o.value === value);
+    if (!option) {
+      option = new Option(value, value);
+      option.dataset.custom = '';
+      option.dataset.count = '0';
+      option.label = value + ' (0)';
+      field.add(option);
     }
-    return true;
+    return option;
   }
 
-  /* Фильтры зависят друг от друга: вариант, который с остальными выбранными фильтрами дает пустой список, скрывается,
-     а число после « · » показывает, сколько автомобилей останется. */
-  function refreshOptions() {
-    selects.forEach(function (s) {
-      var key = s.dataset.filter;
-      Array.prototype.forEach.call(s.options, function (o) {
-        if (!o.value) return;
-        var n = 0;
-        for (var i = 0; i < cards.length; i++) if (matches(cards[i], key, o.value)) n++;
-        var off = n === 0 && !o.selected;
-        o.disabled = off;
-        o.hidden = off;
-        if (o.dataset.label === undefined) {
-          var m = o.textContent.match(/^(.*) · \d+$/);
-          o.dataset.label = m ? m[1] : '';
+  function listing(root) {
+    const server = root.hasAttribute('data-server-catalog');
+    const form = root.querySelector('[data-filters]');
+    const fields = Array.from(form.querySelectorAll('[data-filter]'));
+    const controls = Object.fromEntries(fields.map((f) => [f.dataset.filter, f]));
+    const sort = root.querySelector('[data-sort]');
+    const generations = JSON.parse(form.querySelector('[data-generation-options]').textContent);
+    const facets = form.hasAttribute('data-facets') ? JSON.parse(form.dataset.facets) : null;
+    const reset = form.querySelector('[data-filters-reset]');
+    const show = form.querySelector('[data-filter-show]');
+    const more = root.querySelector('[data-cars-more]');
+    const quiz = document.getElementById(root.dataset.catalogQuiz || '');
+    const extra = form.querySelector('details');
+    const toggle = form.querySelector('[data-filter-toggle]');
+    const badge = form.querySelector('[data-filter-badge]');
+    const panel = form.querySelector('.filters__panel');
+    const phone = matchMedia('(max-width: 600px)');
+    const base = (field) => field.dataset.default || '';
+    const value = (field) => field.tagName === 'INPUT' ? field.value.replace(/\s/g, '') : field.value;
+    let grid, cards, limit, shown, matched, previousSort;
+
+    function inventory() {
+      grid = root.querySelector('[data-cars]');
+      cards = grid ? Array.from(grid.querySelectorAll('[data-car], [data-offer-id]')) : [];
+      limit = Number(grid?.dataset.pageSize) || Infinity;
+      shown = limit;
+      previousSort = null;
+    }
+
+    function dependentChoices(selectedGeneration = controls.generation.value) {
+      const country = controls.country?.value;
+      const brand = controls.brand.value;
+      const model = controls.model.value;
+      const rows = facets || cards.map((c) => c.dataset);
+      const inCountry = rows.filter((c) => !country || c.country === country);
+      const inBrand = inCountry.filter((c) => !brand || c.brand === brand);
+      for (const [field, list] of [[controls.brand, inCountry], [controls.model, inBrand]]) {
+        const key = field.dataset.filter;
+        const totals = new Map();
+        for (const row of list) totals.set(row[key], (totals.get(row[key]) || 0) + Number(row.count ?? 1));
+        let unavailableSelection;
+        for (const option of field.options) {
+          if (!option.value) continue;
+          if (option.hasAttribute('data-custom')) {
+            option.dataset.count = '0';
+            option.label = option.textContent + ' (0)';
+            option.hidden = option.disabled = !option.selected;
+            continue;
+          }
+          const markets = option.dataset.markets?.split(' ');
+          const profile = markets && (!country || markets.includes(country))
+            && (key !== 'model' || !brand || option.dataset.make === brand);
+          let n = totals.get(option.value) || 0;
+          if (option.dataset.profile) {
+            n = Number(option.dataset.count);
+            if (!server && option.dataset.profile === root.dataset.modelProfile) n = cards.length;
+            else if (option.dataset.until && Number(option.dataset.until) <= Date.now()) n = 0;
+          }
+          option.dataset.count = n;
+          option.label = option.textContent + ' (' + digits.format(n) + ')';
+          // На странице марки или модели часть пунктов ведет в соседние разделы.
+          const unavailable = !base(field) && !totals.has(option.value) && !profile;
+          if (unavailable && option.selected) unavailableSelection = option.value;
+          option.hidden = option.disabled = unavailable;
         }
-        if (o.dataset.label) o.textContent = o.dataset.label + ' · ' + n;
+        // Ссылка с собственным названием может совпасть с моделью из другого рынка.
+        if (unavailableSelection) {
+          const own = customOption(field, unavailableSelection);
+          own.disabled = own.hidden = false;
+          own.selected = true;
+        }
+      }
+      const field = controls.generation;
+      const modelCars = inBrand.filter((c) => c.model === model);
+      const modelBrands = [...new Set(modelCars.map((c) => c.brand))];
+      const make = brand || (modelBrands.length === 1 ? modelBrands[0] : '');
+      const history = generations[make + '/' + model] || [];
+      const hint = !model ? 'Сначала выберите модель' : !make ? 'Сначала выберите марку' : 'Нет данных о поколении';
+      field.replaceChildren(new Option(history.length ? 'Все поколения' : hint, ''));
+      for (const row of history) {
+        const years = row.from + ' – ' + (row.to || 'н. в.');
+        const option = new Option(years + ' · ' + row.label, row.id);
+        Object.assign(option.dataset, { years, edition: row.label, codes: (row.codes || []).join(', '), photo: form.dataset.images + '/' + row.photo });
+        field.add(option);
+      }
+      // Старые закладки содержат код кузова конкретного автомобиля.
+      const legacy = selectedGeneration && cards.find((c) => c.dataset.brand === make && c.dataset.model === model && c.dataset.frame === selectedGeneration)?.dataset.generation;
+      field.value = history.some((g) => g.id === selectedGeneration) ? selectedGeneration : legacy || '';
+      field.disabled = !history.length;
+      root.dispatchEvent(new Event('catalog:choices'));
+    }
+
+    function matches(card, active) {
+      const data = card.dataset;
+      return active.every(([key, val]) => {
+        if (key === 'hp-max' && val === '160') return data.low === '1';
+        if (key === 'body') return val.split('|').includes(data.body);
+        if (key.endsWith('-min') || key.endsWith('-max')) {
+          const raw = data[key.slice(0, -4)];
+          if (raw == null || raw === '') return false;
+          return key.endsWith('-min') ? Number(raw) >= Number(val) : Number(raw) <= Number(val);
+        }
+        return data[key] === val;
       });
+    }
+
+    function paramsFor(url) {
+      const params = new URLSearchParams(location.search);
+      for (const field of fields) {
+        const v = value(field);
+        const key = field.dataset.filter;
+        if (v && v !== base(field)) params.set(key, v);
+        else params.delete(key);
+      }
+      if (sort.value !== base(sort)) params.set('sort', sort.value);
+      else params.delete('sort');
+      url.search = params.toString();
+      return url;
+    }
+
+    function render(sync = true) {
+      const active = fields.filter((f) => value(f) && value(f) !== base(f)).map((f) => [f.dataset.filter, value(f)]);
+      for (const range of form.querySelectorAll('[data-range]')) {
+        const lo = controls[range.dataset.range + '-min'], hi = controls[range.dataset.range + '-max'];
+        const reversed = Boolean(value(lo) && value(hi) && Number(value(lo)) > Number(value(hi)));
+        range.classList.toggle('is-invalid', reversed);
+        for (const f of [lo, hi]) {
+          f.setAttribute('aria-invalid', String(reversed));
+          if (reversed) f.setAttribute('aria-describedby', 'filter-' + range.dataset.range + '-error');
+          else f.removeAttribute('aria-describedby');
+        }
+      }
+      reset.hidden = !active.length;
+      badge.hidden = !active.length;
+      badge.textContent = active.length;
+      if (server) return; // Счетчик и пагинация Django относятся ко всей выдаче.
+      let ordered = cards;
+      if (sort.value) {
+        const [key, dir] = sorts[sort.value];
+        ordered = cards.slice().sort((a, b) => {
+          const x = a.dataset[key], y = b.dataset[key];
+          if (!x || !y) return Number(!x) - Number(!y);
+          return (Number(x) - Number(y)) * dir;
+        });
+      }
+      matched = 0;
+      for (const card of ordered) {
+        const ok = matches(card, active);
+        if (ok) matched++;
+        card.hidden = !ok || matched > shown;
+        if (!card.hidden) card.classList.add('is-in');
+        if (sort.value !== previousSort) grid.append(card);
+      }
+      previousSort = sort.value;
+      const n = Math.min(matched, shown);
+      if (quiz) {
+        quiz.hidden = matched > shown;
+        grid.classList.toggle('cars-grid--duo', n > 1);
+      }
+      const countEl = root.querySelector('[data-results-count]');
+      if (countEl) countEl.textContent = count(matched) + (active.length ? ' из ' + cards.length : '');
+      show.textContent = 'Показать ' + count(matched);
+      show.disabled = !grid;
+      if (more) {
+        more.parentElement.hidden = matched <= shown;
+        more.querySelector('span').textContent = 'Показать еще ' + Math.min(matched - n, limit);
+      }
+      const empty = root.querySelector('[data-cars-empty]');
+      if (empty) empty.hidden = matched > 0;
+      root.querySelector('[data-results-head]').hidden = !cards.length;
+      if (sync) {
+        const url = paramsFor(new URL(location.href));
+        if (url.href !== location.href) {
+          try { history.replaceState(history.state, '', url); } catch { /* автономная сборка file:// */ }
+        }
+      }
+    }
+
+    function readUrl() {
+      const params = new URLSearchParams(location.search);
+      // Старые ссылки из квиза задавали строгую нижнюю границу строкой в price-max.
+      if (params.get('price-max') === 'over-5000000') {
+        params.delete('price-max');
+        params.set('price-min', '5000001');
+      }
+      for (const field of fields) {
+        const key = field.dataset.filter, v = params.get(key);
+        if (!v || base(field) || key === 'generation') continue;
+        if (field.tagName === 'INPUT') {
+          if (/^\d{1,12}$/.test(v) && (key.split('-')[0] !== 'year' || v.length <= 4)) {
+            field.value = key.startsWith('year-') ? v : digits.format(Number(v));
+          }
+        } else {
+          if (key === 'body' && v.includes('|') && v.split('|').every((b) => Array.from(field.options).some((o) => b && o.value === b))) {
+            field.add(new Option(v.split('|').join(' / '), v));
+          }
+          if (!Array.from(field.options).some((o) => o.value === v) && (key === 'brand' || key === 'model') && v.length <= 100) {
+            customOption(field, v);
+          }
+          if (Array.from(field.options).some((o) => o.value === v)) field.value = v;
+        }
+      }
+      if (Object.hasOwn(sorts, params.get('sort'))) sort.value = params.get('sort');
+      dependentChoices(params.get('generation') || '');
+      if (extra && Array.from(extra.querySelectorAll('select')).some((f) => f.value)) extra.open = true;
+    }
+
+    form.addEventListener('input', (e) => {
+      const f = e.target;
+      if (!f.matches('input[data-filter]')) return;
+      f.value = f.value.replace(/[^\d\s]/g, '');
+      shown = limit;
+      render();
     });
-  }
-
-  var SORTS = {
-    'price-asc': function (a, b) { return (+a.dataset.price || 1e12) - (+b.dataset.price || 1e12); },
-    'price-desc': function (a, b) { return (+b.dataset.price || 0) - (+a.dataset.price || 0); },
-    'year-desc': function (a, b) { return (+b.dataset.year || 0) - (+a.dataset.year || 0); },
-    'mileage-asc': function (a, b) { return (+a.dataset.mileage || 1e9) - (+b.dataset.mileage || 1e9); },
-  };
-
-  var original = cards.slice();
-  var lastOrder = original;
-  var lastActive = 0;
-  var lastCols = 0;
-
-  function gridCols() {
-    var t = getComputedStyle(grid).gridTemplateColumns;
-    return t && t !== 'none' ? t.split(' ').length : 1;
-  }
-
-  /* Плитка-заявка — только в нефильтрованном списке. Если в последнем ряду свободна ровно одна ячейка (или колонка одна),
-     плитка стоит после 7-й карточки и закрывает ее; иначе встает последней и занимает остаток ряда — пустых ячеек нет.
-     На телефоне (две узкие колонки) плитка всегда во всю ширину — после шестой карточки. */
-  var phone = window.matchMedia ? window.matchMedia('(max-width: 600px)') : null;
-
-  function placeExtras() {
-    var vis = lastOrder.filter(function (c) { return !c.hidden; });
-    var cols = gridCols();
-    lastCols = cols;
-    extras.forEach(function (ex) {
-      ex.hidden = lastActive > 0 || !vis.length;
-      ex.classList.remove('promo-tile--row', 'promo-tile--wide');
-      ex.style.gridColumn = '';
-      if (ex.hidden) return;
-      var rem = vis.length % cols;
-      if (phone && phone.matches && cols > 1) {
-        var after = vis[Math.min(5, vis.length - 1)];
-        if (after.nextSibling) grid.insertBefore(ex, after.nextSibling);
-        else grid.appendChild(ex);
-        ex.style.gridColumn = '1 / -1';
-      } else if (cols === 1 || rem === cols - 1) {
-        var anchor = vis[Math.min(6, vis.length - 1)];
-        if (anchor.nextSibling) grid.insertBefore(ex, anchor.nextSibling);
-        else grid.appendChild(ex);
-      } else {
-        grid.appendChild(ex);
-        var need = cols - rem;
-        ex.style.gridColumn = need === cols ? '1 / -1' : 'span ' + need;
-        if (need === cols) ex.classList.add('promo-tile--row');
-        else if (need > 1) ex.classList.add('promo-tile--wide');
+    form.addEventListener('focusout', (e) => {
+      const f = e.target;
+      if (f.matches('input[data-filter]') && !f.dataset.filter.startsWith('year-')) {
+        f.value = value(f) ? digits.format(Number(value(f))) : '';
       }
     });
-  }
-
-  function apply(resetShown) {
-    if (resetShown) shown = pageSize;
-    var order = sortSel && SORTS[sortSel.value] ? cards.slice().sort(SORTS[sortSel.value]) : original.slice();
-    var active = 0;
-    selects.forEach(function (s) {
-      var on = Boolean(s.value);
-      if (on) active++;
-      s.closest('.filter').classList.toggle('is-active', on);
+    form.addEventListener('change', (e) => {
+      const f = e.target;
+      if (f.tagName !== 'SELECT') return;
+      const key = f.dataset.filter;
+      const children = dependentFilters[key] || [];
+      const selected = f.selectedOptions[0];
+      const custom = selected?.hasAttribute('data-custom') && base(f);
+      const destination = custom ? controls.brand.options[0].dataset.url : selected?.dataset.url;
+      if (destination) {
+        const target = new URL(destination, location.href);
+        const preset = new URLSearchParams(target.search);
+        const url = paramsFor(target);
+        for (const name of [key, ...children]) url.searchParams.delete(name);
+        for (const [name, val] of preset) url.searchParams.set(name, val);
+        if (custom) {
+          url.searchParams.set(key, selected.value);
+          if (key === 'model') url.searchParams.set('brand', controls.brand.value);
+        }
+        f.value = base(f);
+        location.assign(url);
+        return;
+      }
+      for (const name of children) controls[name].value = base(controls[name]);
+      dependentChoices();
+      shown = limit;
+      render();
     });
-    var visible = 0;
-    var matched = 0;
-    order.forEach(function (card) {
-      var ok = matches(card);
-      if (ok) matched++;
-      var show = ok && matched <= shown;
-      card.hidden = !show;
-      if (show) { visible++; card.classList.add('is-in'); }
-      grid.appendChild(card);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (server) { location.assign(paramsFor(new URL(form.action))); return; }
+      if (phone.matches) disclosure(false);
+      (root.querySelector('[data-results-count]') || grid)?.scrollIntoView({ block: 'start' });
     });
-    lastOrder = order;
-    lastActive = active;
-    // на телефоне две колонки нужны, когда карточек хотя бы две: единственная идет во всю ширину
-    grid.classList.toggle('cars-grid--duo', visible > 1);
-    placeExtras();
-    refreshOptions();
-    if (countEl) {
-      countEl.innerHTML = matched + ' ' + plural(matched, ['автомобиль', 'автомобиля', 'автомобилей']) + (active ? '<small>из ' + total + ' в разделе</small>' : '');
+    function disclosure(expanded) {
+      toggle.hidden = !phone.matches;
+      panel.hidden = phone.matches && !expanded;
+      toggle.setAttribute('aria-expanded', String(!panel.hidden));
     }
-    if (moreBtn) {
-      var rest = matched - visible;
-      moreBtn.parentNode.hidden = rest <= 0;
-      moreBtn.querySelector('span').textContent = 'Показать еще ' + Math.min(rest, pageSize);
-    }
-    if (emptyEl) emptyEl.hidden = matched > 0;
-    if (resetBtn) resetBtn.hidden = active === 0;
-    syncUrl();
-  }
-
-  /* Адрес: меняем только свои параметры — рекламные метки (utm_*, yclid, gclid) и все чужое остается на месте. */
-  function syncUrl() {
-    if (!window.history || !history.replaceState) return;
-    var params = new URLSearchParams(location.search);
-    selects.forEach(function (s) {
-      params.delete(s.dataset.filter);
-      if (s.value) params.set(s.dataset.filter, s.value);
+    toggle.addEventListener('click', () => disclosure(panel.hidden));
+    phone.addEventListener('change', () => disclosure(false));
+    disclosure(false);
+    sort.addEventListener('change', () => {
+      if (server) { location.assign(paramsFor(new URL(form.action))); return; }
+      shown = limit;
+      render();
     });
-    params.delete('sort');
-    if (sortSel && sortSel.value) params.set('sort', sortSel.value);
-    var q = params.toString();
-    var cur = new URLSearchParams(location.search).toString();
-    if (q !== cur) history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash);
-  }
-
-  function readUrl() {
-    var params = new URLSearchParams(location.search);
-    selects.forEach(function (s) {
-      var v = params.get(s.dataset.filter);
-      if (v !== null && Array.prototype.some.call(s.options, function (o) { return o.value === v; })) s.value = v;
+    root.addEventListener('click', (e) => {
+      if (!e.target.closest('[data-filters-reset], [data-filters-reset-all]')) return;
+      e.preventDefault();
+      for (const f of fields) f.value = base(f);
+      if (server) { location.assign(paramsFor(new URL(form.action))); return; }
+      shown = limit;
+      dependentChoices();
+      render();
     });
-    if (sortSel && params.get('sort') && SORTS[params.get('sort')]) sortSel.value = params.get('sort');
-  }
-
-  /* Панель фильтров закреплена, поэтому фильтр меняют, уже прокрутив список. После выбора возвращаем к началу результатов,
-     иначе человек остается ниже сократившегося списка и не видит ни карточек, ни пустого состояния. */
-  function toResults() {
-    var head = document.querySelector('.results-head') || grid;
-    var top = head.getBoundingClientRect().top;
-    var pad = (bar ? bar.offsetHeight : 0) + 88;
-    if (top < 0 || top > window.innerHeight * 0.6) {
-      var y = window.pageYOffset + top - pad;
-      // без плавной прокрутки: путь бывает в несколько экранов
-      try { window.scrollTo({ top: y, behavior: 'instant' }); } catch (e) { window.scrollTo(0, y); }
-    }
-    // на телефоне выбранные фильтры и «Сбросить» встают в начало ленты — показываем ее с начала
-    if (row && row.scrollWidth > row.clientWidth) row.scrollLeft = 0;
-  }
-
-  function changed() {
-    apply(true);
-    toResults();
-  }
-
-  function resetAll() {
-    selects.forEach(function (s) { s.value = ''; });
-    changed();
-  }
-
-  selects.forEach(function (s) { s.addEventListener('change', changed); });
-  if (sortSel) sortSel.addEventListener('change', changed);
-  if (resetBtn) resetBtn.addEventListener('click', resetAll);
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('[data-filters-reset-all]')) resetAll();
-  });
-  if (moreBtn) {
-    moreBtn.addEventListener('click', function () {
-      shown += pageSize;
-      apply(false);
+    more?.addEventListener('click', () => { shown += limit; render(); });
+    root.addEventListener('catalog:updated', () => {
+      inventory();
+      dependentChoices();
+      render();
     });
+    inventory();
+    readUrl();
+    render();
   }
 
-  // при смене числа колонок (поворот экрана, изменение окна) плитка-заявка переставляется
-  var resizeTimer;
-  window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () { if (gridCols() !== lastCols) placeExtras(); }, 150);
-  });
-
-  // тень у закрепленной панели фильтров
-  if (bar && 'IntersectionObserver' in window) {
-    var sentinel = document.createElement('div');
-    sentinel.style.cssText = 'height:1px;margin-bottom:-1px';
-    bar.parentNode.insertBefore(sentinel, bar);
-    new IntersectionObserver(function (en) {
-      bar.classList.toggle('is-stuck', !en[0].isIntersecting && en[0].boundingClientRect.top < 100);
-    }, { rootMargin: '-80px 0px 0px 0px' }).observe(sentinel);
-  }
-
-  // с этого момента место и ширину плитки-заявки задает скрипт (см. .cars-grid:not([data-ready]) в 50-catalog.css)
-  grid.setAttribute('data-ready', '');
-  readUrl();
-  apply(true);
+  document.querySelectorAll('[data-catalog-list], [data-server-catalog]').forEach(listing);
 })();

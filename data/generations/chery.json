@@ -1,0 +1,138 @@
+{
+  "tiggo-8-plus": {
+    "source": "https://www.drom.ru/catalog/chery/tiggo_8_plus/",
+    "generations": [
+      {
+        "id": "g1-r3",
+        "label": "1 поколение, 3-й рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chery/tiggo-8-plus-g1-r3-1242631.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2024,
+            "fromMonth": 4,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chery/tiggo-8-plus-g1-r2-1168535.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2021,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chery/tiggo-8-plus-g1-r1-1168515.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": 2022,
+        "codes": [],
+        "photo": "generations/chery/tiggo-8-plus-g1-r0-1168495.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 10,
+            "to": 2022,
+            "toMonth": 4,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "tiggo-3x": {
+    "source": "https://www.drom.ru/catalog/chery/tiggo_3x/",
+    "generations": [
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2023,
+        "to": 2024,
+        "codes": [],
+        "photo": "generations/chery/tiggo-3x-g1-r2-1154351.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 5,
+            "to": 2024,
+            "toMonth": 10,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2020,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chery/tiggo-3x-g1-r1-1154355.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 4,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2016,
+        "to": 2020,
+        "codes": [],
+        "photo": "generations/chery/tiggo-3x-g1-r0-1154369.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 4,
+            "to": 2020,
+            "toMonth": 12,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  }
+}

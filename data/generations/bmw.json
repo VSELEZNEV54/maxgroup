@@ -1,0 +1,1053 @@
+{
+  "5-series": {
+    "source": "https://www.drom.ru/catalog/bmw/5-series/",
+    "generations": [
+      {
+        "id": "g8-r0",
+        "label": "8 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "G61",
+          "G60",
+          "G68"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "G60"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2023,
+            "fromMonth": 7,
+            "to": null,
+            "codes": [
+              "12FJ20",
+              "12FM20",
+              "22FL20"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "G68"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 2,
+            "to": null,
+            "codes": [
+              "12GV20",
+              "22GW20"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-1262698.webp"
+      },
+      {
+        "id": "g7-r1",
+        "label": "7 поколение, рестайлинг",
+        "from": 2020,
+        "to": 2024,
+        "codes": [
+          "G30",
+          "G38",
+          "G31"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 5,
+            "to": 2023,
+            "toMonth": 10,
+            "codes": [
+              "G30"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2023,
+            "toMonth": 6,
+            "codes": [
+              "JR20S",
+              "JS30",
+              "JS44",
+              "JF20",
+              "JA20PH"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 5,
+            "to": 2024,
+            "toMonth": 1,
+            "codes": [
+              "G38"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2024,
+            "toMonth": 1,
+            "codes": [
+              "JT20T",
+              "JT30",
+              "JP20"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-954977.webp"
+      },
+      {
+        "id": "g7-r0",
+        "label": "7 поколение",
+        "from": 2016,
+        "to": 2020,
+        "codes": [
+          "G31",
+          "G30",
+          "G38"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2016,
+            "fromMonth": 10,
+            "to": 2020,
+            "toMonth": 7,
+            "codes": [
+              "G30"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 10,
+            "to": 2020,
+            "toMonth": 8,
+            "codes": [
+              "JR20S",
+              "JS30",
+              "JS44",
+              "JF20",
+              "JR20",
+              "JA20P",
+              "JA20",
+              "JB30",
+              "JC20"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 10,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": [
+              "G38"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 6,
+            "to": 2020,
+            "toMonth": 8,
+            "codes": [
+              "JT20T",
+              "JT30",
+              "JP20",
+              "JT20",
+              "JL10",
+              "JL20",
+              "JM30",
+              "JM20"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-1287799.webp"
+      },
+      {
+        "id": "g6-r1",
+        "label": "6 поколение, рестайлинг",
+        "from": 2013,
+        "to": 2018,
+        "codes": [
+          "F10",
+          "F18",
+          "F11"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2013,
+            "fromMonth": 9,
+            "to": 2017,
+            "toMonth": 3,
+            "codes": [
+              "F10"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2013,
+            "fromMonth": 9,
+            "to": 2015,
+            "toMonth": 8,
+            "codes": [
+              "F11"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 9,
+            "to": 2016,
+            "toMonth": 12,
+            "codes": [
+              "KN44",
+              "FZ35",
+              "FR35",
+              "XG20",
+              "XG28",
+              "FW20"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2013,
+            "fromMonth": 9,
+            "to": 2018,
+            "toMonth": 2,
+            "codes": [
+              "F18"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 9,
+            "to": 2017,
+            "toMonth": 5,
+            "codes": [
+              "HR44",
+              "MU35",
+              "XL20",
+              "XL28",
+              "MX20"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-476781.webp"
+      },
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2009,
+        "to": 2013,
+        "codes": [
+          "F11",
+          "F10",
+          "F18"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2009,
+            "fromMonth": 11,
+            "to": 2013,
+            "toMonth": 10,
+            "codes": [
+              "F10"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2010,
+            "fromMonth": 4,
+            "to": 2013,
+            "toMonth": 10,
+            "codes": [
+              "F11"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 3,
+            "to": 2013,
+            "toMonth": 8,
+            "codes": [
+              "FR44",
+              "FZ35",
+              "FP25",
+              "FR30",
+              "FR35",
+              "XG20",
+              "XG28",
+              "FW20"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2009,
+            "fromMonth": 11,
+            "to": 2013,
+            "toMonth": 9,
+            "codes": [
+              "F18"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 9,
+            "to": 2013,
+            "toMonth": 8,
+            "codes": [
+              "MU44",
+              "MT25",
+              "MU30",
+              "MU35",
+              "XL20",
+              "XL28",
+              "MX20"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-1298929.webp"
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2007,
+        "to": 2010,
+        "codes": [
+          "E60",
+          "E61"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2007,
+            "fromMonth": 3,
+            "to": 2010,
+            "toMonth": 4,
+            "codes": [
+              "E60"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2007,
+            "fromMonth": 3,
+            "to": 2009,
+            "toMonth": 10,
+            "codes": [
+              "E61"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 6,
+            "to": 2010,
+            "toMonth": 2,
+            "codes": [
+              "NU25",
+              "NU30",
+              "NW40",
+              "NW48"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2007,
+            "fromMonth": 3,
+            "to": 2010,
+            "toMonth": 8,
+            "codes": [
+              "E60"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 6,
+            "to": 2010,
+            "toMonth": 8,
+            "codes": [
+              "PU25",
+              "PU30",
+              "PW48"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-1287876.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2003,
+        "to": 2008,
+        "codes": [
+          "E61",
+          "E60"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 8,
+            "to": 2007,
+            "toMonth": 5,
+            "codes": [
+              "NB40",
+              "NB48",
+              "NE25",
+              "NE30",
+              "NA25",
+              "NA30",
+              "NB44"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2003,
+            "fromMonth": 7,
+            "to": 2008,
+            "toMonth": 3,
+            "codes": [
+              "E60"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2004,
+            "fromMonth": 6,
+            "to": 2007,
+            "toMonth": 5,
+            "codes": [
+              "NH48",
+              "NL25",
+              "NL30",
+              "NG25"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-1244775.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2000,
+        "to": 2004,
+        "codes": [
+          "E39"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 11,
+            "to": 2003,
+            "toMonth": 7,
+            "codes": [
+              "DN44",
+              "DT25",
+              "DT30"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 11,
+            "to": 2004,
+            "toMonth": 5,
+            "codes": [
+              "DS25",
+              "DS25A",
+              "DS30"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-1078097.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 1995,
+        "to": 2000,
+        "codes": [
+          "E39"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1996,
+            "fromMonth": 6,
+            "to": 2000,
+            "toMonth": 10,
+            "codes": [
+              "DD25",
+              "DD28",
+              "DE44",
+              "DM25",
+              "DM28",
+              "DN44"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1997,
+            "fromMonth": 7,
+            "to": 2000,
+            "toMonth": 10,
+            "codes": [
+              "DD28A",
+              "DP28"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-1078098.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 1994,
+        "to": 1996,
+        "codes": [
+          "E34"
+        ],
+        "photo": "generations/bmw/5-series-556060.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 1987,
+        "to": 1997,
+        "codes": [
+          "E34"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1988,
+            "fromMonth": 6,
+            "to": 1996,
+            "toMonth": 5,
+            "codes": [
+              "H25",
+              "HB20",
+              "HD25",
+              "HE30",
+              "HE40"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1992,
+            "fromMonth": 5,
+            "to": 1997,
+            "toMonth": 6,
+            "codes": [
+              "HD25"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/5-series-757199.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1981,
+        "to": 1987,
+        "codes": [
+          "E28"
+        ],
+        "photo": "generations/bmw/5-series-783213.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1976,
+        "to": 1981,
+        "codes": [
+          "E12"
+        ],
+        "photo": "generations/bmw/5-series-783086.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1972,
+        "to": 1976,
+        "codes": [
+          "E12"
+        ],
+        "photo": "generations/bmw/5-series-782853.webp"
+      }
+    ]
+  },
+  "x5": {
+    "source": "https://www.drom.ru/catalog/bmw/x5/",
+    "generations": [
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2026,
+        "to": null,
+        "codes": [
+          "G65"
+        ],
+        "photo": "generations/bmw/x5-1342318.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "G05"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 2,
+            "to": null,
+            "codes": [
+              "G05"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2023,
+            "fromMonth": 4,
+            "to": null,
+            "codes": [
+              "12ET44",
+              "32EU44A",
+              "12EV30A",
+              "42EU30"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 2,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/bmw/x5-1119845.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2018,
+        "to": 2023,
+        "codes": [
+          "G05"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2018,
+            "fromMonth": 6,
+            "to": 2023,
+            "toMonth": 3,
+            "codes": [
+              "G05"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 12,
+            "to": 2023,
+            "toMonth": 3,
+            "codes": [
+              "JU44A",
+              "JU44M",
+              "JU44S",
+              "JU8230A",
+              "JU8230S",
+              "CV30A",
+              "CV30S",
+              "TA30"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 6,
+            "to": 2023,
+            "toMonth": 7,
+            "codes": []
+          }
+        ],
+        "photo": "generations/bmw/x5-1214856.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2018,
+        "codes": [
+          "F15"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 11,
+            "to": 2018,
+            "toMonth": 12,
+            "codes": [
+              "KT44",
+              "KR44",
+              "KR44S",
+              "KT20",
+              "KR30",
+              "KR30S",
+              "KS30",
+              "KS30S"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x5-109806.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2010,
+        "to": 2014,
+        "codes": [
+          "E70"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 5,
+            "to": 2014,
+            "toMonth": 3,
+            "codes": [
+              "GY44",
+              "ZV30S",
+              "ZV44S",
+              "ZW30",
+              "ZW30S"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x5-29204.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2006,
+        "to": 2012,
+        "codes": [
+          "E70"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 6,
+            "to": 2012,
+            "toMonth": 5,
+            "codes": [
+              "FE30",
+              "FE48",
+              "GY44"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x5-793845.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2003,
+        "to": 2007,
+        "codes": [
+          "E53"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 10,
+            "to": 2007,
+            "toMonth": 5,
+            "codes": [
+              "FA30N",
+              "FA30NA",
+              "FB44N",
+              "FB44NA"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x5-535056.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1999,
+        "to": 2003,
+        "codes": [
+          "E53"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 10,
+            "to": 2003,
+            "toMonth": 9,
+            "codes": [
+              "FA30",
+              "FA30N",
+              "FB44",
+              "FB44N"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x5-1092144.webp"
+      }
+    ]
+  },
+  "x1": {
+    "source": "https://www.drom.ru/catalog/bmw/x1/",
+    "generations": [
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "U11",
+          "U12"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2022,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "U11"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2023,
+            "fromMonth": 2,
+            "to": null,
+            "codes": [
+              "12EF20",
+              "22EE15",
+              "52EE20",
+              "42EG20T"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "U12"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x1-1296164.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2023,
+        "codes": [
+          "F48",
+          "F49"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2019,
+            "fromMonth": 6,
+            "to": 2022,
+            "toMonth": 11,
+            "codes": [
+              "HS91",
+              "HT11",
+              "HT91"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2019,
+            "fromMonth": 10,
+            "to": 2023,
+            "toMonth": 1,
+            "codes": [
+              "AA15",
+              "AB20",
+              "AD20"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 5,
+            "to": 2023,
+            "toMonth": 3,
+            "codes": [
+              "F49"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x1-1054228.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "F48",
+          "F49"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2015,
+            "fromMonth": 6,
+            "to": 2019,
+            "toMonth": 7,
+            "codes": [
+              "HT11",
+              "HT91",
+              "HU31"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 10,
+            "to": 2019,
+            "toMonth": 9,
+            "codes": [
+              "JG15",
+              "JG20A",
+              "JG20",
+              "HS15",
+              "HS20",
+              "HT20"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 4,
+            "to": 2019,
+            "toMonth": 7,
+            "codes": [
+              "F49"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x1-1134838.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2012,
+        "to": 2015,
+        "codes": [
+          "E84"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2012,
+            "fromMonth": 7,
+            "to": 2015,
+            "toMonth": 10,
+            "codes": [
+              "E84"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2012,
+            "fromMonth": 9,
+            "to": 2015,
+            "toMonth": 9,
+            "codes": [
+              "VL18",
+              "VL20",
+              "VM20"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x1-1296097.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2009,
+        "to": 2012,
+        "codes": [
+          "E84"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2009,
+            "fromMonth": 10,
+            "to": 2012,
+            "toMonth": 7,
+            "codes": [
+              "E84"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 4,
+            "to": 2012,
+            "toMonth": 8,
+            "codes": [
+              "VL18",
+              "VL25",
+              "VM20"
+            ]
+          }
+        ],
+        "photo": "generations/bmw/x1-1134802.webp"
+      }
+    ]
+  }
+}

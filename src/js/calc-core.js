@@ -2,6 +2,7 @@
    Браузер: window.MGCalc. Node: require('./calc-core.js') или globalThis.MGCalc.
 
    MGCalc.calc(input, rules) → подробный результат со всеми строками расчета.
+   input.price задается в валюте страны покупки. Для суммы в рублях передайте input.currency = 'RUB'.
    rules — компактная выжимка (MGCalc.compactRules(raw)) либо исходный data/source/calc-rules.json:
    исходный файл ужимается на лету. Алгоритм — поле algorithm того же файла:
      1. курсы ЦБ на дату ставок; 2. возраст (год → 1 июля, год + месяц → 15-е число);
@@ -452,7 +453,10 @@
     var personal = !(input.personal === false || input.personal === 0 || input.personal === '0');
     var withMarkup = input.markup === true || input.markup === 1 || input.markup === '1';
 
-    var price = Math.max(0, toNum(input.price));
+    var amount = Math.max(0, toNum(input.price));
+    var inRubles = input.currency === 'RUB';
+    var price = inRubles ? amount / rate : amount;
+    var purchaseRub = inRubles ? amount : amount * rate;
     var cc = needsIce ? Math.max(0, Math.round(toNum(input.cc))) : 0;
     var hp = needsIce ? Math.max(0, toNum(input.hp !== undefined ? input.hp : input.iceHp)) : 0;
     var ehp = hasMotor ? Math.max(0, toNum(input.ehp)) : 0;
@@ -489,7 +493,7 @@
       if (fuel === 'ev' && lim.japan.ev) reasons.push('ev');
     } else if (country === 'korea') {
       if (needsIce && cc > lim.korea.maxCc) reasons.push('cc');
-      if (usd && (price * rate) / usd > lim.korea.maxUsd) reasons.push('price');
+      if (usd && purchaseRub / usd > lim.korea.maxUsd) reasons.push('price');
     }
     sanctioned = reasons.length > 0;
     if (input.sanctioned === true || input.sanctioned === false) sanctioned = input.sanctioned;
@@ -504,8 +508,8 @@
     if (input.freightUsd !== undefined) freightUsd = toNum(input.freightUsd);
 
     // 3. таможенная стоимость: цена + фиксированные расходы за рубежом, по курсу ЦБ
-    var carRub = rnd(price * rate);
-    var cvRub = rnd((price + fixedCur) * rate);
+    var carRub = rnd(purchaseRub);
+    var cvRub = rnd(inRubles ? purchaseRub + fixedCur * rate : (amount + fixedCur) * rate);
     var fixedRub = cvRub - carRub;
     var extraRub = rnd(extraCur * rate);
     var freightRub = rnd(freightUsd * usd);
@@ -608,7 +612,8 @@
 
     // --- строки расчета -------------------------------------------------------------------
     var rows1 = [];
-    rows1.push({ id: 'price', label: 'Цена автомобиля ' + cn.inLoc, rub: carRub, note: money(price, cur) + ' × ' + num(rate, 6) + NB + '₽ по курсу ЦБ' });
+    rows1.push({ id: 'price', label: 'Цена автомобиля ' + cn.inLoc, rub: carRub,
+      note: inRubles ? 'Цена введена в рублях, около ' + money(price, cur) + ' по курсу ЦБ' : money(price, cur) + ' × ' + num(rate, 6) + NB + '₽ по курсу ЦБ' });
     rows1.push({
       id: 'abroad',
       label: country === 'china' ? 'Расходы в Китае и доставка до границы' : 'Расходы ' + cn.inLoc + ' и доставка до Владивостока',
@@ -725,7 +730,7 @@
     return {
       ok: missing.length === 0,
       missing: missing,
-      input: { country: country, price: price, year: year, month: age.month || 0, fuel: fuel, cc: cc, hp: hp, ehp: ehp, e30: e30in, personal: personal, markup: withMarkup, city: delivery.city, body: body },
+      input: { country: country, price: amount, currency: inRubles ? 'RUB' : cur, year: year, month: age.month || 0, fuel: fuel, cc: cc, hp: hp, ehp: ehp, e30: e30in, personal: personal, markup: withMarkup, city: delivery.city, body: body },
       country: { slug: country, name: cn.name, from: cn.from, inLoc: cn.inLoc },
       currency: { code: cur, sign: curInfo.sign, name: curInfo.name, gen: curInfo.gen },
       fuel: { slug: fuel, name: FUELS[fuel].name, short: FUELS[fuel].short },

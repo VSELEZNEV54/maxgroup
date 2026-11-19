@@ -1,6 +1,7 @@
 // Шапка с мега-меню, мобильная шторка и плавающая нижняя «пилюля».
-import { html, esc, u, cx } from '../lib/core.mjs';
+import { html, esc, u, cx, img } from '../lib/core.mjs';
 import { icon } from '../lib/icons.mjs';
+import { R } from '../routes.mjs';
 import { logo } from './logo.mjs';
 
 const isCurrent = (page, url) => (page.url === url || (url !== '/' && page.url.startsWith(url)) ? ' aria-current="page"' : '');
@@ -13,20 +14,36 @@ const telegram = (site) => {
   return link ? { url: link.url, label: manager ? 'Написать в Telegram' : 'Telegram-канал', short: manager ? 'Telegram' : 'Telegram-канал' } : null;
 };
 
-function megaCatalog(ctx) {
+function countryLabel(c) {
+  return html`<span class="country-label">${img({ src: 'assets/' + c.flag, alt: '', cls: 'country-label__flag', lazy: false })}${esc(c.navTitle)}</span>`;
+}
+
+function brandLink(b, from) {
+  return html`<a href="${esc(u(b.url))}"${b.count ? '' : ` aria-label="Подобрать ${esc(b.name)} ${esc(from)}"`}>${esc(b.name)}${b.count ? `<small>${b.count}</small>` : ''}</a>`;
+}
+
+function catalogTopLink(country, page) {
+  const url = R.topModels(country.slug);
+  return html`<a class="catalog-top-link" href="${u(url)}"${page?.url === url ? ' aria-current="page"' : ''}>
+    <span>Топ-30 авто ${esc(country.from)}<small>По числу заказов</small></span>${icon('arrow')}
+  </a>`;
+}
+
+function megaCatalog(ctx, page) {
   const { nav } = ctx;
   return html`
         <div class="mega" id="mega-catalog">
           <div class="container mega__inner">
             ${nav.countries.map(
               (c) => html`
-            <div class="mega__col">
+            <div class="mega__col mega__col--country">
               <div class="mega__title">
-                <a href="${u(c.url)}">${esc(c.navTitle)}</a>
+                <a href="${u(c.url)}">${countryLabel(c)}</a>
                 <span class="label label--plain">${c.count}</span>
               </div>
-              <ul class="mega__list">
-                ${c.brands.map((b) => `<li><a href="${u(b.url)}">${esc(b.name)}<small>${b.count}</small></a></li>`)}
+              ${catalogTopLink(c, page)}
+              <ul class="mega__list mega__list--makes" aria-label="Марки ${esc(c.from)}">
+                ${c.brands.map((b) => `<li>${brandLink(b, c.from)}</li>`)}
               </ul>
               <a class="more mega__all" href="${u(c.url)}">Все авто ${esc(c.from)} ${icon('arrow')}</a>
             </div>`
@@ -43,6 +60,17 @@ function megaCatalog(ctx) {
 }
 
 function megaList(id, groups, promo) {
+  const promoCard = promo ? html`
+    <div class="mega__col">
+      <div class="mega__promo">
+        <div>
+          <span class="label">${esc(promo.label)}</span>
+          <p class="h4 u-mt-4" style="color:#fff">${esc(promo.title)}</p>
+          <p>${esc(promo.text)}</p>
+        </div>
+        <a class="btn btn--light btn--sm" href="${u(promo.url)}"${promo.modal ? ` data-modal="${promo.modal}"` : ''}>${esc(promo.cta)}</a>
+      </div>
+    </div>` : '';
   return html`
         <div class="mega mega--simple" id="${id}">
           <div class="container mega__inner">
@@ -55,19 +83,7 @@ function megaList(id, groups, promo) {
               </ul>
             </div>`
             )}
-            ${promo
-              ? html`
-            <div class="mega__col">
-              <div class="mega__promo">
-                <div>
-                  <span class="label">${esc(promo.label)}</span>
-                  <p class="h4 u-mt-4" style="color:#fff">${esc(promo.title)}</p>
-                  <p>${esc(promo.text)}</p>
-                </div>
-                <a class="btn btn--light btn--sm" href="${u(promo.url)}"${promo.modal ? ` data-modal="${promo.modal}"` : ''}>${esc(promo.cta)} ${icon('arrow', 'i-arrow')}</a>
-              </div>
-            </div>`
-              : ''}
+            ${promoCard}
           </div>
         </div>`;
 }
@@ -76,32 +92,30 @@ export function header(ctx, page) {
   const { site, nav } = ctx;
   const phone = site.contacts.phones[0];
   const tg = telegram(site);
+  const catalogCurrent = ['catalog', 'country', 'brand', 'model', 'car', 'selection'].includes(page.type) ? ' aria-current="page"' : '';
   return html`
     <header class="${cx('header', page.headerOver && 'header--over')}" data-header>
       <div class="container header__inner">
         ${logo(site)}
         <nav class="nav" aria-label="Основная навигация">
           <div class="nav__item" data-mega>
-            <a class="nav__link" href="${u(nav.catalogUrl)}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-catalog"${['catalog', 'country', 'brand', 'model', 'car', 'selection'].includes(page.type) ? ' aria-current="page"' : ''}>Каталог ${icon('chevron')}</a>
-            ${megaCatalog(ctx)}
-          </div>
-          <div class="nav__item" data-mega>
-            <a class="nav__link" href="${u(nav.servicesUrl)}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-services"${isCurrent(page, nav.servicesUrl)}>Услуги ${icon('chevron')}</a>
-            ${megaList('mega-services', nav.serviceGroups, nav.servicePromo)}
+            <a class="nav__link btn btn--primary btn--sm" href="${u(nav.catalogUrl)}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-catalog"${catalogCurrent}>${icon('grid')} Каталог</a>
+            ${megaCatalog(ctx, page)}
           </div>
           ${nav.top.map((l) => `<div class="nav__item"><a class="nav__link" href="${u(l.url)}"${isCurrent(page, l.url)}>${esc(l.name)}</a></div>`)}
           <div class="nav__item" data-mega>
-            <a class="nav__link" href="${u(nav.aboutUrl)}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-company"${isCurrent(page, nav.aboutUrl)}>Компания ${icon('chevron')}</a>
+            <a class="nav__link" href="${u(nav.aboutUrl)}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-company"${isCurrent(page, nav.aboutUrl)}>О компании ${icon('chevron')}</a>
             ${megaList('mega-company', nav.companyGroups, nav.companyPromo)}
           </div>
         </nav>
+        <a class="header__catalog-mobile btn btn--primary btn--sm" href="${u(nav.catalogUrl)}"${catalogCurrent}>Каталог</a>
         <div class="header__side">
           <div class="header__icons">
             ${site.socials.whatsapp ? `<a class="icon-btn" href="${esc(site.socials.whatsapp.url)}" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="Написать в WhatsApp">${icon('whatsapp')}</a>` : ''}
             ${tg ? `<a class="icon-btn" href="${esc(tg.url)}" target="_blank" rel="noopener" aria-label="${tg.label}" title="${tg.label}">${icon('telegram')}</a>` : ''}
           </div>
           <div class="header__phone">
-            <a href="tel:${phone.tel}">${esc(phone.label)}</a>
+            <a href="tel:${phone.tel}" aria-label="Позвонить ${esc(phone.label)}">${icon('phone')}<span>${esc(phone.label)}</span></a>
             <span>${esc(site.contacts.hoursShort)}</span>
           </div>
           <a class="btn btn--primary btn--sm header__cta" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчет стоимости авто"><span>Рассчитать<span class="header__cta-rest"> стоимость</span></span></a>
@@ -111,7 +125,7 @@ export function header(ctx, page) {
     </header>`;
 }
 
-export function drawer(ctx) {
+export function drawer(ctx, page) {
   const { site, nav } = ctx;
   const phone = site.contacts.phones[0];
   const tg = telegram(site);
@@ -121,17 +135,19 @@ export function drawer(ctx) {
       <ul class="drawer__nav" aria-label="Меню сайта">
         ${nav.countries.map(
           (c) => html`
-        <li>
+        <li class="drawer__catalog-section">
           <details>
-            <summary>${esc(c.navTitle)} ${plus}</summary>
+            <summary>${countryLabel(c)} ${plus}</summary>
+            ${catalogTopLink(c, page)}
             <div class="drawer__sub">
               <a class="is-strong" href="${u(c.url)}">Все авто ${esc(c.from)} (${c.count})</a>
-              ${c.brands.map((b) => `<a href="${u(b.url)}">${esc(b.name)}</a>`)}
+              ${c.brands.slice(0, 12).map((b) => brandLink(b, c.from))}
+              ${c.brands.length > 12 && html`<details class="drawer__makes"><summary>Еще марки ${plus}</summary><div class="drawer__sub">${c.brands.slice(12).map((b) => brandLink(b, c.from))}</div></details>`}
             </div>
           </details>
         </li>`
         )}
-        <li>
+        <li class="drawer__catalog-section">
           <details>
             <summary>Подборки ${plus}</summary>
             <div class="drawer__sub">
@@ -140,18 +156,10 @@ export function drawer(ctx) {
             </div>
           </details>
         </li>
-        <li>
-          <details>
-            <summary>Услуги ${plus}</summary>
-            <div class="drawer__sub">
-              ${nav.serviceGroups.flatMap((g) => g.items).map((s) => `<a href="${u(s.url)}">${esc(s.name)}</a>`)}
-            </div>
-          </details>
-        </li>
         ${nav.top.map((l) => `<li><a href="${u(l.url)}">${esc(l.name)} ${icon('arrow')}</a></li>`)}
         <li>
           <details>
-            <summary>Компания ${plus}</summary>
+            <summary>О компании ${plus}</summary>
             <div class="drawer__sub">
               ${nav.companyGroups.flatMap((g) => g.items).map((s) => `<a href="${u(s.url)}">${esc(s.name)}</a>`)}
             </div>
@@ -159,7 +167,7 @@ export function drawer(ctx) {
         </li>
       </ul>
       <div class="drawer__foot">
-        <a class="btn btn--primary btn--block" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчет стоимости авто">Рассчитать стоимость ${icon('arrow', 'i-arrow')}</a>
+        <a class="btn btn--primary btn--block" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчет стоимости авто">Рассчитать стоимость</a>
         <div class="form__row">
           ${site.socials.whatsapp ? `<a class="btn btn--wa btn--block" href="${esc(site.socials.whatsapp.url)}" target="_blank" rel="noopener">${icon('whatsapp')} WhatsApp</a>` : ''}
           ${tg ? `<a class="btn btn--tg btn--block" href="${esc(tg.url)}" target="_blank" rel="noopener">${icon('telegram')} ${tg.short}</a>` : ''}

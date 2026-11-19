@@ -4,8 +4,9 @@
 //
 // Страница, на которой стоит fullCalc() или miniCalc(), обязана подключить скрипты: scripts: ['calc-core', 'calc'].
 import { html, esc, u, typo, cx, attrs } from '../lib/core.mjs';
-import { icon, label, duo, btn, reveal, note } from './ui.mjs';
+import { icon, img, label, duo, btn, reveal, note } from './ui.mjs';
 import { R } from '../routes.mjs';
+import { selectControl } from './select.mjs';
 import '../js/calc-core.js';
 import '../js/calc.js';
 
@@ -14,21 +15,14 @@ export const calcCore = globalThis.MGCalc;
 const core = calcCore;
 const { view, fmt } = core;
 
-/** Примеры для кнопок-пресетов: параметры правдоподобные, цены условные. fit, carnival и zeekr — контрольные примеры из calc-rules.json */
-export const PRESETS = [
-  { id: 'fit', name: 'Honda Fit 1.3', country: 'japan', price: 1100000, year: 2022, fuel: 'ice', cc: 1317, hp: 98, body: 'sedan' },
-  { id: 'vezel', name: 'Honda Vezel 1.5', country: 'japan', price: 2000000, year: 2022, fuel: 'ice', cc: 1496, hp: 118, body: 'crossover' },
-  { id: 'k5', name: 'Kia K5 2.0', country: 'korea', price: 21000000, year: 2022, fuel: 'ice', cc: 1999, hp: 160, body: 'sedan' },
-  { id: 'carnival', name: 'Kia Carnival 2.2 дизель', country: 'korea', price: 32000000, year: 2022, fuel: 'ice', cc: 2151, hp: 202, body: 'suv' },
-  { id: 'cx5', name: 'Mazda CX-5 2.0', country: 'china', price: 135000, year: 2025, fuel: 'ice', cc: 1998, hp: 155, body: 'crossover' },
-  { id: 'zeekr', name: 'Zeekr 001', country: 'china', price: 230000, year: 2024, fuel: 'ev', ehp: 422, e30: 139.5, body: 'crossover' },
-];
-
-/** Типовой автомобиль страны: стартовые значения формы и мини-калькулятора */
-export const COUNTRY_DEFAULTS = { japan: PRESETS[0], korea: PRESETS[2], china: PRESETS[4] };
+/* Типовые начальные параметры. Исходная цена указана в валюте страны. */
+const COUNTRY_DEFAULTS = {
+  japan: { price: 1100000, year: 2022, cc: 1317, hp: 98, body: 'sedan' },
+  korea: { price: 21000000, year: 2022, cc: 1999, hp: 160, body: 'sedan' },
+  china: { price: 135000, year: 2025, cc: 1998, hp: 155, body: 'crossover' },
+};
 
 const FUEL_HINT = { mild: 'MHEV', parallel: 'Prius, e:HEV', series: 'e-Power, Li, Aito' };
-const CUR_NAME = { japan: 'в иенах', korea: 'в вонах', china: 'в юанях' };
 const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
 const cache = new WeakMap();
@@ -54,7 +48,7 @@ export const calcHref = (params = {}) => {
 /**
  * Контрольные примеры из calc-rules.json в виде параметров формы калькулятора: год и месяц выпуска, город и тип кузова
  * берутся из заголовка примера («…выпуск 11.2021, Япония → Новосибирск») и суммы доставки. Этими же параметрами
- * tools/test-calc.mjs сверяет ядро с эталоном, а страница калькулятора строит разборы и ссылки «открыть в калькуляторе».
+ * tools/test-calc.mjs сверяет ядро с эталоном.
  */
 export function exampleInputs(raw) {
   const byName = new Map(raw.delivery.cities.map((c) => [c.city, c]));
@@ -96,7 +90,39 @@ function numField({ name, labelHtml, value, suffix, group: grouped, hint, max = 
             </label>`;
 }
 
-const tip = (t) => (t ? `<details class="calc-tip"><summary>${icon('info')}<span>${esc(t.q)}</span></summary><p>${typo(t.a)}</p></details>` : '');
+function purchaseField(r, id, unit = 'RUB') {
+  const rubles = unit === 'RUB';
+  const amount = rubles ? r.carRub : Math.round(r.input.currency === 'RUB' ? r.input.price / r.rates.cur : r.input.price);
+  return html`<div class="field calc-field calc-purchase">
+    <div class="calc-purchase__head">
+      <label class="field__label" for="${id}">Цена покупки</label>
+      <div class="opts calc-units" role="radiogroup" aria-label="Валюта цены">
+        <label class="opt"><input type="radio" name="currency" value="RUB"${rubles ? ' checked' : ''}><span>Рубли ₽</span></label>
+        <label class="opt"><input type="radio" name="currency" value="local"${rubles ? '' : ' checked'}><span data-calc-out="local-unit">${view.localUnit(r)}</span></label>
+      </div>
+    </div>
+    <div class="calc-field__box">
+      <input class="field__control" id="${id}" name="price" type="text" inputmode="numeric" maxlength="14" autocomplete="off"
+        data-calc-group data-price="${r.input.price}" data-currency="${r.input.currency}" value="${amount ? group(amount) : ''}" aria-describedby="${id}-hint">
+      <span class="calc-field__suffix" data-calc-out="cur">${rubles ? '₽' : esc(r.currency.sign)}</span>
+    </div>
+    <span class="calc-hint" id="${id}-hint" data-calc-out="price-rub">${esc(view.priceHint(r, unit))}</span>
+  </div>`;
+}
+
+const flag = (ctx, slug) => img({ src: 'assets/' + ctx.countryBySlug[slug].flag, cls: 'country-label__flag', alt: '', lazy: false });
+
+function tip(key, t) {
+  if (!t) return '';
+  const id = 'calc-tip-' + key;
+  return html`<div class="calc-tip">
+    <button type="button" class="calc-tip__trigger" id="${id}-button" popovertarget="${id}">${icon('info')}<span>${esc(t.q)}</span></button>
+    <div class="calc-tip__panel" id="${id}" popover="auto" role="region" aria-labelledby="${id}-button">
+      <p>${typo(t.a)}</p>
+      <button type="button" class="calc-tip__close" aria-label="Закрыть подсказку" popovertarget="${id}" popovertargetaction="hide">${icon('close')}</button>
+    </div>
+  </div>`;
+}
 
 const pills = (name, items, current, hint = {}, aria = '') =>
   `<div class="opts calc-opts" role="radiogroup"${aria ? ` aria-label="${esc(aria)}"` : ''}>${items
@@ -106,7 +132,7 @@ const pills = (name, items, current, hint = {}, aria = '') =>
 /**
  * Полный калькулятор: форма слева, закрепленный итог справа, расшифровка по строкам под ними.
  * @param {object} o
- * @param {object} [o.state] — стартовые значения (по умолчанию первый пресет)
+ * @param {object} [o.state] — стартовые значения (по умолчанию типовой автомобиль из Японии)
  * @param {object} [o.tips] — тексты подсказок {passing, hp160, hybrid, e30, personal, markup} → {q, a}
  * @param {object} [o.links] — ссылки для подсказок «что изменило бы сумму»: {passing: {url, text}, hp160: {…}}; url — адрес из routes.mjs
  * @param {Array} [o.budgets] — [{max, url, text}] — ссылка «автомобили в этот бюджет»
@@ -115,12 +141,10 @@ const pills = (name, items, current, hint = {}, aria = '') =>
 export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subject = 'Точный расчет из калькулятора' } = {}) {
   const rules = calcRules(ctx);
   links = Object.fromEntries(Object.entries(links).map(([k, v]) => [k, { ...v, url: u(v.url) }])); // адреса сайта → ссылки с учетом режима сборки
-  const s = { ...PRESETS[0], month: 0, city: '', personal: true, markup: false, ...state };
+  const country = state?.country || 'japan';
+  const s = { country, fuel: 'ice', ...COUNTRY_DEFAULTS[country], month: 0, city: '', personal: true, markup: false, ...state };
   const r = core.calc(s, rules);
   const mode = r.delivery.city ? 'city' : 'vl';
-  const activePreset = state ? null : PRESETS[0].id;
-  // типовой автомобиль каждой страны: по ссылке вида ?country=korea форма показывает его целиком, а не корейскую цену с двигателем Honda Fit
-  const defaults = Object.fromEntries(Object.entries(COUNTRY_DEFAULTS).map(([k, v]) => [k, { price: v.price, year: v.year, cc: v.cc, hp: v.hp, body: v.body }]));
   const dec = (n) => (n ? String(n).replace('.', ',') : '');
   const ratesDate = fmt.dateShort(Date.parse(rules.date));
   const showIce = 'ice mild parallel';
@@ -136,36 +160,21 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
   };
 
   return html`
-        <div class="calc" data-calc data-calc-links="${json(links)}" data-calc-defaults="${json(defaults)}">
-          <div class="calc-presets"${reveal()}>
-            ${label('Примеры')}
-            <div class="calc-presets__list">
-              ${PRESETS.map((p) => `<button class="chip chip--sm" type="button" data-calc-preset="${json(p)}" aria-pressed="${p.id === activePreset}">${esc(p.name)}<small>${esc(core.COUNTRIES[p.country].name)}</small></button>`)}
-            </div>
-            <span class="calc-presets__note">Цены условные, подставьте свои</span>
-          </div>
-
+        <div class="calc" data-calc data-calc-links="${json(links)}" data-calc-defaults="${json(COUNTRY_DEFAULTS)}">
           <div class="note calc-ref" data-calc-ref role="note" hidden>${icon('info')}<div>${typo(`<b>Параметры перенесены из карточки автомобиля.</b> Калькулятор считает по курсам ЦБ и ставкам на ${ratesDate} и по типовым расходам. Цена в карточке рассчитана на сайте на дату публикации, поэтому суммы могут отличаться. Если мощности в карточке не было, укажите ее: от нее зависит утилизационный сбор.`)}</div></div>
 
           <div class="calc__grid">
-            <form class="calc__form" data-calc-form novalidate autocomplete="off">
+            <form id="calc-inputs" class="calc__form" data-calc-form novalidate autocomplete="off">
               <fieldset class="calc-card" id="calc-country">
                 <legend class="sr-only">Страна и цена автомобиля</legend>
                 <div class="calc-card__head"><span class="calc-card__num">01</span><h3 class="calc-card__title">Страна и цена</h3></div>
                 <div class="calc-card__body">
                   <div class="calc-countries" role="radiogroup" aria-label="Страна покупки">
                     ${Object.entries(core.COUNTRIES).map(
-                      ([slug, c]) => `<label class="calc-country"><input type="radio" name="country" value="${slug}"${slug === r.country.slug ? ' checked' : ''}><span><b>${esc(c.name)}</b><small>${esc(ctx.countryBySlug[slug]?.sourceShort || '')} · ${esc(core.CURRENCIES[c.cur].name)}</small></span></label>`
+                      ([slug, c]) => `<label class="calc-country"><input type="radio" name="country" value="${slug}"${slug === r.country.slug ? ' checked' : ''}><span>${flag(ctx, slug)}<b>${esc(c.name)}</b></span></label>`
                     )}
                   </div>
-                  ${numField({
-                    name: 'price',
-                    labelHtml: `Цена автомобиля <span data-calc-out="cur-name">${CUR_NAME[r.country.slug]}</span>`,
-                    value: group(s.price),
-                    suffix: `<span data-calc-out="cur">${esc(r.currency.sign)}</span>`,
-                    group: true,
-                    hint: `<span class="calc-hint" data-calc-out="price-rub">≈ ${fmt.rub(r.carRub)} по курсу ЦБ: ${esc(r.rates.curLabel)}</span>`,
-                  })}
+                  ${purchaseField(r, 'calc-price', s.unit)}
                   <div class="calc-notes" data-calc-out="warn-price" aria-live="polite">${view.warnings(r, 'price')}</div>
                 </div>
               </fieldset>
@@ -175,18 +184,14 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                 <div class="calc-card__head"><span class="calc-card__num">02</span><h3 class="calc-card__title">Год и месяц выпуска</h3></div>
                 <div class="calc-card__body">
                   <div class="calc-cols">
-                    <label class="field calc-field">
-                      <span class="field__label">Год выпуска</span>
-                      <select class="field__control" name="year">${years(rules).map((y) => `<option value="${y}"${y === s.year ? ' selected' : ''}>${y}</option>`)}</select>
-                    </label>
-                    <label class="field calc-field">
-                      <span class="field__label">Месяц выпуска</span>
-                      <select class="field__control" name="month"><option value="0"${!s.month ? ' selected' : ''}>Не знаю</option>${MONTHS.map((m, i) => `<option value="${i + 1}"${s.month === i + 1 ? ' selected' : ''}>${m}</option>`)}</select>
-                    </label>
+                    ${selectControl({ id: 'calc-year', name: 'year', label: 'Год выпуска', fieldClass: 'calc-field', search: true,
+                      options: years(rules).map((y) => `<option value="${y}"${y === s.year ? ' selected' : ''}>${y}</option>`) })}
+                    ${selectControl({ id: 'calc-month', name: 'month', label: 'Месяц выпуска', fieldClass: 'calc-field',
+                      options: html`<option value="0"${!s.month ? ' selected' : ''}>Не знаю</option>${MONTHS.map((m, i) => `<option value="${i + 1}"${s.month === i + 1 ? ' selected' : ''}>${m}</option>`)}` })}
                   </div>
                   <p class="calc-line" data-calc-out="age-line">${view.ageLine(r)}</p>
                   <div class="calc-notes" data-calc-out="warn-age" aria-live="polite">${view.warnings(r, 'age')}</div>
-                  <div class="calc-tips">${tip(tips.passing)}</div>
+                  <div class="calc-tips">${tip('passing', tips.passing)}</div>
                 </div>
               </fieldset>
 
@@ -211,10 +216,10 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                   </div>
                   <p class="calc-line" data-calc-out="power-line">${view.powerLine(r)}</p>
                   <div class="calc-notes" data-calc-out="warn-engine" aria-live="polite">${view.warnings(r, 'engine')}</div>
-                  <div class="calc-tips">${tip(tips.hp160)}${tip(tips.hybrid)}<div data-calc-show="${showMotor}"${hidden(showMotor)}>${tip(tips.e30)}</div></div>
+                  <div class="calc-tips">${tip('hp160', tips.hp160)}${tip('hybrid', tips.hybrid)}<div data-calc-show="${showMotor}"${hidden(showMotor)}>${tip('e30', tips.e30)}</div></div>
                   <div class="calc-check">
                     <label class="check"><input type="checkbox" name="personal"${s.personal ? ' checked' : ''}><span>Для личного пользования: первый автомобиль за 12 месяцев, без продажи в течение года</span></label>
-                    ${tip(tips.personal)}
+                    ${tip('personal', tips.personal)}
                   </div>
                 </div>
               </fieldset>
@@ -224,24 +229,16 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                 <div class="calc-card__head"><span class="calc-card__num">04</span><h3 class="calc-card__title">Доставка по России</h3></div>
                 <div class="calc-card__body">
                   <div class="calc-cols calc-cols--stack">
-                    <label class="field calc-field">
-                      <span class="field__label">Город получения</span>
-                      <select class="field__control" name="city">
-                        ${rules.cities.map((c) => `<option value="${c.s}"${c.s === (r.delivery.city || 'vladivostok') ? ' selected' : ''}>${esc(c.n)}${c.s === 'vladivostok' ? ' (самовывоз)' : ''}</option>`)}
-                      </select>
-                    </label>
                     <div class="field calc-field">
-                      <span class="field__label">Тип кузова для тарифа автовоза</span>
+                      <span class="field__label">Тип кузова</span>
                       ${pills('body', Object.entries(core.BODIES).map(([k, v]) => [k, v.name]), r.input.body, {}, 'Тип кузова')}
                     </div>
-                  </div>
-                  <div class="calc-check">
-                    <label class="check"><input type="checkbox" name="markup"${s.markup ? ' checked' : ''}><span>Учесть наценку банка при оплате за рубеж. Ориентир к курсу ЦБ: +${fmt.num(rules.markup.JPY * 100, 1)} % иена, +${fmt.num(rules.markup.KRW * 100, 1)} % вона, +${fmt.num(rules.markup.CNY * 100, 1)} % юань</span></label>
-                    ${tip(tips.markup)}
+                    ${selectControl({ id: 'calc-city', name: 'city', label: 'Город получения', fieldClass: 'calc-field', search: true,
+                      options: rules.cities.map((c) => `<option value="${c.s}"${c.s === (r.delivery.city || 'vladivostok') ? ' selected' : ''}>${esc(c.n)}${c.s === 'vladivostok' ? ' (самовывоз)' : ''}</option>`) })}
                   </div>
                 </div>
               </fieldset>
-              <p class="calc__nojs">${icon('info')}Пересчет работает при включенном JavaScript. Ниже есть пример расчета, таблицы ставок и разбор трех автомобилей.</p>
+              <p class="calc__nojs">${icon('info')}Для пересчета при изменении параметров включите JavaScript. Таблицы ставок доступны ниже.</p>
             </form>
 
             <aside class="calc__side" aria-label="Результат расчета">
@@ -250,12 +247,18 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                   <h3 class="label">Итог под ключ</h3>
                   <div class="calc-switch" role="group" aria-label="Что входит в итог">
                     <button type="button" data-calc-view="vl" aria-pressed="${mode === 'vl'}"><span>Во Владивостоке</span></button>
-                    <button type="button" data-calc-view="city" aria-pressed="${mode === 'city'}"><span>${r.delivery.city ? 'С доставкой в ' + esc(r.delivery.acc) : 'С доставкой в город'}</span></button>
+                    <button type="button" data-calc-view="city" aria-pressed="${mode === 'city'}"><span>С доставкой</span></button>
                   </div>
                 </div>
                 <div class="calc-live" aria-live="polite" aria-atomic="true">
                   <div class="calc-res__total"><span data-calc-out="total">${view.total(r, mode)}</span></div>
                   <p class="calc-res__caption" data-calc-out="caption">${esc(view.caption(r, mode))}</p>
+                </div>
+                <div class="calc-bank">
+                  <label class="check"><input type="checkbox" name="markup" form="calc-inputs"${s.markup ? ' checked' : ''}>
+                    <span>Учесть наценку банка <b data-calc-out="bank-rate">+${fmt.num(r.markup.pct * 100, 1)} %</b></span>
+                  </label>
+                  ${tip('markup', tips.markup)}
                 </div>
                 <div class="calc-res__status" data-calc-out="status">${view.status(r)}</div>
                 <div class="calc-res__legend" data-calc-out="legend">${view.legend(r, mode)}</div>
@@ -264,8 +267,8 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
                   <ul data-calc-out="insights">${view.insights(r, links)}</ul>
                 </div>
                 <div class="calc-res__actions">
-                  <a class="btn btn--primary btn--block" href="${u(R.contacts)}"${attrs(modalAttrs)}>Получить точный расчет ${icon('arrow', 'i-arrow')}</a>
-                  <button class="btn btn--ghost btn--sm btn--block" type="button" data-calc-copy data-copy="${esc(ctx.site.url + R.calculator)}" data-copy-done="Ссылка на расчет скопирована">${icon('share')}Скопировать ссылку на расчет</button>
+                  <a class="btn btn--primary btn--block" href="${u(R.contacts)}"${attrs(modalAttrs)}>Получить точный расчет</a>
+                  <button class="btn btn--ghost btn--sm btn--block" type="button" data-calc-copy data-copy="${esc(ctx.site.url + R.calculator)}" data-copy-done="Ссылка на расчет скопирована">${icon('share')}Скопировать ссылку</button>
                 </div>
                 <p class="calc-res__foot">Ставки и курсы ЦБ на ${esc(fmt.dateShort(Date.parse(rules.date)))}, возраст автомобиля на <span data-calc-out="date">${esc(r.dateLabel)}</span>. <a class="link" href="#smeta">Расшифровка по строкам</a></p>
               </div>
@@ -278,6 +281,10 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
               ${budgets.length ? `<a class="more" href="${esc(u(budgets[budgets.length - 1].url))}" data-calc-budget="${json(budgets.map((b) => ({ ...b, url: u(b.url) })))}"><span>${esc(budgets[budgets.length - 1].text)}</span> ${icon('arrow')}</a>` : ''}
             </div>
             <div class="calc-groups" data-calc-out="breakdown">${view.breakdown(r, mode)}</div>
+            <div class="calc-detail-total">
+              <div><h4 class="h4">Итого</h4><p data-calc-out="caption">${esc(view.caption(r, mode))}</p></div>
+              <strong class="h3" data-calc-out="total">${view.total(r, mode)}</strong>
+            </div>
             <div class="calc__after">
               <div class="calc-insights calc-insights--below" data-calc-insights${r.insights.length ? '' : ' hidden'}>
                 ${label('Что изменило бы сумму')}
@@ -313,7 +320,7 @@ export function miniCalc(ctx, { country, title, lead, tag = 'h2', rules: withRul
   const d = COUNTRY_DEFAULTS[c];
   const cn = core.COUNTRIES[c];
   const r = core.calc({ country: c, price: d.price, year: d.year, fuel: 'ice', cc: d.cc, hp: d.hp }, rules);
-  const params = { country: c, price: d.price, year: d.year, cc: d.cc, hp: d.hp };
+  const params = { country: c, price: d.price, unit: 'RUB', year: d.year, cc: d.cc, hp: d.hp };
   const dateShort = fmt.dateShort(Date.parse(rules.date));
   return html`
         <div class="mcalc" data-calc-mini data-dock-hide data-calc-url="${esc(u(R.calculator))}"${reveal()}>
@@ -326,14 +333,12 @@ export function miniCalc(ctx, { country, title, lead, tag = 'h2', rules: withRul
             ${locked
               ? `<input type="hidden" name="country" value="${c}">`
               : `<div class="opts mcalc__countries" role="radiogroup" aria-label="Страна покупки">${Object.entries(core.COUNTRIES)
-                  .map(([slug, x]) => `<label class="opt"><input type="radio" name="country" value="${slug}"${slug === c ? ' checked' : ''}><span>${esc(x.name)}</span></label>`)
+                  .map(([slug, x]) => `<label class="opt"><input type="radio" name="country" value="${slug}"${slug === c ? ' checked' : ''}><span>${flag(ctx, slug)}${esc(x.name)}</span></label>`)
                   .join('')}</div>`}
             <div class="mcalc__fields">
-              ${numField({ name: 'price', labelHtml: `Цена <span data-calc-out="cur-name">${CUR_NAME[c]}</span>`, value: group(d.price), suffix: `<span data-calc-out="cur">${esc(r.currency.sign)}</span>`, group: true, hint: `<span class="calc-hint" data-calc-out="price-rub">≈ ${fmt.rub(r.carRub)} по курсу ЦБ</span>` })}
-              <label class="field calc-field">
-                <span class="field__label">Год выпуска</span>
-                <select class="field__control" name="year">${years(rules).map((y) => `<option value="${y}"${y === d.year ? ' selected' : ''}>${y}</option>`)}</select>
-              </label>
+              ${purchaseField(r, 'mini-price')}
+              ${selectControl({ id: 'mini-year', name: 'year', label: 'Год выпуска', fieldClass: 'calc-field', search: true,
+                options: years(rules).map((y) => `<option value="${y}"${y === d.year ? ' selected' : ''}>${y}</option>`) })}
               ${numField({ name: 'cc', labelHtml: 'Объем двигателя', value: d.cc, suffix: 'см³', max: 4 })}
               ${numField({ name: 'hp', labelHtml: 'Мощность', value: d.hp, suffix: 'л.с.', max: 4, decimal: true })}
             </div>
@@ -348,8 +353,8 @@ export function miniCalc(ctx, { country, title, lead, tag = 'h2', rules: withRul
             </div>
             <div class="mcalc__legend" data-calc-out="legend">${view.legend(r, 'vl')}</div>
             <div class="mcalc__actions">
-              <a class="btn btn--light btn--block" href="${calcHref(params)}" data-calc-more>Подробный расчет ${icon('arrow', 'i-arrow')}</a>
-              ${btn('Точный расчет от менеджера', R.contacts, { variant: 'ghost', block: true, arrow: false, modal: 'request', subject: 'Точный расчет (мини-калькулятор)', attrs: { 'data-modal-title': 'Пришлем точный расчет', 'data-modal-label': 'Расчет' } })}
+              <a class="btn btn--light btn--block" href="${calcHref(params)}" data-calc-more>Подробный расчет</a>
+              ${btn('Точный расчет от менеджера', R.contacts, { variant: 'ghost', block: true, modal: 'request', subject: 'Точный расчет (мини-калькулятор)', attrs: { 'data-modal-title': 'Пришлем точный расчет', 'data-modal-label': 'Расчет' } })}
             </div>
             <p class="mcalc__disc">Расчет предварительный: расходы, комиссия и логистика указаны ориентировочно. Точную сумму под конкретный автомобиль считает менеджер.</p>
           </div>

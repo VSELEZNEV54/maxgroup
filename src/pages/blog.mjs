@@ -173,7 +173,7 @@ function calcBanner() {
               </div>
               <div class="btn-row">
                 ${btn('Открыть калькулятор', R.calculator, { variant: 'light' })}
-                ${btn('Расчет от менеджера', R.contacts, { variant: 'ghost', arrow: false, modal: 'request', subject: 'Расчет стоимости авто (статья блога)', attrs: { 'data-modal-title': 'Рассчитаем автомобиль под ключ', 'data-modal-text': 'Оставьте контакты и напишите, какой автомобиль нужен, и мы пришлем расчет по текущим ставкам и курсу.' } })}
+                ${btn('Расчет от менеджера', R.contacts, { variant: 'ghost', modal: 'request', subject: 'Расчет стоимости авто (статья блога)', attrs: { 'data-modal-title': 'Рассчитаем автомобиль под ключ', 'data-modal-text': 'Оставьте контакты и напишите, какой автомобиль нужен, и мы пришлем расчет по текущим ставкам и курсу.' } })}
               </div>
             </aside>`;
 }
@@ -247,7 +247,7 @@ function telegramBand(ctx) {
             <h2>${duo('Смотрите автомобили до покупки', 'в нашем Telegram')}</h2>
             <p class="lead">${typo(popup.text || 'Свежие предложения, видеообзоры и реальные этапы доставки авто из Японии, Кореи и Китая.')}</p>
             <div class="blog-tg__actions">
-              <a class="btn btn--dark" href="${esc(tg.url)}" target="_blank" rel="noopener">${icon('telegram')}Подписаться на канал ${icon('arrow', 'i-arrow')}</a>
+              <a class="btn btn--dark" href="${esc(tg.url)}" target="_blank" rel="noopener">${icon('telegram')}Подписаться на канал</a>
               ${tg.handle ? `<span class="label label--plain">${esc(tg.handle)}</span>` : ''}
             </div>
           </div>

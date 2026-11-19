@@ -1,0 +1,66 @@
+{
+  "001": {
+    "source": "https://www.drom.ru/catalog/zeekr/001/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [],
+        "photo": "generations/zeekr/001-g1-r1-1191991.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2021,
+        "to": 2024,
+        "codes": [],
+        "photo": "generations/zeekr/001-g1-r0-1081126.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 10,
+            "to": 2024,
+            "toMonth": 2,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "7x": {
+    "source": "https://www.drom.ru/catalog/zeekr/7x/",
+    "generations": [
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "photo": "generations/zeekr/7x-g1-r0-1219640.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2024,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  }
+}

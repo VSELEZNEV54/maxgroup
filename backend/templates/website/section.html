@@ -1,0 +1,6 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="section"><div class="container">
+  <h2>{{ value.heading }}</h2>
+  <div class="prose">{{ value.text|richtext }}</div>
+  {% if value.image %}{% image value.image width-960 loading="lazy" %}{% endif %}
+</div></section>

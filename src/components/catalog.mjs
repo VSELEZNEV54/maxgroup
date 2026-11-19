@@ -1,14 +1,44 @@
 // Блоки каталога: панель фильтров, сетка автомобилей, таблица цен, «что входит в цену», сравнение стран.
-import { html, esc, u, price, priceShort, km, num, typo, uniq, plural, count, cx } from '../lib/core.mjs';
-import { icon, label, carCard, btn, reveal, duo, sectionHead } from './ui.mjs';
+import { html, esc, u, price, cardPrice, priceShort, km, num, img, typo, plural, count, cx } from '../lib/core.mjs';
+import { icon, carCard, btn, reveal, duo, sectionHead, specList } from './ui.mjs';
 import { R } from '../routes.mjs';
+import { filtersBar, filteredEmpty, resultsHead } from './catalog-filters.mjs';
+import { quizSection } from './quiz.mjs';
 
-const select = (key, title, options, cls = '') =>
-  options.length > 1
-    ? `<label class="${cx('filter', cls)}"><span class="sr-only">${esc(title)}</span><select data-filter="${key}" aria-label="${esc(title)}"><option value="">${esc(title)}</option>${options.map((o) => `<option value="${esc(o.value)}">${esc(o.name)}</option>`).join('')}</select></label>`
-    : '';
+export const profilePrice = (entry) => entry.priceRub ? 'от ' + cardPrice(entry.priceRub) : 'По запросу';
+export const profilePriceLabel = (entry) => ['Ориентир под ключ', entry.priceDestination].filter(Boolean).join(' ');
 
-const COUNTRY_NAME = { japan: 'Япония', korea: 'Корея', china: 'Китай' };
+export function salesManagerCard(site) {
+  const manager = site.salesManager;
+  const phone = site.contacts.phones[0];
+  return html`<div class="manager">
+    <div class="manager__photo" aria-hidden="true">${img({ src: manager.photo, alt: '', cls: 'sales-portrait', sizes: '56px' })}</div>
+    <div>
+      <div class="manager__name">${esc(manager.name)}</div>
+      <div class="manager__role">${esc(manager.role)}</div>
+    </div>
+    <a class="manager__phone" href="tel:${esc(phone.tel)}"><small class="manager__role">${esc(phone.department)}</small><br>${esc(phone.label)}</a>
+  </div>`;
+}
+
+export function popularModelCard(entry, { embedded = false, priority = false } = {}) {
+  const heading = embedded ? 'h3' : 'h2';
+  return html`
+        <article class="${cx('card popular-model', embedded && 'popular-model--embedded')}" id="${entry.slug}" data-source-number="${entry.sourceNumber}">
+          <a class="popular-model__photo" href="${u(entry.url)}" aria-label="${esc('О модели ' + entry.name)}">
+            ${img({ src: entry.photo.src, alt: entry.name, priority, sizes: '(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw' })}
+          </a>
+          <div class="popular-model__body">
+            <${heading} class="popular-model__title"><a href="${u(entry.url)}">${esc(entry.name)}</a></${heading}>
+            ${specList([['Год выпуска', esc(entry.years)], ['Двигатель', esc(entry.engine || 'Уточняется')], ['Комплектация', esc(entry.trim)]])}
+            <div class="popular-model__price">
+              <span class="popular-model__meta">${typo(esc(profilePriceLabel(entry)))}</span>
+              <strong>${profilePrice(entry)}</strong>
+            </div>
+            <a class="btn btn--primary btn--block popular-model__catalog-link" href="${u(entry.pricesUrl)}" aria-label="${esc('Автомобили и цены — ' + entry.name)}">Автомобили и цены ${icon('arrow')}</a>
+          </div>
+        </article>`;
+}
 
 /**
  * Цена «от» для текстов листинга. x — марка, модель, подборка или срез с полями priceStats() (src/data/index.mjs).
@@ -44,106 +74,26 @@ function priceTable(head, rows, numCols = []) {
         </div>`;
 }
 
-/** Панель фильтров. Варианты строятся только из автомобилей текущей страницы — пустых фильтров не бывает. */
-export function filtersBar(cars, { hide = [] } = {}) {
-  const has = (k) => !hide.includes(k);
-  const opts = (fn, nameFn = (v) => v) => {
-    const m = new Map();
-    for (const c of cars) { const v = fn(c); if (v) m.set(v, (m.get(v) || 0) + 1); }
-    return [...m.entries()].sort((x, y) => y[1] - x[1] || String(x[0]).localeCompare(String(y[0]))).map(([v, n]) => ({ value: v, name: `${nameFn(v)} · ${n}` }));
-  };
-  const prices = cars.map((c) => c.priceRub).filter(Boolean);
-  const maxPrice = prices.length ? Math.max(...prices) : 0;
-  const minPrice = prices.length ? Math.min(...prices) : 0;
-  const priceSteps = [1_000_000, 1_500_000, 2_000_000, 2_500_000, 3_000_000, 4_000_000, 5_000_000, 7_000_000].filter((p) => p > minPrice && p < maxPrice);
-  const years = uniq(cars.map((c) => c.year).filter(Boolean)).sort((x, y) => y - x);
-  const brandNames = new Map(cars.map((c) => [c.brandSlug, c.brand]));
-  const modelNames = new Map(cars.map((c) => [c.modelSlug, `${c.brand} ${c.model}`]));
-  const parts = [
-    has('country') ? select('country', 'Страна', opts((c) => c.country, (v) => COUNTRY_NAME[v] || v)) : '',
-    has('brand') ? select('brand', 'Марка', opts((c) => c.brandSlug, (v) => brandNames.get(v))) : '',
-    has('model') ? select('model', 'Модель', opts((c) => c.modelSlug, (v) => modelNames.get(v))) : '',
-    has('price') && priceSteps.length ? `<label class="filter"><span class="sr-only">Цена до</span><select data-filter="price-max" aria-label="Цена до"><option value="">Цена до</option>${priceSteps.map((p) => `<option value="${p}">до ${priceShort(p)}</option>`).join('')}</select></label>` : '',
-    has('year') && years.length > 1 ? `<label class="filter"><span class="sr-only">Год от</span><select data-filter="year-min" aria-label="Год выпуска от"><option value="">Год от</option>${years.slice(1).map((y) => `<option value="${y}">от ${y}</option>`).join('')}</select></label>` : '',
-    has('body') ? select('body', 'Кузов', opts((c) => c.body, (v) => v[0].toUpperCase() + v.slice(1))) : '',
-    has('fuel') ? select('fuel', 'Двигатель', opts((c) => c.engine?.type, (v) => v[0].toUpperCase() + v.slice(1))) : '',
-    has('drive') ? select('drive', 'Привод', opts((c) => c.drive)) : '',
-    has('hp') && cars.some((c) => c.engine?.powerHp && c.engine.powerHp <= 160) && cars.some((c) => c.engine?.powerHp > 160)
-      ? `<label class="filter"><span class="sr-only">Мощность</span><select data-filter="hp-max" aria-label="Мощность"><option value="">Мощность</option><option value="160">до 160 л.с.</option><option value="200">до 200 л.с.</option><option value="250">до 250 л.с.</option></select></label>`
-      : '',
-  ].filter(Boolean);
-  return html`
-        <div class="filters" data-filters>
-          <div class="filters__row">
-            ${parts}
-            <button class="filters__reset" type="button" data-filters-reset hidden>Сбросить ${icon('close')}</button>
-            <span class="filters__spacer"></span>
-            <label class="filter"><span class="sr-only">Сортировка</span><select data-sort aria-label="Сортировка">
-              <option value="">По умолчанию</option>
-              <option value="price-asc">Сначала дешевле</option>
-              <option value="price-desc">Сначала дороже</option>
-              <option value="year-desc">Сначала новее</option>
-              <option value="mileage-asc">Меньше пробег</option>
-            </select></label>
-          </div>
-        </div>`;
-}
-
-/** Плитка-заявка внутри сетки */
-export function promoTile({ title = 'Не нашли нужный автомобиль?', text = 'В каталоге собраны примеры. Подберем под ваш запрос на аукционах и площадках и пришлем расчет под ключ.', subject = 'Подбор автомобиля (каталог)', car, accent = false } = {}) {
-  return html`
-          <div class="${cx('promo-tile', accent && 'promo-tile--accent')}" data-grid-extra>
-            <div>
-              ${label('Подбор под запрос')}
-              <p class="promo-tile__title">${typo(title)}</p>
-              <p>${typo(text)}</p>
-            </div>
-            ${btn('Подобрать автомобиль', R.contacts, { variant: 'light', modal: 'request', subject, attrs: { 'data-modal-title': 'Подберем автомобиль под ваш запрос', 'data-modal-car': car || null } })}
-          </div>`;
-}
-
-/** Подпись к ценам листинга: «под ключ» — только там, где в цену вошел утилизационный сбор */
-function pricesNote(cars) {
-  const partial = cars.filter((c) => c.priceIsPartial).length;
-  if (!partial) return 'Цены указаны под ключ во Владивостоке, с таможенными платежами.';
-  if (partial === cars.length) return 'Цены указаны во Владивостоке, без утилизационного сбора: его считаем по документам автомобиля.';
-  return 'Цены указаны под ключ во Владивостоке, с таможенными платежами. Где утильсбор не вошел в цену, в карточке указано «без утильсбора».';
-}
-
 /**
  * Сетка автомобилей с фильтрами. Все карточки — в HTML; js/catalog.js только скрывает и сортирует.
  * priority: false — листинг начинается ниже первого экрана, приоритетную загрузку первому фото не ставим.
  */
-export function carsBlock(cars, { filters = true, hide = [], pageSize = 24, promo = true, promoOpts = {}, tag = 'h3', emptyText, priority = true } = {}) {
-  if (!cars.length) {
-    return html`
-        <div class="empty">
-          ${icon('search', 'card__icon')}
-          <p class="h3">${typo(emptyText || 'Сейчас в каталоге нет примеров, но мы привезем такой автомобиль под заказ')}</p>
-          <p>Оставьте заявку, и мы подберем варианты на аукционах и площадках и пришлем расчет под ключ.</p>
-          ${btn('Оставить заявку', R.contacts, { modal: 'request', subject: 'Подбор автомобиля (пустой раздел каталога)' })}
-        </div>`;
-  }
+export function carsBlock(ctx, cars, { scope, heading = 'Все автомобили', quizFilters = false, pageSize = 24, country, subject = 'Подбор автомобиля (каталог)', tag = 'h3', priority = true } = {}) {
   return html`
-        ${filters && cars.length > 4 ? filtersBar(cars, { hide }) : ''}
-        <div class="results-head">
-          <div class="results-head__count" data-results-count aria-live="polite">${count(cars.length, ['автомобиль', 'автомобиля', 'автомобилей'])}</div>
-          <p class="muted small">${typo(pricesNote(cars))} <a class="link" href="${u(R.calculator)}">Как считается цена</a></p>
-        </div>
-        <div class="${cx('grid grid--4 cars-grid', cars.length > 1 && 'cars-grid--duo')}" data-cars data-page-size="${pageSize}">
-          ${cars.map((c, i) => carCard(c, { i: i % 4, tag, priority: priority && i === 0 }))}
-          ${promo ? promoTile(promoOpts) : ''}
-        </div>
-        <div class="cars-more" hidden><button class="btn btn--ghost" type="button" data-cars-more><span>Показать еще</span> ${icon('arrow-down')}</button></div>
-        <div class="empty" data-cars-empty hidden>
-          ${icon('search', 'card__icon')}
-          <p class="h3">По таким параметрам примеров нет</p>
-          <p>Это не значит, что автомобиля нет на рынке: подберем его под заказ.</p>
-          <div class="btn-row">
-            <button class="btn btn--ghost" type="button" data-filters-reset-all>Сбросить фильтры</button>
-            ${btn('Подобрать под запрос', R.contacts, { modal: 'request', subject: 'Подбор автомобиля (фильтр без результатов)' })}
+    <section class="section section--sm section--flush-top" data-catalog-list data-catalog-quiz="podbor">
+        <div class="container">
+          <h2 class="sr-only">${esc(heading)}</h2>
+          ${filtersBar(cars, { scope, quizFilters })}
+          ${resultsHead(cars.length)}
+          ${filteredEmpty({ visible: !cars.length })}
+          <div class="${cx('grid grid--4 cars-grid', cars.length > 1 && 'cars-grid--duo')}" data-cars data-page-size="${pageSize}">
+            ${cars.toSorted((a, b) => Number(Boolean(b.modelInTop30)) - Number(Boolean(a.modelInTop30)))
+              .map((c, i) => carCard(c, { i: i % 4, tag, priority: priority && i === 0 }))}
           </div>
-        </div>`;
+          <div class="cars-more" hidden><button class="btn btn--ghost" type="button" data-cars-more><span>Показать еще</span></button></div>
+        </div>
+    </section>
+    ${quizSection(ctx, { white: true, country, brand: scope?.brand, model: scope?.model, subject })}`;
 }
 
 /** Заголовок колонки цены: «под ключ» — только если у всех автомобилей таблицы цена полная */

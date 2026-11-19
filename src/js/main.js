@@ -15,7 +15,6 @@
   var header = $('[data-header]');
   var drawer = $('[data-drawer]');
   var dock = $('[data-dock]');
-  var lastY = window.scrollY;
   var ticking = false;
   var formsInView = 0;
 
@@ -37,15 +36,10 @@
 
   function onScroll() {
     var y = window.scrollY;
-    if (header) {
-      header.classList.toggle('is-stuck', y > 24);
-      var goingDown = y > lastY && y > 480;
-      if (Math.abs(y - lastY) > 6) header.classList.toggle('is-hidden', goingDown && !header.classList.contains('is-open'));
-    }
+    if (header) header.classList.toggle('is-stuck', y > 24);
     var nearBottom = window.innerHeight + y > doc.documentElement.scrollHeight - 220;
     if (dock) dock.classList.toggle('is-visible', y > window.innerHeight * 0.55 && !nearBottom && formsInView === 0);
     if (buybar) buybar.classList.toggle('is-hidden', nearBottom || formsInView > 0);
-    lastY = y;
     ticking = false;
   }
 
@@ -128,7 +122,6 @@
     drawer.classList.toggle('is-open', willOpen);
     drawer.setAttribute('aria-hidden', String(!willOpen));
     header.classList.toggle('is-open', willOpen);
-    header.classList.remove('is-hidden');
     body.classList.toggle('is-locked', willOpen);
     // пока меню открыто, содержимое под ним скрыто от скринридера (от клавиатуры — ловушка фокуса ниже)
     behindDrawer.forEach(function (el) {
@@ -266,54 +259,21 @@
 
   $$('[data-hero-video]').forEach(function (wrap) {
     var video = $('video', wrap);
-    var btn = $('[data-video-toggle]', wrap.closest('section') || doc);
-    if (!video) return;
-    var userPaused = false;
-
-    function setState(playing) {
-      if (!btn) return;
-      btn.setAttribute('aria-pressed', String(!playing));
-      btn.setAttribute('aria-label', playing ? 'Поставить видео на паузу' : 'Включить видео');
-      btn.classList.toggle('is-paused', !playing);
-    }
-
-    function play() {
-      var p = video.play();
-      if (p && p.catch) p.catch(function () { setState(false); });
-    }
-
-    // состояние кнопки и показ ролика поверх постера — и при автозапуске, и при ручном включении
-    video.addEventListener('playing', function () { wrap.classList.add('is-playing'); setState(true); });
-    video.addEventListener('pause', function () { setState(false); });
-
-    // экономим трафик: на мобильных — облегченный файл
+    if (!video || reduceMotion || (navigator.connection && navigator.connection.saveData)) return;
     var src = window.innerWidth < 760 && video.dataset.srcMobile ? video.dataset.srcMobile : video.dataset.src;
-    var saveData = navigator.connection && navigator.connection.saveData;
-    if (src && !reduceMotion && !saveData) {
-      video.src = src;
-      video.load();
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) {
-            if (en.isIntersecting) { if (!userPaused) play(); } else video.pause();
-          });
-        }, { threshold: 0.15 }).observe(wrap);
-      } else {
-        play();
-      }
-    } else {
-      setState(false);
-      if (btn && (reduceMotion || saveData)) {
-        btn.addEventListener('click', function once() {
-          if (!video.src && src) { video.src = src; video.load(); }
-        }, { once: true });
-      }
+    if (!src) return;
+    video.src = src;
+    video.addEventListener('playing', function () { wrap.classList.add('is-playing'); });
+    function play() {
+      var attempt = video.play();
+      if (attempt && attempt.catch) attempt.catch(function () { /* остается постер */ });
     }
-
-    if (btn) {
-      btn.addEventListener('click', function () {
-        if (video.paused) { userPaused = false; play(); } else { userPaused = true; video.pause(); }
-      });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) play(); else video.pause(); });
+      }, { threshold: 0.15 }).observe(wrap);
+    } else {
+      play();
     }
   });
 
@@ -427,6 +387,9 @@
     markTables();
     window.addEventListener('load', markTables);
     window.addEventListener('resize', markTables);
+    document.addEventListener('toggle', function (event) {
+      if (event.target.open && event.target.querySelector('.table-wrap')) markTables();
+    }, true);
   }
 
   /* аккордеоны одной группы: открыт только один */
@@ -615,6 +578,21 @@
   }
 
   $$('[data-lead-form]').forEach(function (form) {
+    var previewEndpoint = document.body.dataset.previewLeads;
+    var previewSubmission;
+    if (previewEndpoint) {
+      form.action = previewEndpoint;
+      form.setAttribute('data-server-lead', '');
+      var demoNote = form.querySelector('.form__success .form__note');
+      if (demoNote) demoNote.remove();
+      var notice = document.createElement('p');
+      notice.setAttribute('data-submit-error', '');
+      notice.setAttribute('role', 'alert');
+      notice.className = 'form__note';
+      notice.textContent = 'Не удалось сохранить заявку. Попробуйте отправить еще раз.';
+      notice.hidden = true;
+      form.appendChild(notice);
+    }
     // ошибка согласия снимается, как только галочку поставили
     var agreeBox = $('input[name="agree"]', form);
     if (agreeBox) {
@@ -624,8 +602,9 @@
         agreeBox.removeAttribute('aria-invalid');
       });
     }
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
+      if (form.classList.contains('is-sent')) return;
       var ok = true;
       var phone = $('[data-phone]', form);
       if (phone) {
@@ -647,7 +626,37 @@
       }
       if (!ok) return;
       var btn = $('button[type="submit"]', form);
+      if (btn && btn.disabled) return;
       if (btn) btn.classList.add('is-loading');
+      if (form.hasAttribute('data-server-lead')) {
+        if (btn) btn.disabled = true;
+        var error = form.querySelector('[data-submit-error]');
+        error.hidden = true;
+        try {
+          var payload = new FormData(form);
+          if (previewEndpoint) {
+            var context = await fetch(previewEndpoint + 'context/', { cache: 'no-store' });
+            if (!context.ok) throw new Error(String(context.status));
+            var token = await context.json();
+            previewSubmission = previewSubmission || token.submission_id;
+            payload.set('csrfmiddlewaretoken', token.csrf);
+            payload.set('submission_id', previewSubmission);
+            payload.set('page', location.pathname);
+          }
+          var response = await fetch(form.action, {
+            method: 'POST', body: payload, headers: { Accept: 'application/json' }
+          });
+          var result = response.ok ? await response.json() : null;
+          if (!result || !result.accepted) throw new Error(String(response.status));
+          previewSubmission = null;
+          if (form.elements.submission_id) form.elements.submission_id.value = result.next_submission_id;
+          if (btn) btn.disabled = false;
+        } catch (failure) {
+          error.hidden = false;
+          if (btn) { btn.disabled = false; btn.classList.remove('is-loading'); }
+          return;
+        }
+      }
       var msg = encodeURIComponent(buildMessage(form));
       var wa = $('[data-wa-link]', form);
       var tg = $('[data-tg-link]', form);
@@ -661,7 +670,7 @@
         if (btn) btn.classList.remove('is-loading');
         form.classList.add('is-sent');
         form.dispatchEvent(new CustomEvent('lead:sent', { bubbles: true }));
-      }, 450);
+      }, form.hasAttribute('data-server-lead') ? 0 : 450);
     });
   });
 

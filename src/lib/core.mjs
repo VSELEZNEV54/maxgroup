@@ -1,5 +1,6 @@
 // Базовые помощники генератора: шаблоны, экранирование, ссылки, форматирование, изображения.
-import { readFileSync, existsSync, openSync, readSync, closeSync } from 'node:fs';
+import { readFileSync, existsSync, openSync, readSync, closeSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, dirname, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -59,16 +60,37 @@ export function u(path) {
     if (!state.base || !path.startsWith('/') || path === state.base || path.startsWith(state.base + '/')) return path;
     return state.base + path;
   }
-  const [p, hash = ''] = path.split('#');
+  const suffixStart = path.search(/[?#]/);
+  const p = suffixStart < 0 ? path : path.slice(0, suffixStart);
+  const suffix = suffixStart < 0 ? '' : path.slice(suffixStart);
   const from = state.current.endsWith('/') ? state.current : posix.dirname(state.current) + '/';
   let target = p;
   if (target.endsWith('/')) target += 'index.html';
   let rel = posix.relative(from, target) || 'index.html';
-  return rel + (hash ? '#' + hash : '');
+  return rel + suffix;
+}
+
+const preparedPhotos = new Map();
+
+// Подготавливаем новые растровые иллюстрации при первом обращении из шаблона.
+// Суффикс сохраняет различие между одноименными JPG, PNG и авторским WebP.
+function imageAsset(file) {
+  const path = String(file).replace(/^\/?(assets\/)?/, '');
+  if (!/^img\/.+\.(?:jpe?g|png|gif|tiff?|bmp|avif)$/i.test(path) || path.startsWith('img/og/') ||
+      /^img\/brand\/(?:icon-\d+|favicon-\d+|apple-touch-icon)\.png$/.test(path)) return path;
+  if (preparedPhotos.has(path)) return preparedPhotos.get(path);
+  const source = join(ROOT, 'assets', path);
+  const out = path + '.webp';
+  const dest = join(ROOT, 'assets', out);
+  if (!existsSync(dest) || statSync(dest).mtimeMs < statSync(source).mtimeMs) {
+    execFileSync('python3', [join(ROOT, 'tools/webp.py'), source, dest], { stdio: 'inherit' });
+  }
+  preparedPhotos.set(path, out);
+  return out;
 }
 
 /** Путь к файлу из /assets: a('img/cars/x/01.webp') */
-export const a = (file) => u('/assets/' + String(file).replace(/^\/?(assets\/)?/, ''));
+export const a = (file) => u('/assets/' + imageAsset(file));
 
 /** Абсолютный URL для canonical / OG / schema.org */
 export const abs = (site, path) => site.url.replace(/\/$/, '') + path;
@@ -80,6 +102,8 @@ const NNBSP = ' '; // узкий неразрывный пробел для р
 
 export const num = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, NNBSP);
 export const price = (n) => (n || n === 0 ? `${num(n)}${NBSP}₽` : 'по запросу');
+// В карточках разряды цены разделены обычным неразрывным пробелом, как в CarLot.price_text.
+export const cardPrice = (n) => price(n).replaceAll(NNBSP, NBSP);
 export const km = (n) => (n || n === 0 ? `${num(n)}${NBSP}км` : '—');
 
 /** Цена коротко: 1 505 000 → «1,5 млн ₽», 850 000 → «850 тыс. ₽» */
@@ -220,12 +244,12 @@ function parseSize(b, full) {
 export const fileExists = (file) => existsSync(join(ROOT, file));
 
 /**
- * <img> с размерами (без CLS), lazy-загрузкой и srcset, если рядом лежат уменьшенные версии (-640, -960).
+ * <img> с размерами (без CLS), lazy-загрузкой и srcset, если рядом лежат уменьшенные версии (-480, -800).
  * src — путь относительно корня проекта: 'assets/img/cars/x/01.webp'
  */
 export function img({ src, alt = '', cls, lazy = true, sizes, priority = false, w, h, attrs: extra = {} }) {
   if (!src) return '';
-  const rel = String(src).replace(/^\//, '');
+  const rel = 'assets/' + imageAsset(src);
   const size = imgSize(rel);
   const width = w || size?.w;
   const height = h || size?.h;

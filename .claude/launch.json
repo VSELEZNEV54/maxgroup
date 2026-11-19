@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "maxgroup-django",
+      "runtimeExecutable": "make",
+      "runtimeArgs": ["preview"],
+      "port": 8000
+    },
+    {
       "name": "maxgroup-site",
       "runtimeExecutable": "node",
       "runtimeArgs": [

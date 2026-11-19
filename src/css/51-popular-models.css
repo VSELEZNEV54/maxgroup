@@ -1,0 +1,97 @@
+/* Подборки и страницы моделей по заказам. */
+.popular-model.card {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  scroll-margin-top: 6rem;
+}
+
+.popular-model--embedded { margin-top: var(--sp-5); max-width: 42rem; }
+.popular-model__photo { display: block; overflow: hidden; background: var(--paper); }
+.popular-model__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.popular-model__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: clamp(18px, 2vw, 28px);
+  min-width: 0;
+}
+
+.popular-model__meta, .offer-status {
+  color: var(--text-2);
+  font-size: .9375rem;
+  line-height: 1.45;
+}
+
+.popular-model__title, .popular-model__price strong {
+  font-size: var(--fs-h3);
+  font-weight: var(--w-medium);
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+.popular-model__title a:hover { color: var(--accent); }
+.popular-model__price { display: grid; gap: var(--sp-1); margin-top: auto; }
+.popular-model__catalog-link { padding-inline: var(--sp-4); }
+.popular-model .spec > div { padding-block: 9px; align-items: baseline; }
+.popular-model :is(dt, dd), .profile-spec dd { overflow-wrap: anywhere; }
+.popular-model .spec dd, .profile-spec dd { text-align: right; }
+
+.profile-info {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(28px, 5vw, 88px);
+}
+.profile-head__copy { display: grid; margin-top: var(--sp-3); }
+.profile-head__kicker { margin-bottom: var(--sp-2); }
+.profile-head__copy h1 + .lead { margin-top: clamp(16px, 1.25vw, 24px); }
+.profile-head__copy .btn { justify-self: start; margin-top: clamp(20px, 1.5vw, 28px); }
+.profile-head__copy .btn--ghost:is(:hover, :focus-visible, :active) {
+  --btn-bg: transparent;
+  --btn-bd: var(--accent);
+  color: var(--accent);
+}
+.profile-head__kicker a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .875rem;
+  font-weight: var(--w-medium);
+  color: var(--text-2);
+}
+.profile-head__kicker a::before { content: ''; width: 9px; height: 9px; background: var(--accent); border-radius: 50%; }
+.profile-head__kicker a:hover { text-decoration: underline; }
+.profile-head__copy h1 { font-size: clamp(2.15rem, 4.4vw, 4.7rem); overflow-wrap: break-word; }
+.profile-figure { max-width: 32rem; margin: var(--sp-5) 0 0; }
+.profile-figure img { display: block; width: 100%; height: auto; border-radius: var(--r-md); }
+.profile-info p, .profile-info .more, .profile-editorial > :not(:first-child) { margin-top: var(--sp-4); }
+.profile-spec { padding: clamp(18px, 3vw, 40px); background: var(--card); border-radius: var(--r-md); }
+.profile-editorial .prose { max-width: 76ch; }
+.profile-head + #avtomobili { padding-top: var(--sp-4); }
+.offer-status { margin-block: var(--sp-3) var(--sp-5); }
+.offer-empty { background: var(--card); border-radius: var(--r-sm); }
+.section--white .offer-empty { background: var(--paper); }
+.model-photo-caption { position: absolute; bottom: 8px; left: 8px; padding: 3px 8px; border-radius: var(--r-sm); background: var(--ink); color: white; font-size: .75rem; }
+.offer-empty { display: grid; gap: var(--sp-3); padding: clamp(20px, 3vw, 40px); }
+.offer-empty p:last-child { max-width: 65ch; color: var(--text-2); }
+#avtomobili, #o-modeli { scroll-margin-top: 5rem; }
+
+@media (max-width: 840px) {
+  .profile-info { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 375px) {
+  .profile-head__kicker { display: none; }
+  .profile-head__copy .btn { padding-inline: var(--sp-3); min-height: 44px; font-size: var(--fs-sm); }
+}
+@media (max-width: 600px) {
+  .popular-model__catalog-link { min-height: 48px; }
+  .model-offers.grid { grid-template-columns: minmax(0, 1fr); }
+}

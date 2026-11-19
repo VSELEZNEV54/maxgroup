@@ -1,0 +1,17 @@
+name: Локальный стек Django
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - name: Запустить проект с изолированными локальными реквизитами
+        run: make up
+      - name: Проверить модели, миграции и пользовательские сценарии
+        run: make test

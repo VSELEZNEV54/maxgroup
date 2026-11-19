@@ -1,0 +1,264 @@
+{
+  "cooper": {
+    "source": "https://www.drom.ru/catalog/mini/hatch/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "F65",
+          "F66",
+          "J01"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "42GD15",
+              "52GD20"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2024,
+            "fromMonth": 4,
+            "to": null,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 3,
+            "to": null,
+            "codes": [
+              "12GD15",
+              "22GD20",
+              "32GD20",
+              "12GC32",
+              "12HF32",
+              "22GC32"
+            ]
+          }
+        ],
+        "photo": "generations/mini/cooper-1343961.webp"
+      },
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 2021,
+        "to": 2024,
+        "codes": [
+          "F55",
+          "F56"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 5,
+            "to": 2024,
+            "toMonth": 5,
+            "codes": [
+              "XU15MW",
+              "XU20MW",
+              "XV15MW",
+              "XV20MW"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 5,
+            "to": 2024,
+            "toMonth": 2,
+            "codes": [
+              "XR15MW",
+              "XR20MW",
+              "XRJCWMW",
+              "XY15MW"
+            ]
+          }
+        ],
+        "photo": "generations/mini/cooper-1267388.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2021,
+        "codes": [
+          "F55",
+          "F56"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 5,
+            "to": 2021,
+            "toMonth": 4,
+            "codes": [
+              "XU15MW",
+              "XU20MW",
+              "XV15MW",
+              "XV20MW",
+              "XU15M",
+              "XU20M",
+              "XT15M",
+              "XT20M"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 5,
+            "to": 2021,
+            "toMonth": 4,
+            "codes": [
+              "XR15MW",
+              "XR20MW",
+              "XRJCWMW",
+              "XV20MW",
+              "XY15MW",
+              "XY20MW",
+              "XR20M",
+              "XRJCWM",
+              "XR15M",
+              "XN15M",
+              "XN20M"
+            ]
+          }
+        ],
+        "photo": "generations/mini/cooper-1267400.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2018,
+        "codes": [
+          "F55",
+          "F56"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2014,
+            "fromMonth": 10,
+            "to": 2018,
+            "toMonth": 4,
+            "codes": [
+              "XS12",
+              "XS15",
+              "XS20",
+              "XU15",
+              "XT15",
+              "XT20"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2018,
+            "toMonth": 4,
+            "codes": [
+              "XRJCW",
+              "XM12",
+              "XM15",
+              "XM20",
+              "XMJCW",
+              "XR15",
+              "XN15",
+              "XN20"
+            ]
+          }
+        ],
+        "photo": "generations/mini/cooper-992154.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2010,
+        "to": 2014,
+        "codes": [
+          "R56"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 10,
+            "to": 2014,
+            "toMonth": 3,
+            "codes": [
+              "JCWGP",
+              "MFJCW",
+              "SR16",
+              "SU16",
+              "SUJCW",
+              "SV16"
+            ]
+          }
+        ],
+        "photo": "generations/mini/cooper-609924.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2006,
+        "to": 2010,
+        "codes": [
+          "R56"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 2,
+            "to": 2010,
+            "toMonth": 9,
+            "codes": [
+              "ME14",
+              "MF16",
+              "MF16S",
+              "MFJCW",
+              "SR16",
+              "SU16",
+              "SV16"
+            ]
+          }
+        ],
+        "photo": "generations/mini/cooper-609962.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2001,
+        "to": 2007,
+        "codes": [
+          "R50"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 3,
+            "to": 2007,
+            "toMonth": 1,
+            "codes": [
+              "RA16",
+              "RE16"
+            ]
+          }
+        ],
+        "photo": "generations/mini/cooper-858817.webp"
+      }
+    ]
+  }
+}

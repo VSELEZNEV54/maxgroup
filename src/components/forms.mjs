@@ -4,6 +4,7 @@
 // канал компании для переписки не подходит. method="post" — чтобы при сбое скрипта телефон не попал в адресную строку.
 import { html, esc, u } from '../lib/core.mjs';
 import { icon } from '../lib/icons.mjs';
+import { selectControl } from './select.mjs';
 
 let uid = 0;
 const nextId = (p) => `${p}-${++uid}`;
@@ -26,18 +27,8 @@ const FIELD = {
         <span class="field__label">Какой автомобиль ищете</span>
         <input class="field__control" type="text" name="car" id="${id}-car" placeholder="Toyota Alphard 2022-2023" value="${esc(o.car || '')}">
       </label>`,
-  budget: (id) => html`
-      <label class="field">
-        <span class="field__label">Бюджет под ключ</span>
-        <select class="field__control" name="budget" id="${id}-budget">
-          <option value="">Не определился</option>
-          <option>до 1 млн ₽</option>
-          <option>1-1,5 млн ₽</option>
-          <option>1,5-2,5 млн ₽</option>
-          <option>2,5-4 млн ₽</option>
-          <option>от 4 млн ₽</option>
-        </select>
-      </label>`,
+  budget: (id) => selectControl({ id: id + '-budget', name: 'budget', label: 'Бюджет под ключ',
+    options: '<option value="">Не определился</option><option>до 1 млн ₽</option><option>1-1,5 млн ₽</option><option>1,5-2,5 млн ₽</option><option>2,5-4 млн ₽</option><option>от 4 млн ₽</option>' }),
   city: (id, o) => html`
       <label class="field">
         <span class="field__label">Город доставки</span>
@@ -66,27 +57,23 @@ const FIELD = {
  * @param {string[]} [o.fields] — порядок полей: name, phone, car, budget, city, comment, contact
  * @param {string} [o.cta] — текст кнопки
  * @param {string} [o.btn] — модификатор кнопки (btn--primary | btn--light | btn--dark)
- * @param {boolean} [o.row] — имя и телефон в одну строку
  */
 export function leadForm(o = {}) {
   const id = nextId('f');
   const fields = o.fields || ['name', 'phone'];
   const cta = o.cta || 'Отправить заявку';
-  const inRow = o.row !== false && fields.includes('name') && fields.includes('phone');
-  const rest = inRow ? fields.filter((f) => f !== 'name' && f !== 'phone') : fields;
   return html`
     <form class="form" id="${id}" method="post" data-lead-form novalidate>
       <input type="hidden" name="subject" value="${esc(o.subject || 'Заявка с сайта')}">
       <input type="hidden" name="calc" value="">
       ${o.hidden ? Object.entries(o.hidden).map(([k, v]) => `<input type="hidden" name="${esc(k)}" value="${esc(v)}">`) : ''}
-      ${inRow ? `<div class="form__row">${FIELD.name(id, o)}${FIELD.phone(id, o)}</div>` : ''}
-      ${rest.map((f) => FIELD[f](id, o))}
+      ${fields.map((f) => FIELD[f](id, o))}
       <label class="check">
         <input type="checkbox" name="agree" required aria-describedby="${id}-agree-error">
         <span>Соглашаюсь на обработку персональных данных согласно <a href="${u('/politika-konfidencialnosti/')}" target="_blank">политике конфиденциальности</a></span>
       </label>
       <span class="field__error" id="${id}-agree-error" role="alert">Отметьте согласие на обработку данных: без него заявку не отправить</span>
-      <button class="btn ${o.btn || 'btn--primary'} btn--block" type="submit">${esc(cta)} ${icon('arrow', 'i-arrow')}</button>
+      <button class="btn ${o.btn || 'btn--primary'} btn--block" type="submit">${esc(cta)}</button>
       ${o.note ? `<p class="form__note">${esc(o.note)}</p>` : ''}
       <div class="form__success" role="status">
         <span class="label">Заявка принята</span>

@@ -1,0 +1,93 @@
+name: maxgroup-local
+
+x-app: &app
+  image: maxgroup-app:local
+  build:
+    context: .
+    target: app
+  env_file: .env
+  volumes:
+    - uploads:/srv/media
+    - static:/srv/static:ro
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: maxgroup
+      POSTGRES_USER: maxgroup
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Создайте .env командой make init}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U maxgroup -d maxgroup"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  broker:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - broker:/data
+  cache:
+    image: redis:7-alpine
+    command: redis-server --maxmemory 128mb --maxmemory-policy allkeys-lru
+  setup:
+    <<: *app
+    volumes:
+      - uploads:/srv/media
+      - static:/srv/static
+    depends_on:
+      db: {condition: service_healthy}
+    command: ["sh", "-ec", "python manage.py migrate --noinput && python manage.py collectstatic --noinput --verbosity 0 && python manage.py sync_site && python manage.py prepare_roles && python manage.py local_admin"]
+  web:
+    <<: *app
+    restart: unless-stopped
+    depends_on:
+      setup: {condition: service_completed_successfully}
+      cache: {condition: service_started}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/',timeout=2)"]
+      interval: 10s
+      timeout: 4s
+      retries: 15
+  worker-crm:
+    <<: *app
+    restart: unless-stopped
+    depends_on:
+      setup: {condition: service_completed_successfully}
+      broker: {condition: service_started}
+    command: celery -A backend worker -Q crm -l INFO --concurrency=2
+  worker-import:
+    <<: *app
+    restart: unless-stopped
+    depends_on:
+      setup: {condition: service_completed_successfully}
+      broker: {condition: service_started}
+    command: celery -A backend worker -Q imports -l INFO --concurrency=1
+  beat:
+    <<: *app
+    restart: unless-stopped
+    depends_on:
+      setup: {condition: service_completed_successfully}
+      broker: {condition: service_started}
+    command: celery -A backend beat -l INFO --schedule=/tmp/celerybeat
+  nginx:
+    image: maxgroup-nginx:local
+    build:
+      context: .
+      target: proxy
+    ports:
+      - "127.0.0.1:${SITE_PORT:-8000}:80"
+    volumes:
+      - static:/srv/static:ro
+      - uploads:/srv/media:ro
+    depends_on:
+      web: {condition: service_healthy}
+    restart: unless-stopped
+
+volumes:
+  postgres:
+  uploads:
+  static:
+  broker:

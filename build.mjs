@@ -17,6 +17,8 @@ import { loadContext } from './src/data/index.mjs';
 import { base } from './src/layout/base.mjs';
 import { collectPages } from './src/pages/index.mjs';
 import { resetFormIds } from './src/components/forms.mjs';
+import { cachedOfferPhoto, freshUntil, offerList } from './src/components/model-offers.mjs';
+import { offerVehicle } from './src/data/model-offers.mjs';
 import { lint } from './src/lib/lint.mjs';
 
 const args = new Set(process.argv.slice(2));
@@ -151,7 +153,37 @@ for (const page of pages) {
   rendered.push({ page, rel, html: doc });
 }
 
+// Контракт миграции для Django. В статическую демонстрационную сборку не попадает.
+if (args.has('--django')) {
+  write('source-manifest.json', JSON.stringify({
+    version: 1,
+    origin: site.url,
+    phone: site.contacts.phones[0],
+    pages: rendered.map(({ page: p }) => ({
+      path: p.url, kind: p.type, heading: noYo(p.h1 || p.title),
+      indexable: !p.noindex && p.type !== 'notFound',
+    })),
+    cars: [...ctx.cars, ...ctx.popularModels.flatMap((entry) => entry.offers.cars.map((offer) => ({
+      ...offerVehicle(entry, offer), importProvider: 'model-offers', checkedAt: entry.offers.checkedAt,
+      expiresAt: Date.parse(freshUntil(entry.offers.checkedAt)),
+      photos: [cachedOfferPhoto(offer.id) ? '/model-media/' + offer.id + '.webp' : '/' + entry.photo.src],
+    })))],
+  }));
+}
 write('assets/css/main.css', cssMin);
+const mediaDir = join(OUT, 'model-media');
+mkdirSync(mediaDir, { recursive: true });
+for (const entry of ctx.popularModels) {
+  setCurrent(entry.url);
+  const { checkedAt } = entry.offers;
+  for (const car of entry.offers.cars) {
+    const photo = cachedOfferPhoto(car.id);
+    if (photo) copyFileSync(photo, join(mediaDir, car.id + '.webp'));
+  }
+  write(`model-inventory/${entry.key}.json`, JSON.stringify({
+    checkedAt, expires: freshUntil(checkedAt), html: noYo(offerList(entry, entry.offers)),
+  }));
+}
 for (const f of jsFiles) write(`assets/js/${f}`, readFileSync(join(jsDir, f), 'utf8'));
 let copied = 0;
 for (const dir of ['img', 'video', 'fonts']) {
@@ -164,6 +196,16 @@ for (const dir of ['img', 'video', 'fonts']) {
 }
 
 // --- служебные файлы -----------------------------------------------------------------------------
+
+const photoCredits = ctx.popularModels.filter(({ photo }) => photo.source).map(({ name, country, photo }) => [
+  `${name} ${ctx.countryBySlug[country].from}`,
+  `Файл — ${photo.src}`,
+  photo.author && `Автор — ${photo.author}`,
+  `Оригинал — ${photo.source}`,
+  [photo.license, photo.licenseUrl].filter(Boolean).join(' · '),
+].filter(Boolean).join('\n'));
+// Имена авторов и адреса оригиналов сохраняем без типографических замен.
+write('assets/photo-credits.txt', Buffer.from(['Фотографии моделей', 'Для каталога подготовлены копии в формате WebP.', ...photoCredits].join('\n\n') + '\n'));
 
 const indexable = pages.filter((p) => !p.noindex && !p.url.endsWith('.html'));
 const sitemap =

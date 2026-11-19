@@ -2,7 +2,7 @@
    1. MGCalc.view — строители HTML для результата. Те же функции вызывает генератор сайта (src/components/calc.mjs),
       поэтому разметка в исходном HTML и после пересчета в браузере совпадает.
    2. Полный калькулятор [data-calc]: живой пересчет, состояние в адресе (?country=japan&price=…&year=…&cc=…&hp=…&city=…),
-      пресеты, подсказки, переключатель «во Владивостоке / с доставкой», сводка расчета в заявке (поле name="calc").
+      выбор валюты, подсказки, переключатель «во Владивостоке / с доставкой», сводка расчета в заявке (поле name="calc").
    3. Мини-калькулятор [data-calc-mini]: страна, цена, год, объем, мощность → итог и ссылка на подробный расчет. */
 (function (root) {
   'use strict';
@@ -19,7 +19,7 @@
     arrow: SVG + '<path d="M4 12h15m-6-6 6 6-6 6"/></svg>'
   };
 
-  var ORDER = ['country', 'price', 'year', 'month', 'fuel', 'cc', 'hp', 'ehp', 'e30', 'city', 'body', 'personal', 'markup', 'view'];
+  var ORDER = ['country', 'price', 'currency', 'unit', 'year', 'month', 'fuel', 'cc', 'hp', 'ehp', 'e30', 'city', 'body', 'personal', 'markup', 'view'];
   var ENGINE = ['cc', 'hp', 'ehp', 'e30'];
   var SCOPE = { 'age-month': 'age', 'age-soon': 'age', epts: 'age' };
 
@@ -64,6 +64,14 @@
   }
 
   var view = {
+    localUnit: function (r) {
+      return { JPY: 'Иены ¥', KRW: 'Воны ₩', CNY: 'Юани ¥' }[r.currency.code];
+    },
+    priceHint: function (r, unit) {
+      if (!r.input.price) return '';
+      var local = r.input.currency === 'RUB' ? r.input.price / r.rates.cur : r.input.price;
+      return '≈ ' + (unit === 'RUB' ? F.money(local, r.currency.code) : F.rub(r.carRub)) + ' по курсу ЦБ';
+    },
     total: function (r, mode) {
       return r.ok ? F.rub(total(r, mode)) : 'нет данных';
     },
@@ -222,7 +230,7 @@
       var eng = r.fuel.slug === 'ev' || r.fuel.slug === 'series'
         ? r.fuel.short + ', ' + (i.e30 ? F.num(i.e30, 2) + ' кВт за 30 минут' : F.num(i.ehp) + ' л.с.')
         : r.fuel.short + ' ' + F.num(i.cc) + ' см³, ' + F.num(i.hp, 1) + ' л.с.' + (r.fuel.slug === 'parallel' && (i.ehp || i.e30) ? ' + электромотор ' + (i.e30 ? F.num(i.e30, 2) + ' кВт за 30 минут' : F.num(i.ehp) + ' л.с.') : '');
-      var s = (name ? name + '; ' : '') + r.country.name + ', ' + F.money(i.price, r.currency.code) + ', ' + (i.month ? (i.month < 10 ? '0' : '') + i.month + '.' : '') + i.year + ' г., ' + eng +
+      var s = (name ? name + '; ' : '') + r.country.name + ', ' + (i.currency === 'RUB' ? F.rub(i.price) : F.money(i.price, r.currency.code)) + ', ' + (i.month ? (i.month < 10 ? '0' : '') + i.month + '.' : '') + i.year + ' г., ' + eng +
         '; под ключ во Владивостоке ≈ ' + F.rub(r.totalVladivostok) +
         (r.delivery.city ? '; с доставкой в ' + r.delivery.acc + ' ≈ ' + F.rub(r.totalCity) : '') +
         '; пошлина ' + F.rub(r.duty.rub) + ', утильсбор ' + F.rub(r.util.rub) +
@@ -236,11 +244,18 @@
       for (var i = 0; i < ORDER.length; i++) {
         var k = ORDER[i];
         var v = s[k];
-        if (v === undefined || v === null || v === '' || v === 0 || v === '0') { if (k !== 'personal') continue; }
+        if (k === 'currency') { if (v === 'RUB') q.push('currency=RUB'); continue; }
+        if (k === 'unit') {
+          if ((v === 'local' || v === 'RUB') && v !== (s.currency === 'RUB' ? 'RUB' : 'local')) q.push('unit=' + v);
+          continue;
+        }
+        if (v === undefined || v === null || v === '' || v === 0 || v === '0') {
+          if (k !== 'personal' && !(k === 'price' && (v === 0 || v === '0'))) continue;
+        }
         if (k === 'personal') { if (v === false || v === 0 || v === '0') q.push('personal=0'); continue; }
         if (k === 'markup') { if (v === true || v === 1 || v === '1') q.push('markup=1'); continue; }
         if (k === 'view') { if (v === 'vl' && s.city) q.push('view=vl'); continue; }
-        if (k === 'body' && !s.city) continue;
+        if (k === 'body' && !s.city && v === 'sedan') continue;
         if (k === 'fuel' && v === 'ice') continue;
         q.push(k + '=' + encodeURIComponent(v));
       }
@@ -290,6 +305,7 @@
         // пришли без цены: подставляем типовую цену страны и просим уточнить; без параметров двигателя — типовой автомобиль целиком
         var d = defaults[s.country];
         s.price = d.price;
+        delete s.currency; // типовая цена задана в валюте страны
         if (!specific) {
           if (s.year === undefined && d.year) s.year = d.year;
           s.fuel = 'ice';
@@ -424,12 +440,129 @@
     return out;
   }
 
+  // Цена хранится в той валюте, в которой ее ввели. Переключение меняет только
+  // представление, поэтому округление эквивалента не меняет пошлину или итог.
+  function purchaseEditor(form) {
+    var field = form.elements.price;
+    var market = form.elements.country.value;
+    var amount = Number(field.dataset.price) || 0;
+    var currency = field.dataset.currency === 'RUB' ? 'RUB' : 'local';
+    function rate() { return RULES.rates[core.COUNTRIES[market].cur]; }
+    function paint() {
+      var unit = form.elements.currency.value;
+      var display = amount;
+      if (unit !== currency) display = unit === 'RUB' ? amount * rate() : amount / rate();
+      field.value = amount ? groupDigits(String(Math.round(display))) : '';
+    }
+    return {
+      read: function () { return { price: amount, currency: currency, unit: form.elements.currency.value }; },
+      edit: function () {
+        formatInt(field, 11);
+        amount = Number(digits(field.value));
+        currency = form.elements.currency.value;
+      },
+      restore: function (s, defaultPrice) {
+        market = form.elements.country.value;
+        if (s.price !== undefined) {
+          // Эквивалент введенной суммы может быть длиннее исходной цены после смены страны.
+          amount = Number(digits(intPart(s.price)).slice(0, 14));
+          currency = s.currency === 'RUB' ? 'RUB' : 'local';
+        }
+        var unit = s.unit === 'RUB' || s.unit === 'local' ? s.unit : defaultPrice ? 'RUB' : currency;
+        setRadio(form, 'currency', unit);
+        paint();
+      },
+      changeMarket: function () {
+        if (market !== form.elements.country.value && currency === 'local') {
+          amount = Math.round(amount * rate());
+          currency = 'RUB';
+        }
+        market = form.elements.country.value;
+        paint();
+      },
+      paint: paint
+    };
+  }
+
+  function updatePriceLabels(r, s, rootEl, defaultPrice) {
+    setText($('[data-calc-out="local-unit"]', rootEl), view.localUnit(r));
+    setText($('[data-calc-out="cur"]', rootEl), s.unit === 'RUB' ? '₽' : r.currency.sign);
+    var hint = $('[data-calc-out="price-rub"]', rootEl);
+    setText(hint, view.priceHint(r, s.unit) + (defaultPrice && s.price ? '. Укажите цену своего автомобиля.' : ''));
+  }
+
   function setHtml(el, html) {
     if (el && el.innerHTML !== html) el.innerHTML = html;
   }
 
   function setText(el, text) {
     if (el && el.textContent !== text) el.textContent = text;
+  }
+
+  // Клик, Escape и закрытие снаружи обрабатывает браузер. Наведение открывает ту же подсказку.
+  function initTips(container) {
+    var active = null;
+    function place() {
+      if (!active || !active.matches(':popover-open')) return;
+      var anchor = active.parentElement.querySelector('.calc-tip__trigger').getBoundingClientRect();
+      var box = active.getBoundingClientRect();
+      var gap = 6;
+      var edge = 8;
+      var w = doc.documentElement.clientWidth;
+      var h = doc.documentElement.clientHeight;
+      var top = anchor.bottom + gap;
+      if (top + box.height > h - edge) top = anchor.top - gap - box.height;
+      active.style.left = Math.max(edge, Math.min(anchor.left, w - box.width - edge)) + 'px';
+      active.style.top = Math.max(edge, Math.min(top, h - box.height - edge)) + 'px';
+    }
+    $$('.calc-tip', container).forEach(function (tip) {
+      var trigger = $('.calc-tip__trigger', tip);
+      var panel = $('.calc-tip__panel', tip);
+      if (!panel.showPopover) {
+        var details = doc.createElement('details');
+        var summary = doc.createElement('summary');
+        summary.className = 'calc-tip__trigger';
+        summary.append(...trigger.childNodes);
+        details.append(summary, panel.querySelector('p'));
+        tip.replaceChildren(details);
+        return;
+      }
+      var hovered = false;
+      var timer;
+      panel.classList.add('is-positioned');
+      panel.addEventListener('toggle', function () {
+        if (panel.matches(':popover-open')) {
+          active = panel;
+          place();
+        } else {
+          hovered = false;
+          if (active === panel) active = null;
+        }
+      });
+      trigger.addEventListener('pointerenter', function (event) {
+        clearTimeout(timer);
+        if (event.pointerType !== 'mouse' || panel.matches(':popover-open')) return;
+        hovered = true;
+        panel.showPopover();
+        active = panel;
+        place();
+      });
+      function leave() {
+        if (hovered) timer = setTimeout(function () { if (hovered) panel.hidePopover(); }, 180);
+      }
+      trigger.addEventListener('pointerleave', leave);
+      panel.addEventListener('pointerenter', function () { clearTimeout(timer); });
+      panel.addEventListener('pointerleave', leave);
+      trigger.addEventListener('click', function (event) {
+        if (!hovered) return;
+        // Щелчок по открытой при наведении подсказке фиксирует ее для чтения.
+        event.preventDefault();
+        hovered = false;
+        clearTimeout(timer);
+      });
+    });
+    window.addEventListener('resize', place);
+    doc.addEventListener('scroll', place, { capture: true, passive: true });
   }
 
   /** Сводка расчета уходит в каждую форму заявки на странице: main.js добавит ее в сообщение строкой «Расчет: …» */
@@ -451,13 +584,19 @@
   $$('[data-calc]').forEach(function (rootEl) {
     var form = $('[data-calc-form]', rootEl);
     if (!form) return;
+    initTips(rootEl);
+    function openLinkedTable() {
+      var sheet = doc.getElementById(location.hash.slice(1));
+      if (sheet && sheet.matches('details.calc-sheet')) sheet.open = true;
+    }
+    openLinkedTable();
+    window.addEventListener('hashchange', openLinkedTable);
     var out = {};
     $$('[data-calc-out]', rootEl).forEach(function (el) { (out[el.dataset.calcOut] = out[el.dataset.calcOut] || []).push(el); });
     var each = function (key, fn) { (out[key] || []).forEach(fn); };
     var viewBtns = $$('[data-calc-view]', rootEl);
-    var presets = $$('[data-calc-preset]', rootEl);
+    var purchase = purchaseEditor(form);
     var copyBtn = $('[data-calc-copy]', rootEl);
-    var reqBtns = $$('[data-calc-request]', rootEl);
     var budget = $('[data-calc-budget]', rootEl);
     var dockEl = $('[data-calc-dock]', rootEl);
     var links = {};
@@ -469,7 +608,6 @@
     var refEl = $('[data-calc-ref]', rootEl);
     var ref = '';
     var mode = 'vl';
-    var presetName = '';
     var country = radio(form, 'country') || 'japan';
     var priceHint = false;
     var timer = null;
@@ -477,7 +615,7 @@
     function read() {
       return {
         country: radio(form, 'country') || 'japan',
-        price: +digits(form.elements.price.value) || 0,
+        ...purchase.read(),
         year: +form.elements.year.value || 0,
         month: +form.elements.month.value || 0,
         fuel: radio(form, 'fuel') || 'ice',
@@ -492,9 +630,9 @@
       };
     }
 
-    function apply(s) {
-      if (s.country && core.COUNTRIES[s.country]) { setRadio(form, 'country', s.country); country = s.country; }
-      if (s.price !== undefined) setVal(form, 'price', digits(intPart(s.price)).slice(0, 11), true);
+    function apply(s, defaultPrice) {
+      if (s.country && core.COUNTRIES[s.country]) setRadio(form, 'country', s.country);
+      purchase.restore(s, defaultPrice);
       var sel = form.elements.year;
       if (s.year !== undefined && /^(19[89]|20[0-4])\d$/.test(String(s.year)) && +s.year <= +sel.options[0].value) {
         // год вне списка (старше 2007-го) добавляем в конец — расчет покажет предупреждение про ЭПТС; будущие годы не принимаем
@@ -522,6 +660,7 @@
         RULES.cities.forEach(function (c) { if (c.s === slug || c.x === slug) found = c.s; });
         form.elements.city.value = found;
       }
+      form.dispatchEvent(new Event('select:sync'));
     }
 
     function render(pushUrl) {
@@ -529,15 +668,12 @@
       s.date = DATE;
       var r = core.calc(s, RULES);
       if (!r.delivery.city && mode === 'city') mode = 'vl';
+      rootEl.classList.toggle('has-long-total', r.ok && total(r, mode) >= 1e9);
 
       // поля, зависящие от типа двигателя и страны
       $$('[data-calc-show]', rootEl).forEach(function (el) { el.hidden = (' ' + el.dataset.calcShow + ' ').indexOf(' ' + r.fuel.slug + ' ') < 0; });
-      each('cur', function (el) { setText(el, r.currency.sign); });
-      each('cur-name', function (el) { setText(el, r.country.slug === 'japan' ? 'в иенах' : r.country.slug === 'korea' ? 'в вонах' : 'в юанях'); });
-      each('price-rub', function (el) {
-        setText(el, s.price ? '≈ ' + F.rub(r.carRub) + ' по курсу ЦБ: ' + r.rates.curLabel + (priceHint ? '. Цена подставлена для примера, укажите свою.' : '') : 'Введите цену автомобиля ' + r.country.inLoc + ' в валюте страны.');
-        el.classList.toggle('is-accent', priceHint || !s.price);
-      });
+      updatePriceLabels(r, s, rootEl, priceHint);
+      each('bank-rate', function (el) { setText(el, '+' + F.num(r.markup.pct * 100, 1) + NB + '%'); });
       each('ehp-label', function (el) { setText(el, r.fuel.slug === 'parallel' ? 'Мощность электромотора, пиковая' : 'Мощность электромоторов, пиковая'); });
       var e30El = form.elements.e30;
       if (e30El) e30El.placeholder = s.ehp ? '≈ ' + F.num(s.ehp * RULES.util.hpToKw * RULES.util.peakTo30, 2) + ' (оценка)' : 'если известна';
@@ -575,11 +711,10 @@
       viewBtns.forEach(function (b) {
         var on = b.dataset.calcView === mode;
         b.setAttribute('aria-pressed', String(on));
-        if (b.dataset.calcView === 'city') setText($('span', b) || b, r.delivery.city ? 'С доставкой в ' + r.delivery.acc : 'С доставкой в город');
       });
 
       // ссылки и заявка
-      var q = view.query({ country: s.country, price: s.price, year: s.year, month: s.month, fuel: s.fuel, cc: r.input.cc, hp: r.input.hp, ehp: r.input.ehp, e30: r.input.e30, city: r.delivery.city, body: s.body, personal: s.personal, markup: s.markup, view: mode });
+      var q = view.query({ country: s.country, price: s.price, currency: s.currency, unit: s.unit, year: s.year, month: s.month, fuel: s.fuel, cc: r.input.cc, hp: r.input.hp, ehp: r.input.ehp, e30: r.input.e30, city: r.delivery.city, body: s.body, personal: s.personal, markup: s.markup, view: mode });
       var url = baseUrl + (q ? '?' + q : '');
       if (pushUrl) {
         // в адресе остаются чужие параметры (рекламные метки) и якорь; в ссылку «скопировать» они не попадают
@@ -590,9 +725,8 @@
         }
       }
       if (copyBtn) copyBtn.dataset.copy = location.origin && location.origin !== 'null' ? location.origin + url : location.href.split(/[?#]/)[0] + (q ? '?' + q : '');
-      var summary = r.ok ? view.summary(r, mode, presetName) : '';
+      var summary = r.ok ? view.summary(r, mode) : '';
       pushSummary(summary);
-      reqBtns.forEach(function (b) { b.dataset.modalCar = presetName ? presetName + ' ' + s.year : ''; });
       if (budget && budgets.length && r.ok) {
         var t = total(r, mode);
         var pick = budgets[budgets.length - 1];
@@ -607,31 +741,24 @@
       timer = setTimeout(function () { render(true); }, 220);
     }
 
-    function unpreset() {
-      presetName = '';
-      presets.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-    }
-
     // --- события ---
 
     form.addEventListener('input', function (e) {
       var el = e.target;
-      if (el.name === 'price') { formatInt(el, 11); priceHint = false; }
+      if (el.name === 'price') { purchase.edit(); priceHint = false; }
       if (el.name === 'cc') formatCc(el, false);
       if (el.name === 'hp' || el.name === 'ehp') formatDec(el, 1);
       if (el.name === 'e30') formatDec(el, 2);
-      if (/^(price|cc|hp|ehp|e30)$/.test(el.name)) { unpreset(); render(false); schedule(); }
+      if (/^(price|cc|hp|ehp|e30)$/.test(el.name)) { render(false); schedule(); }
     });
 
-    form.addEventListener('change', function (e) {
+    rootEl.addEventListener('change', function (e) {
       var el = e.target;
+      if (el.form !== form) return;
+      if (el.name === 'currency') purchase.paint();
       if (el.name === 'cc') formatCc(el, true);
       if (el.name === 'country') {
-        // тот же бюджет в валюте новой страны
-        var p = +digits(form.elements.price.value) || 0;
-        if (p) setVal(form, 'price', core.convertPrice(p, country, el.value, RULES), true);
-        country = el.value;
-        unpreset();
+        purchase.changeMarket();
         ref = ''; // другая страна — уже не автомобиль из карточки
       }
       if (el.name === 'city') mode = el.value && el.value !== 'vladivostok' ? 'city' : 'vl';
@@ -639,7 +766,6 @@
         // переключили на электромобиль: чтобы расчет не обнулялся, берем введенную мощность как пиковую мощность моторов
         form.elements.ehp.value = form.elements.hp.value;
       }
-      if (/^(year|month|fuel)$/.test(el.name)) unpreset();
       render(true);
     });
 
@@ -648,27 +774,13 @@
     viewBtns.forEach(function (b) {
       b.addEventListener('click', function () {
         if (b.dataset.calcView === 'city' && (!form.elements.city.value || form.elements.city.value === 'vladivostok')) {
-          form.elements.city.focus();
+          (form.querySelector('#calc-city-trigger') || form.elements.city).focus();
           var card = form.elements.city.closest('.calc-card');
           if (card && card.scrollIntoView) card.scrollIntoView({ block: 'center', behavior: 'smooth' });
           if (window.mgToast) window.mgToast('Выберите город доставки');
           return;
         }
         mode = b.dataset.calcView;
-        render(true);
-      });
-    });
-
-    presets.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var p;
-        try { p = JSON.parse(b.dataset.calcPreset); } catch (err) { return; }
-        apply({ country: p.country, price: p.price, year: p.year, month: p.month || 0, fuel: p.fuel || 'ice', cc: p.cc || 0, hp: p.hp || 0, ehp: p.ehp || 0, e30: p.e30 || 0, body: p.body || 'sedan' });
-        priceHint = false;
-        ref = '';
-        unpreset();
-        presetName = p.name || '';
-        b.setAttribute('aria-pressed', 'true');
         render(true);
       });
     });
@@ -694,11 +806,10 @@
     try { def = JSON.parse(rootEl.dataset.calcDefaults || '{}'); } catch (err3) { def = {}; }
     var st = view.start(parseQuery(location.search), country, def);
     if (st) {
-      apply(st.state);
+      apply(st.state, st.priceHint);
       priceHint = st.priceHint;
       if (st.city) mode = 'city';
       ref = st.ref;
-      unpreset();
     }
     render(false);
     rootEl.classList.add('is-live');
@@ -711,21 +822,20 @@
     if (!form) return;
     var more = $$('[data-calc-more]', rootEl);
     var baseUrl = rootEl.dataset.calcUrl || '';
-    var country = (form.elements.country && form.elements.country.value) || 'japan';
+    var purchase = purchaseEditor(form);
 
     function render() {
       var c = (form.elements.country && form.elements.country.value) || 'japan';
-      var s = { country: c, price: +digits(form.elements.price.value) || 0, year: +form.elements.year.value || 0, fuel: 'ice', cc: ccOf(form.elements.cc.value), hp: F.toNum(form.elements.hp.value), date: DATE };
+      var s = { country: c, ...purchase.read(), year: +form.elements.year.value || 0, fuel: 'ice', cc: ccOf(form.elements.cc.value), hp: F.toNum(form.elements.hp.value), date: DATE };
       var r = core.calc(s, RULES);
+      rootEl.classList.toggle('has-long-total', r.ok && r.totalVladivostok >= 1e9);
       // сводка расчета для заявки «Точный расчет от менеджера» (см. обработчик клика ниже)
+      updatePriceLabels(r, s, rootEl);
       rootEl.__calcSummary = r.ok ? view.summary(r, 'vl', '') : '';
       $$('[data-calc-out]', rootEl).forEach(function (el) {
         var k = el.dataset.calcOut;
         if (k === 'total') setText(el, r.ok ? '≈ ' + view.total(r, 'vl') : 'нет данных');
         if (k === 'legend') setHtml(el, view.legend(r, 'vl'));
-        if (k === 'cur') setText(el, r.currency.sign);
-        if (k === 'cur-name') setText(el, r.country.slug === 'japan' ? 'в иенах' : r.country.slug === 'korea' ? 'в вонах' : 'в юанях');
-        if (k === 'price-rub') setText(el, s.price ? '≈ ' + F.rub(r.carRub) + ' по курсу ЦБ' : 'в валюте страны');
         if (k === 'note') {
           var w = '';
           for (var i = 0; i < r.warnings.length; i++) if (r.warnings[i].level === 'warn') { w = r.warnings[i].code === 'age-month' ? 'Год пограничный: в подробном расчете укажите месяц выпуска.' : ''; if (w) break; }
@@ -734,24 +844,21 @@
           el.classList.toggle('is-warn', !!w);
         }
       });
-      var q = view.query({ country: c, price: s.price, year: s.year, cc: s.cc, hp: s.hp });
+      var q = view.query({ country: c, ...purchase.read(), year: s.year, cc: s.cc, hp: s.hp });
       more.forEach(function (a) { a.href = baseUrl + (q ? '?' + q : ''); });
     }
 
     form.addEventListener('input', function (e) {
       var el = e.target;
-      if (el.name === 'price') formatInt(el, 11);
+      if (el.name === 'price') purchase.edit();
       if (el.name === 'cc') formatCc(el, false);
       if (el.name === 'hp') formatDec(el, 1);
       render();
     });
     form.addEventListener('change', function (e) {
       if (e.target.name === 'cc') formatCc(e.target, true);
-      if (e.target.name === 'country') {
-        var p = +digits(form.elements.price.value) || 0;
-        if (p) form.elements.price.value = groupDigits(String(core.convertPrice(p, country, e.target.value, RULES)));
-        country = e.target.value;
-      }
+      if (e.target.name === 'country') purchase.changeMarket();
+      if (e.target.name === 'currency') purchase.paint();
       render();
     });
     form.addEventListener('submit', function (e) {

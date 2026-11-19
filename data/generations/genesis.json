@@ -1,0 +1,401 @@
+{
+  "g70": {
+    "source": "https://www.drom.ru/catalog/genesis/g70/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "KMT",
+          "IK"
+        ],
+        "photo": "generations/genesis/g70-g1-r1-1151015.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2020,
+            "fromMonth": 10,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "IK"
+            ]
+          },
+          {
+            "market": "russia",
+            "from": 2021,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "IK"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "KMT"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2021,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "KMT"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2017,
+        "to": 2021,
+        "codes": [
+          "IK"
+        ],
+        "photo": "generations/genesis/g70-g1-r0-806826.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2017,
+            "fromMonth": 9,
+            "to": 2021,
+            "toMonth": 7,
+            "codes": [
+              "IK"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "g80": {
+    "source": "https://www.drom.ru/catalog/genesis/g80/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "RG3"
+        ],
+        "photo": "generations/genesis/g80-g2-r1-1334192.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 12,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "RG3"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2023,
+            "fromMonth": 12,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "RG3"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2023,
+            "fromMonth": 12,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "RG3"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2020,
+        "to": 2024,
+        "codes": [
+          "RG3"
+        ],
+        "photo": "generations/genesis/g80-g2-r0-1334357.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2020,
+            "fromMonth": 3,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "RG3"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 3,
+            "to": 2024,
+            "toMonth": 9,
+            "codes": [
+              "RG3"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2020,
+            "fromMonth": 3,
+            "to": 2023,
+            "toMonth": 12,
+            "codes": [
+              "RG3"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2020,
+            "fromMonth": 3,
+            "to": 2023,
+            "toMonth": 12,
+            "codes": [
+              "RG3"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2017,
+        "to": 2020,
+        "codes": [
+          "DH"
+        ],
+        "photo": "generations/genesis/g80-g1-r0-699452.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2017,
+            "fromMonth": 3,
+            "to": 2020,
+            "toMonth": 3,
+            "codes": [
+              "DH"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "gv70": {
+    "source": "https://www.drom.ru/catalog/genesis/gv70/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "JK1"
+        ],
+        "photo": "generations/genesis/gv70-g1-r1-1335287.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2025,
+            "fromMonth": 1,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "JK1"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2025,
+            "fromMonth": 1,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "JK1"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2025,
+            "fromMonth": 1,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "JK1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": 2025,
+        "codes": [
+          "JK1"
+        ],
+        "photo": "generations/genesis/gv70-g1-r0-1335077.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2020,
+            "fromMonth": 12,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "JK1"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 12,
+            "to": 2025,
+            "toMonth": 1,
+            "codes": [
+              "JK1"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2020,
+            "fromMonth": 12,
+            "to": 2025,
+            "toMonth": 1,
+            "codes": [
+              "JK1"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2020,
+            "fromMonth": 12,
+            "to": 2025,
+            "toMonth": 1,
+            "codes": [
+              "JK1"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "gv80": {
+    "source": "https://www.drom.ru/catalog/genesis/gv80/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "JX1"
+        ],
+        "photo": "generations/genesis/gv80-g1-r1-1334053.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "JX1"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2023,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "JX1"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2023,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "JX1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": 2023,
+        "codes": [
+          "JX1"
+        ],
+        "photo": "generations/genesis/gv80-g1-r0-1090718.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2020,
+            "fromMonth": 1,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "JX1"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 1,
+            "to": 2023,
+            "toMonth": 9,
+            "codes": [
+              "JX1"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2020,
+            "fromMonth": 1,
+            "to": 2023,
+            "toMonth": 9,
+            "codes": [
+              "JX1"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2020,
+            "fromMonth": 1,
+            "to": 2023,
+            "toMonth": 9,
+            "codes": [
+              "JX1"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

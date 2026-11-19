@@ -272,21 +272,35 @@
     let failed = false;
     try {
       if (cfg.endpoint) {
-        const res = await fetch(cfg.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead) });
+        const headers = { 'Content-Type': 'application/json', Accept: 'application/json' };
+        if (form.hasAttribute('data-server-lead')) {
+          headers['X-CSRFToken'] = form.elements.csrfmiddlewaretoken.value;
+          lead.submission_id = form.elements.submission_id.value;
+          lead.agree = agree;
+          lead.page = location.pathname;
+        }
+        const res = await fetch(cfg.endpoint, { method: 'POST', headers, body: JSON.stringify(lead) });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
       } else {
         console.info('[квиз] заявка (endpoint не задан, никуда не отправлена)', lead);
       }
       try {
-        const saved = JSON.parse(localStorage.getItem('mg-quiz-leads') || '[]');
-        saved.push(lead);
-        localStorage.setItem('mg-quiz-leads', JSON.stringify(saved.slice(-20)));
+        if (!form.hasAttribute('data-server-lead')) {
+          const saved = JSON.parse(localStorage.getItem('mg-quiz-leads') || '[]');
+          saved.push(lead);
+          localStorage.setItem('mg-quiz-leads', JSON.stringify(saved.slice(-20)));
+        }
       } catch (err) { /* хранилище недоступно */ }
     } catch (err) {
       failed = true;
       console.warn('[квиз] заявка не отправлена', err);
     }
     btnSubmit.classList.remove('is-loading');
+    if (failed && form.hasAttribute('data-server-lead')) {
+      const error = form.querySelector('[data-submit-error]');
+      error.hidden = false;
+      return;
+    }
     finish(contact, failed);
   });
 

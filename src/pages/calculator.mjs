@@ -1,12 +1,12 @@
-// Калькулятор стоимости авто «под ключ»: инструмент + методика + таблицы ставок + разборы + FAQ.
-// Числа в таблицах и разборах считаются при сборке тем же ядром (js/calc-core.js), что работает в браузере.
+// Калькулятор стоимости авто «под ключ»: инструмент, каталог, методика, таблицы ставок и FAQ.
+// Числа в таблицах считаются при сборке тем же ядром (js/calc-core.js), что работает в браузере.
 import { html, esc, typo, abs } from '../lib/core.mjs';
 import { faqLd } from '../lib/seo.mjs';
-import { icon, label, duo, more, reveal, sectionHead, pageHead, faqList, ctaBand, seoText, linkBlock, route, img, table, fact } from '../components/ui.mjs';
-import { fullCalc, calcRules, calcRulesScript, calcHref, exampleInputs, calcCore as core } from '../components/calc.mjs';
+import { btn, carCard, label, duo, more, reveal, sectionHead, pageHead, faqList, ctaBand, seoText, linkBlock, img, table } from '../components/ui.mjs';
+import { fullCalc, calcRules, calcRulesScript, exampleInputs, calcCore as core } from '../components/calc.mjs';
 import { R } from '../routes.mjs';
 
-const { fmt, view } = core;
+const { fmt } = core;
 const { num, rub } = fmt;
 const NB = ' ';
 
@@ -14,9 +14,7 @@ const HOME = { name: 'Главная', url: R.home };
 // Двухтонный заголовок без неразрывных пробелов — для h2 с data-split: скрипт «по словам» (main.js) режет строку и по
 // неразрывным пробелам, и тогда пробел может оказаться в начале строки. В заголовках без data-split используем обычный duo().
 const duoPlain = (a, b) => `${esc(a)} <span class="mute">${esc(b)}</span>`;
-const SHOWN = ['fit-2022-jp', 'carnival-2022-kr', 'zeekr001-2024-cn'];
 const PAIR = ['prius-2021-jp', 'prius-2021-jp-over5'];
-const EX_NAME = { 'fit-2022-jp': 'Honda Fit 1.3', 'carnival-2022-kr': 'Kia Carnival 2.2 дизель', 'zeekr001-2024-cn': 'Zeekr 001', 'prius-2021-jp': 'Toyota Prius 1.8' };
 // типичный двигатель для каждой строки шкалы единых ставок — чтобы показать пошлину в рублях
 const SAMPLE_CC = [998, 1496, 1797, 1997, 2488, 3456];
 // статьи блога в блоке перелинковки «Полезно знать»
@@ -172,16 +170,15 @@ function howSection(c) {
     </section>`;
 }
 
-function sheet({ id, t, body, wide, i = 0 }) {
-  return html`
-        <div class="calc-sheet${wide ? ' calc-sheet--wide' : ''}" id="${id}"${reveal(i)}>
-          <div class="calc-sheet__copy">
-            <h3 class="h3">${typo(t.title)}</h3>
-            <p>${typo(t.text)}</p>
-            <p class="calc-sheet__src">${esc(t.source)}</p>
-          </div>
-          <div class="calc-sheet__body">${body}</div>
-        </div>`;
+function sheet({ id, t, body, wide }) {
+  return html`<details class="acc calc-sheet${wide ? ' calc-sheet--wide' : ''}" id="${id}" name="calc-rates">
+    <summary><h3>${typo(t.title)}</h3><i class="acc__icon" aria-hidden="true"></i></summary>
+    <div class="calc-sheet__body">
+      <p>${typo(t.text)}</p>
+      ${body}
+      <p class="calc-sheet__src">${esc(t.source)}</p>
+    </div>
+  </details>`;
 }
 
 function tablesSection(ctx, c, rules, f) {
@@ -193,13 +190,13 @@ function tablesSection(ctx, c, rules, f) {
 
   // 1. единая ставка для авто старше 3 лет
   const used = table(
-    ['Объем двигателя', '3-5 лет, €/см³', 'Старше 5 лет, €/см³', 'Пример двигателя', 'Пошлина, 3-5 лет', 'Пошлина, старше 5 лет'],
+    ['Объем двигателя', '3–5 лет, €/см³', 'Старше 5 лет, €/см³', 'Пример двигателя', 'Пошлина, 3–5 лет', 'Пошлина, старше 5 лет'],
     raw.ets['3to5'].map((row, i) => {
       const cc = SAMPLE_CC[i] || (row.maxCc ? row.maxCc : raw.ets['3to5'][i - 1].maxCc + 500);
       const old = raw.ets.gt5[i];
       return [rangeOf(raw.ets['3to5'], i, 'maxCc', 'см³'), `<strong>${num(row.eurPerCc, 2)}</strong>`, num(old.eurPerCc, 2), `${num(cc)}${NB}см³`, `<strong>${rub(row.eurPerCc * cc * eur)}</strong>`, rub(old.eurPerCc * cc * eur)];
     }),
-    { numCols: [1, 2, 3, 4, 5] }
+    { numCols: [1, 2, 3, 4, 5], cls: 'calc-duty-table' }
   );
 
   // 2. единая ставка для авто до 3 лет
@@ -246,10 +243,6 @@ function tablesSection(ctx, c, rules, f) {
     { numCols: [1] }
   );
 
-  const midIdx = Math.max(1, raw.customsFee.scale.findIndex((x) => x.maxValueRub === 1200000));
-  const feeMid = raw.customsFee.scale[midIdx];
-  const feeLow = raw.customsFee.scale[midIdx - 1];
-  const feeNext = raw.customsFee.scale[Math.min(midIdx + 1, raw.customsFee.scale.length - 1)];
 
   // 5. электромобили: акциз и утильсбор
   const exYears = Object.keys(raw.stp.exciseRubPerHp).sort();
@@ -280,106 +273,31 @@ function tablesSection(ctx, c, rules, f) {
           label: `Ставки ${f.year}`,
           title: duoPlain('Таблицы ставок:', 'пошлина, утильсбор, сборы'),
           lead: T.lead,
-          aside: html`<nav class="calc-toc" aria-label="Таблицы ставок">
-            <a href="#stavki-poshlina">Пошлина 3-5 лет и старше</a>
-            <a href="#stavki-do-3-let">Пошлина до 3 лет</a>
-            <a href="#stavki-utilsbor">Утильсбор ${f.year}</a>
-            <a href="#stavki-sbor">Таможенный сбор</a>
-            <a href="#stavki-elektro">Электромобили</a>
-          </nav>`,
         })}
-        <div class="calc-sheets">
+        <div class="calc-sheets" data-acc-group>
           ${sheet({ id: 'stavki-poshlina', t: T.used, wide: true, body: `<p class="calc-sheet__cap">Единая ставка и пример пошлины по курсу евро ${f.eur} ₽${SWIPE}</p>${used}` })}
           ${sheet({ id: 'stavki-do-3-let', t: T.fresh, body: fresh })}
           ${sheet({ id: 'stavki-utilsbor', t: T.util, wide: true, body: `<p class="calc-sheet__cap">ДВС и обычные гибриды · ${f.year} год · ₽, до 3 лет / старше 3 лет${SWIPE}</p>${util}` })}
-          ${sheet({
-            id: 'stavki-sbor',
-            t: T.fee,
-            body: `<div class="calc-sheet__pair">${fee}${fact({ value: num(feeMid.feeRub), unit: '₽', name: `при стоимости до ${String(feeMid.maxValueRub / 1000000).replace('.', ',')} млн ₽`, text: `Ступень от ${num(feeLow.maxValueRub / 1000)} тыс. до ${String(feeMid.maxValueRub / 1000000).replace('.', ',')} млн ₽ таможенной стоимости: в нее попадает Honda Fit из примеров ниже. Следующая ступень: ${rub(feeNext.feeRub)}.`, variant: 'accent' })}</div>`,
-          })}
+          ${sheet({ id: 'stavki-sbor', t: T.fee, body: fee })}
           ${sheet({ id: 'stavki-elektro', t: T.ev, body: `<p class="calc-sheet__cap">Акциз, ₽ за 1 л.с.</p>${excise}<p class="calc-sheet__cap">Утилизационный сбор · ${f.year} год · личное пользование</p>${evUtil}` })}
         </div>
       </div>
     </section>`;
 }
 
-function exampleCard(ctx, ex, i) {
-  const { result: r, input } = ex;
-  const mode = r.delivery.city ? 'city' : 'vl';
-  const sh = view.shares(r, mode);
-  const eng = r.mode === 'STP' ? `${r.fuel.short}, ${num(r.util.e30, 2)}${NB}кВт за 30 минут` : `${r.fuel.short === 'ДВС' ? '' : r.fuel.short + ', '}${num(r.input.cc)}${NB}см³, ${num(r.input.hp)}${NB}л.с.`;
-  return html`
-          <article class="calc-ex"${reveal(i)}>
-            <header class="calc-ex__head">
-              ${route([r.country.name, 'Владивосток', r.delivery.city ? r.delivery.name : null])}
-              <h3 class="calc-ex__title">${esc(ex.name)}</h3>
-              <p class="calc-ex__meta">${input.month ? String(input.month).padStart(2, '0') + '.' : ''}${input.year} · ${eng} · ${esc(fmt.money(input.price, r.currency.code))}</p>
-              <div class="calc-ex__status">${view.status(r).replace(/<a /g, '<span ').replace(/<\/a>/g, '</span>').replace(/ href="[^"]*"/g, '')}</div>
-            </header>
-            <div class="calc-ex__body">
-              ${r.groups
-                .filter((g) => g.rows.length)
-                .map(
-                  (g) => html`
-              <div class="calc-ex__group">
-                <div class="calc-ex__ghead"><span><i class="calc-dot calc-dot--${g.id}"></i>${esc(g.title)}</span><span>${sh[g.id].pct}${NB}%</span></div>
-                <dl class="calc-rows">${g.rows.map((row) => `<div class="calc-row"><dt>${esc(row.label)}<small>${esc(row.note)}</small></dt><dd>${rub(row.rub)}</dd></div>`)}</dl>
-              </div>`
-                )}
-            </div>
-            <footer class="calc-ex__foot">
-              <div class="calc-ex__total"><span>${r.delivery.city ? 'Под ключ с доставкой в ' + esc(r.delivery.acc) : 'Под ключ во Владивостоке'}</span><b>${rub(mode === 'city' ? r.totalCity : r.totalVladivostok)}</b></div>
-              <a class="more" href="${calcHref({ ...r.input, city: r.delivery.city })}">Открыть в калькуляторе ${icon('arrow')}</a>
-            </footer>
-          </article>`;
-}
-
-function examplesSection(ctx, c, examples, f) {
-  const shown = SHOWN.map((id) => examples.find((x) => x.id === id)).filter(Boolean);
-  const list = shown.length === 3 ? shown : examples.filter((x) => !PAIR.includes(x.id)).slice(0, 3);
-  const a = examples.find((x) => x.id === PAIR[0]);
-  const b = examples.find((x) => x.id === PAIR[1]);
-  const monthName = (m) => core.MONTHS[m - 1];
-  return html`
-    <section class="section" id="primery">
-      <div class="container">
-        ${sectionHead({
-          label: `Примеры · расчет на ${f.dateShort}`,
-          title: duoPlain('Три расчета:', 'Япония, Корея, Китай'),
-          lead: c.examplesLead,
-        })}
-        <div class="calc-exs">
-          ${list.map((ex, i) => exampleCard(ctx, ex, i))}
-        </div>
-        ${a && b
-          ? html`
-        <div class="calc-month on-dark"${reveal()}>
-          <div class="calc-month__bg">${img({ src: 'assets/img/hero/bridge-kei.webp', alt: '', sizes: '100vw' })}</div>
-          <div class="calc-month__copy">
-            ${label('Месяц выпуска')}
-            <p class="calc-month__lead">${typo(c.monthNote)}</p>
-          </div>
-          <div class="calc-month__nums">
-            <a class="calc-month__num" href="${calcHref({ ...a.result.input, city: a.result.delivery.city })}">
-              <span>${monthName(a.input.month)} ${a.input.year} · ${esc(a.result.age.name)}</span>
-              <b>${rub(a.result.duty.rub)}</b>
-              <small>пошлина ${icon('arrow')}</small>
-            </a>
-            <a class="calc-month__num" href="${calcHref({ ...b.result.input, city: b.result.delivery.city })}">
-              <span>${monthName(b.input.month)} ${b.input.year} · ${esc(b.result.age.name)}</span>
-              <b>${rub(b.result.duty.rub)}</b>
-              <small>пошлина ${icon('arrow')}</small>
-            </a>
-            <div class="calc-month__num calc-month__num--diff">
-              <span>Разница</span>
-              <b>${rub(b.result.duty.rub - a.result.duty.rub)}</b>
-              <small>за пять месяцев возраста</small>
-            </div>
-          </div>
-        </div>`
-          : ''}
-      </div>
-    </section>`;
+function catalogSection(ctx) {
+  const cars = ctx.countries.map(({ slug }) => {
+    const market = ctx.cars.filter((car) => car.country === slug);
+    return market.find((car) => car.modelInTop30 && car.priceRub && !car.priceIsPartial) || market[0];
+  }).filter(Boolean);
+  if (!cars.length) return '';
+  return html`<section class="section section--sm section--white" id="katalog">
+    <div class="container">
+      ${sectionHead({ title: duo('Автомобили', 'из каталога') })}
+      <div class="grid grid--3 m-rail">${cars.map((car, i) => carCard(car, { i }))}</div>
+      <div class="section-foot">${btn('Весь каталог', R.catalog, { variant: 'dark' })}</div>
+    </div>
+  </section>`;
 }
 
 function limitsSection(c, f) {
@@ -468,7 +386,7 @@ export function calculatorPages(ctx) {
   const { site } = ctx;
   const rules = calcRules(ctx);
   // контрольные примеры считаем на дату ставок — так же, как эталон в calc-rules.json
-  const examples = exampleInputs(ctx.calc).map((x) => ({ ...x, name: EX_NAME[x.id] || x.title.split(/\s*[(,]/)[0], result: core.calc({ ...x.input, date: rules.date }, rules) }));
+  const examples = exampleInputs(ctx.calc).map((x) => ({ ...x, result: core.calc({ ...x.input, date: rules.date }, rules) }));
   const f = facts(ctx, rules, examples);
   const c = filler(f)(ctx.content.calculator || {});
   const crumbs = [HOME, { name: 'Калькулятор', url: R.calculator }];
@@ -526,12 +444,7 @@ export function calculatorPages(ctx) {
       label: `Калькулятор · ставки на ${f.dateShort}`,
       h1: duo('Калькулятор растаможки авто', 'под ключ'),
       lead: c.lead,
-      kv: [
-        { k: 'Евро, курс ЦБ', v: `${f.eur}${NB}₽` },
-        { k: '100 иен', v: `${num(rules.rates.JPY * 100, 4)}${NB}₽` },
-        { k: '1 000 вон', v: `${num(rules.rates.KRW * 1000, 4)}${NB}₽` },
-        { k: 'Юань', v: `${num(rules.rates.CNY, 4)}${NB}₽` },
-      ],
+      cls: 'catalog-head',
     })}
     <section class="section section--flush-top calc-section" id="raschet">
       <div class="container">
@@ -540,9 +453,9 @@ export function calculatorPages(ctx) {
         ${calcRulesScript(ctx)}
       </div>
     </section>
+    ${catalogSection(ctx)}
     ${howSection(c)}
     ${tablesSection(ctx, c, rules, f)}
-    ${examplesSection(ctx, c, examples, f)}
     ${limitsSection(c, f)}
     ${faqSection(c.faq)}
     ${linksSection(ctx, c)}

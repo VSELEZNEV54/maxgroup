@@ -128,7 +128,7 @@ function head(ctx, s, c, crumbs) {
   const h = HEAD[s.slug];
   const actions =
     btn(c.head.cta, R.contacts, { variant: 'light', modal: 'request', subject: c.cta.subject, attrs: { 'data-modal-title': c.head.modalTitle, 'data-modal-text': c.head.modalText, 'data-modal-label': s.navName || s.name } }) +
-    btn('Рассчитать стоимость', R.calculator, { variant: 'ghost', arrow: false });
+    btn('Рассчитать стоимость', R.calculator, { variant: 'ghost' });
   return html`
     <div class="svc-head svc-head--${h.kind} svc-head--${s.slug}">
       ${pageHead({
@@ -1135,7 +1135,7 @@ function hubPage(ctx, vars) {
         lead: c.lead,
         kv: c.kv,
         single: true,
-        actions: btn('Получить консультацию', R.contacts, { variant: 'light', modal: 'request', subject: c.cta.subject }) + btn('Рассчитать стоимость', R.calculator, { variant: 'ghost', arrow: false }),
+        actions: btn('Получить консультацию', R.contacts, { variant: 'light', modal: 'request', subject: c.cta.subject }) + btn('Рассчитать стоимость', R.calculator, { variant: 'ghost' }),
         photo: HUB_PHOTO,
         photoAlt: 'Автомобиль на Золотом мосту во Владивостоке ночью',
       })}

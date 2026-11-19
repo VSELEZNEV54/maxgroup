@@ -233,6 +233,29 @@ check('гибрид без электромотора: вместо «льгот
 check('гибрид с электромотором: статус по сумме мощностей', /Утильсбор по полной шкале/.test(view.status(core.calc({ ...start({ country: 'japan', price: '2761000', year: '2024', fuel: 'parallel', cc: '2000', hp: '152', ehp: '113' }).state, date }, raw))), true);
 check('адрес: дробная мощность не превращается в целое в 10 раз больше', view.query({ country: 'japan', price: 1100000, year: 2022, cc: 1317, hp: 98.6 }).includes('hp=98.6'), true);
 
+// Одна цена в двух валютах должна давать тот же расчет, включая расходы на покупку и доставку.
+for (const country of Object.keys(DEF)) {
+  const local = { ...DEF[country], country, price: 1000000, city: 'moskva', date };
+  const original = core.calc(local, compact);
+  const inRubles = { ...local, price: original.carRub, currency: 'RUB' };
+  const result = core.calc(inRubles, compact);
+  check(country + ': сохранена цена в рублях', result.input.price, original.carRub);
+  check(country + ': пошлина совпадает при смене валюты', result.duty.rub, original.duty.rub);
+  check(country + ': совпадает итог во Владивостоке', result.totalVladivostok, original.totalVladivostok);
+  check(country + ': совпадает итог с доставкой', result.totalCity, original.totalCity);
+  const withBank = core.calc({ ...inRubles, markup: true }, compact);
+  check(country + ': наценка добавляется к итогу один раз', withBank.totalCity, result.totalCity + result.markup.rubIfOn);
+  check(country + ': наценка не меняет таможенные платежи', withBank.customsTotalRub, result.customsTotalRub);
+  const params = Object.fromEntries(new URLSearchParams(view.query({ ...inRubles, unit: 'local', markup: true })));
+  check(country + ': ссылка хранит валюту ввода отдельно от валюты показа', params.currency + '/' + params.unit, 'RUB/local');
+  check(country + ': сумма восстанавливается по ссылке', run(params).totalCity, withBank.totalCity);
+}
+check('ссылка с пустым полем цены сохраняет неполный расчет', run({ ...DEF.japan, price: '0', currency: 'RUB' }).ok, false);
+check('нулевая цена не заменяется примером при копировании', view.query({ price: 0, currency: 'RUB' }), 'price=0&currency=RUB');
+check('у старой ссылки с местной ценой прежний формат', view.query({ country: 'japan', price: 1100000, currency: 'local', unit: 'local' }), 'country=japan&price=1100000');
+check('кузов сохраняется и до выбора города', view.query({ body: 'suv' }), 'body=suv');
+check('цена по умолчанию задана в валюте страны', run({ country: 'china', currency: 'RUB' }).input.currency, 'CNY');
+
 // --- отчёт -----------------------------------------------------------------------------------
 
 console.log(`Контрольных примеров: ${raw.examples.items.length}, проверок пройдено: ${passed}, ошибок: ${failures.length}`);

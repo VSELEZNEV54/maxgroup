@@ -1,0 +1,618 @@
+{
+  "jimny": {
+    "source": "https://www.drom.ru/catalog/suzuki/jimny/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2018,
+        "to": null,
+        "codes": [
+          "JC74",
+          "JB64"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2025,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "JC74W"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 6,
+            "to": null,
+            "codes": [
+              "JB64W"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-1249735.webp"
+      },
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 2012,
+        "to": 2019,
+        "codes": [
+          "JB23",
+          "JB43"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2012,
+            "fromMonth": 5,
+            "to": 2018,
+            "toMonth": 6,
+            "codes": [
+              "JB23W"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-424887.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2002,
+        "to": 2012,
+        "codes": [
+          "JB23",
+          "JB43"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 1,
+            "to": 2012,
+            "toMonth": 4,
+            "codes": [
+              "JB23W"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-838587.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 1998,
+        "to": 2005,
+        "codes": [
+          "JB23",
+          "JB43"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1998,
+            "fromMonth": 10,
+            "to": 2001,
+            "toMonth": 12,
+            "codes": [
+              "JB23W"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-838627.webp"
+      },
+      {
+        "id": "g2-r3",
+        "label": "2 поколение, 3-й рестайлинг",
+        "from": 1995,
+        "to": 1998,
+        "codes": [
+          "JA12W",
+          "JA22W",
+          "JA12V",
+          "JA12C"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 11,
+            "to": 1998,
+            "toMonth": 9,
+            "codes": [
+              "JA12W",
+              "JA22W",
+              "JA12V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 11,
+            "to": 1998,
+            "toMonth": 9,
+            "codes": [
+              "JA12C"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-425182.webp"
+      },
+      {
+        "id": "g2-r2",
+        "label": "2 поколение, 2-й рестайлинг",
+        "from": 1990,
+        "to": 1995,
+        "codes": [
+          "JA11V",
+          "JA11C"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1990,
+            "fromMonth": 2,
+            "to": 1995,
+            "toMonth": 10,
+            "codes": [
+              "JA11V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1990,
+            "fromMonth": 2,
+            "to": 1995,
+            "toMonth": 10,
+            "codes": [
+              "JA11C"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-425281.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 1984,
+        "to": 1990,
+        "codes": [
+          "JA51W",
+          "JA51V",
+          "JA71V",
+          "JA51C"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1984,
+            "fromMonth": 11,
+            "to": 1990,
+            "toMonth": 1,
+            "codes": [
+              "JA51W",
+              "JA51V",
+              "JA71V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1984,
+            "fromMonth": 11,
+            "to": 1988,
+            "toMonth": 5,
+            "codes": [
+              "JA51C"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-196616.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1982,
+        "to": 1984,
+        "codes": [
+          "SJ40V",
+          "SJ40",
+          "SJ40T"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1982,
+            "fromMonth": 8,
+            "to": 1984,
+            "toMonth": 10,
+            "codes": [
+              "SJ40V"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1982,
+            "fromMonth": 8,
+            "to": 1984,
+            "toMonth": 10,
+            "codes": [
+              "SJ40"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1982,
+            "fromMonth": 8,
+            "to": 1984,
+            "toMonth": 10,
+            "codes": [
+              "SJ40T"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-374103.webp"
+      },
+      {
+        "id": "g1-r3",
+        "label": "1 поколение, 3-й рестайлинг",
+        "from": 1978,
+        "to": 1981,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1978,
+            "fromMonth": 11,
+            "to": 1981,
+            "toMonth": 4,
+            "codes": []
+          }
+        ],
+        "photo": "generations/suzuki/jimny-1137206.webp"
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 1976,
+        "to": 1978,
+        "codes": [],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1976,
+            "fromMonth": 6,
+            "to": 1978,
+            "toMonth": 10,
+            "codes": []
+          }
+        ],
+        "photo": "generations/suzuki/jimny-1137210.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1972,
+        "to": 1976,
+        "codes": [
+          "LJ20V",
+          "LJ20VM",
+          "LJ20"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1972,
+            "fromMonth": 5,
+            "to": 1976,
+            "toMonth": 5,
+            "codes": [
+              "LJ20V",
+              "LJ20VM"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1972,
+            "fromMonth": 5,
+            "to": 1976,
+            "toMonth": 5,
+            "codes": [
+              "LJ20"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-1137211.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1970,
+        "to": 1972,
+        "codes": [
+          "LJ10"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1970,
+            "fromMonth": 4,
+            "to": 1972,
+            "toMonth": 4,
+            "codes": [
+              "LJ10"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/jimny-1137172.webp"
+      }
+    ]
+  },
+  "swift": {
+    "source": "https://www.drom.ru/catalog/suzuki/swift/",
+    "generations": [
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "AOL"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2023,
+            "fromMonth": 12,
+            "to": null,
+            "codes": [
+              "ZCEDS",
+              "ZDEDS",
+              "ZCDDS",
+              "ZDDDS"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/swift-1310597.webp"
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2020,
+        "to": 2024,
+        "codes": [
+          "A2L",
+          "RZ/AZ"
+        ],
+        "photo": "generations/suzuki/swift-1104388.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2016,
+        "to": null,
+        "codes": [
+          "RZ/AZ",
+          "A2L"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 12,
+            "to": 2025,
+            "toMonth": 11,
+            "codes": [
+              "ZC33S",
+              "ZC83S",
+              "ZC43S",
+              "ZC53S",
+              "ZD53S",
+              "ZD83S",
+              "ZC13S"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/swift-1104407.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2013,
+        "to": 2018,
+        "codes": [
+          "FZ/NZ",
+          "AZG"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 7,
+            "to": 2016,
+            "toMonth": 11,
+            "codes": [
+              "ZC32S",
+              "ZC72S",
+              "ZD72S"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2013,
+            "fromMonth": 3,
+            "to": 2018,
+            "toMonth": 9,
+            "codes": []
+          }
+        ],
+        "photo": "generations/suzuki/swift-1104931.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2010,
+        "to": 2017,
+        "codes": [
+          "FZ/NZ",
+          "AZG"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 9,
+            "to": 2013,
+            "toMonth": 6,
+            "codes": [
+              "ZC32S",
+              "ZC72S",
+              "ZD72S"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/swift-1104968.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2007,
+        "to": 2010,
+        "codes": [
+          "RS"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 5,
+            "to": 2010,
+            "toMonth": 8,
+            "codes": [
+              "ZC31S",
+              "ZC11S",
+              "ZC21S",
+              "ZC71S",
+              "ZD11S",
+              "ZD21S"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/swift-837954.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2003,
+        "to": 2008,
+        "codes": [
+          "RS"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2004,
+            "fromMonth": 11,
+            "to": 2007,
+            "toMonth": 4,
+            "codes": [
+              "ZC31S",
+              "ZC11S",
+              "ZC21S",
+              "ZD11S",
+              "ZD21S"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/swift-837735.webp"
+      },
+      {
+        "id": "g2-r2",
+        "label": "2 поколение, 2-й рестайлинг",
+        "from": 2000,
+        "to": 2004,
+        "codes": [
+          "AH",
+          "AJ",
+          "AA44",
+          "SF310"
+        ],
+        "photo": "generations/suzuki/swift-993147.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 1995,
+        "to": 2000,
+        "codes": [
+          "MA"
+        ],
+        "photo": "generations/suzuki/swift-837720.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1989,
+        "to": 1995,
+        "codes": [
+          "EA"
+        ],
+        "photo": "generations/suzuki/swift-837711.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1986,
+        "to": 2005,
+        "codes": [
+          "AA"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 6,
+            "to": 2005,
+            "toMonth": 12,
+            "codes": [
+              "HT51S"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 6,
+            "to": 2005,
+            "toMonth": 9,
+            "codes": [
+              "HT81S"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/swift-971251.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1983,
+        "to": 2003,
+        "codes": [
+          "AA"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2000,
+            "fromMonth": 1,
+            "to": 2003,
+            "toMonth": 5,
+            "codes": [
+              "HT51S"
+            ]
+          }
+        ],
+        "photo": "generations/suzuki/swift-837692.webp"
+      }
+    ]
+  }
+}

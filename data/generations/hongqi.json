@@ -1,0 +1,81 @@
+{
+  "h5": {
+    "source": "https://www.drom.ru/catalog/hongqi/h5/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2026,
+        "to": null,
+        "codes": [],
+        "photo": "generations/hongqi/h5-g2-r1-1333903.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2026,
+            "fromMonth": 5,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2026,
+            "fromMonth": 5,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [],
+        "photo": "generations/hongqi/h5-g2-r0-1140482.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2022,
+            "fromMonth": 3,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 3,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2018,
+        "to": 2022,
+        "codes": [
+          "CA7150HA6T"
+        ],
+        "photo": "generations/hongqi/h5-g1-r0-1103272.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 4,
+            "to": 2022,
+            "toMonth": 3,
+            "codes": [
+              "CA7150HA6T"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

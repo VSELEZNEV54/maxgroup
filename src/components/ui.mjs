@@ -1,5 +1,5 @@
 // Библиотека UI-компонентов. Каждый компонент — функция, возвращающая HTML-строку из классов src/css/30-components.css.
-import { html, esc, u, a, cx, img, price, km, num, typo, attrs, plural, priceShort, lcFirst } from '../lib/core.mjs';
+import { html, esc, u, a, cx, img, price, cardPrice, km, num, typo, attrs, plural, priceShort, lcFirst } from '../lib/core.mjs';
 import { icon, stars } from '../lib/icons.mjs';
 import { leadForm } from './forms.mjs';
 import { R } from '../routes.mjs';
@@ -19,7 +19,7 @@ export const label = (text, cls = '') => `<span class="${cx('label', cls)}">${es
 export const duo = (main, muted) => `${typo(main)}${muted ? ` <span class="mute">${typo(muted)}</span>` : ''}`;
 
 /** Кнопка-ссылка. variant: primary | dark | light | ghost | wa | tg */
-export function btn(text, href, { variant = 'primary', size, arrow = true, block, modal, subject, attrs: extra = {}, iconName } = {}) {
+export function btn(text, href, { variant = 'primary', size, block, modal, subject, attrs: extra = {}, iconName } = {}) {
   const isModal = Boolean(modal);
   // заголовок и текст модалки подставляет скрипт — неразрывные пробелы ставим заранее
   const extraAttrs = { ...extra };
@@ -28,7 +28,7 @@ export function btn(text, href, { variant = 'primary', size, arrow = true, block
     'data-modal': isModal ? modal : null,
     'data-modal-subject': subject || null,
     ...extraAttrs,
-  })}>${iconName ? icon(iconName) : ''}${esc(text)}${arrow ? ' ' + icon('arrow', 'i-arrow') : ''}</a>`;
+  })}>${iconName ? icon(iconName) : ''}${esc(text)}</a>`;
 }
 
 /** Ссылка со стрелкой и подчеркиванием */
@@ -132,7 +132,15 @@ export function card({ icon: ic, label: lbl, title, text, href, foot, tall, line
           </${Tag}>`;
 }
 
-const FLAG = { japan: 'JP', korea: 'KR', china: 'CN' };
+/** Первая строка под названием во всех карточках конкретных автомобилей. */
+export function carFacts(year, mileage, grade) {
+  const facts = [
+    year ? year + ' г.' : 'Год не указан',
+    Number.isFinite(mileage) ? km(mileage) : 'Пробег не указан',
+    grade != null && grade !== '' ? 'Оценка ' + String(grade).replace('.', ',') : 'Оценка не указана',
+  ];
+  return html`<ul class="car__specs car__facts">${facts.map((fact) => `<li>${esc(fact)}</li>`)}</ul>`;
+}
 
 /** Короткие характеристики для карточки авто */
 export function carSpecs(car) {
@@ -140,7 +148,7 @@ export function carSpecs(car) {
 }
 
 /** Карточка автомобиля в листинге. data-* атрибуты используются клиентскими фильтрами (js/catalog.js). */
-export function carCard(car, { i = 0, tag = 'h3', priority = false, sizes } = {}) {
+export function carCard(car, { i = 0, tag = 'h3', priority = false, sizes, attributes, media } = {}) {
   const specs = carSpecs(car).slice(0, 4);
   const badges = [];
   if (car.isPassing) badges.push('<span class="badge badge--accent">Проходной</span>');
@@ -155,7 +163,12 @@ export function carCard(car, { i = 0, tag = 'h3', priority = false, sizes } = {}
             'data-country': car.country,
             'data-brand': car.brandSlug,
             'data-model': car.modelSlug,
+            'data-generation': car.generationKey,
+            'data-frame': car.generation,
+            'data-grade': car.gradeValue,
+            'data-popular': Number(Boolean(car.modelInTop30)),
             'data-year': car.year,
+            'data-age': car.ageCat,
             'data-price': car.priceRub,
             'data-mileage': car.mileageKm,
             'data-hp': car.engine?.powerHp,
@@ -163,24 +176,20 @@ export function carCard(car, { i = 0, tag = 'h3', priority = false, sizes } = {}
             'data-fuel': car.engine?.type,
             'data-body': car.body,
             'data-drive': car.drive,
+            ...attributes,
           })}>
             <a class="car__media" href="${u(car.url)}" tabindex="-1" aria-hidden="true">
-              ${car.photos[0] ? img({ src: car.photos[0], alt: `${car.titleYear} ${car.countryName ? 'из ' + countryGen(car.country) : ''}`.trim(), priority, sizes: sizes || '(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1180px) 33vw, 25vw' }) : ''}
+              ${media ?? (car.photos[0] ? img({ src: car.photos[0], alt: `${car.titleYear} ${car.countryName ? 'из ' + countryGen(car.country) : ''}`.trim(), priority, sizes: sizes || '(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1180px) 33vw, 25vw' }) : '')}
               ${badges.length ? `<span class="car__badges">${badges.slice(0, 2).join('')}</span>` : ''}
               ${car.photos.length > 1 ? `<span class="car__count">${icon('camera')}${car.photos.length}</span>` : ''}
             </a>
             <div class="car__body">
-              <div class="car__meta">
-                <span>${FLAG[car.country] || ''}</span>
-                ${car.year ? `<span>${car.year}</span>` : ''}
-                ${car.mileageKm || car.mileageKm === 0 ? `<span>${km(car.mileageKm)}</span>` : ''}
-                ${car.auctionGrade ? `<span>оценка ${esc(car.auctionGrade)}</span>` : ''}
-              </div>
               <${tag} class="car__title"><a href="${u(car.url)}">${esc(car.titleFull)}</a></${tag}>
+              ${carFacts(car.year, car.mileageKm, car.auctionGrade)}
               <ul class="car__specs">${specs.map((s) => `<li>${esc(s)}</li>`)}</ul>
               <div class="car__foot">
-                <div class="car__price">${car.priceIsPartial ? 'от ' : ''}${price(car.priceRub)}<small>${esc(car.priceLabel)}</small></div>
-                <span class="car__go" aria-hidden="true">${icon('arrow')}</span>
+                <div class="car__price"><span class="car__amount">${car.priceIsPartial ? 'от ' : ''}${cardPrice(car.priceRub)}</span><small>${esc(car.priceLabel)}</small></div>
+                <a class="car__go" href="${u(car.url)}" aria-label="Открыть объявление ${esc(car.titleFull)}">${icon('arrow')}</a>
               </div>
             </div>
           </article>`;
@@ -190,8 +199,11 @@ const GEN = { japan: 'Японии', korea: 'Кореи', china: 'Китая' };
 export const countryGen = (slug) => GEN[slug] || '';
 
 /** Карточка кейса (привезенный автомобиль). stack=true — фото сверху. */
-export function caseCard(c, { i = 0, stack = false, tag = 'h3', sizes } = {}) {
-  const rows = Object.entries(c.specs || {}).filter(([k]) => !/цвет/i.test(k)).slice(0, 3);
+export function caseCard(c, { i = 0, stack = false, tag = 'h3', sizes, estimate = false } = {}) {
+  const specs = { ...(c.year ? { 'Год выпуска': c.year } : {}), ...c.specs };
+  const first = ['Год выпуска', 'Двигатель', 'Комплектация'];
+  const ordered = estimate ? [...new Set([...first, ...Object.keys(specs)])] : Object.keys(c.specs || {});
+  const rows = ordered.filter((key) => specs[key] && !/цвет/i.test(key)).slice(0, 3).map((key) => [key, specs[key]]);
   return html`
           <article class="${cx('case', stack && 'case--stack')}"${reveal(Math.min(i, 5))}>
             <div class="case__media">
@@ -203,7 +215,7 @@ export function caseCard(c, { i = 0, stack = false, tag = 'h3', sizes } = {}) {
               <${tag} class="case__title"><a href="${u(c.url)}">${esc(c.name)}</a></${tag}>
               ${rows.length ? `<dl class="case__list">${rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>` : ''}
               <div class="case__foot">
-                ${c.price ? `<div class="case__price">${price(c.price)}<small>${esc(lcFirst(c.priceLabel || 'Стоимость'))}</small></div>` : `<div class="case__price"><small>${esc(c.statusLabel)}</small></div>`}
+                ${c.price ? `<div class="case__price">${estimate ? '≈ ' : ''}${price(c.price)}<small>${esc(lcFirst(c.priceLabel || 'Стоимость'))}</small></div>` : `<div class="case__price"><small>${esc(c.statusLabel)}</small></div>`}
                 <span class="car__go" aria-hidden="true">${icon('arrow')}</span>
               </div>
             </div>

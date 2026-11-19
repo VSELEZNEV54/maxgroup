@@ -1,0 +1,542 @@
+{
+  "a4l": {
+    "source": "https://www.drom.ru/catalog/audi/a4/",
+    "generations": [
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "B9",
+          "8W2"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 4,
+            "to": null,
+            "codes": [
+              "8W2"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4l-1217391.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2016,
+        "to": 2020,
+        "codes": [
+          "B9"
+        ],
+        "photo": "generations/audi/a4l-2016.webp",
+        "source": "https://news.drom.ru/Audi-A4L-77828.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "to": 2020,
+            "codes": [
+              "B9"
+            ],
+            "fromMonth": 9,
+            "toMonth": 4
+          }
+        ]
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2012,
+        "to": 2016,
+        "codes": [
+          "B8"
+        ],
+        "photo": "generations/audi/a4l-2012.webp",
+        "source": "https://www.autohome.com.cn/news/201208/376371.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2012,
+            "to": 2016,
+            "codes": [
+              "B8"
+            ],
+            "fromMonth": 8,
+            "toMonth": 7
+          }
+        ]
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2008,
+        "to": 2012,
+        "codes": [
+          "B8"
+        ],
+        "photo": "generations/audi/a4l-2008.webp",
+        "source": "https://www.autohome.com.cn/news/200811/49775.html",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2008,
+            "to": 2012,
+            "codes": [
+              "B8"
+            ],
+            "fromMonth": 11,
+            "toMonth": 8
+          }
+        ]
+      }
+    ]
+  },
+  "q5l": {
+    "source": "https://www.drom.ru/catalog/audi/q5/",
+    "generations": [
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2026,
+        "to": null,
+        "codes": [
+          "GU"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2026,
+            "fromMonth": 1,
+            "to": null,
+            "codes": [
+              "GU"
+            ]
+          }
+        ],
+        "photo": "generations/audi/q5l-1317474.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "FY",
+          "FYB"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "FYB"
+            ]
+          }
+        ],
+        "photo": "generations/audi/q5l-1194270.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2018,
+        "to": 2021,
+        "codes": [
+          "FY",
+          "FYB"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 7,
+            "to": 2021,
+            "toMonth": 9,
+            "codes": [
+              "FYB"
+            ]
+          }
+        ],
+        "photo": "generations/audi/q5l-1194311.webp"
+      }
+    ]
+  },
+  "q2l": {
+    "source": "https://www.drom.ru/catalog/audi/q2/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "GA"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 8,
+            "to": null,
+            "codes": [
+              "GA"
+            ]
+          }
+        ],
+        "photo": "generations/audi/q2l-1236421.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2018,
+        "to": 2021,
+        "codes": [
+          "GA"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 10,
+            "to": 2021,
+            "toMonth": 7,
+            "codes": [
+              "GA"
+            ]
+          }
+        ],
+        "photo": "generations/audi/q2l-1236442.webp"
+      }
+    ]
+  },
+  "a4": {
+    "source": "https://www.drom.ru/catalog/audi/a4/",
+    "generations": [
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "B9"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 10,
+            "to": 2025,
+            "toMonth": 2,
+            "codes": [
+              "8WDDWF",
+              "8WDEM",
+              "8WDEZ",
+              "8WDTPF",
+              "8WDETF"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "8W2"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 5,
+            "to": null,
+            "codes": [
+              "8W5"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4-932697.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2015,
+        "to": 2020,
+        "codes": [
+          "B9"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 12,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": [
+              "8WCVK",
+              "8WCVN",
+              "8WCYRF"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 4,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": [
+              "8WCVK",
+              "8WCVN",
+              "8WCYRF"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4-932713.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2011,
+        "to": 2016,
+        "codes": [
+          "B8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2012,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 1,
+            "codes": [
+              "8KCDN",
+              "8KCDNF"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2012,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 3,
+            "codes": [
+              "8KCDN",
+              "8KCDNF"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4-29297.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2007,
+        "to": 2012,
+        "codes": [
+          "B8"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2008,
+            "fromMonth": 3,
+            "to": 2012,
+            "toMonth": 3,
+            "codes": [
+              "8KCAB",
+              "8KCALF",
+              "8KCDH",
+              "8KCDNF",
+              "8KCDN"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2008,
+            "fromMonth": 8,
+            "to": 2012,
+            "toMonth": 3,
+            "codes": [
+              "8KCALF",
+              "8KCDH",
+              "8KCDNF",
+              "8KCDN"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4-846668.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2004,
+        "to": 2009,
+        "codes": [
+          "B7"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 2,
+            "to": 2008,
+            "toMonth": 2,
+            "codes": [
+              "8EALT",
+              "8EAUKF",
+              "8EBFB",
+              "8EBWEF",
+              "8EBGBF"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2005,
+            "fromMonth": 2,
+            "to": 2008,
+            "toMonth": 7,
+            "codes": [
+              "8EALT",
+              "8EAUKF",
+              "8EBFB",
+              "8EBWEF",
+              "8EBGBF"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4-800702.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2000,
+        "to": 2006,
+        "codes": [
+          "B6"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2001,
+            "fromMonth": 6,
+            "to": 2005,
+            "toMonth": 1,
+            "codes": [
+              "8EALT",
+              "8EAMBF",
+              "8EASNF",
+              "8EBDV"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 2,
+            "to": 2005,
+            "toMonth": 1,
+            "codes": [
+              "8EALT",
+              "8EAMBF",
+              "8EASNF",
+              "8EBDV"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4-538850.webp"
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 1999,
+        "to": 2001,
+        "codes": [
+          "B5"
+        ],
+        "photo": "generations/audi/a4-540558.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1996,
+        "to": 2002,
+        "codes": [
+          "B5"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 6,
+            "to": 2001,
+            "toMonth": 5,
+            "codes": [
+              "8DADR",
+              "8DAPS",
+              "8DAPSF",
+              "8DAPT",
+              "8DAPUF"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 6,
+            "to": 2002,
+            "toMonth": 1,
+            "codes": [
+              "8DADR",
+              "8DAPS",
+              "8DAPSF",
+              "8DAPT"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4-655711.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1994,
+        "to": 1999,
+        "codes": [
+          "B5"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 10,
+            "to": 1999,
+            "toMonth": 5,
+            "codes": [
+              "8DABC",
+              "8DACKF",
+              "8DADR",
+              "8DAEBF",
+              "8DAGA",
+              "8DAGAF"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1996,
+            "fromMonth": 10,
+            "to": 1999,
+            "toMonth": 5,
+            "codes": [
+              "8DABC",
+              "8DADR",
+              "8DAGA",
+              "8DAGAF"
+            ]
+          }
+        ],
+        "photo": "generations/audi/a4-1091425.webp"
+      }
+    ]
+  }
+}

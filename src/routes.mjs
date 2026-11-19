@@ -8,8 +8,11 @@ export const R = {
   // Каталог: хаб → страна → марка → модель → автомобиль
   catalog: '/catalog/',
   country: (country) => `/${COUNTRY_PATH[country]}/`,
+  topModels: (country) => `/${COUNTRY_PATH[country]}/top-30/`,
   brand: (country, brand) => `/${COUNTRY_PATH[country]}/${brand}/`,
   model: (country, brand, model) => `/${COUNTRY_PATH[country]}/${brand}/${model}/`,
+  modelPrices: (modelUrl) => `${modelUrl}ceny-pod-klyuch/`,
+  modelOffer: (modelUrl, id) => `${modelUrl}lot-${id}/`,
   car: (car) => `/${COUNTRY_PATH[car.country]}/${car.brandSlug}/${car.modelSlug}/${car.id}/`,
 
   // Подборки (теговые посадочные)

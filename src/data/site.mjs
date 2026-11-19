@@ -3,9 +3,7 @@ import { readJson } from '../lib/core.mjs';
 
 const src = readJson('data/source/maxgroup.json');
 const co = src.company;
-/** Телефоны на сайте: общий номер (Сергей Усов) и Владислав Ли. Остальные номера сотрудников не публикуем (решение 12.11.2026). */
-export const SITE_TELS = ['+79244377700', '+79242577744'];
-const primary = co.phones.find((p) => p.primary) || co.phones[0];
+const salesPhone = co.phones.find((p) => p.primary);
 
 export const site = {
   // Домен для canonical / sitemap / schema.org. Меняется в одном месте.
@@ -20,8 +18,29 @@ export const site = {
   priceRange: '₽₽',
   locale: 'ru_RU',
 
-  // Реквизитов на текущем сайте заказчика нет — заполнить перед запуском (важный коммерческий фактор Яндекса).
-  legal: { name: null, inn: null, ogrn: null },
+  salesManager: {
+    name: 'Валерий Криницын',
+    role: 'Менеджер по продажам',
+    photo: 'assets/img/team/valeriy-krinitsyn.webp',
+  },
+
+  // Карточка организации, предоставленная заказчиком 18.11.2026.
+  legal: {
+    name: 'ООО «МАКС ГРУПП»',
+    fullName: 'Общество с ограниченной ответственностью «МАКС ГРУПП»',
+    inn: '2502082723',
+    kpp: '250201001',
+    ogrn: '1252500025238',
+    address: '692771, Приморский край, г. Артем, ул. Паровозная, д. 5',
+    phone: { label: '+7 914 979-92-32', tel: '+79149799232' },
+    email: 'galstyanaik@yandex.ru',
+    bank: {
+      name: 'АО «АЛЬФА-БАНК»',
+      bic: '044525593',
+      correspondentAccount: '30101810200000000593',
+      account: '40702810517000000145',
+    },
+  },
 
   contacts: {
     city: co.address.city,
@@ -35,10 +54,7 @@ export const site = {
     hoursShort: 'Пн-Пт 10-19 по Владивостоку',
     hoursSpec: [{ days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: co.schedule.opens, closes: co.schedule.closes }],
     email: co.email,
-    phones: [
-      { label: primary.display, tel: primary.tel, person: 'Сергей Усов' },
-      ...co.phones.filter((p) => p !== primary && SITE_TELS.includes(p.tel)).map((p) => ({ label: p.display, tel: p.tel, person: p.person.replace(/\s*\(.*\)$/, '') })),
-    ],
+    phones: [{ label: salesPhone.display, tel: salesPhone.tel, department: 'Отдел продаж' }],
     maps: { twoGis: co.links.twoGis, yandex: co.links.yandexMaps },
   },
 

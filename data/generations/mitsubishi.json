@@ -1,0 +1,214 @@
+{
+  "outlander-phev": {
+    "source": "https://www.drom.ru/catalog/mitsubishi/outlander/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "GN0W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "GN0W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/outlander-phev-1228191.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2021,
+        "to": 2024,
+        "codes": [
+          "GN0W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2021,
+            "fromMonth": 12,
+            "to": 2024,
+            "toMonth": 9,
+            "codes": [
+              "GN0W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/outlander-phev-1038685.webp"
+      },
+      {
+        "id": "g3-r3",
+        "label": "3 поколение, 3-й рестайлинг",
+        "from": 2018,
+        "to": 2021,
+        "codes": [
+          "GG3W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 8,
+            "to": 2021,
+            "toMonth": 10,
+            "codes": [
+              "GG3W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/outlander-phev-838521.webp"
+      },
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 2015,
+        "to": 2018,
+        "codes": [
+          "GG2W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2015,
+            "fromMonth": 6,
+            "to": 2018,
+            "toMonth": 7,
+            "codes": [
+              "GG2W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/outlander-phev-216705.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2014,
+        "to": 2015,
+        "codes": [
+          "GG2W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2014,
+            "fromMonth": 5,
+            "to": 2015,
+            "toMonth": 5,
+            "codes": [
+              "GG2W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/outlander-phev-690822.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2013,
+        "to": 2014,
+        "codes": [
+          "GG2W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 1,
+            "to": 2014,
+            "toMonth": 4,
+            "codes": [
+              "GG2W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/outlander-phev-595183.webp"
+      }
+    ]
+  },
+  "delica-d-5": {
+    "source": "https://www.drom.ru/catalog/mitsubishi/delica_d_5/",
+    "generations": [
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "CV1W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2025,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "CV1W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/delica-d-5-1298672.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2025,
+        "codes": [
+          "CV1W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 11,
+            "to": 2025,
+            "toMonth": 12,
+            "codes": [
+              "CV1W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/delica-d-5-860254.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2007,
+        "to": 2019,
+        "codes": [
+          "CV2W",
+          "CV4W",
+          "CV5W",
+          "CV1W"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2007,
+            "fromMonth": 1,
+            "to": 2019,
+            "toMonth": 10,
+            "codes": [
+              "CV2W",
+              "CV4W",
+              "CV5W",
+              "CV1W"
+            ]
+          }
+        ],
+        "photo": "generations/mitsubishi/delica-d-5-1130759.webp"
+      }
+    ]
+  }
+}

@@ -1,0 +1,978 @@
+{
+  "monza": {
+    "source": "https://www.drom.ru/catalog/chevrolet/monza/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chevrolet/monza-g4-r1-1138642.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 4,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2019,
+        "to": 2022,
+        "codes": [],
+        "photo": "generations/chevrolet/monza-g4-r0-1138628.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 3,
+            "to": 2022,
+            "toMonth": 8,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "spark": {
+    "source": "https://www.drom.ru/catalog/chevrolet/spark/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2018,
+        "to": null,
+        "codes": [
+          "M400"
+        ],
+        "photo": "generations/chevrolet/spark-g4-r1-1110316.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2018,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "M400"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2018,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 8,
+            "codes": [
+              "M400"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2015,
+        "to": 2022,
+        "codes": [
+          "M400"
+        ],
+        "photo": "generations/chevrolet/spark-g4-r0-1031096.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 2015,
+            "fromMonth": 4,
+            "to": 2022,
+            "toMonth": 8,
+            "codes": [
+              "M400"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2016,
+        "to": null,
+        "codes": [
+          "M300"
+        ],
+        "photo": "generations/chevrolet/spark-g3-r1-969701.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2016,
+            "fromMonth": 11,
+            "to": 2022,
+            "toMonth": 11,
+            "codes": [
+              "M300"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2016,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "M300"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2009,
+        "to": 2016,
+        "codes": [
+          "M300"
+        ],
+        "photo": "generations/chevrolet/spark-g3-r0-694242.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2009,
+            "fromMonth": 3,
+            "to": 2015,
+            "toMonth": 3,
+            "codes": [
+              "M300"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2009,
+            "fromMonth": 3,
+            "to": 2016,
+            "toMonth": 12,
+            "codes": [
+              "M300"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2005,
+        "to": 2010,
+        "codes": [
+          "M200"
+        ],
+        "photo": "generations/chevrolet/spark-g2-r0-852909.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2005,
+            "fromMonth": 1,
+            "to": 2010,
+            "toMonth": 1,
+            "codes": [
+              "M200"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2004,
+        "to": 2011,
+        "codes": [
+          "KLYA"
+        ],
+        "photo": "generations/chevrolet/spark-g1-r0-1110301.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2004,
+            "fromMonth": 2,
+            "to": 2011,
+            "toMonth": 8,
+            "codes": [
+              "KLYA"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "trax": {
+    "source": "https://www.drom.ru/catalog/chevrolet/trax/",
+    "generations": [
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2022,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chevrolet/trax-g2-r0-1326690.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2022,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2022,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2023,
+        "codes": [],
+        "photo": "generations/chevrolet/trax-g1-r1-1118673.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 10,
+            "to": 2019,
+            "toMonth": 6,
+            "codes": []
+          },
+          {
+            "market": "korea",
+            "from": 2016,
+            "fromMonth": 10,
+            "to": 2023,
+            "toMonth": 9,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2016,
+            "fromMonth": 10,
+            "to": 2023,
+            "toMonth": 7,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2012,
+        "to": 2016,
+        "codes": [],
+        "photo": "generations/chevrolet/trax-g1-r0-1118659.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2012,
+            "fromMonth": 9,
+            "to": 2016,
+            "toMonth": 11,
+            "codes": []
+          },
+          {
+            "market": "korea",
+            "from": 2012,
+            "fromMonth": 9,
+            "to": 2016,
+            "toMonth": 9,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2012,
+            "fromMonth": 9,
+            "to": 2016,
+            "toMonth": 9,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "trailblazer": {
+    "source": "https://www.drom.ru/catalog/chevrolet/trailblazer/",
+    "generations": [
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chevrolet/trailblazer-g3-r1-1302943.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2024,
+            "fromMonth": 2,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2024,
+            "fromMonth": 2,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2019,
+        "to": 2024,
+        "codes": [],
+        "photo": "generations/chevrolet/trailblazer-g3-r0-1302927.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2019,
+            "fromMonth": 12,
+            "to": 2022,
+            "toMonth": 4,
+            "codes": []
+          },
+          {
+            "market": "korea",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": 2024,
+            "toMonth": 4,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": 2024,
+            "toMonth": 3,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2023,
+        "codes": [
+          "31UX"
+        ],
+        "photo": "generations/chevrolet/trailblazer-g2-r1-1262618.webp",
+        "ranges": [
+          {
+            "market": "southeast-asia",
+            "from": 2016,
+            "fromMonth": 5,
+            "to": 2023,
+            "toMonth": 3,
+            "codes": [
+              "31UX"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2012,
+        "to": 2015,
+        "codes": [
+          "31UX"
+        ],
+        "photo": "generations/chevrolet/trailblazer-g2-r0-34217.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2012,
+            "fromMonth": 3,
+            "to": 2015,
+            "toMonth": 7,
+            "codes": [
+              "31UX"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2005,
+        "to": 2010,
+        "codes": [
+          "GMT360",
+          "GMT370"
+        ],
+        "photo": "generations/chevrolet/trailblazer-g1-r1-673787.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2005,
+            "fromMonth": 9,
+            "to": 2010,
+            "toMonth": 7,
+            "codes": [
+              "GMT360"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2005,
+            "fromMonth": 9,
+            "to": 2009,
+            "toMonth": 6,
+            "codes": [
+              "GMT360",
+              "GMT370"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2001,
+        "to": 2006,
+        "codes": [
+          "GMT360",
+          "GMT370"
+        ],
+        "photo": "generations/chevrolet/trailblazer-g1-r0-987977.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2001,
+            "fromMonth": 8,
+            "to": 2006,
+            "toMonth": 12,
+            "codes": [
+              "GMT360"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2001,
+            "fromMonth": 8,
+            "to": 2006,
+            "toMonth": 7,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2001,
+            "fromMonth": 8,
+            "to": 2005,
+            "toMonth": 8,
+            "codes": [
+              "GMT360",
+              "GMT370"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "malibu": {
+    "source": "https://www.drom.ru/catalog/chevrolet/malibu/",
+    "generations": [
+      {
+        "id": "g9-r1",
+        "label": "9 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2024,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g9-r1-1183333.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2018,
+            "fromMonth": 4,
+            "to": 2023,
+            "toMonth": 3,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2018,
+            "fromMonth": 4,
+            "to": 2024,
+            "toMonth": 5,
+            "codes": []
+          },
+          {
+            "market": "cis",
+            "from": 2018,
+            "fromMonth": 4,
+            "to": 2024,
+            "toMonth": 11,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g9-r0",
+        "label": "9 поколение",
+        "from": 2015,
+        "to": 2018,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g9-r0-1183325.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2015,
+            "fromMonth": 4,
+            "to": 2018,
+            "toMonth": 3,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2015,
+            "fromMonth": 4,
+            "to": 2018,
+            "toMonth": 3,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g8-r0",
+        "label": "8 поколение",
+        "from": 2011,
+        "to": 2016,
+        "codes": [
+          "V300"
+        ],
+        "photo": "generations/chevrolet/malibu-g8-r0-56076.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2012,
+            "fromMonth": 9,
+            "to": 2015,
+            "toMonth": 1,
+            "codes": [
+              "V300"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2011,
+            "fromMonth": 10,
+            "to": 2016,
+            "toMonth": 3,
+            "codes": []
+          },
+          {
+            "market": "cis",
+            "from": 2011,
+            "fromMonth": 10,
+            "to": 2016,
+            "toMonth": 12,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g7-r0",
+        "label": "7 поколение",
+        "from": 2007,
+        "to": 2012,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g7-r0-963396.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 2007,
+            "fromMonth": 7,
+            "to": 2012,
+            "toMonth": 9,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g6-r1",
+        "label": "6 поколение, рестайлинг",
+        "from": 2005,
+        "to": 2008,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g6-r1-963389.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 2005,
+            "fromMonth": 7,
+            "to": 2008,
+            "toMonth": 6,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2005,
+            "fromMonth": 7,
+            "to": 2007,
+            "toMonth": 6,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2003,
+        "to": 2005,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g6-r0-963366.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 2003,
+            "fromMonth": 7,
+            "to": 2005,
+            "toMonth": 6,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 1999,
+        "to": 2005,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g5-r1-963286.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 1999,
+            "fromMonth": 7,
+            "to": 2005,
+            "toMonth": 4,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 1996,
+        "to": 1999,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g5-r0-963229.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 1996,
+            "fromMonth": 10,
+            "to": 1999,
+            "toMonth": 6,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 1977,
+        "to": 1983,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g4-r0-963223.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 1977,
+            "fromMonth": 11,
+            "to": 1981,
+            "toMonth": 8,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 1977,
+            "fromMonth": 11,
+            "to": 1983,
+            "toMonth": 8,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 1972,
+        "to": 1977,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g3-r0-962364.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 1972,
+            "fromMonth": 9,
+            "to": 1977,
+            "toMonth": 10,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 1970,
+        "to": 1972,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g2-r1-962135.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 1970,
+            "fromMonth": 9,
+            "to": 1972,
+            "toMonth": 8,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1967,
+        "to": 1970,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g2-r0-962282.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 1967,
+            "fromMonth": 9,
+            "to": 1970,
+            "toMonth": 8,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 1967,
+            "fromMonth": 9,
+            "to": 1968,
+            "toMonth": 8,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1963,
+        "to": 1967,
+        "codes": [],
+        "photo": "generations/chevrolet/malibu-g1-r0-961314.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 1963,
+            "fromMonth": 10,
+            "to": 1967,
+            "toMonth": 8,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 1965,
+            "fromMonth": 9,
+            "to": 1967,
+            "toMonth": 8,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "equinox": {
+    "source": "https://www.drom.ru/catalog/chevrolet/equinox/",
+    "generations": [
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chevrolet/equinox-g4-r0-1242537.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 2024,
+            "fromMonth": 1,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2020,
+        "to": null,
+        "codes": [],
+        "photo": "generations/chevrolet/equinox-g3-r1-1251731.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": 2024,
+            "toMonth": 3,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": 2024,
+            "toMonth": 8,
+            "codes": []
+          },
+          {
+            "market": "southeast-asia",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2016,
+        "to": 2022,
+        "codes": [],
+        "photo": "generations/chevrolet/equinox-g3-r0-1251715.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 9,
+            "to": 2021,
+            "toMonth": 1,
+            "codes": []
+          },
+          {
+            "market": "korea",
+            "from": 2016,
+            "fromMonth": 9,
+            "to": 2021,
+            "toMonth": 3,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2016,
+            "fromMonth": 9,
+            "to": 2021,
+            "toMonth": 2,
+            "codes": []
+          },
+          {
+            "market": "uae",
+            "from": 2016,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 6,
+            "codes": []
+          },
+          {
+            "market": "southeast-asia",
+            "from": 2016,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 1,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2017,
+        "codes": [],
+        "photo": "generations/chevrolet/equinox-g2-r1-957824.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 2015,
+            "fromMonth": 2,
+            "to": 2017,
+            "toMonth": 3,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2009,
+        "to": 2015,
+        "codes": [],
+        "photo": "generations/chevrolet/equinox-g2-r0-957796.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 2009,
+            "fromMonth": 1,
+            "to": 2015,
+            "toMonth": 1,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2003,
+        "to": 2009,
+        "codes": [],
+        "photo": "generations/chevrolet/equinox-g1-r0-957772.webp",
+        "ranges": [
+          {
+            "market": "usa",
+            "from": 2003,
+            "fromMonth": 1,
+            "to": 2009,
+            "toMonth": 5,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  }
+}

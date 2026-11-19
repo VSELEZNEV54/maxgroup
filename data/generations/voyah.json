@@ -1,0 +1,59 @@
+{
+  "free": {
+    "source": "https://www.drom.ru/catalog/voyah/free/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [],
+        "photo": "generations/voyah/free-g1-r1-1155516.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2022,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": null,
+        "codes": [],
+        "photo": "generations/voyah/free-g1-r0-1077991.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2020,
+            "fromMonth": 12,
+            "to": 2025,
+            "toMonth": 10,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 12,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  }
+}

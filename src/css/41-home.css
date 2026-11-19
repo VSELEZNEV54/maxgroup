@@ -135,6 +135,7 @@
     gap: var(--gap);
     columns: auto;
     overflow-x: auto;
+    overflow-y: hidden;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--gutter);
@@ -155,13 +156,17 @@
     scroll-snap-align: start;
     margin-bottom: 0;
   }
+
+  .js .m-rail > [data-reveal] {
+    transform: none;
+  }
 }
 
 /* --- Каталог на главной -------------------------------------------------------------------- */
 
 /* 901–1180px: сетка в три колонки — показываем шесть карточек (3 + 3), а не 3 + 3 + 2 */
 @media (min-width: 901px) and (max-width: 1180px) {
-  #katalog [data-tab-panel] > :nth-child(n + 7) {
+  .no-js #home-cars > :nth-child(n + 7) {
     display: none;
   }
 }
@@ -183,13 +188,125 @@
   }
 }
 
-/* --- Первый экран -------------------------------------------------------------------------- */
+/* --- Фильтры и кнопка каталога -------------------------------------------------------------- */
 
-/* третий факт начинает вторую строку — без левого отступа, по одной вертикали с первым */
-@media (max-width: 560px) {
-  .hero__strip .hero__fact:nth-child(3) {
-    padding-left: 0;
+.catalog-choices {
+  display: grid;
+  justify-items: start;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+
+#katalog .section-foot { justify-content: center; }
+
+@media (max-width: 600px) {
+  #katalog .tabs__btn small { display: none; }
+}
+
+/* --- Этапы сделки из презентации ----------------------------------------------------------- */
+
+.process {
+  display: grid;
+  grid-template-columns: max-content repeat(6, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.process__keys,
+.process__stage {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  min-width: 0;
+}
+
+.process__keys {
+  align-items: center;
+  padding-right: var(--sp-3);
+  font-size: var(--fs-h4);
+}
+
+.process__keys b { font-weight: var(--w-medium); }
+.process__stage header { padding: var(--sp-2) var(--sp-1); }
+.process__stage h3 { font-size: var(--fs-h3); }
+
+.process__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-3);
+}
+
+.process__top svg { width: 24px; height: 24px; color: var(--accent); }
+
+.process__cell {
+  padding: clamp(14px, 1.45vw, 24px);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  line-height: 1.4;
+}
+
+.process__cell--team { background: var(--accent-soft); }
+.process__stage:last-child .process__cell--team { background: var(--accent); color: var(--card); }
+
+.process__role {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 1100px) {
+  .process { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--sp-2); }
+  .process__keys { display: none; }
+  .process__stage header { padding-top: var(--sp-5); }
+  .process__role {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    color: var(--text-2);
+    margin-bottom: var(--sp-2);
+    font: var(--fs-mono) var(--font-mono);
   }
+  .process__stage:last-child .process__cell--team .process__role { color: var(--card); }
+}
+
+@media (max-width: 720px) {
+  .process { grid-template-columns: minmax(0, 1fr); }
+  .process__stage { grid-row: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto; gap: var(--gap); }
+  .process__stage header { grid-column: 1 / -1; }
+  .process__top { margin-bottom: var(--sp-2); }
+}
+
+@media (max-width: 374px) {
+  .process__stage { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* На светлых карточках текст и предметная фотография занимают разные части кадра. */
+@media (min-width: 901px) {
+  #uslugi .svc__title,
+  #uslugi .svc__text { max-width: 40%; }
+}
+
+@media (max-width: 900px) {
+  #uslugi .svc--light {
+    justify-content: flex-start;
+    gap: var(--sp-4);
+  }
+  #uslugi .svc__bg {
+    position: relative;
+    inset: auto;
+    order: 1;
+    margin: 0 -20px -20px;
+  }
+  #uslugi .svc__bg img {
+    height: auto;
+    aspect-ratio: 2.4;
+    object-position: right 58%;
+  }
+  #uslugi .svc__bg::after { background: linear-gradient(180deg, #e9eef5, transparent 32%); }
 }
 
 /* --- Доставка ------------------------------------------------------------------------------ */

@@ -161,8 +161,8 @@ function guidePage(ctx) {
             <h1>${duo('Как читать', 'аукционный лист')}</h1>
             <p class="lead" style="max-width:54ch">${typo(g.lead)}</p>
             <div class="page-head__actions u-mt-6">
-              ${btn('Найти обозначение', '#poisk', { variant: 'light', arrow: false, iconName: 'search' })}
-              ${helpBtn('ghost', { arrow: false })}
+              ${btn('Найти обозначение', '#poisk', { variant: 'light', iconName: 'search' })}
+              ${helpBtn('ghost')}
             </div>
           </div>
           <div class="page-head__side guide-head__codes">

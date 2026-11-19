@@ -1,0 +1,768 @@
+{
+  "e-class": {
+    "source": "https://www.drom.ru/catalog/mercedes-benz/e-class/",
+    "generations": [
+      {
+        "id": "g6-r0",
+        "label": "6 поколение",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "V214",
+          "W214",
+          "S214"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 4,
+            "to": null,
+            "codes": [
+              "214.005",
+              "214.050",
+              "214.056",
+              "214.061",
+              "214.063"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 2,
+            "to": null,
+            "codes": [
+              "214004C",
+              "214050C",
+              "214046",
+              "214054",
+              "214054C"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 4,
+            "to": null,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2024,
+            "fromMonth": 2,
+            "to": null,
+            "codes": [
+              "214204C",
+              "214250C",
+              "214046",
+              "214214"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-1135706.webp"
+      },
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "A238",
+          "C238",
+          "V213",
+          "W213",
+          "S213"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 3,
+            "to": 2023,
+            "toMonth": 8,
+            "codes": [
+              "213.005",
+              "213.053",
+              "213.068",
+              "213.083"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2024,
+            "toMonth": 1,
+            "codes": [
+              "213004C",
+              "213016",
+              "213061",
+              "213077C",
+              "213078C",
+              "213083",
+              "213053",
+              "213089"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 3,
+            "to": 2024,
+            "toMonth": 6,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2024,
+            "toMonth": 1,
+            "codes": [
+              "213204C",
+              "213217",
+              "213261",
+              "213277C",
+              "213278C",
+              "213259",
+              "213283"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "238361",
+              "238377C",
+              "238359",
+              "238383"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2020,
+            "fromMonth": 10,
+            "to": null,
+            "codes": [
+              "238461",
+              "238477C",
+              "238483"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-1230306.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2016,
+        "to": 2020,
+        "codes": [
+          "A238",
+          "C238",
+          "W213",
+          "V213",
+          "S213"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2016,
+            "fromMonth": 1,
+            "to": 2020,
+            "toMonth": 5,
+            "codes": [
+              "213.004",
+              "213.005",
+              "213.045",
+              "213.048",
+              "213.064",
+              "213.068",
+              "213.088"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 7,
+            "to": 2020,
+            "toMonth": 8,
+            "codes": [
+              "213077C",
+              "213078C",
+              "213083C",
+              "213053C",
+              "213061",
+              "213064",
+              "213088",
+              "213089",
+              "213043C",
+              "213068",
+              "213050C",
+              "213004C",
+              "213042C",
+              "213045C",
+              "213071"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 1,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2016,
+            "fromMonth": 11,
+            "to": 2020,
+            "toMonth": 8,
+            "codes": [
+              "213277C",
+              "213278C",
+              "213283C",
+              "213243C",
+              "213268",
+              "213204C",
+              "213217",
+              "213242C",
+              "213245C",
+              "213271"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2017,
+            "fromMonth": 5,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": [
+              "238377C",
+              "238383C",
+              "238348C",
+              "238366",
+              "238368",
+              "238342C"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2018,
+            "fromMonth": 1,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": [
+              "238477C",
+              "238483C",
+              "238442C"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-1146368.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2013,
+        "to": 2017,
+        "codes": [
+          "A207",
+          "W212",
+          "C207",
+          "V212",
+          "S212"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 5,
+            "to": 2016,
+            "toMonth": 6,
+            "codes": [
+              "212074",
+              "212075",
+              "212095C",
+              "212073",
+              "212001C",
+              "212026C",
+              "212061C",
+              "212036C",
+              "212055C",
+              "212059C",
+              "212080C"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2013,
+            "fromMonth": 1,
+            "to": 2016,
+            "toMonth": 8,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 5,
+            "to": 2016,
+            "toMonth": 10,
+            "codes": [
+              "212273",
+              "212201C",
+              "212226C",
+              "212261C",
+              "212236C",
+              "212255C",
+              "212259C"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 8,
+            "to": 2017,
+            "toMonth": 4,
+            "codes": [
+              "207361",
+              "207336",
+              "207359"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2013,
+            "fromMonth": 8,
+            "to": 2017,
+            "toMonth": 12,
+            "codes": [
+              "207436"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-35651.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2009,
+        "to": 2014,
+        "codes": [
+          "A207",
+          "W212",
+          "C207",
+          "V212",
+          "S212"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2009,
+            "fromMonth": 5,
+            "to": 2013,
+            "toMonth": 4,
+            "codes": [
+              "212072",
+              "212073",
+              "212074",
+              "212077",
+              "212047C",
+              "212054C",
+              "212056C",
+              "212024",
+              "212024C",
+              "212055C",
+              "212059",
+              "212059C"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2009,
+            "fromMonth": 1,
+            "to": 2014,
+            "toMonth": 1,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2010,
+            "fromMonth": 2,
+            "to": 2013,
+            "toMonth": 4,
+            "codes": [
+              "212247C",
+              "212254C",
+              "212256C",
+              "212224",
+              "212224C",
+              "212255C",
+              "212259",
+              "212259C"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 2009,
+            "fromMonth": 7,
+            "to": 2013,
+            "toMonth": 7,
+            "codes": [
+              "207347",
+              "207356",
+              "207359"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-1265599.webp"
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2006,
+        "to": 2010,
+        "codes": [
+          "W211",
+          "S211"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2006,
+            "fromMonth": 8,
+            "to": 2009,
+            "toMonth": 4,
+            "codes": [
+              "211022",
+              "211072",
+              "211077",
+              "211052C",
+              "211054C",
+              "211056C"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2006,
+            "fromMonth": 4,
+            "to": 2010,
+            "toMonth": 6,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2006,
+            "fromMonth": 8,
+            "to": 2010,
+            "toMonth": 1,
+            "codes": [
+              "211222",
+              "211252C",
+              "211254C",
+              "211256C"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-1286630.webp"
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2002,
+        "to": 2006,
+        "codes": [
+          "S211",
+          "W211"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 2002,
+            "fromMonth": 6,
+            "to": 2006,
+            "toMonth": 7,
+            "codes": [
+              "211070",
+              "211054C",
+              "211056C",
+              "211076",
+              "211061",
+              "211065",
+              "211065C"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2002,
+            "fromMonth": 1,
+            "to": 2006,
+            "toMonth": 7,
+            "codes": []
+          },
+          {
+            "market": "japan",
+            "from": 2003,
+            "fromMonth": 8,
+            "to": 2006,
+            "toMonth": 7,
+            "codes": [
+              "211254C",
+              "211256C",
+              "211261",
+              "211265C"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-1286619.webp"
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 1999,
+        "to": 2003,
+        "codes": [
+          "W210",
+          "S210"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 10,
+            "to": 2002,
+            "toMonth": 5,
+            "codes": [
+              "210061",
+              "210062",
+              "210065",
+              "210070",
+              "E55"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1999,
+            "fromMonth": 10,
+            "to": 2003,
+            "toMonth": 7,
+            "codes": [
+              "210261",
+              "210262",
+              "210265",
+              "210270"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-535419.webp"
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 1995,
+        "to": 1999,
+        "codes": [
+          "S210",
+          "W210"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1995,
+            "fromMonth": 10,
+            "to": 1999,
+            "toMonth": 9,
+            "codes": [
+              "210037",
+              "210055",
+              "210061",
+              "210065",
+              "210070"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1996,
+            "fromMonth": 11,
+            "to": 1999,
+            "toMonth": 9,
+            "codes": [
+              "210237",
+              "210261",
+              "210265"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-809083.webp"
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1993,
+        "to": 1997,
+        "codes": [
+          "A124",
+          "C124",
+          "W124",
+          "V124",
+          "S124"
+        ],
+        "ranges": [
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 9,
+            "to": 1995,
+            "toMonth": 9,
+            "codes": [
+              "124022",
+              "124028",
+              "124032"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 9,
+            "to": 1996,
+            "toMonth": 10,
+            "codes": [
+              "124082",
+              "124088",
+              "124092"
+            ]
+          },
+          {
+            "market": "japan",
+            "from": 1993,
+            "fromMonth": 9,
+            "to": 1995,
+            "toMonth": 9,
+            "codes": [
+              "124052"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/e-class-1042224.webp"
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1984,
+        "to": 1993,
+        "codes": [
+          "A124",
+          "C124",
+          "S124",
+          "V124",
+          "W124"
+        ],
+        "photo": "generations/mercedes-benz/e-class-554915.webp"
+      }
+    ]
+  },
+  "a-class-a180l": {
+    "source": "https://www.drom.ru/catalog/mercedes-benz/a-class/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "Z177"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 5,
+            "to": null,
+            "codes": []
+          }
+        ],
+        "photo": "generations/mercedes-benz/a-class-a180l-1249973.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2018,
+        "to": 2023,
+        "codes": [
+          "Z177"
+        ],
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 11,
+            "to": 2023,
+            "toMonth": 5,
+            "codes": []
+          }
+        ],
+        "photo": "generations/mercedes-benz/a-class-a180l-1249956.webp"
+      }
+    ]
+  },
+  "c200d": {
+    "source": "https://www.drom.ru/catalog/mercedes-benz/c-class/",
+    "generations": [
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2026,
+        "to": null,
+        "codes": [
+          "W206"
+        ],
+        "photo": "generations/mercedes-benz/c200d-1366583.webp"
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2021,
+        "to": 2026,
+        "codes": [
+          "W206"
+        ],
+        "photo": "generations/mercedes-benz/c200d-1105904.webp"
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2021,
+        "codes": [
+          "W205"
+        ],
+        "photo": "generations/mercedes-benz/c200d-1175475.webp"
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2015,
+        "to": 2018,
+        "codes": [
+          "W205"
+        ],
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2015,
+            "fromMonth": 4,
+            "to": 2018,
+            "toMonth": 7,
+            "codes": [
+              "W205.007"
+            ]
+          }
+        ],
+        "photo": "generations/mercedes-benz/c200d-1305779.webp"
+      }
+    ]
+  }
+}

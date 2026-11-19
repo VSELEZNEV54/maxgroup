@@ -314,7 +314,7 @@ function hubPage(ctx, list) {
             <p class="lead">${typo(t.lead)}</p>
             <div class="page-head__actions">
               ${btn('Хочу такой же', R.contacts, { variant: 'light', modal: 'request', subject: 'Хочу такой же автомобиль (привезенные авто)', attrs: { 'data-modal-title': 'Привезем такой же автомобиль', 'data-modal-text': 'Назовите модель и бюджет, и мы подберем варианты и пришлем расчет под ключ.' } })}
-              ${btn('Смотреть каталог', R.catalog, { variant: 'ghost', arrow: false })}
+              ${btn('Смотреть каталог', R.catalog, { variant: 'ghost' })}
             </div>
           </div>
         </div>
@@ -720,7 +720,7 @@ function casePage(ctx, list, c) {
                 : `<div class="casehero__price"><span class="casehero__sum casehero__sum--text">${esc(noPriceText)}</span></div>`}
               <div class="casehero__actions">
                 ${wantBtn('primary')}
-                ${btn('Рассчитать стоимость', R.calculator, { variant: 'ghost', arrow: false })}
+                ${btn('Рассчитать стоимость', R.calculator, { variant: 'ghost' })}
               </div>`;
 
   return {
@@ -806,7 +806,7 @@ function casePage(ctx, list, c) {
           label: t.now.label,
           title: c.multi ? duo('Сколько стоят такие автомобили', t.now.titleMuted) : duo(`Сколько стоит ${c.short}`, t.now.titleMuted),
           lead: c.price ? t.now.lead : t.now.leadNoPrice,
-          actions: btn('Рассчитать в калькуляторе', R.calculator, { variant: 'light' }) + wantBtn('ghost', { arrow: false }),
+          actions: btn('Рассчитать в калькуляторе', R.calculator, { variant: 'light' }) + wantBtn('ghost'),
         })}
         <div class="now-grid" style="--cols:${nowCols}">
           ${now.map(

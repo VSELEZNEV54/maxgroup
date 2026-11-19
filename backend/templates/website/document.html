@@ -1,0 +1,5 @@
+<!doctype html>
+<html{{ html_attributes }}>
+<head>{{ head|safe }}</head>
+<body{% if body_class %} class="{{ body_class }}"{% endif %}{{ body_attributes|safe }}>{{ body|safe }}</body>
+</html>

@@ -1,0 +1,2558 @@
+{
+  "carnival": {
+    "source": "https://www.drom.ru/catalog/kia/carnival/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "KA4",
+          "K4A"
+        ],
+        "photo": "generations/kia/carnival-g4-r1-1168108.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "KA4"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2023,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "K4A"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "KA4",
+          "LJD"
+        ],
+        "photo": "generations/kia/carnival-g4-r0-1140607.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2020,
+            "fromMonth": 7,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "KA4"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "LJD"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 7,
+            "to": 2023,
+            "toMonth": 10,
+            "codes": [
+              "KA4"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2020,
+            "fromMonth": 7,
+            "to": 2024,
+            "toMonth": 11,
+            "codes": [
+              "KA4"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2020,
+        "codes": [
+          "YP"
+        ],
+        "photo": "generations/kia/carnival-g3-r1-1084454.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2018,
+            "fromMonth": 3,
+            "to": 2020,
+            "toMonth": 8,
+            "codes": [
+              "YP"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2014,
+        "to": 2018,
+        "codes": [
+          "YP"
+        ],
+        "photo": "generations/kia/carnival-g3-r0-935695.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2018,
+            "toMonth": 2,
+            "codes": [
+              "YP"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2010,
+        "to": 2014,
+        "codes": [
+          "VQ"
+        ],
+        "photo": "generations/kia/carnival-g2-r1-1086953.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2010,
+            "fromMonth": 1,
+            "to": 2014,
+            "toMonth": 10,
+            "codes": [
+              "VQ"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2010,
+            "fromMonth": 6,
+            "to": 2014,
+            "toMonth": 10,
+            "codes": [
+              "VQ"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2005,
+        "to": 2010,
+        "codes": [
+          "VQ"
+        ],
+        "photo": "generations/kia/carnival-g2-r0-1154923.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2005,
+            "fromMonth": 10,
+            "to": 2010,
+            "toMonth": 9,
+            "codes": [
+              "VQ"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2005,
+            "fromMonth": 7,
+            "to": 2010,
+            "toMonth": 1,
+            "codes": [
+              "VQ"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2005,
+            "fromMonth": 10,
+            "to": 2010,
+            "toMonth": 5,
+            "codes": [
+              "VQ"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2002,
+        "to": 2006,
+        "codes": [],
+        "photo": "generations/kia/carnival-g1-r1-863185.webp",
+        "ranges": [
+          {
+            "market": "europe",
+            "from": 2002,
+            "fromMonth": 12,
+            "to": 2006,
+            "toMonth": 10,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1998,
+        "to": 2002,
+        "codes": [],
+        "photo": "generations/kia/carnival-g1-r0-897788.webp",
+        "ranges": [
+          {
+            "market": "europe",
+            "from": 1998,
+            "fromMonth": 1,
+            "to": 2002,
+            "toMonth": 11,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "sorento": {
+    "source": "https://www.drom.ru/catalog/kia/sorento/",
+    "generations": [
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "MQ4"
+        ],
+        "photo": "generations/kia/sorento-g4-r1-1170298.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "MQ4"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "MQ4"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2023,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "MQ4"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2023,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "MQ4"
+            ]
+          },
+          {
+            "market": "uae",
+            "from": 2023,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "MQ4"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2020,
+        "to": 2024,
+        "codes": [
+          "MQ4"
+        ],
+        "photo": "generations/kia/sorento-g4-r0-1103418.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": 2023,
+            "toMonth": 7,
+            "codes": [
+              "MQ4"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": 2023,
+            "toMonth": 7,
+            "codes": [
+              "MQ4"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": 2024,
+            "toMonth": 7,
+            "codes": [
+              "MQ4"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2020,
+            "fromMonth": 2,
+            "to": 2024,
+            "toMonth": 3,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2017,
+        "to": 2020,
+        "codes": [
+          "UM"
+        ],
+        "photo": "generations/kia/sorento-g3-r1-1112259.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2017,
+            "fromMonth": 7,
+            "to": 2020,
+            "toMonth": 11,
+            "codes": [
+              "UM"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2017,
+            "fromMonth": 7,
+            "to": 2020,
+            "toMonth": 3,
+            "codes": [
+              "UM"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2017,
+            "fromMonth": 11,
+            "to": 2020,
+            "toMonth": 9,
+            "codes": [
+              "UM"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2014,
+        "to": 2018,
+        "codes": [
+          "UM"
+        ],
+        "photo": "generations/kia/sorento-g3-r0-841557.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2014,
+            "fromMonth": 8,
+            "to": 2018,
+            "toMonth": 1,
+            "codes": [
+              "UM"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2014,
+            "fromMonth": 8,
+            "to": 2017,
+            "toMonth": 7,
+            "codes": [
+              "UM"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2016,
+            "fromMonth": 1,
+            "to": 2018,
+            "toMonth": 4,
+            "codes": [
+              "UM"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2012,
+        "to": 2021,
+        "codes": [
+          "XM"
+        ],
+        "photo": "generations/kia/sorento-g2-r1-550025.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2012,
+            "fromMonth": 7,
+            "to": 2021,
+            "toMonth": 2,
+            "codes": [
+              "XM"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2012,
+            "fromMonth": 7,
+            "to": 2014,
+            "toMonth": 7,
+            "codes": [
+              "XM"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2013,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 1,
+            "codes": [
+              "XM"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2009,
+        "to": 2013,
+        "codes": [
+          "XM"
+        ],
+        "photo": "generations/kia/sorento-g2-r0-549115.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2009,
+            "fromMonth": 5,
+            "to": 2012,
+            "toMonth": 6,
+            "codes": [
+              "XM"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2009,
+            "fromMonth": 5,
+            "to": 2012,
+            "toMonth": 6,
+            "codes": [
+              "XM"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2010,
+            "fromMonth": 3,
+            "to": 2013,
+            "toMonth": 4,
+            "codes": [
+              "XM"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2006,
+        "to": 2011,
+        "codes": [
+          "BL"
+        ],
+        "photo": "generations/kia/sorento-g1-r1-549042.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2006,
+            "fromMonth": 4,
+            "to": 2011,
+            "toMonth": 1,
+            "codes": [
+              "BL"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2006,
+            "fromMonth": 4,
+            "to": 2009,
+            "toMonth": 4,
+            "codes": [
+              "BL"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2006,
+            "fromMonth": 4,
+            "to": 2009,
+            "toMonth": 4,
+            "codes": [
+              "BL"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2002,
+        "to": 2006,
+        "codes": [
+          "BL"
+        ],
+        "photo": "generations/kia/sorento-g1-r0-549025.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2002,
+            "fromMonth": 2,
+            "to": 2006,
+            "toMonth": 3,
+            "codes": [
+              "BL"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2002,
+            "fromMonth": 2,
+            "to": 2006,
+            "toMonth": 3,
+            "codes": [
+              "BL"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2002,
+            "fromMonth": 2,
+            "to": 2006,
+            "toMonth": 3,
+            "codes": [
+              "BL"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "sportage": {
+    "source": "https://www.drom.ru/catalog/kia/sportage/",
+    "generations": [
+      {
+        "id": "g5-r1",
+        "label": "5 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [
+          "NQ5"
+        ],
+        "photo": "generations/kia/sportage-g5-r1-1362643.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2024,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "NQ5"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2024,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "NQ5"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2024,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "NQ5"
+            ]
+          },
+          {
+            "market": "uae",
+            "from": 2024,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "NQ5"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g5-r0",
+        "label": "5 поколение",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "NQ5"
+        ],
+        "photo": "generations/kia/sportage-g5-r0-1080607.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2021,
+            "fromMonth": 6,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "NQ5"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 6,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "NQ5"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2021,
+            "fromMonth": 6,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "europe",
+            "from": 2021,
+            "fromMonth": 6,
+            "to": 2025,
+            "toMonth": 6,
+            "codes": [
+              "NQ5"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2021,
+            "fromMonth": 6,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "cis",
+            "from": 2021,
+            "fromMonth": 3,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "uae",
+            "from": 2021,
+            "fromMonth": 6,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "NQ5"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2022,
+        "codes": [
+          "QL"
+        ],
+        "photo": "generations/kia/sportage-g4-r1-1084090.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2018,
+            "fromMonth": 5,
+            "to": 2022,
+            "toMonth": 10,
+            "codes": [
+              "QL"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2018,
+            "fromMonth": 7,
+            "to": 2021,
+            "toMonth": 7,
+            "codes": []
+          },
+          {
+            "market": "europe",
+            "from": 2018,
+            "fromMonth": 8,
+            "to": 2021,
+            "toMonth": 11,
+            "codes": [
+              "QL"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2019,
+            "fromMonth": 10,
+            "to": 2021,
+            "toMonth": 6,
+            "codes": [
+              "QL"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g4-r0",
+        "label": "4 поколение",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "QL"
+        ],
+        "photo": "generations/kia/sportage-g4-r0-1083793.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2016,
+            "fromMonth": 3,
+            "to": 2019,
+            "toMonth": 1,
+            "codes": [
+              "QL"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2015,
+            "fromMonth": 9,
+            "to": 2018,
+            "toMonth": 7,
+            "codes": []
+          },
+          {
+            "market": "europe",
+            "from": 2015,
+            "fromMonth": 10,
+            "to": 2018,
+            "toMonth": 8,
+            "codes": [
+              "QL"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2016,
+            "fromMonth": 3,
+            "to": 2019,
+            "toMonth": 10,
+            "codes": [
+              "QL"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2014,
+        "to": null,
+        "codes": [
+          "SL",
+          "NP"
+        ],
+        "photo": "generations/kia/sportage-g3-r1-1270661.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 3,
+            "codes": [
+              "SL"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "NP"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 3,
+            "codes": [
+              "SL"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 3,
+            "codes": [
+              "SL"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 3,
+            "codes": [
+              "SL"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2010,
+        "to": 2021,
+        "codes": [
+          "SL",
+          "NP"
+        ],
+        "photo": "generations/kia/sportage-g3-r0-1270659.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2010,
+            "fromMonth": 8,
+            "to": 2014,
+            "toMonth": 3,
+            "codes": [
+              "SL"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2018,
+            "fromMonth": 4,
+            "to": 2021,
+            "toMonth": 7,
+            "codes": [
+              "NP"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2010,
+            "fromMonth": 8,
+            "to": 2014,
+            "toMonth": 3,
+            "codes": [
+              "SL"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2010,
+            "fromMonth": 8,
+            "to": 2014,
+            "toMonth": 3,
+            "codes": [
+              "SL"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2010,
+            "fromMonth": 8,
+            "to": 2014,
+            "toMonth": 3,
+            "codes": [
+              "SL"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r2",
+        "label": "2 поколение, 2-й рестайлинг",
+        "from": 2008,
+        "to": 2010,
+        "codes": [
+          "JE",
+          "KM"
+        ],
+        "photo": "generations/kia/sportage-g2-r2-555686.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2008,
+            "fromMonth": 4,
+            "to": 2010,
+            "toMonth": 7,
+            "codes": [
+              "KM"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2008,
+            "fromMonth": 4,
+            "to": 2010,
+            "toMonth": 7,
+            "codes": [
+              "JE",
+              "KM"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2008,
+            "fromMonth": 4,
+            "to": 2010,
+            "toMonth": 7,
+            "codes": [
+              "JE"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2007,
+        "to": 2010,
+        "codes": [
+          "KM",
+          "JE"
+        ],
+        "photo": "generations/kia/sportage-g2-r1-864648.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2007,
+            "fromMonth": 4,
+            "to": 2008,
+            "toMonth": 3,
+            "codes": [
+              "KM"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2007,
+            "fromMonth": 10,
+            "to": 2010,
+            "toMonth": 3,
+            "codes": [
+              "KM"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2007,
+            "fromMonth": 4,
+            "to": 2008,
+            "toMonth": 3,
+            "codes": [
+              "JE"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2004,
+        "to": 2008,
+        "codes": [
+          "KM",
+          "JE"
+        ],
+        "photo": "generations/kia/sportage-g2-r0-864634.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2006,
+            "fromMonth": 3,
+            "to": 2007,
+            "toMonth": 3,
+            "codes": [
+              "KM"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2004,
+            "fromMonth": 8,
+            "to": 2007,
+            "toMonth": 9,
+            "codes": [
+              "KM"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2004,
+            "fromMonth": 12,
+            "to": 2008,
+            "toMonth": 3,
+            "codes": [
+              "JE",
+              "KM"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2006,
+            "fromMonth": 3,
+            "to": 2008,
+            "toMonth": 3,
+            "codes": [
+              "JE"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2002,
+        "to": 2003,
+        "codes": [
+          "JA"
+        ],
+        "photo": "generations/kia/sportage-g1-r2-880759.webp",
+        "ranges": [
+          {
+            "market": "europe",
+            "from": 2002,
+            "fromMonth": 7,
+            "to": 2003,
+            "toMonth": 6,
+            "codes": [
+              "JA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 1998,
+        "to": 2002,
+        "codes": [
+          "K00",
+          "JA"
+        ],
+        "photo": "generations/kia/sportage-g1-r1-1196836.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 1998,
+            "fromMonth": 2,
+            "to": 2002,
+            "toMonth": 9,
+            "codes": [
+              "K00"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 1998,
+            "fromMonth": 7,
+            "to": 2002,
+            "toMonth": 6,
+            "codes": [
+              "JA"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 1998,
+            "fromMonth": 9,
+            "to": 2002,
+            "toMonth": 9,
+            "codes": [
+              "JA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 1993,
+        "to": 2006,
+        "codes": [
+          "K00",
+          "JA"
+        ],
+        "photo": "generations/kia/sportage-g1-r0-864538.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 1993,
+            "fromMonth": 5,
+            "to": 2006,
+            "toMonth": 2,
+            "codes": [
+              "JA"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 1993,
+            "fromMonth": 7,
+            "to": 1998,
+            "toMonth": 2,
+            "codes": [
+              "K00"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 1993,
+            "fromMonth": 7,
+            "to": 1998,
+            "toMonth": 6,
+            "codes": [
+              "JA"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 1993,
+            "fromMonth": 5,
+            "to": 1998,
+            "toMonth": 8,
+            "codes": [
+              "JA"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "k5": {
+    "source": "https://www.drom.ru/catalog/kia/k5/",
+    "generations": [
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "DL3"
+        ],
+        "photo": "generations/kia/k5-g3-r1-1213612.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "usa",
+            "from": 2023,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "DL3"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2024,
+            "fromMonth": 6,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "DL3"
+            ]
+          },
+          {
+            "market": "uae",
+            "from": 2023,
+            "fromMonth": 10,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "DL3"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2019,
+        "to": null,
+        "codes": [
+          "DL3"
+        ],
+        "photo": "generations/kia/k5-g3-r0-1106554.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2019,
+            "fromMonth": 12,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "DL3"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 12,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "DL3"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2019,
+            "fromMonth": 12,
+            "to": 2023,
+            "toMonth": 10,
+            "codes": [
+              "DL3"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2019,
+            "fromMonth": 12,
+            "to": 2024,
+            "toMonth": 2,
+            "codes": [
+              "DL3"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2019,
+            "fromMonth": 12,
+            "to": 2024,
+            "toMonth": 6,
+            "codes": [
+              "DL3"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2018,
+        "to": 2021,
+        "codes": [
+          "JF"
+        ],
+        "photo": "generations/kia/k5-g2-r1-1104910.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2018,
+            "fromMonth": 1,
+            "to": 2021,
+            "toMonth": 10,
+            "codes": [
+              "JF"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2015,
+        "to": 2018,
+        "codes": [
+          "JF"
+        ],
+        "photo": "generations/kia/k5-g2-r0-1104917.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2015,
+            "fromMonth": 7,
+            "to": 2018,
+            "toMonth": 10,
+            "codes": [
+              "JF"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2013,
+        "to": 2015,
+        "codes": [
+          "TF"
+        ],
+        "photo": "generations/kia/k5-g1-r1-136994.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2013,
+            "fromMonth": 6,
+            "to": 2015,
+            "toMonth": 7,
+            "codes": [
+              "TF"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2010,
+        "to": 2013,
+        "codes": [
+          "TF"
+        ],
+        "photo": "generations/kia/k5-g1-r0-579558.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2010,
+            "fromMonth": 4,
+            "to": 2013,
+            "toMonth": 6,
+            "codes": [
+              "TF"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "k8": {
+    "source": "https://www.drom.ru/catalog/kia/k8/",
+    "generations": [
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "photo": "generations/kia/k8-g1-r1-1290030.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2024,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "cis",
+            "from": 2024,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "uae",
+            "from": 2024,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2021,
+        "to": 2025,
+        "codes": [
+          "GL3"
+        ],
+        "photo": "generations/kia/k8-g1-r0-1184876.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2021,
+            "fromMonth": 4,
+            "to": 2024,
+            "toMonth": 8,
+            "codes": [
+              "GL3"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2021,
+            "fromMonth": 4,
+            "to": 2025,
+            "toMonth": 7,
+            "codes": [
+              "GL3"
+            ]
+          },
+          {
+            "market": "uae",
+            "from": 2021,
+            "fromMonth": 4,
+            "to": 2024,
+            "toMonth": 8,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "seltos": {
+    "source": "https://www.drom.ru/catalog/kia/seltos/",
+    "generations": [
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "SP3",
+          "SP3c"
+        ],
+        "photo": "generations/kia/seltos-g2-r0-1307092.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2026,
+            "fromMonth": 8,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "SP3c"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2025,
+            "fromMonth": 12,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "SP3"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [
+          "SP2c"
+        ],
+        "photo": "generations/kia/seltos-g1-r2-1281656.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "SP2c"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2022,
+        "to": 2026,
+        "codes": [
+          "SP2",
+          "SP2c"
+        ],
+        "photo": "generations/kia/seltos-g1-r1-1252840.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 7,
+            "to": 2025,
+            "toMonth": 7,
+            "codes": [
+              "SP2c"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2022,
+            "fromMonth": 7,
+            "to": 2025,
+            "toMonth": 12,
+            "codes": [
+              "SP2"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2022,
+            "fromMonth": 7,
+            "to": 2026,
+            "toMonth": 6,
+            "codes": [
+              "SP2"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2022,
+            "fromMonth": 7,
+            "to": 2026,
+            "toMonth": 11,
+            "codes": [
+              "SP2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2019,
+        "to": 2023,
+        "codes": [
+          "SP2"
+        ],
+        "photo": "generations/kia/seltos-g1-r0-1091027.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2019,
+            "fromMonth": 6,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "SP2"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2019,
+            "fromMonth": 6,
+            "to": 2022,
+            "toMonth": 7,
+            "codes": [
+              "SP2"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2019,
+            "fromMonth": 6,
+            "to": 2023,
+            "toMonth": 6,
+            "codes": [
+              "SP2"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2019,
+            "fromMonth": 6,
+            "to": 2023,
+            "toMonth": 4,
+            "codes": [
+              "SP2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "mohave": {
+    "source": "https://www.drom.ru/catalog/kia/mohave/",
+    "generations": [
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2019,
+        "to": 2024,
+        "codes": [
+          "HM2"
+        ],
+        "photo": "generations/kia/mohave-g1-r2-1140621.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "HM2"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2024,
+            "toMonth": 7,
+            "codes": [
+              "HM2"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2019,
+            "fromMonth": 9,
+            "to": 2024,
+            "toMonth": 7,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2021,
+        "codes": [
+          "HM",
+          "HM2"
+        ],
+        "photo": "generations/kia/mohave-g1-r1-1249464.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2016,
+            "fromMonth": 2,
+            "to": 2020,
+            "toMonth": 11,
+            "codes": [
+              "HM"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2016,
+            "fromMonth": 2,
+            "to": 2019,
+            "toMonth": 9,
+            "codes": [
+              "HM"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2016,
+            "fromMonth": 2,
+            "to": 2019,
+            "toMonth": 9,
+            "codes": [
+              "HM"
+            ]
+          },
+          {
+            "market": "uae",
+            "from": 2016,
+            "fromMonth": 2,
+            "to": 2021,
+            "toMonth": 7,
+            "codes": [
+              "HM2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2007,
+        "to": 2017,
+        "codes": [
+          "HM",
+          "HM2"
+        ],
+        "photo": "generations/kia/mohave-g1-r0-1249436.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2007,
+            "fromMonth": 12,
+            "to": 2017,
+            "toMonth": 3,
+            "codes": [
+              "HM"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2007,
+            "fromMonth": 12,
+            "to": 2015,
+            "toMonth": 12,
+            "codes": [
+              "HM"
+            ]
+          },
+          {
+            "market": "cis",
+            "from": 2007,
+            "fromMonth": 12,
+            "to": 2016,
+            "toMonth": 2,
+            "codes": [
+              "HM"
+            ]
+          },
+          {
+            "market": "uae",
+            "from": 2007,
+            "fromMonth": 12,
+            "to": 2016,
+            "toMonth": 2,
+            "codes": [
+              "HM2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "kx3": {
+    "source": "https://www.drom.ru/catalog/kia/kx3/",
+    "generations": [
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2019,
+        "to": 2023,
+        "codes": [
+          "SP2c"
+        ],
+        "photo": "generations/kia/kx3-g2-r0-1080591.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 11,
+            "to": 2023,
+            "toMonth": 5,
+            "codes": [
+              "SP2c"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2019,
+        "codes": [
+          "KC"
+        ],
+        "photo": "generations/kia/kx3-g1-r1-1080617.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 9,
+            "to": 2019,
+            "toMonth": 11,
+            "codes": [
+              "KC"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2015,
+        "to": 2016,
+        "codes": [
+          "KC"
+        ],
+        "photo": "generations/kia/kx3-g1-r0-1080631.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2015,
+            "fromMonth": 3,
+            "to": 2016,
+            "toMonth": 9,
+            "codes": [
+              "KC"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "morning": {
+    "source": "https://www.drom.ru/catalog/kia/morning/",
+    "generations": [
+      {
+        "id": "g3-r2",
+        "label": "3 поколение, 2-й рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [
+          "JA"
+        ],
+        "photo": "generations/kia/morning-g3-r2-1157342.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2023,
+            "fromMonth": 7,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "JA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2020,
+        "to": null,
+        "codes": [
+          "JA"
+        ],
+        "photo": "generations/kia/morning-g3-r1-1210388.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2020,
+            "fromMonth": 6,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "JA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2017,
+        "to": 2020,
+        "codes": [
+          "JA"
+        ],
+        "photo": "generations/kia/morning-g3-r0-1112231.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2017,
+            "fromMonth": 1,
+            "to": 2020,
+            "toMonth": 6,
+            "codes": [
+              "JA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2017,
+        "codes": [
+          "TA"
+        ],
+        "photo": "generations/kia/morning-g2-r1-1210290.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2015,
+            "fromMonth": 1,
+            "to": 2017,
+            "toMonth": 1,
+            "codes": [
+              "TA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2011,
+        "to": 2015,
+        "codes": [
+          "TA"
+        ],
+        "photo": "generations/kia/morning-g2-r0-576752.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2011,
+            "fromMonth": 1,
+            "to": 2015,
+            "toMonth": 1,
+            "codes": [
+              "TA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2009,
+        "to": 2011,
+        "codes": [
+          "SA"
+        ],
+        "photo": "generations/kia/morning-g1-r2-979131.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2009,
+            "fromMonth": 6,
+            "to": 2011,
+            "toMonth": 1,
+            "codes": [
+              "SA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2008,
+        "to": 2009,
+        "codes": [
+          "SA"
+        ],
+        "photo": "generations/kia/morning-g1-r1-979135.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2008,
+            "fromMonth": 1,
+            "to": 2009,
+            "toMonth": 6,
+            "codes": [
+              "SA"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2004,
+        "to": 2008,
+        "codes": [
+          "SA"
+        ],
+        "photo": "generations/kia/morning-g1-r0-1209801.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2004,
+            "fromMonth": 2,
+            "to": 2008,
+            "toMonth": 1,
+            "codes": [
+              "SA"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ray": {
+    "source": "https://www.drom.ru/catalog/kia/ray/",
+    "generations": [
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "TAM"
+        ],
+        "photo": "generations/kia/ray-g1-r2-1157352.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2022,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "TAM"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2017,
+        "to": 2022,
+        "codes": [
+          "TAM"
+        ],
+        "photo": "generations/kia/ray-g1-r1-1157365.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2017,
+            "fromMonth": 12,
+            "to": 2022,
+            "toMonth": 9,
+            "codes": [
+              "TAM"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2011,
+        "to": 2018,
+        "codes": [
+          "TAM"
+        ],
+        "photo": "generations/kia/ray-g1-r0-137043.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2011,
+            "fromMonth": 11,
+            "to": 2018,
+            "toMonth": 3,
+            "codes": [
+              "TAM"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "k3": {
+    "source": "https://www.drom.ru/catalog/kia/k3/",
+    "generations": [
+      {
+        "id": "g4-r2",
+        "label": "4 поколение, 2-й рестайлинг",
+        "from": 2022,
+        "to": null,
+        "codes": [
+          "BDC"
+        ],
+        "photo": "generations/kia/k3-g4-r2-1225387.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 12,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "BDC"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g4-r1",
+        "label": "4 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2022,
+        "codes": [
+          "BDC"
+        ],
+        "photo": "generations/kia/k3-g4-r1-1080457.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 5,
+            "to": 2022,
+            "toMonth": 12,
+            "codes": [
+              "BDC"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2016,
+        "to": 2019,
+        "codes": [
+          "YD"
+        ],
+        "photo": "generations/kia/k3-g3-r1-1083643.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2016,
+            "fromMonth": 11,
+            "to": 2019,
+            "toMonth": 5,
+            "codes": [
+              "YD"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2012,
+        "to": 2016,
+        "codes": [
+          "YD"
+        ],
+        "photo": "generations/kia/k3-g3-r0-1081284.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2012,
+            "fromMonth": 7,
+            "to": 2016,
+            "toMonth": 10,
+            "codes": [
+              "YD"
+            ]
+          },
+          {
+            "market": "china",
+            "from": 2014,
+            "fromMonth": 4,
+            "to": 2016,
+            "toMonth": 10,
+            "codes": [
+              "YD"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "BD"
+        ],
+        "photo": "generations/kia/k3-g2-r1-1111406.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2021,
+            "fromMonth": 4,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "BD"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2018,
+        "to": 2021,
+        "codes": [
+          "BD"
+        ],
+        "photo": "generations/kia/k3-g2-r0-1111267.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2018,
+            "fromMonth": 2,
+            "to": 2021,
+            "toMonth": 4,
+            "codes": [
+              "BD"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2018,
+            "fromMonth": 10,
+            "to": 2021,
+            "toMonth": 4,
+            "codes": [
+              "BD"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2015,
+        "to": 2019,
+        "codes": [
+          "YD"
+        ],
+        "photo": "generations/kia/k3-g1-r1-1111452.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2015,
+            "fromMonth": 11,
+            "to": 2018,
+            "toMonth": 6,
+            "codes": [
+              "YD"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2016,
+            "fromMonth": 1,
+            "to": 2019,
+            "toMonth": 11,
+            "codes": [
+              "YD"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2012,
+        "to": 2016,
+        "codes": [
+          "YK",
+          "YD"
+        ],
+        "photo": "generations/kia/k3-g1-r0-575001.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2013,
+            "fromMonth": 8,
+            "to": 2016,
+            "toMonth": 3,
+            "codes": [
+              "YK"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2012,
+            "fromMonth": 9,
+            "to": 2015,
+            "toMonth": 11,
+            "codes": [
+              "YD"
+            ]
+          },
+          {
+            "market": "korea",
+            "from": 2013,
+            "fromMonth": 9,
+            "to": 2016,
+            "toMonth": 12,
+            "codes": [
+              "YD"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "niro": {
+    "source": "https://www.drom.ru/catalog/kia/niro/",
+    "generations": [
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2026,
+        "to": null,
+        "codes": [],
+        "photo": "generations/kia/niro-g2-r1-1314726.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2026,
+            "fromMonth": 3,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2021,
+        "to": null,
+        "codes": [
+          "SG2"
+        ],
+        "photo": "generations/kia/niro-g2-r0-1311512.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2021,
+            "fromMonth": 11,
+            "to": 2026,
+            "toMonth": 3,
+            "codes": [
+              "SG2"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2021,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "SG2"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2021,
+            "fromMonth": 11,
+            "to": null,
+            "toMonth": null,
+            "codes": [
+              "SG2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r2",
+        "label": "1 поколение, 2-й рестайлинг",
+        "from": 2022,
+        "to": 2024,
+        "codes": [
+          "DE"
+        ],
+        "photo": "generations/kia/niro-g1-r2-1311493.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2022,
+            "fromMonth": 5,
+            "to": 2024,
+            "toMonth": 3,
+            "codes": [
+              "DE"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2019,
+        "to": 2022,
+        "codes": [
+          "DE"
+        ],
+        "photo": "generations/kia/niro-g1-r1-1311429.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2019,
+            "fromMonth": 3,
+            "to": 2022,
+            "toMonth": 5,
+            "codes": [
+              "DE"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2019,
+            "fromMonth": 3,
+            "to": 2022,
+            "toMonth": 5,
+            "codes": [
+              "DE"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2016,
+        "to": 2022,
+        "codes": [
+          "DE"
+        ],
+        "photo": "generations/kia/niro-g1-r0-1311344.webp",
+        "ranges": [
+          {
+            "market": "korea",
+            "from": 2016,
+            "fromMonth": 2,
+            "to": 2019,
+            "toMonth": 3,
+            "codes": [
+              "DE"
+            ]
+          },
+          {
+            "market": "europe",
+            "from": 2016,
+            "fromMonth": 2,
+            "to": 2022,
+            "toMonth": 5,
+            "codes": [
+              "DE"
+            ]
+          },
+          {
+            "market": "usa",
+            "from": 2016,
+            "fromMonth": 2,
+            "to": 2019,
+            "toMonth": 3,
+            "codes": [
+              "DE"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

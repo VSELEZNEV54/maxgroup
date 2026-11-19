@@ -1,0 +1,170 @@
+{
+  "uni-k": {
+    "source": "https://www.drom.ru/catalog/changan/uni-k/",
+    "generations": [
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2020,
+        "to": null,
+        "codes": [],
+        "photo": "generations/changan/uni-k-g1-r0-1084269.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2020,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  },
+  "cs75-plus": {
+    "source": "https://www.drom.ru/catalog/changan/cs75_plus/",
+    "generations": [
+      {
+        "id": "g3-r1",
+        "label": "3 поколение, рестайлинг",
+        "from": 2025,
+        "to": null,
+        "codes": [],
+        "photo": "generations/changan/cs75-plus-g3-r1-1331412.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2025,
+            "fromMonth": 12,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g3-r0",
+        "label": "3 поколение",
+        "from": 2024,
+        "to": null,
+        "codes": [],
+        "photo": "generations/changan/cs75-plus-g3-r0-1225488.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2024,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2024,
+            "fromMonth": 9,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r1",
+        "label": "2 поколение, рестайлинг",
+        "from": 2023,
+        "to": null,
+        "codes": [],
+        "photo": "generations/changan/cs75-plus-g2-r1-1235171.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2023,
+            "fromMonth": 4,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2023,
+            "fromMonth": 4,
+            "to": null,
+            "toMonth": null,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g2-r0",
+        "label": "2 поколение",
+        "from": 2022,
+        "to": 2024,
+        "codes": [],
+        "photo": "generations/changan/cs75-plus-g2-r0-1084442.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2022,
+            "fromMonth": 4,
+            "to": 2024,
+            "toMonth": 8,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r1",
+        "label": "1 поколение, рестайлинг",
+        "from": 2021,
+        "to": 2024,
+        "codes": [],
+        "photo": "generations/changan/cs75-plus-g1-r1-1084426.webp",
+        "ranges": [
+          {
+            "market": "russia",
+            "from": 2021,
+            "fromMonth": 4,
+            "to": 2024,
+            "toMonth": 12,
+            "codes": []
+          },
+          {
+            "market": "china",
+            "from": 2021,
+            "fromMonth": 4,
+            "to": 2022,
+            "toMonth": 3,
+            "codes": []
+          }
+        ]
+      },
+      {
+        "id": "g1-r0",
+        "label": "1 поколение",
+        "from": 2019,
+        "to": 2021,
+        "codes": [],
+        "photo": "generations/changan/cs75-plus-g1-r0-1084407.webp",
+        "ranges": [
+          {
+            "market": "china",
+            "from": 2019,
+            "fromMonth": 4,
+            "to": 2021,
+            "toMonth": 3,
+            "codes": []
+          }
+        ]
+      }
+    ]
+  }
+}

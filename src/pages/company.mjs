@@ -232,10 +232,10 @@ function contactGrid(ctx, { alt, tag = 'h2', hoursLink } = {}) {
             <div class="co-info"${reveal(1)}>
               ${label('Телефон')}
               <a class="co-info__big" href="tel:${main.tel}">${esc(main.label)}</a>
-              <p class="co-info__sub">${esc(main.person || 'Менеджер')} · звонки в рабочие часы офиса</p>
+              <p class="co-info__sub">${esc(main.department)} · звонки в рабочие часы офиса</p>
               <div class="co-info__foot">
                 <a class="btn btn--dark btn--sm" href="tel:${main.tel}">${icon('phone')} Позвонить</a>
-                ${btn('Заказать звонок', R.contacts, { variant: 'ghost', size: 'sm', arrow: false, modal: 'request', subject: 'Обратный звонок', attrs: { 'data-modal-title': 'Перезвоним в рабочее время', 'data-modal-text': `Оставьте номер, и менеджер перезвонит в часы работы офиса: ${c.hours} по Владивостоку.`, 'data-modal-label': 'Звонок' } })}
+                ${btn('Заказать звонок', R.contacts, { variant: 'ghost', size: 'sm', modal: 'request', subject: 'Обратный звонок', attrs: { 'data-modal-title': 'Перезвоним в рабочее время', 'data-modal-text': `Оставьте номер, и менеджер перезвонит в часы работы офиса: ${c.hours} по Владивостоку.`, 'data-modal-label': 'Звонок' } })}
               </div>
             </div>
             <div class="co-info"${reveal(2)}>
@@ -257,22 +257,37 @@ function contactGrid(ctx, { alt, tag = 'h2', hoursLink } = {}) {
         </div>`;
 }
 
-/** Реквизиты: юрлица в источнике нет — честная заглушка без выдуманных данных */
+/** Карточка организации на страницах контактов и компании. */
 function requisites(ctx, { tag = 'h2' } = {}) {
-  const t = ctx.content.companyPages.requisites;
-  const c = ctx.site.contacts;
+  const { legal, contacts } = ctx.site;
+  const bank = legal.bank;
+  const row = (name, value) => `<div><dt>${esc(name)}</dt><dd>${esc(value)}</dd></div>`;
   return html`
         <div class="co-req" id="rekvizity"${reveal()}>
-          <div>${label(t.label)}</div>
+          <div>${label('Реквизиты')}</div>
           <div>
-            <${tag} class="co-req__title">${typo(t.title)}</${tag}>
-            <p class="co-req__text">${typo(t.text)}</p>
+            <${tag} class="co-req__title">Владелец сайта</${tag}>
+            <p class="co-req__text">${esc(legal.fullName)}</p>
             <dl class="co-req__list">
-              <div><dt>Компания</dt><dd>${esc(ctx.site.name)}</dd></div>
-              <div><dt>Адрес</dt><dd>${esc(c.addressFull)}</dd></div>
-              <div><dt>Телефон</dt><dd><a class="link" href="tel:${c.phones[0].tel}">${esc(c.phones[0].label)}</a></dd></div>
+              ${row('ИНН', legal.inn)}
+              ${row('КПП', legal.kpp)}
+              ${row('ОГРН', legal.ogrn)}
+              ${row('Юридический и фактический адрес', legal.address)}
+              ${row('Офис для клиентов', contacts.addressFull)}
+              <div><dt>Телефон организации</dt><dd><a class="link" href="tel:${esc(legal.phone.tel)}">${esc(legal.phone.label)}</a></dd></div>
+              <div><dt>Электронная почта организации</dt><dd><a class="link" href="mailto:${esc(legal.email)}">${esc(legal.email)}</a></dd></div>
             </dl>
-            ${btn(t.cta, R.contacts, { variant: 'dark', modal: 'request', subject: 'Запрос реквизитов', attrs: { 'data-modal-title': 'Пришлем реквизиты компании', 'data-modal-text': 'Оставьте контакты, и менеджер отправит реквизиты компании в мессенджер или на почту.', 'data-modal-label': 'Реквизиты' } })}
+            <details class="acc">
+              <summary>Банковские реквизиты<i class="acc__icon" aria-hidden="true"></i></summary>
+              <div class="acc__body">
+                <dl class="co-req__list">
+                  ${row('Банк', bank.name)}
+                  ${row('БИК', bank.bic)}
+                  ${row('Расчетный счет', bank.account)}
+                  ${row('Корреспондентский счет', bank.correspondentAccount)}
+                </dl>
+              </div>
+            </details>
           </div>
         </div>`;
 }
@@ -402,7 +417,7 @@ function aboutPage(ctx) {
       ],
       actions:
         btn('Связаться с менеджером', R.contacts, { variant: 'light', modal: 'request', subject: 'Заявка со страницы «О компании»' }) +
-        btn('Отзывы клиентов', R.reviews, { variant: 'ghost', arrow: false }),
+        btn('Отзывы клиентов', R.reviews, { variant: 'ghost' }),
     })}
 
     <section class="section" id="kto-my">
@@ -565,7 +580,7 @@ function aboutPage(ctx) {
 // --- Контакты ----------------------------------------------------------------------------------------
 
 function contactsPage(ctx) {
-  const { site, source } = ctx;
+  const { site } = ctx;
   const t = ctx.content.contacts;
   const tools = textTools(ctx);
   const c = site.contacts;
@@ -576,12 +591,7 @@ function contactsPage(ctx) {
   const geo = geoOf(ctx);
   const faq = t.faq.map((f) => ({ q: f.q, a: tools.md(f.a) }));
 
-  const waLinks = [source.company?.links?.whatsapp, source.company?.links?.whatsappHeroManager].filter(Boolean);
-  const waFor = (tel) => waLinks.find((x) => x.includes(String(tel).replace(/\D/g, '')));
-  const people = [
-    ...ctx.team.map((p) => ({ name: p.name, role: p.role, phone: p.phone, tel: p.tel, initials: p.initials })),
-    ...c.phones.filter((p) => !ctx.team.some((m) => m.tel === p.tel)).map((p) => ({ name: p.person || 'Менеджер', role: t.managers.extraRole, phone: p.label, tel: p.tel })),
-  ];
+  const salesPhone = c.phones[0];
 
   const zone = (z) => {
     const shift = z.offset - VL_OFFSET;
@@ -623,22 +633,22 @@ function contactsPage(ctx) {
       <div class="container">
         ${sectionHead({ label: t.managers.label, title: duoS(t.managers.titleMain, t.managers.titleMute), lead: t.managers.lead })}
         <div class="co-people">
-          ${people.map((p, i) => {
-            const wa = waFor(p.tel);
-            return html`
+          ${ctx.team.map((p, i) => html`
           <article class="co-man"${reveal(Math.min(i, 4))}>
-            <div class="co-man__photo" aria-hidden="true">${esc(p.initials || p.name.trim()[0])}</div>
+            <div class="co-man__photo" aria-hidden="true">${img({ src: p.photo, alt: '', cls: 'sales-portrait', sizes: '76px' })}</div>
             <div>
               <h3 class="co-man__name">${esc(p.name)}</h3>
               <div class="co-man__role">${esc(p.role)}</div>
             </div>
-            <a class="co-man__phone" href="tel:${p.tel}">${esc(p.phone)}</a>
-            <div class="co-man__actions">
-              ${wa ? `<a class="btn btn--wa btn--sm" ${extLink(wa)} aria-label="Написать в WhatsApp: ${esc(p.name)}">${icon('whatsapp')} WhatsApp</a>` : ''}
-              <a class="btn btn--ghost btn--sm" href="tel:${p.tel}" aria-label="Позвонить: ${esc(p.name)}">${icon('phone')} Позвонить</a>
+            <div class="co-man__contact">
+              <div class="co-man__role">${esc(salesPhone.department)}</div>
+              <a class="co-man__phone" href="tel:${esc(salesPhone.tel)}">${esc(salesPhone.label)}</a>
             </div>
-          </article>`;
-          })}
+            <div class="co-man__actions">
+              ${site.socials.whatsapp ? `<a class="btn btn--wa btn--sm" ${extLink(site.socials.whatsapp.url)} aria-label="Написать в отдел продаж в WhatsApp">${icon('whatsapp')} WhatsApp</a>` : ''}
+              <a class="btn btn--ghost btn--sm" href="tel:${esc(salesPhone.tel)}" aria-label="Позвонить в отдел продаж">${icon('phone')} Позвонить</a>
+            </div>
+          </article>`)}
         </div>
       </div>
     </section>
@@ -886,7 +896,7 @@ function faqPage(ctx) {
       ],
       actions:
         btn('Задать свой вопрос', R.contacts, { modal: 'request', subject: 'Вопрос менеджеру (FAQ)', attrs: { 'data-modal-title': 'Задайте вопрос менеджеру', 'data-modal-text': 'Оставьте контакты, и мы перезвоним или напишем в мессенджер в рабочее время.', 'data-modal-label': 'Вопрос' } }) +
-        btn('Калькулятор', R.calculator, { variant: 'ghost', arrow: false }),
+        btn('Калькулятор', R.calculator, { variant: 'ghost' }),
     })}
 
     <section class="section section--white">
@@ -1023,7 +1033,7 @@ function videoPage(ctx) {
             <p class="lead">${typo(t.bridge.lead)}</p>
             <div class="btn-row">
               ${btn('Рассчитать стоимость', R.calculator, { variant: 'dark' })}
-              ${btn('Каталог', R.catalog, { variant: 'ghost', arrow: false })}
+              ${btn('Каталог', R.catalog, { variant: 'ghost' })}
             </div>
           </div>
           <div${reveal(1)}>
@@ -1054,8 +1064,20 @@ function privacyPage(ctx) {
   const p = ctx.source.privacyPolicy;
   const t = ctx.content.companyPages.privacy;
   if (!p) return null;
+  const { legal } = ctx.site;
   const crumbs = [HOME, { name: 'Политика конфиденциальности', url: R.privacy }];
-  const sections = p.sections.map((s, i) => ({ ...s, id: `p-${i + 1}` }));
+  const sections = p.sections.map((s, i) => ({
+    ...s,
+    id: `p-${i + 1}`,
+    paragraphs: s.paragraphs.map((v) => v.replace('компании «Макс Групп»', legal.name)),
+    list: s.title.endsWith('Контактная информация') ? [
+      legal.fullName,
+      `ИНН ${legal.inn}, КПП ${legal.kpp}, ОГРН ${legal.ogrn}`,
+      `Адрес оператора: ${legal.address}`,
+      `Телефон: ${legal.phone.label}`,
+      `Электронная почта: ${legal.email}`,
+    ] : s.list,
+  }));
   return {
     url: R.privacy,
     type: 'privacy',
@@ -1066,7 +1088,7 @@ function privacyPage(ctx) {
     priority: 0.2,
     changefreq: 'yearly',
     render: () => html`
-    ${pageHead({ crumbs, label: String(p.updated || '').replace(/^Дата последнего обновления:\s*/, 'Обновлено '), h1: esc(p.h1), lead: t.lead, single: true, cls: 'co-head--doc' })}
+    ${pageHead({ crumbs, label: `Обновлено ${t.updated}`, h1: esc(p.h1), lead: t.lead, single: true, cls: 'co-head--doc' })}
     <section class="section section--white section--sm">
       <div class="container">
         <div class="co-doc">
@@ -1082,7 +1104,7 @@ function privacyPage(ctx) {
             ${s.paragraphs.map((x) => `<p>${esc(x)}</p>`)}
             ${s.list?.length ? `<ul>${s.list.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}`
             )}
-            <p class="muted small">${esc(p.updated)}</p>
+            <p class="muted small">Обновлено ${esc(t.updated)}</p>
           </article>
         </div>
       </div>
@@ -1132,12 +1154,15 @@ function sitemapPage(ctx) {
 
   // подборки: общие (/podborki/…) и срезы внутри стран (/avto-iz-yaponii/do-160-ls/)
   const globalSelections = selections.filter((s) => s.global !== false);
-  const slices = (ctx.slices || []).filter((x) => x.count > 0);
+  const countrySelections = [
+    ...(ctx.slices || []).filter((x) => x.count > 0),
+    ...ctx.countries.map((cn) => ({ country: cn.slug, h1: `Топ-30 автомобилей ${cn.from}`, url: R.topModels(cn.slug) })),
+  ];
   const selectionsBody =
     (globalSelections.length ? `<h3 class="co-map__sub">Все страны<small>${globalSelections.length}</small></h3>${list(globalSelections.map((s) => ({ name: s.h1 || s.name, url: s.url })))}` : '') +
     ctx.countries
       .map((cn) => {
-        const own = slices.filter((x) => x.country === cn.slug);
+        const own = countrySelections.filter((x) => x.country === cn.slug);
         return own.length ? `<h3 class="co-map__sub">Подборки авто ${esc(cn.from)}<small>${own.length}</small></h3>${list(own.map((x) => ({ name: x.h1 || `${x.name} ${cn.from}`, url: x.url })))}` : '';
       })
       .join('');
@@ -1172,10 +1197,15 @@ function sitemapPage(ctx) {
     })
     .join('');
 
+  const servicePages = [
+    { name: 'Политика конфиденциальности', url: R.privacy },
+    { name: 'Права на фотографии', url: '/assets/photo-credits.txt' },
+    { name: 'Карта сайта', url: R.sitemap },
+  ];
   const groups = [
     group('razdely', 'Основные разделы', main.length, list(main)),
     hasCatalog ? group('katalog', 'Каталог: страны, марки, модели', ctx.brands.length + ctx.models.length, catalogBody, 'Марки сгруппированы по стране покупки, под каждой указаны модели из каталога.') : '',
-    globalSelections.length + slices.length ? group('podborki', 'Подборки', globalSelections.length + slices.length, selectionsBody, 'По бюджету, типу кузова и условиям растаможки: общие и по странам.') : '',
+    globalSelections.length + countrySelections.length ? group('podborki', 'Подборки', globalSelections.length + countrySelections.length, selectionsBody, 'Популярные модели по заказам и подборки по бюджету, типу кузова и условиям растаможки.') : '',
     group('uslugi', 'Услуги и инструменты', ctx.services.length + 3, list([{ name: 'Все услуги', url: R.services }, ...ctx.services.map((s) => ({ name: s.name, url: s.url })), { name: 'Калькулятор стоимости под ключ', url: R.calculator }, { name: 'Как читать аукционный лист', url: R.auctionSheet }])),
     ctx.cities.length
       ? group(
@@ -1191,7 +1221,7 @@ function sitemapPage(ctx) {
     ctx.cases.length ? group('privezennye-avto', 'Привезенные авто', ctx.cases.length, list(ctx.cases.map((c) => ({ name: c.name, url: c.url })))) : '',
     ctx.posts.length ? group('blog', 'Блог', ctx.posts.length, list(ctx.posts.map((p) => ({ name: p.title, url: p.url })))) : '',
     hasCatalog ? group('avtomobili', 'Все автомобили каталога', ctx.cars.length, carsBody, 'Каждый автомобиль указан с ценой под ключ во Владивостоке.') : '',
-    group('sluzhebnye', 'Служебные страницы', 2, list([{ name: 'Политика конфиденциальности', url: R.privacy }, { name: 'Карта сайта', url: R.sitemap }])),
+    group('sluzhebnye', 'Служебные страницы', servicePages.length, list(servicePages)),
   ];
 
   return {
@@ -1209,8 +1239,6 @@ function sitemapPage(ctx) {
       h1: duo(t.h1Main, t.h1Mute),
       lead: t.lead,
       kv: [
-        hasCatalog ? { k: 'В каталоге', v: count(ctx.cars.length, CAR_WORD) } : null,
-        hasCatalog ? { k: 'Марок и моделей', v: String(ctx.brands.length + ctx.models.length) } : null,
         { k: 'Городов доставки', v: String(ctx.cities.length) },
         { k: 'Привезенных авто', v: String(ctx.cases.length) },
       ].filter(Boolean),
@@ -1252,8 +1280,8 @@ function notFoundPage(ctx) {
             <p class="lead">${typo(t.lead)}</p>
             <div class="btn-row">
               ${btn('На главную', R.home, { variant: 'light' })}
-              ${btn('Каталог', R.catalog, { variant: 'ghost', arrow: false })}
-              ${btn('Калькулятор', R.calculator, { variant: 'ghost', arrow: false })}
+              ${btn('Каталог', R.catalog, { variant: 'ghost' })}
+              ${btn('Калькулятор', R.calculator, { variant: 'ghost' })}
             </div>
           </div>
         </div>

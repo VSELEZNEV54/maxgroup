@@ -54,7 +54,7 @@ export function organizationLd(site) {
     '@id': orgId(site),
     name: site.name,
     alternateName: site.altNames,
-    legalName: site.legal?.name || undefined,
+    legalName: site.legal?.fullName || site.legal?.name || undefined,
     url: abs(site, '/'),
     logo: abs(site, '/assets/img/brand/logo.svg'),
     image: abs(site, '/assets/' + site.ogImage),

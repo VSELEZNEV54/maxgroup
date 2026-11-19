@@ -1,18 +1,17 @@
 // Главная страница.
-import { html, esc, u, a, img, typo, price, priceShort, num, count, clip } from '../lib/core.mjs';
+import { html, esc, u, a, img, imgSize, typo, price, count } from '../lib/core.mjs';
 import { faqLd, itemListLd } from '../lib/seo.mjs';
 import {
-  icon, stars, label, duo, btn, more, reveal, sectionHead, fact, carCard, caseCard, reviewCard, faqList, chips, step, rail, railNav, ctaBand, seoText, leadForm,
+  icon, stars, label, duo, btn, more, reveal, sectionHead, fact, carCard, caseCard, reviewCard, faqList, rail, railNav, ctaBand, seoText,
 } from '../components/ui.mjs';
-import { whyFacts, steps, homeFaq } from '../data/texts.mjs';
+import { whyFacts, homeProcess, homeFaq } from '../data/texts.mjs';
 import { quizSection } from '../components/quiz.mjs';
 import { miniCalcSection } from '../components/calc.mjs';
 import { R } from '../routes.mjs';
 
 const MARQUEE = ['Toyota', 'Honda', 'Nissan', 'Mazda', 'Subaru', 'Lexus', 'Hyundai', 'Kia', 'Genesis', 'Geely', 'Changan', 'Haval', 'Zeekr', 'BYD', 'Li Auto', 'Chery'];
 
-function hero(ctx) {
-  const { site } = ctx;
+function hero() {
   return html`
     <section class="hero on-dark" aria-label="Автомобили из Азии под заказ">
       <div class="hero__media" data-hero-video>
@@ -25,38 +24,53 @@ function hero(ctx) {
           ${label('Полное сопровождение сделки')}
         </div>
         <div class="hero__main">
-          <h1 class="hero-title hero__title" data-hero-in style="--i:1">Авто из Японии, Кореи и&nbsp;Китая <span class="mute">под заказ</span></h1>
+          <h1 class="hero-title hero__title" data-hero-in style="--i:1">Авто из Японии, Кореи и&nbsp;Китая под&nbsp;заказ</h1>
           <div class="hero__side" data-hero-in style="--i:2">
-            <p class="lead">${typo('Максимально прозрачный процесс импорта. Подбираем, проверяем, покупаем и привозим автомобили под ваш запрос и бюджет.')}</p>
+            <p class="lead">${typo('Максимально прозрачный процесс импорта: подбираем, проверяем, покупаем и привозим автомобиль под ваш запрос и бюджет.')}</p>
             <div class="hero__actions">
               ${btn('Рассчитать стоимость', R.calculator, { variant: 'light', modal: 'request', subject: 'Расчет стоимости авто (главная, первый экран)' })}
-              ${btn('Смотреть каталог', R.catalog, { variant: 'ghost', arrow: false })}
+              ${btn('Смотреть каталог', R.catalog, { variant: 'ghost' })}
             </div>
           </div>
-        </div>
-        <div class="hero__strip" data-hero-in style="--i:3">
-          <div class="hero__fact"><b>5,0 в ${site.rating.count} отзывах</b><span>Из 2ГИС и Яндекс Карт, у всех высшая оценка</span></div>
-          <div class="hero__fact"><b>Таможня</b><span>Оформление и расчет пошлин берем на себя</span></div>
-          <div class="hero__fact"><b>Платежный агент</b><span>Легальная оплата за рубеж с документами</span></div>
-          <div class="hero__fact"><b>Под ключ</b><span>От торгов до выдачи ключей в вашем городе</span></div>
-          <button class="hero__toggle" type="button" aria-label="Поставить видео на паузу" aria-pressed="false" data-video-toggle>${icon('pause', 'i-pause')}${icon('play-fill', 'i-play')}</button>
         </div>
       </div>
     </section>`;
 }
 
+function trustStrip() {
+  const facts = [
+    ['5.0 в отзывах', 'По отзывам клиентов в 2ГИС и на Яндекс Картах'],
+    ['Опыт работы', 'Давно работаем с аукционами Японии и площадками Кореи и Китая'],
+    ['Таможня', 'Оформление и расчет пошлин берем на себя'],
+    ['Платежный агент', 'Оплата за рубеж с подтверждающими документами'],
+    ['Под ключ', 'От покупки до выдачи автомобиля в вашем городе'],
+  ];
+  return html`<div class="section--white"><dl class="container trust-strip" aria-label="О работе Макс Групп">
+    ${facts.map(([title, text]) => html`<div><dt>${esc(title)}</dt><dd>${typo(text)}</dd></div>`)}
+  </dl></div>`;
+}
+
 function brandsStrip(ctx) {
-  const known = new Map();
-  for (const b of ctx.brands) if (!known.has(b.name)) known.set(b.name, b.url);
-  const names = [...new Set([...MARQUEE.filter((n) => known.has(n)), ...[...known.keys()]])].slice(0, 18);
-  const list = (names.length >= 8 ? names : MARQUEE).map((n) => (known.has(n) ? `<a class="marquee__item" href="${u(known.get(n))}">${esc(n)}</a>` : `<span class="marquee__item">${esc(n)}</span>`));
-  const group = `<div class="marquee__group">${list.join('')}</div>`;
-  return html`
-    <div class="brands-strip" aria-label="Марки автомобилей">
-      <div class="marquee">
-        <div class="marquee__track">${group}${group.replace(/<a /g, '<a tabindex="-1" aria-hidden="true" ').replace(/<span /g, '<span aria-hidden="true" ')}</div>
-      </div>
-    </div>`;
+  const brands = new Map();
+  for (const brand of ctx.brands) {
+    if (!brands.has(brand.name)) brands.set(brand.name, brand);
+  }
+  const names = [...new Set([...MARQUEE, ...brands.keys()])].filter((name) => brands.has(name));
+  const group = (duplicate) => html`<div class="marquee__group"${duplicate ? ' aria-hidden="true" inert' : ''}>
+    ${names.map((name) => {
+      const b = brands.get(name);
+      const src = `assets/img/makes/${b.slug}.webp`;
+      const size = imgSize(src);
+      // При ширине S·√(w/h) каждый знак занимает одинаковую площадь S² с родными пропорциями.
+      const widthFactor = size ? Math.sqrt(size.w / size.h).toFixed(3) : 1;
+      return html`<a class="marquee__item" href="${u(b.url)}" style="--mark-width:${widthFactor}"${duplicate ? ' tabindex="-1"' : ''}>
+        ${img({ src, alt: name })}
+      </a>`;
+    })}
+  </div>`;
+  return html`<div class="brands-strip" aria-label="Марки автомобилей"><div class="marquee">
+    <div class="marquee__track">${group(false)}${group(true)}</div>
+  </div></div>`;
 }
 
 function countriesSection(ctx) {
@@ -66,34 +80,24 @@ function countriesSection(ctx) {
         ${sectionHead({
           label: 'Направления',
           title: duo('Три рынка,', 'одна команда на всех этапах'),
-          lead: 'Выбираем страну под задачу: японские аукционы для праворульных автомобилей с честным пробегом, Корея для свежих левых рулей, Китай для новых моделей и электромобилей.',
+          lead: 'Сравните цены под ключ во Владивостоке и посмотрите автомобили из каждой страны.',
         })}
         <div class="grid grid--3">
           ${ctx.nav.countries.map((c, i) => {
-            const full = ctx.cars.filter((x) => x.country === c.slug && x.priceRub && !x.priceIsPartial);
-            const from = full.length ? Math.min(...full.map((x) => x.priceRub)) : null;
-            return html`
-          <article class="country country--light"${reveal(i)}>
-            <div class="country__bg">${img({ src: 'assets/' + c.image, alt: `Автомобили ${c.from} под заказ`, sizes: '(max-width: 900px) 100vw, 33vw' })}</div>
-            <div>
-              <div class="country__top">
-                <h3 class="country__title"><a href="${u(c.url)}">${esc(c.navTitle)}</a></h3>
-                <span class="country__arrow" aria-hidden="true">${icon('arrow')}</span>
+            const prices = ctx.cars.filter((x) => x.country === c.slug && x.priceRub && !x.priceIsPartial).map((x) => x.priceRub);
+            return html`<article class="country country--light"${reveal(i)}>
+              <div class="country__bg">${img({ src: 'assets/' + c.image, alt: '', sizes: '(max-width: 900px) 100vw, 33vw' })}</div>
+              <div>
+                <h3 class="country__title country-label">
+                  ${img({ src: 'assets/' + c.flag, cls: 'country-label__flag', alt: '' })}${esc(c.navTitle)}
+                </h3>
+                <p class="country__text">${esc(c.featuredMakes.join(' · '))}</p>
               </div>
-              <p class="country__text">${typo(c.text)}</p>
-            </div>
-            <div>
-              <div class="country__stat">
-                <div><b>${esc(c.sourceShort)}</b>источник</div>
-                <div><b>${esc(c.steering[0].toUpperCase() + c.steering.slice(1))}</b>компоновка</div>
-                ${from ? `<div><b>от ${priceShort(from)}</b>под ключ</div>` : ''}
+              <div class="country__body">
+                <div class="country__stat"><b>${prices.length ? 'от ' + price(Math.min(...prices)) : 'По запросу'}</b>под ключ во Владивостоке</div>
+                ${btn(`Перейти к каталогу ${c.gen}`, c.url, { variant: 'dark', size: 'sm' })}
               </div>
-              <div class="country__links">
-                ${c.brands.slice(0, 5).map((b) => `<a class="chip chip--sm" href="${u(b.url)}">${esc(b.name)}</a>`).join('')}
-                <a class="chip chip--sm" href="${u(c.url)}">Все авто ${esc(c.from)}</a>
-              </div>
-            </div>
-          </article>`;
+            </article>`;
           })}
         </div>
       </div>
@@ -121,53 +125,66 @@ function whySection(ctx) {
 }
 
 function catalogSection(ctx) {
-  const tabs = [{ key: 'all', name: 'Все', cars: pickMixed(ctx.cars, 8) }, ...ctx.nav.countries.map((c) => ({ key: c.slug, name: c.navTitle, cars: ctx.cars.filter((x) => x.country === c.slug).slice(0, 8), url: c.url, total: c.count }))];
   if (!ctx.cars.length) return '';
+  const markets = [{ slug: 'all', navTitle: 'Все', url: R.catalog }, ...ctx.nav.countries];
+  const selections = ctx.selections.filter((s) => s.nav !== false && s.count).slice(0, 7);
+  const byMarket = ctx.countries.map((c) => ctx.cars.filter((car) => car.country === c.slug));
+  const mixed = [];
+  const longest = Math.max(...byMarket.map((group) => group.length));
+  for (let index = 0; index < longest; index++) {
+    for (const group of byMarket) if (group[index]) mixed.push(group[index]);
+  }
   return html`
-    <section class="section section--white" id="katalog" data-tabs-scope>
+    <section class="section section--white" id="katalog" data-home-catalog>
       <div class="container">
         ${sectionHead({
           label: 'Каталог',
           title: duo('Автомобили, которые можно', 'заказать прямо сейчас'),
           lead: 'Примеры с аукционов и площадок с расчетом цены во Владивостоке. Не нашли нужный? Подберем под запрос.',
-          aside: html`<div class="tabs" role="tablist" aria-label="Страна" data-tabs>
-            ${tabs.map((t, i) => `<button class="tabs__btn" type="button" role="tab" id="katalog-tab-${t.key}" aria-controls="katalog-panel-${t.key}" aria-selected="${i === 0}" data-tab="${t.key}"${i ? ' tabindex="-1"' : ''}>${esc(t.name)}${t.total ? `<small>${t.total}</small>` : ''}</button>`)}
+          actions: html`<div class="catalog-choices">
+            <div class="tabs" role="group" aria-label="Страна">
+              ${markets.map((m) => html`<a class="tabs__btn" href="${u(m.url)}" data-home-country="${m.slug}">${esc(m.navTitle)}${m.count ? `<small>${m.count}</small>` : ''}</a>`)}
+            </div>
+            <div class="chips" role="group" aria-label="Подборка">
+              ${selections.map((s) => html`<a class="chip chip--sm" href="${u(s.url)}" data-home-selection="${s.slug}">${esc(s.name)}</a>`)}
+            </div>
           </div>`,
         })}
-        ${tabs.map(
-          (t, i) => html`
-        <div class="grid grid--4 m-rail" role="tabpanel" id="katalog-panel-${t.key}" aria-labelledby="katalog-tab-${t.key}" data-tab-panel="${t.key}"${i ? ' hidden' : ''}>
-          ${t.cars.map((c, ci) => carCard(c, { i: ci % 4 }))}
-        </div>`
-        )}
+        <p class="sr-only" role="status" data-home-status></p>
+        <div class="grid grid--4 m-rail" id="home-cars">
+          ${mixed.map((car, i) => carCard(car, { i: i % 4, attributes: {
+            hidden: i >= 8, 'data-selections': selections.filter((s) => s.test(car)).map((s) => s.slug).join(' '),
+          } }))}
+        </div>
+        <div class="empty" data-home-empty hidden>
+          <p>Сейчас в каталоге нет автомобилей по этим параметрам.</p>
+          <button class="btn btn--ghost" type="button" data-home-reset>Сбросить фильтры</button>
+        </div>
         <div class="section-foot">
-          ${chips(ctx.nav.selections.slice(0, 7), { sm: false })}
-          ${btn(`Весь каталог: ${ctx.carWord(ctx.cars.length)}`, R.catalog, { variant: 'dark' })}
+          ${btn('Весь каталог Max Group', R.catalog, { variant: 'dark' })}
         </div>
       </div>
     </section>`;
 }
 
-/** Смешанная выборка: по кругу из каждой страны, чтобы на вкладке «Все» были все три рынка */
-function pickMixed(cars, n) {
-  const groups = ['japan', 'korea', 'china'].map((c) => cars.filter((x) => x.country === c));
-  const out = [];
-  for (let i = 0; out.length < n && i < 40; i++) for (const g of groups) if (g[i] && out.length < n) out.push(g[i]);
-  return out;
-}
-
 function stepsSection() {
   return html`
-    <section class="section section--dark" id="kak-my-rabotaem">
+    <section class="section section--white" id="kak-my-rabotaem">
       <div class="container">
         ${sectionHead({
           label: 'Как мы работаем',
           title: duo('От заявки до ключей', 'за шесть понятных шагов'),
-          lead: 'Типовой порядок сделки. На каждом шаге менеджер сообщает, где автомобиль и что с ним происходит; порядок оплаты закрепляется в договоре.',
-          aside: railNav(),
+          lead: 'Что делаете вы и что делает Макс Групп на каждом этапе покупки.',
           actions: more('Подробно о каждом шаге', R.howTo),
         })}
-        ${rail(steps.map((s, i) => step(s, i)), { col: 'minmax(300px, 27%)', colMobile: 'minmax(270px, 82%)' })}
+        <div class="process" aria-label="Этапы сделки">
+          <div class="process__keys" aria-hidden="true"><span></span><b>Вы</b><b>Мы</b></div>
+          ${homeProcess.map((s, i) => html`<article class="process__stage"${reveal(i)}>
+            <header><div class="process__top">${icon(s.icon)}<span class="label label--plain">${String(i + 1).padStart(2, '0')}</span></div><h3>${s.title}</h3></header>
+            <p class="process__cell"><span class="process__role">Вы</span>${typo(s.client)}</p>
+            <p class="process__cell process__cell--team"><span class="process__role">Мы</span>${typo(s.team)}</p>
+          </article>`)}
+        </div>
       </div>
     </section>`;
 }
@@ -183,9 +200,9 @@ function casesSection(ctx) {
           lead: 'Реальные автомобили наших клиентов: доставленные, в пути и на торгах.',
           aside: railNav(),
         })}
-        ${rail(cases.map((c, i) => caseCard(c, { i, stack: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
+        ${rail(cases.map((c, i) => caseCard(c, { i, stack: true, estimate: true })), { col: 'minmax(300px, 23.6%)', colMobile: 'minmax(260px, 78%)' })}
         <div class="section-foot">
-          <p class="muted" style="max-width:52ch">${typo('Фотографии и цены взяты из описаний сделок. Цена указана на дату покупки; что в нее входит, подписано в карточке.')}</p>
+          <p class="muted" style="max-width:52ch">${typo('На карточках указана примерная стоимость на дату покупки. Состав расходов и маршрут смотрите в истории сделки.')}</p>
           ${btn(`Все ${count(ctx.cases.length, ['автомобиль', 'автомобиля', 'автомобилей'])}`, R.cases, { variant: 'dark' })}
         </div>
       </div>
@@ -212,7 +229,7 @@ function servicesSection(ctx) {
   main.sort((x, y) => order.indexOf(x.slug) - order.indexOf(y.slug));
   const credit = ctx.source.credit;
   return html`
-    <section class="section section--dark" id="uslugi">
+    <section class="section section--white" id="uslugi">
       <div class="container">
         ${sectionHead({
           label: 'Услуги',
@@ -223,8 +240,8 @@ function servicesSection(ctx) {
         <div class="svc-grid">
           ${main.map(
             (s, i) => html`
-          <article class="svc"${reveal(i % 2)}>
-            <div class="svc__bg">${img({ src: 'assets/' + s.image, alt: '', sizes: '(max-width: 720px) 100vw, 50vw' })}</div>
+          <article class="svc svc--light"${reveal(i % 2)}>
+            <div class="svc__bg">${img({ src: 'assets/' + s.image.replace('.webp', '-light.webp'), alt: '', sizes: '(max-width: 720px) 100vw, 50vw' })}</div>
             <div class="svc__top">
               ${label(s.label)}
               <span class="svc__arrow" aria-hidden="true">${icon('arrow')}</span>
@@ -238,7 +255,7 @@ function servicesSection(ctx) {
         </div>
       </div>
     </section>
-    <section class="section section--sm" id="avtokredit">
+    <section class="section section--sm section--white" id="avtokredit">
       <div class="container">
         <div class="credit credit--home"${reveal()}>
           <div class="credit__bg">${creditPicture(credit.banner)}</div>
@@ -423,7 +440,7 @@ export function homePages(ctx) {
         'Авто из Японии, Кореи и Китая под заказ с доставкой по России. Подбор на аукционах, проверка, таможенное оформление во Владивостоке. Рассчитайте цену под ключ.',
       h1: 'Авто из Японии, Кореи и Китая под заказ',
       headerOver: true,
-      scripts: ['quiz', 'calc-core', 'calc'],
+      scripts: ['quiz', 'home-catalog', 'calc-core', 'calc'],
       priority: 1,
       changefreq: 'daily',
       preload: [{ href: 'img/hero/poster.webp', as: 'image', type: 'image/webp' }],
@@ -433,8 +450,10 @@ export function homePages(ctx) {
       ].filter(Boolean),
       render: () =>
         [
-          hero(ctx),
+          hero(),
+          trustStrip(),
           brandsStrip(ctx),
+          quizSection(ctx, { subject: 'Квиз подбора (главная)', white: true }),
           countriesSection(ctx),
           whySection(ctx),
           catalogSection(ctx),
@@ -443,7 +462,6 @@ export function homePages(ctx) {
           casesSection(ctx),
           servicesSection(ctx),
           reviewsSection(ctx),
-          quizSection(ctx, { subject: 'Квиз подбора (главная)' }),
           deliverySection(ctx),
           videoSection(ctx),
           blogSection(ctx),

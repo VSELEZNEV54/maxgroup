@@ -6,6 +6,7 @@ import { mkdirSync, writeFileSync, copyFileSync, existsSync, readFileSync } from
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { icon } from '../src/lib/icons.mjs';
+import { site } from '../src/data/site.mjs';
 import { COMMON, PERKS, COUNTRY, MODELS } from './models.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -24,15 +25,16 @@ function copy(from, to) {
     throw new Error(`Нет файла ${from}`);
   }
   mkdirSync(dirname(to), { recursive: true });
-  if (!existsSync(to) || readFileSync(from).length !== readFileSync(to).length) copyFileSync(from, to);
+  if (!existsSync(to) || !readFileSync(from).equals(readFileSync(to))) copyFileSync(from, to);
 }
 for (const f of ['inter-tight-cyrillic.woff2', 'inter-tight-cyrillic-ext.woff2', 'inter-tight-latin.woff2', 'inter-tight-latin-ext.woff2']) {
   copy(join(ROOT, 'assets/fonts', f), join(A, 'fonts', f));
 }
 copy(join(ROOT, 'design-system/assets/logo-light.svg'), join(A, 'logo-light.svg'));
-for (const f of ['flag-jp.svg', 'flag-cn.svg', 'logo-avatar-round.webp', 'favicon-48.png', 'apple-touch-icon.png']) {
+for (const f of ['flag-jp.svg', 'flag-cn.svg', 'favicon-48.png', 'apple-touch-icon.png']) {
   copy(join(ROOT, 'assets/img/brand', f), join(A, f));
 }
+copy(join(ROOT, site.salesManager.photo), join(A, 'img', 'sales-manager.webp'));
 for (const m of MODELS) copy(join(ROOT, 'assets/img/cars', m.photo.from), join(A, 'img', `${m.slug}.webp`));
 
 // фото первого экрана (renders.json + renders.py): берем сцену, если она уже лежит в assets/img/renders
@@ -233,8 +235,8 @@ function page(m) {
         <p class="q-side__title">Подборка ${esc(m.name)}</p>
         <dl class="q-sum">${summaryRows(m)}</dl>
         <div class="q-tipbox" aria-live="polite">
-          <img class="q-tipbox__ava" src="../assets/logo-avatar-round.webp" alt="" width="40" height="40">
-          <div><span class="q-tipbox__who">Макс Групп, отдел подбора</span><p class="q-tipbox__text" data-tip-text>${typo(qs[0].tip)}</p></div>
+          <span class="q-tipbox__ava"><img src="../assets/img/sales-manager.webp" alt="" width="40" height="40"></span>
+          <div><span class="q-tipbox__who">${esc(site.salesManager.name)}</span><p class="q-tipbox__text" data-tip-text>${typo(qs[0].tip)}</p></div>
         </div>
       </div>
       <p class="q-side__bonus">${icon('doc-check')}<span>${typo(`После ответов пришлем подборку ${m.short} и расчет под ключ`)}</span></p>

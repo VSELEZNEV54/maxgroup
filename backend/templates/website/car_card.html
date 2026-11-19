@@ -1,0 +1,16 @@
+{% load wagtailimages_tags %}
+<article class="car is-in" data-car="{{ lot.external_id }}">
+  <a class="car__media" href="{{ url }}" aria-label="{{ lot.title }}">{% if lot.cover %}{% image lot.cover fill-480x320 loading="lazy" %}{% elif photo %}<img src="{{ photo }}" alt="{{ lot.title }}" width="480" height="320" loading="lazy">{% endif %}</a>
+  <div class="car__body"><h3 class="car__title"><a href="{{ url }}">{{ lot.title }}</a></h3>
+  <ul class="car__specs car__facts">
+    <li>{% if lot.year %}{{ lot.year }} г.{% else %}Год не указан{% endif %}</li>
+    <li>{% if lot.mileage != None %}{{ lot.mileage }} км{% else %}Пробег не указан{% endif %}</li>
+    <li>{% if lot.attributes.auctionGrade %}Оценка {{ lot.attributes.auctionGrade }}{% else %}Оценка не указана{% endif %}</li>
+  </ul>
+  <div class="car__foot">
+    <div class="car__price"><span class="car__amount">{{ lot.price_text }}</span><small>{{ lot.price_label }}</small></div>
+    <a class="car__go" href="{{ url }}" aria-label="Открыть объявление {{ lot.title }}">
+      <svg data-icon="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+    </a>
+  </div></div>
+</article>

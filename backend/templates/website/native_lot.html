@@ -1,0 +1,12 @@
+{% load wagtailimages_tags %}
+<section class="section"><div class="container carpage">
+  <div class="gallery" data-gallery>
+    {% if lot.cover %}{% image lot.cover width-960 %}
+    {% else %}{% for photo in photos %}<a href="{{ photo }}" data-gallery-item><img src="{{ photo }}" alt="{{ lot.title }}" {% if not forloop.first %}loading="lazy"{% endif %}></a>{% endfor %}{% endif %}
+  </div>
+  <div><h1>{{ lot.title }}</h1><p class="h3">{{ lot.price_text }}</p><p>{{ lot.price_label }}</p>
+  <p>{% if lot.year %}{{ lot.year }} г.{% endif %} {% if lot.mileage != None %} · {{ lot.mileage }} км{% endif %}</p>
+  {% if lot.description %}<div class="prose">{{ lot.description|linebreaks }}</div>{% endif %}
+  <button type="button" class="btn btn--primary" data-modal="request" data-modal-subject="Заявка на {{ lot.title }}" data-modal-car="{{ lot.title }}">Оставить заявку</button>
+  </div>
+</div></section>
