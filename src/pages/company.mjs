@@ -378,7 +378,6 @@ function aboutPage(ctx) {
 
   const videos = source.videos || [];
   const views = Math.floor(videos.reduce((sum, v) => sum + (parseFloat(String(v.viewsOnCover).replace(',', '.')) || 0), 0));
-  const byStatus = (name) => ctx.cases.filter((c) => c.statusLabel === name).length;
   const clientCities = [...new Set(ctx.cases.map((c) => c.clientCity).filter((x) => x && x !== site.contacts.city))];
   const board = [...ctx.cases.filter((c) => c.clientCity), ...ctx.cases.filter((c) => !c.clientCity && c.countryName && c.price)].slice(0, 8);
   const picked = t.reviews.authors.map((name) => ctx.reviews.find((r) => r.author === name)).filter(Boolean);
@@ -410,11 +409,7 @@ function aboutPage(ctx) {
       lead: source.hero?.subtitle,
       photo: 'assets/img/hero/poster.webp',
       photoAlt: 'Владивосток в сумерках: Золотой мост и бухта Золотой Рог',
-      kv: [
-        { k: 'Отзывы', v: `${reviewsCount} · все с оценкой ${comma(site.rating.value.toFixed(1))}` },
-        { k: 'Направления', v: ctx.countries.map((c) => esc(c.navTitle)).join(' · ') },
-        { k: 'Офис', v: `${esc(site.contacts.city)}, ${esc(site.contacts.hours)}` },
-      ],
+      single: true,
       actions:
         btn('Связаться с менеджером', R.contacts, { variant: 'light', modal: 'request', subject: 'Заявка со страницы «О компании»' }) +
         btn('Отзывы клиентов', R.reviews, { variant: 'ghost' }),
@@ -508,13 +503,7 @@ function aboutPage(ctx) {
         ${sectionHead({
           label: t.geo.label,
           title: duoS(t.geo.titleMain, t.geo.titleMute),
-          lead: fillBraces(t.geo.lead, {
-            total: count(ctx.cases.length, CAR_WORD),
-            delivered: `${byStatus('Доставлен')} ${plural(byStatus('Доставлен'), ['доставлен', 'доставлены', 'доставлены'])}`,
-            transit: `${byStatus('В пути')} в пути`,
-            auction: `${byStatus('На торгах')} на торгах`,
-            cities: clientCities.join(', '),
-          }),
+          lead: fillBraces(t.geo.lead, { cities: clientCities.join(', ') }),
           actions: more('Все привезенные авто', R.cases),
         })}
         <div class="co-board">
@@ -552,7 +541,7 @@ function aboutPage(ctx) {
       </div>
     </section>
 
-    <section class="section" id="ofis">
+    <section class="section co-office" id="ofis">
       <div class="container">
         ${sectionHead({ label: t.office.label, title: duoS(t.office.titleMain, t.office.titleMute), lead: t.office.lead })}
         ${contactGrid(ctx, { alt: ctx.content.contacts.addressAlt, tag: 'h3' })}

@@ -8,7 +8,7 @@
    ХАБ «ПРИВЕЗЕННЫЕ АВТО»
    -------------------------------------------------------------------------- */
 
-/* --- Шапка с итогами -------------------------------------------------------- */
+/* --- Шапка -------------------------------------------------------- */
 
 .cases-head .page-head__bg img {
   object-position: 60% 40%;
@@ -23,73 +23,6 @@
   max-width: 46ch;
 }
 
-.cases-stats {
-  --stat: clamp(2.5rem, 1.6rem + 3vw, 4.5rem);
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-top: clamp(28px, 3.6vw, 56px);
-  border-top: 1px solid var(--ink-line-2);
-}
-
-.cases-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: clamp(16px, 1.7vw, 24px) clamp(14px, 1.7vw, 24px) 0 0;
-  color: var(--on-dark);
-}
-
-.cases-stat + .cases-stat {
-  padding-left: clamp(14px, 1.7vw, 24px);
-  border-left: 1px solid var(--ink-line);
-}
-
-.cases-stat__value {
-  display: flex;
-  align-items: flex-end;
-  height: calc(var(--stat) * 0.92);
-  font-size: var(--stat);
-  font-weight: var(--w-medium);
-  line-height: 0.92;
-  letter-spacing: -0.045em;
-  font-variant-numeric: tabular-nums;
-  transition: transform var(--dur-base) var(--ease-out);
-}
-
-.cases-stat__value--range {
-  font-size: clamp(1.25rem, 0.9rem + 1.2vw, 2.125rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
-}
-
-.cases-stat__name {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.cases-stat__text {
-  max-width: 30ch;
-  font-size: 0.875rem;
-  line-height: 1.4;
-  color: var(--on-dark-2);
-  transition: color var(--dur-fast) var(--ease-out);
-}
-
-a.cases-stat:hover .cases-stat__value {
-  transform: translate3d(6px, 0, 0);
-}
-
-a.cases-stat:hover .cases-stat__text {
-  color: #fff;
-}
-
 /* точка статуса: те же цвета, что у .status */
 .cases-dot {
   flex: none;
@@ -102,35 +35,6 @@ a.cases-stat:hover .cases-stat__text {
 .cases-dot--delivered { background: var(--ok); }
 .cases-dot--transit { background: #e8a214; }
 .cases-dot--auction { background: var(--accent); }
-.on-dark .cases-dot--auction { background: var(--accent-on-dark); }
-
-@media (max-width: 900px) {
-  .cases-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-top: 0;
-  }
-
-  .cases-stat__value--range {
-    font-size: clamp(1.0625rem, 4.4vw, 1.5rem);
-    white-space: normal;
-  }
-
-  .cases-stat,
-  .cases-stat + .cases-stat {
-    padding: 16px 12px 18px 0;
-    border-left: 0;
-    border-top: 1px solid var(--ink-line-2);
-  }
-
-  .cases-stat:nth-child(even) {
-    padding-left: 16px;
-    border-left: 1px solid var(--ink-line);
-  }
-
-  .cases-stat__text {
-    font-size: 0.8125rem;
-  }
-}
 
 /* --- Панель фильтра и сетка --------------------------------------------------- */
 
@@ -173,10 +77,9 @@ a.cases-stat:hover .cases-stat__text {
 
 .cases-grid {
   --n: 4;
-  container-type: inline-size;
   display: grid;
   grid-template-columns: repeat(var(--n), minmax(0, 1fr));
-  grid-auto-flow: dense;
+  grid-auto-rows: 1fr;
   gap: var(--gap);
 }
 
@@ -187,11 +90,6 @@ a.cases-stat:hover .cases-stat__text {
 
 .cases-grid__item[hidden] {
   display: none;
-}
-
-.cases-grid__item.is-wide,
-.cases-grid__promo.is-wide {
-  grid-column: span 2;
 }
 
 /* маршрут в плитке: длинный город переносится целиком, а не по словам */
@@ -212,18 +110,6 @@ a.cases-stat:hover .cases-stat__text {
 /* вертикальные телефонные снимки показываем крупно: 4:5 вместо квадрата */
 .cases-grid .case--stack .case__media {
   aspect-ratio: 4 / 5;
-}
-
-.cases-grid .is-wide .case--stack .case__media {
-  aspect-ratio: 8 / 5;
-}
-
-/* одна высота фото у обычных и двойных плиток — считаем от ширины колонки */
-@supports (height: 1cqw) {
-  .cases-grid .case--stack .case__media {
-    aspect-ratio: auto;
-    height: calc((100cqw - (var(--n) - 1) * var(--gap)) / var(--n) * 1.25);
-  }
 }
 
 /* плитка-заявка внутри сетки; при включенном фильтре уходит в конец, при пустом результате скрыта */
@@ -291,8 +177,6 @@ a.cases-stat:hover .cases-stat__text {
 @media (max-width: 560px) {
   .cases-grid { --n: 2; }
 
-  .cases-grid__item.is-wide,
-  .cases-grid__promo.is-wide,
   .cases-grid__promo,
   .cases-grid.is-filtered .cases-grid__promo {
     grid-column: 1 / -1;

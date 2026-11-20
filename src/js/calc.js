@@ -585,12 +585,6 @@
     var form = $('[data-calc-form]', rootEl);
     if (!form) return;
     initTips(rootEl);
-    function openLinkedTable() {
-      var sheet = doc.getElementById(location.hash.slice(1));
-      if (sheet && sheet.matches('details.calc-sheet')) sheet.open = true;
-    }
-    openLinkedTable();
-    window.addEventListener('hashchange', openLinkedTable);
     var out = {};
     $$('[data-calc-out]', rootEl).forEach(function (el) { (out[el.dataset.calcOut] = out[el.dataset.calcOut] || []).push(el); });
     var each = function (key, fn) { (out[key] || []).forEach(fn); };

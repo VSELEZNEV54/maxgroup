@@ -5,7 +5,7 @@
 // Город может заменить любой текст общего шаблона (delivery.city) полем "tpl" в своем файле — см. mergeTpl().
 import { html, esc, u, typo, price, num, plural, count } from '../lib/core.mjs';
 import { faqLd, serviceLd, itemListLd } from '../lib/seo.mjs';
-import { icon, label, duo, btn, more, reveal, sectionHead, pageHead, route, fact, carFacts, caseCard, faqList, step, rail, railNav, ctaBand, seoText, note, img } from '../components/ui.mjs';
+import { icon, label, duo, btn, more, reveal, sectionHead, pageHead, fact, carFacts, caseCard, faqList, step, rail, railNav, ctaBand, seoText, note, img } from '../components/ui.mjs';
 import { R } from '../routes.mjs';
 
 const HOME = { name: 'Главная', url: R.home };
@@ -675,12 +675,7 @@ function cityPage(ctx, city, idx, baseTpl, g, picks) {
       lead: wj(fill(t.lead || tpl.lead)),
       photo: frame.src,
       photoAlt: frame.alt,
-      side: route(['Япония · Корея · Китай', 'Владивосток', city.name]),
-      kv: [
-        { k: 'Расстояние', v: `${num(city.distanceKm)}${NB}км` },
-        { k: 'В пути', v: wj(daysText(city.days)) },
-        { k: 'Автовоз', v: `от ${price(city.priceFrom)}` },
-      ],
+      single: true,
       actions:
         requestBtn('Рассчитать с доставкой', { variant: 'light', subject, attrs: { 'data-modal-title': `Авто с доставкой в ${city.nameAcc}`, 'data-modal-text': 'Расскажите, какой автомобиль ищете, и мы пришлем варианты и цену под ключ с доставкой.', 'data-modal-label': subject } }) +
         btn('Тарифы автовоза', '#tarify', { variant: 'ghost' }),
@@ -718,46 +713,47 @@ function hubGroups(ctx) {
     if (!cities.length) return null;
     const dMin = Math.min(...cities.map((c) => c.days[0]));
     const dMax = Math.max(...cities.map((c) => c.days[1]));
-    return { ...gr, cities, days: daysText([dMin, dMax]), from: Math.min(...cities.map((c) => c.priceFrom)) };
+    const from = Math.min(...cities.flatMap(({ truck }) => [truck.sedan, truck.crossover, truck.suv]));
+    return { ...gr, cities, days: daysText([dMin, dMax]), from };
   }).filter(Boolean);
 }
 
-function hubTable(groups, g) {
+function regionTable(region, asOf) {
   return html`
-          <table class="dtable" role="table">
-            <caption class="sr-only">Доставка авто из Владивостока по городам России: расстояние, срок и цена автовоза по типу кузова, ${esc(g.asOf)}</caption>
-            <thead role="rowgroup">
-              <tr role="row">
-                <th role="columnheader" scope="col">Город</th>
-                <th role="columnheader" scope="col" class="dtable__km">Расстояние</th>
-                <th role="columnheader" scope="col">В пути</th>
-                <th role="columnheader" scope="col"><span class="dtable__m">Автовоз, </span>седан</th>
-                <th role="columnheader" scope="col" class="dtable__x">Кроссовер</th>
-                <th role="columnheader" scope="col" class="dtable__x">Внедорожник</th>
-                <th role="columnheader" class="dtable__go"><span class="sr-only">Подробнее</span></th>
-              </tr>
-            </thead>
-            ${groups.map(
-              (gr) => html`
-            <tbody role="rowgroup" id="${gr.id}">
-              <tr role="row" class="dtable__group">
-                <th role="columnheader" scope="colgroup" colspan="7"><span class="dtable__gname">${esc(gr.title)}</span><span class="dtable__gmeta">${count(gr.cities.length, CITY_WORD)} · ${wj(gr.days)} · от ${price(gr.from)}</span></th>
-              </tr>
-              ${gr.cities.map(
-                (c) => html`
-              <tr role="row" class="dtable__row">
-                <th role="rowheader" scope="row" class="dtable__city"><a href="${u(c.url)}">${esc(c.name)}</a>${c.rail ? '<span class="badge badge--line">+ ж/д</span>' : ''}${c.estimated ? '<span class="badge">оценка</span>' : ''}</th>
-                <td role="cell" class="dtable__km">${num(c.distanceKm)}${NB}км</td>
-                <td role="cell">${esc(c.daysLabel)}</td>
-                <td role="cell">${price(c.truck.sedan)}</td>
-                <td role="cell" class="dtable__x">${price(c.truck.crossover)}</td>
-                <td role="cell" class="dtable__x">${price(c.truck.suv)}</td>
-                <td role="cell" class="dtable__go" aria-hidden="true">${icon('arrow')}</td>
-              </tr>`
-              )}
-            </tbody>`
-            )}
-          </table>`;
+      <details class="acc dhub__region" id="${region.id}" name="delivery-regions">
+        <summary>
+          <span>${esc(region.title)}</span>
+          <small class="dhub__meta">${count(region.cities.length, CITY_WORD)} · ${wj(region.days)} · от${NB}${price(region.from)}</small>
+          <i class="acc__icon" aria-hidden="true"></i>
+        </summary>
+        <div class="acc__body">
+          <p class="dhub__hint">Листайте таблицу по горизонтали</p>
+          <div class="table-wrap" aria-label="Тарифы автовоза · ${esc(region.title)}">
+            <table class="table dtable">
+              <caption class="sr-only">Доставка из Владивостока · ${esc(region.title)}, ${esc(asOf)}</caption>
+              <thead><tr>
+                <th scope="col">Город</th>
+                <th scope="col" class="num">Седан</th>
+                <th scope="col" class="num">Кроссовер</th>
+                <th scope="col" class="num">Внедорожник</th>
+                <th scope="col" class="num">В пути</th>
+                <th scope="col" class="num">Расстояние</th>
+              </tr></thead>
+              <tbody>
+                ${region.cities.map((c) => html`
+                  <tr>
+                    <th scope="row"><a class="link" href="${u(c.url)}">${esc(c.name)}</a>${c.rail ? ' <span class="badge badge--line">+ ж/д</span>' : ''}${c.estimated ? ' <span class="badge">оценка</span>' : ''}</th>
+                    <td class="num">${price(c.truck.sedan)}</td>
+                    <td class="num">${price(c.truck.crossover)}</td>
+                    <td class="num">${price(c.truck.suv)}</td>
+                    <td class="num">${esc(c.daysLabel)}</td>
+                    <td class="num">${num(c.distanceKm)}${NB}км</td>
+                  </tr>`)}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>`;
 }
 
 function hubTableSection(ctx, h, fill, g, groups) {
@@ -765,22 +761,15 @@ function hubTableSection(ctx, h, fill, g, groups) {
   return html`
     <section class="section" id="goroda">
       <div class="container">
-        ${head({ label: `Города и тарифы · ${g.asOf}`, title: duo('Автовоз из Владивостока:', 'цены и сроки по городам'), lead: fill(h.tableLead) })}
+        ${head({ label: `Автовоз · ${g.asOf}`, title: duo('Города', 'и тарифы'), lead: fill(h.tableLead) })}
         <div class="dhub">
-          <aside class="dhub__aside"${reveal()}>
-            <nav class="dhub__nav" aria-label="Регионы доставки">
-              ${groups.map((gr) => `<a href="#${gr.id}"><span>${esc(gr.title)}</span><small>${gr.cities.length}</small></a>`)}
-            </nav>
-            <div class="dhub__vl">
-              ${label('Владивосток')}
-              <p class="dhub__vl-title">Самовывоз</p>
-              <p>${show(fill(h.vladivostok))}</p>
-              ${local ? `<a class="more" href="${u(local.url)}">${esc(local.name)} для клиента из Большого Камня ${icon('arrow')}</a>` : ''}
-            </div>
-          </aside>
-          <div class="dhub__main"${reveal(1)}>
-            ${hubTable(groups, g)}
-            <div class="u-mt-6">${note(`<p>${show(fill(h.tableNote))}</p>`)}</div>
+          <div data-acc-group>${groups.map((group) => regionTable(group, g.asOf))}</div>
+          ${note(`<p>${show(fill(h.tableNote))}</p>`)}
+          <div class="dhub__vl">
+            ${label('Владивосток')}
+            <h3 class="dhub__vl-title">Самовывоз</h3>
+            <p>${show(fill(h.vladivostok))}</p>
+            ${local ? `<a class="more" href="${u(local.url)}">${esc(local.name)} для клиента из Большого Камня ${icon('arrow')}</a>` : ''}
           </div>
         </div>
       </div>
@@ -923,7 +912,7 @@ function hubPage(ctx, d, g) {
     bodyClass: 'p-delivery',
     title,
     description,
-    h1: 'Доставка авто из Владивостока по России',
+    h1: 'Доставка авто из Владивостока по всей России',
     breadcrumbs: crumbsList,
     headerOver: true,
     priority: 0.8,
@@ -934,17 +923,11 @@ function hubPage(ctx, d, g) {
     render: () => html`
     ${pageHead({
       crumbs: crumbsList,
-      label: `Владивосток → ${ctx.cities.length} ${plural(ctx.cities.length, CITY_WORD)} России`,
-      h1: duo('Доставка авто из Владивостока', 'по России'),
+      h1: duo('Доставка авто из Владивостока', 'по всей России'),
       lead: wj(fill(h.lead)),
       photo: HUB_FRAME.src,
       photoAlt: HUB_FRAME.alt,
-      side: route(['Япония · Корея · Китай', 'Владивосток', 'Ваш город']),
-      kv: [
-        { k: 'Городов в таблице', v: String(ctx.cities.length) },
-        { k: 'В пути', v: g.fromDays },
-        { k: 'Автовоз', v: `от ${g.minFrom}` },
-      ],
+      single: true,
       actions:
         requestBtn('Рассчитать доставку', { variant: 'light', subject: 'Доставка по России', attrs: { 'data-modal-title': 'Рассчитаем доставку в ваш город', 'data-modal-text': 'Назовите город и автомобиль, и мы пришлем цену и ближайшую дату отправки.', 'data-modal-label': 'Доставка по России' } }) +
         btn('Города и тарифы', '#goroda', { variant: 'ghost' }),

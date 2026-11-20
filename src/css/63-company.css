@@ -757,6 +757,33 @@ a.co-info__mid:hover {
   }
 }
 
+/* В блоке офиса заголовок, телефон и сведения о владельце начинаются на одной колонке. */
+.co-office :is(.section-head, .co-contact, .co-req) {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(12px, 1.4vw, 20px);
+}
+
+.co-office .co-contact__side {
+  gap: var(--sp-5);
+}
+
+.co-office .co-info {
+  padding: var(--sp-4) 0 0;
+  border-top: 1px solid var(--line-2);
+  border-radius: 0;
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .co-office :is(.section-head, .co-contact, .co-req) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .co-office .co-contact {
+    row-gap: var(--sp-5);
+  }
+}
+
 /* живые часы «сейчас во Владивостоке» */
 .co-clock {
   display: grid;

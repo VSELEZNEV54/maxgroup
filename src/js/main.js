@@ -402,6 +402,14 @@
       });
     });
   });
+  if ($('[data-acc-group] > details[id]')) {
+    function openLinkedTable() {
+      var target = doc.getElementById(location.hash.slice(1));
+      if (target && target.matches('[data-acc-group] > details')) target.open = true;
+    }
+    openLinkedTable();
+    window.addEventListener('hashchange', openLinkedTable);
+  }
 
   /* ---------------------------------------------------------------------- модальные окна */
 

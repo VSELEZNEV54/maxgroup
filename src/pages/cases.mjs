@@ -19,12 +19,6 @@ const tt = (s) => typo(s).replace(/(\d) (?=\d{3}(?!\d))/g, '$1\u00a0');
 /** Предлог перед названием: «об Audi A3L», но «о Ford Ranger» (перед гласным звуком — «об») */
 const about = (name) => `${/^[aeiouаиоуыэ]/i.test(name) ? 'об' : 'о'} ${name}`;
 const range = (arr) => (arr?.length ? (arr[0] === arr[1] ? String(arr[0]) : `${arr[0]}-${arr[1]}`) : '');
-/** Диапазон цен для плитки: нижняя граница в единицах верхней («от 0,85 до 4,3 млн ₽»), чтобы строка помещалась в колонку */
-const rangeShort = (lo, hi) => {
-  if (hi < 1_000_000) return `от ${Math.round(lo / 1000)} до ${priceShort(hi)}`;
-  const m = lo >= 1_000_000 ? Math.round(lo / 100_000) / 10 : Math.round(lo / 10_000) / 100;
-  return `от ${String(m).replace('.', ',')} до ${priceShort(hi)}`;
-};
 /** Рыночные ориентиры сроков из calc-rules.json — для ответов о сроке доставки */
 function timingVars(ctx) {
   const c = ctx.calc?.costs || {};
@@ -37,14 +31,13 @@ function timingVars(ctx) {
 }
 /** Статьи блога по списку адресов: [{ name, url }] — только те, что есть в ctx.posts */
 const postLinks = (ctx, slugs = []) => [...new Set(slugs)].map((slug) => ctx.posts.find((p) => p.slug === slug)).filter(Boolean).map((p) => ({ name: p.short || p.title, url: p.url }));
-/** Размеры фото в сетке хаба: 4 колонки → 3 (до 1180px) → 2 (до 900px); горизонтальный снимок занимает две колонки */
-const GRID_SIZES = { wide: '(max-width: 900px) 100vw, (max-width: 1180px) 66vw, 50vw', normal: '(max-width: 900px) 50vw, (max-width: 1180px) 33vw, 25vw' };
+const GRID_SIZES = '(max-width: 900px) 50vw, (max-width: 1180px) 33vw, 25vw';
 
 // Статусы считаем сами: в общих данных код «in-transit» не получает свой цвет (см. отчет, sharedNeeds).
 const STATUS = {
-  delivered: { key: 'delivered', label: 'Доставлен', cls: 'status--ok', hash: 'dostavlen', total: 'Доставлено' },
-  transit: { key: 'transit', label: 'В пути', cls: 'status--transit', hash: 'v-puti', total: 'В пути' },
-  auction: { key: 'auction', label: 'На торгах', cls: 'status--auction', hash: 'na-torgah', total: 'На торгах' },
+  delivered: { key: 'delivered', label: 'Доставлен', cls: 'status--ok', hash: 'dostavlen' },
+  transit: { key: 'transit', label: 'В пути', cls: 'status--transit', hash: 'v-puti' },
+  auction: { key: 'auction', label: 'На торгах', cls: 'status--auction', hash: 'na-torgah' },
 };
 
 function statusOf(c) {
@@ -222,14 +215,10 @@ function hubPage(ctx, list) {
   const auction = by('auction');
   const prices = list.map((c) => c.price).filter(Boolean);
   const priceFrom = prices.length ? Math.min(...prices) : null;
-  const priceTo = prices.length ? Math.max(...prices) : null;
   const countries = ctx.countries.map((cn) => ({ cn, n: list.filter((c) => c.countrySlug === cn.slug).length })).filter((x) => x.n > 0);
   const withTerm = list.find((c) => c.deliveryTerm);
   const vars = {
     total: list.length,
-    delivered: delivered.length,
-    transit: transit.length,
-    auction: auction.length,
     priceFrom: priceFrom ? plain(price(priceFrom)) : '',
     // пути без u(): строки собираются до рендера, относительными в локальной сборке их делает base.mjs
     calculator: R.calculator,
@@ -244,13 +233,10 @@ function hubPage(ctx, list) {
   const title = fill(t.title, vars);
   const description = fill(t.description, vars);
 
-  // сетка: горизонтальные фото занимают две колонки; плитка-заявка делает число ячеек кратным 4, 3 и 2
   const PROMO_AT = 8;
-  const cells = list.reduce((s, c) => s + (c.wide ? 2 : 1), 0);
-  const promoWide = (cells + 1) % 4 !== 0;
   // плитки собираем внутри render(): caseCard и btn строят ссылки через u(), а она зависит от текущей страницы
   const promo = () => html`
-          <div class="promo-tile promo-tile--accent cases-grid__promo on-dark${promoWide ? ' is-wide' : ''}">
+          <div class="promo-tile promo-tile--accent cases-grid__promo on-dark">
             <div>
               ${label('Под заказ')}
               <p class="promo-tile__title">${typo(t.promo.title)}</p>
@@ -258,20 +244,18 @@ function hubPage(ctx, list) {
             </div>
             ${btn('Хочу такой же', R.contacts, { variant: 'light', modal: 'request', subject: 'Хочу такой же автомобиль (привезенные авто, плитка)', attrs: { 'data-modal-title': 'Привезем такой же автомобиль', 'data-modal-text': 'Назовите модель и бюджет, и мы подберем варианты и пришлем расчет под ключ.' } })}
           </div>`;
-  // у широких плиток слот вдвое больше: без своего sizes браузер берет файл 480px и фото выходит размытым
-  const gridSizes = (c) => (c.wide ? GRID_SIZES.wide : GRID_SIZES.normal);
   const tiles = () => {
     const out = list.map(
       (c, i) => html`
-          <div class="cases-grid__item${c.wide ? ' is-wide' : ''}" data-case data-status="${c.st.key}" data-country="${c.countrySlug || ''}">
-            ${caseCard(c, { i: i % 4, stack: true, sizes: gridSizes(c) }).replace(/ sizes="[^"]*"/, ` sizes="${gridSizes(c)}"`)}
+          <div class="cases-grid__item" data-case data-status="${c.st.key}" data-country="${c.countrySlug || ''}">
+            ${caseCard(c, { i: i % 4, stack: true, sizes: GRID_SIZES })}
           </div>`
     );
     out.splice(Math.min(PROMO_AT, out.length), 0, promo());
     return out;
   };
 
-  const chip = (group, value, text, n, { dot } = {}) =>
+  const chip = (group, value, text, { n, dot } = {}) =>
     `<button class="chip" type="button" data-cf="${group}" data-v="${value}" aria-pressed="${value === '' ? 'true' : 'false'}">${dot ? `<i class="cases-dot cases-dot--${dot}" aria-hidden="true"></i>` : ''}${esc(text)}${n !== undefined ? `<small>${n}</small>` : ''}</button>`;
 
   // география: города из карточек сделок, от дальних к ближним
@@ -318,25 +302,6 @@ function hubPage(ctx, list) {
             </div>
           </div>
         </div>
-        <div class="cases-stats">
-          ${[delivered, transit, auction].map((group, i) => {
-            const st = [STATUS.delivered, STATUS.transit, STATUS.auction][i];
-            return html`
-          <a class="cases-stat" href="#avto" data-cases-set="${st.key}">
-            <span class="cases-stat__value">${group.length}</span>
-            <span class="cases-stat__name"><i class="cases-dot cases-dot--${st.key}" aria-hidden="true"></i>${esc(st.total)}</span>
-            <span class="cases-stat__text">${typo(t.stats[st.key])}</span>
-          </a>`;
-          })}
-          ${priceFrom
-            ? html`
-          <div class="cases-stat">
-            <span class="cases-stat__value cases-stat__value--range">${rangeShort(priceFrom, priceTo)}</span>
-            <span class="cases-stat__name">Диапазон цен</span>
-            <span class="cases-stat__text">${typo(t.stats.price)}</span>
-          </div>`
-            : ''}
-        </div>
       </div>
     </section>
 
@@ -349,15 +314,15 @@ function hubPage(ctx, list) {
           </div>
           <div class="cases-bar__filters">
             <div class="chips" role="group" aria-label="Статус автомобиля">
-              ${chip('status', '', 'Все', list.length)}
-              ${delivered.length ? chip('status', 'delivered', STATUS.delivered.label, delivered.length, { dot: 'delivered' }) : ''}
-              ${transit.length ? chip('status', 'transit', STATUS.transit.label, transit.length, { dot: 'transit' }) : ''}
-              ${auction.length ? chip('status', 'auction', STATUS.auction.label, auction.length, { dot: 'auction' }) : ''}
+              ${chip('status', '', 'Все')}
+              ${delivered.length ? chip('status', 'delivered', STATUS.delivered.label, { dot: 'delivered' }) : ''}
+              ${transit.length ? chip('status', 'transit', STATUS.transit.label, { dot: 'transit' }) : ''}
+              ${auction.length ? chip('status', 'auction', STATUS.auction.label, { dot: 'auction' }) : ''}
             </div>
             ${countries.length > 1
               ? html`<div class="chips" role="group" aria-label="Страна покупки">
               ${chip('country', '', 'Все страны')}
-              ${countries.map((x) => chip('country', x.cn.slug, x.cn.navTitle, x.n))}
+              ${countries.map((x) => chip('country', x.cn.slug, x.cn.navTitle, { n: x.n }))}
             </div>`
               : ''}
           </div>
@@ -406,8 +371,6 @@ function hubPage(ctx, list) {
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cf]');
     if (b) { state[b.dataset.cf] = b.dataset.v; apply(); return; }
-    var s = e.target.closest('[data-cases-set]');
-    if (s) { state.status = s.dataset.casesSet; state.country = ''; apply(); return; }
     if (e.target.closest('[data-cases-reset]')) { state.status = ''; state.country = ''; apply(); }
   });
   var byHash = { '#dostavlen': 'delivered', '#v-puti': 'transit', '#na-torgah': 'auction' };
