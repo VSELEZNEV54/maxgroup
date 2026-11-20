@@ -1,8 +1,8 @@
 // Гид «Как читать аукционный лист» (/aukcionnyj-list/): справочник оценок и обозначений японских аукционов.
 // Тексты и словарь — data/content/guide.json (собран из source.auctionSheetGuide с maxgroupvl.ru).
-import { html, esc, u, a, img, typo, num } from '../lib/core.mjs';
+import { html, esc, u, img, typo } from '../lib/core.mjs';
 import { faqLd, articleLd, howToLd } from '../lib/seo.mjs';
-import { icon, label, duo, btn, more, reveal, sectionHead, crumbs, faqList, linkBlock, ctaBand, note, card } from '../components/ui.mjs';
+import { icon, label, duo, btn, more, reveal, sectionHead, pageHead, faqList, linkBlock, ctaBand, note, card } from '../components/ui.mjs';
 import { R } from '../routes.mjs';
 
 const HOME = { name: 'Главная', url: R.home };
@@ -94,7 +94,7 @@ function sheetSvg() {
 function guidePage(ctx) {
   const g = ctx.content.guide;
   const { site } = ctx;
-  const crumbsList = [HOME, { name: g.h1, url: R.auctionSheet }];
+  const crumbsList = [HOME, { name: 'Информация для клиентов', url: R.clients }, { name: g.h1, url: R.auctionSheet }];
   const japan = ctx.countryBySlug.japan;
   const auction = ctx.services.find((s) => s.slug === 'aukciony-yaponii');
   const helpBtn = (variant = 'dark', opts = {}) =>
@@ -106,9 +106,6 @@ function guidePage(ctx) {
       attrs: { 'data-modal-title': 'Поможем разобрать аукционный лист', 'data-modal-text': 'Оставьте контакты: менеджер свяжется с вами и подскажет, как передать фото листа или ссылку на лот.', 'data-modal-label': 'Аукционный лист' },
     });
 
-  const commentsCount = g.comments.groups.reduce((s, x) => s + x.items.length, 0);
-  const damageCount = g.damage.groups.reduce((s, x) => s + x.items.length, 0);
-  const gradesCount = g.grades.numeric.length + g.grades.special.length;
   // реальные автомобили клиентов с аукционными оценками — примеры к справочнику
   const gradeDict = [...g.grades.numeric, ...g.grades.special];
   const real = ctx.cases
@@ -152,37 +149,15 @@ function guidePage(ctx) {
       faqLd(g.faq),
     ].filter(Boolean),
     render: () => html`
-    <section class="page-head page-head--dark on-dark guide-head">
-      <div class="container">${crumbs(crumbsList)}</div>
-      <div class="container">
-        <div class="page-head__grid">
-          <div class="page-head__main">
-            <div style="margin-bottom:16px">${label(g.label)}</div>
-            <h1>${duo('Как читать', 'аукционный лист')}</h1>
-            <p class="lead" style="max-width:54ch">${typo(g.lead)}</p>
-            <div class="page-head__actions u-mt-6">
-              ${btn('Найти обозначение', '#poisk', { variant: 'light', iconName: 'search' })}
-              ${helpBtn('ghost')}
-            </div>
-          </div>
-          <div class="page-head__side guide-head__codes">
-            ${g.highlights.map(
-              (x, i) => html`
-            <div class="guide-head__code"${reveal(i)}>
-              <span>${esc(x.code)}</span>
-              <p>${typo(x.meaning)}</p>
-            </div>`
-            )}
-          </div>
-        </div>
-        <dl class="kv guide-head__kv">
-          <div class="kv__item"><dt>Оценок состояния</dt><dd>${gradesCount}</dd></div>
-          <div class="kv__item"><dt>Обозначений дефектов</dt><dd>${damageCount}</dd></div>
-          <div class="kv__item"><dt>Японских пометок</dt><dd>${commentsCount}</dd></div>
-          <div class="kv__item"><dt>Сокращений КПП и опций</dt><dd>${g.gear.items.length + g.options.items.length}</dd></div>
-        </dl>
-      </div>
-    </section>
+    ${pageHead({
+      crumbs: crumbsList,
+      label: g.label,
+      h1: duo('Как читать', 'аукционный лист'),
+      lead: g.lead,
+      dark: true,
+      single: true,
+      actions: btn('Найти обозначение', '#poisk', { variant: 'light', iconName: 'search' }) + helpBtn('ghost'),
+    })}
 
     <section class="section section--white guide-sec">
       <div class="container">

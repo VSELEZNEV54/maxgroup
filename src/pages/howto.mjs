@@ -8,7 +8,7 @@ import { R } from '../routes.mjs';
 export function howToPages(ctx) {
   const c = ctx.content.howTo;
   if (!c) return [];
-  const crumbsList = [{ name: 'Главная', url: R.home }, { name: 'Как заказать автомобиль', url: R.howTo }];
+  const crumbsList = [{ name: 'Главная', url: R.home }, { name: 'Информация для клиентов', url: R.clients }, { name: 'Как заказать автомобиль', url: R.howTo }];
   const faq = [...c.fears, ...c.faq];
   // доставленные автомобили: сначала те, у которых известен город клиента; лента из 8 карточек (трех не хватало на ряд)
   const deliveredAll = ctx.cases.filter((x) => x.statusCode === 'delivered');
@@ -42,11 +42,7 @@ export function howToPages(ctx) {
       lead: c.lead,
       photo: 'assets/img/hero/gclass-road.webp',
       photoAlt: 'Автомобиль на ночной трассе во Владивостоке',
-      kv: [
-        { k: 'Этапов', v: '6' },
-        { k: 'До Владивостока', v: 'обычно 3-6 недель' },
-        { k: 'Оплата', v: 'по договору' },
-      ],
+      single: true,
       actions: btn('Начать с расчета', R.calculator, { variant: 'light' }) + btn('Задать вопрос', R.contacts, { variant: 'ghost', modal: 'request', subject: 'Вопрос: как заказать автомобиль' }),
     })}
 
@@ -61,6 +57,7 @@ export function howToPages(ctx) {
             <div class="flow__main">
               <h3 class="flow__title">${typo(s.title)}</h3>
               <p>${typo(s.text)}</p>
+              ${i === 3 ? more('Что происходит после оплаты', R.afterPayment) : ''}
             </div>
             <ul class="flow__result">
               ${s.result.map((r) => `<li>${icon('check')}<span>${typo(r)}</span></li>`)}

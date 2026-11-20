@@ -37,19 +37,6 @@ function hero() {
     </section>`;
 }
 
-function trustStrip() {
-  const facts = [
-    ['5.0 в отзывах', 'По отзывам клиентов в 2ГИС и на Яндекс Картах'],
-    ['Опыт работы', 'Давно работаем с аукционами Японии и площадками Кореи и Китая'],
-    ['Таможня', 'Оформление и расчет пошлин берем на себя'],
-    ['Платежный агент', 'Оплата за рубеж с подтверждающими документами'],
-    ['Под ключ', 'От покупки до выдачи автомобиля в вашем городе'],
-  ];
-  return html`<div class="section--white"><dl class="container trust-strip" aria-label="О работе Макс Групп">
-    ${facts.map(([title, text]) => html`<div><dt>${esc(title)}</dt><dd>${typo(text)}</dd></div>`)}
-  </dl></div>`;
-}
-
 function brandsStrip(ctx) {
   const brands = new Map();
   for (const brand of ctx.brands) {
@@ -373,7 +360,7 @@ export function postCard(p, { i = 0, tag = 'h3' } = {}) {
           <article class="post"${reveal(i)}>
             ${p.cover ? `<div class="post__media">${img({ src: p.cover, alt: p.coverAlt || p.title, sizes: '(max-width: 900px) 100vw, 33vw' })}</div>` : ''}
             <div class="post__body">
-              <div class="post__meta"><span>${esc(p.category || 'Блог')}</span><span>${p.readMin} мин чтения</span></div>
+              <div class="post__meta"><span>${esc(p.category || 'Блог')}</span>${p.readMin ? `<span>${p.readMin} мин чтения</span>` : ''}</div>
               <${tag} class="post__title"><a href="${u(p.url)}">${typo(esc(p.title))}</a></${tag}>
               <p class="post__text">${typo(esc(p.description || ''))}</p>
               <span class="post__more">Читать ${icon('arrow')}</span>
@@ -451,7 +438,6 @@ export function homePages(ctx) {
       render: () =>
         [
           hero(),
-          trustStrip(),
           brandsStrip(ctx),
           quizSection(ctx, { subject: 'Квиз подбора (главная)', white: true }),
           countriesSection(ctx),

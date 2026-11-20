@@ -44,6 +44,8 @@ export const R = {
   video: '/video/',
 
   // Контент
+  clients: '/klientam/',
+  afterPayment: '/klientam/posle-oplaty/',
   blog: '/blog/',
   post: (slug) => `/blog/${slug}/`,
 

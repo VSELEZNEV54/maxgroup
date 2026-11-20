@@ -6,6 +6,12 @@ import { logo } from './logo.mjs';
 
 const isCurrent = (page, url) => (page.url === url || (url !== '/' && page.url.startsWith(url)) ? ' aria-current="page"' : '');
 
+function currentSection(page, item) {
+  if (page.url === item.url) return ' aria-current="page"';
+  const links = new Set(item.groups.flatMap((group) => group.items.map((link) => link.url)));
+  return page.breadcrumbs?.some((crumb) => links.has(crumb.url)) ? ' aria-current="location"' : '';
+}
+
 // Telegram: личного адреса менеджера в данных заказчика нет — ссылка ведет на канал, и подписана она как канал.
 // Появится site.socials.telegramManager — подпись и ссылка сменятся сами.
 const telegram = (site) => {
@@ -77,7 +83,7 @@ function megaList(id, groups, promo) {
             ${groups.map(
               (g) => html`
             <div class="mega__col">
-              <div class="mega__title">${g.url ? `<a href="${u(g.url)}">${esc(g.title)}</a>` : `<span class="label">${esc(g.title)}</span>`}</div>
+              ${g.title ? `<div class="mega__title"><span class="label">${esc(g.title)}</span></div>` : ''}
               <ul class="mega__list mega__list--1">
                 ${g.items.map((it) => `<li><a href="${u(it.url)}">${esc(it.name)}</a></li>`)}
               </ul>
@@ -102,11 +108,11 @@ export function header(ctx, page) {
             <a class="nav__link btn btn--primary btn--sm" href="${u(nav.catalogUrl)}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-catalog"${catalogCurrent}>${icon('grid')} Каталог</a>
             ${megaCatalog(ctx, page)}
           </div>
-          ${nav.top.map((l) => `<div class="nav__item"><a class="nav__link" href="${u(l.url)}"${isCurrent(page, l.url)}>${esc(l.name)}</a></div>`)}
-          <div class="nav__item" data-mega>
-            <a class="nav__link" href="${u(nav.aboutUrl)}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-company"${isCurrent(page, nav.aboutUrl)}>О компании ${icon('chevron')}</a>
-            ${megaList('mega-company', nav.companyGroups, nav.companyPromo)}
-          </div>
+          ${nav.top.map((item) => item.panel ? html`
+          <div class="nav__item nav__item--section" data-mega>
+            <a class="nav__link" href="${u(item.url)}" aria-haspopup="true" aria-expanded="false" aria-controls="${item.panel}"${currentSection(page, item)}>${esc(item.name)} ${icon('chevron')}</a>
+            ${megaList(item.panel, item.groups, item.promo)}
+          </div>` : `<div class="nav__item"><a class="nav__link" href="${u(item.url)}"${isCurrent(page, item.url)}>${esc(item.name)}</a></div>`)}
         </nav>
         <a class="header__catalog-mobile btn btn--primary btn--sm" href="${u(nav.catalogUrl)}"${catalogCurrent}>Каталог</a>
         <div class="header__side">
@@ -156,15 +162,14 @@ export function drawer(ctx, page) {
             </div>
           </details>
         </li>
-        ${nav.top.map((l) => `<li><a href="${u(l.url)}">${esc(l.name)} ${icon('arrow')}</a></li>`)}
-        <li>
+        ${nav.top.map((item) => item.panel ? html`<li>
           <details>
-            <summary>О компании ${plus}</summary>
+            <summary>${esc(item.name)} ${plus}</summary>
             <div class="drawer__sub">
-              ${nav.companyGroups.flatMap((g) => g.items).map((s) => `<a href="${u(s.url)}">${esc(s.name)}</a>`)}
+              ${item.groups.flatMap((g) => g.items).map((s) => `<a href="${u(s.url)}">${esc(s.name)}</a>`)}
             </div>
           </details>
-        </li>
+        </li>` : `<li><a href="${u(item.url)}">${esc(item.name)} ${icon('arrow')}</a></li>`)}
       </ul>
       <div class="drawer__foot">
         <a class="btn btn--primary btn--block" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчет стоимости авто">Рассчитать стоимость</a>

@@ -5,6 +5,7 @@ import { html, esc, u, img, typo, dateRu, count, cx, slugify, abs } from '../lib
 import { articleLd, itemListLd, faqLd } from '../lib/seo.mjs';
 import { icon, label, duo, btn, more, reveal, sectionHead, pageHead, crumbs, carCard, faqList, rail, ctaBand } from '../components/ui.mjs';
 import { postCard } from './home.mjs';
+import { leadForm } from '../components/forms.mjs';
 import { R } from '../routes.mjs';
 
 const HOME = { name: 'Главная', url: R.home };
@@ -19,6 +20,7 @@ const arr = (v) => (Array.isArray(v) ? v : v ? [v] : []);
 const catId = (c) => slugify(c || 'blog') || 'blog';
 const catUrl = (c) => `${R.blog}#${catId(c)}`;
 const modified = (p) => (p.updated && p.updated > p.date ? p.updated : p.date);
+const postTopics = (p) => esc([...arr(p.tags), ...(p.toc || []).map((section) => section.text)].join(' '));
 
 /** Порядок ленты задает поле order во front matter (1…N); статьи без него встают в конец по slug */
 const ord = (p) => (p.order !== undefined && p.order !== '' && Number.isFinite(+p.order) ? +p.order : 1e6);
@@ -181,7 +183,7 @@ function calcBanner() {
 /** Карточка статьи в сетке индекса (расширение .post из общих стилей) */
 function blogCard(ctx, p, { i = 0, size = '' } = {}) {
   return html`
-          <article class="${cx('post', 'blog-card', size && `blog-card--${size}`)}" data-post data-cat="${catId(p.category)}"${reveal(Math.min(i, 5))}>
+          <article class="${cx('post', 'blog-card', size && `blog-card--${size}`)}" data-post data-cat="${catId(p.category)}" data-topics="${postTopics(p)}"${reveal(Math.min(i, 5))}>
             ${p.cover ? `<div class="post__media">${img({ src: p.cover, alt: p.coverAlt || p.title, sizes: size ? '(max-width: 900px) 100vw, 50vw' : '(max-width: 900px) 100vw, 33vw', attrs: focus(p) })}</div>` : ''}
             <div class="post__body">
               <div class="post__meta"><span>${esc(p.category || 'Блог')}</span><span>${p.readMin} мин чтения</span></div>
@@ -198,7 +200,7 @@ function blogCard(ctx, p, { i = 0, size = '' } = {}) {
 /** Первая статья индекса — крупная темная редакционная карточка */
 function leadPost(ctx, p) {
   return html`
-        <article class="blog-lead on-dark" data-post data-cat="${catId(p.category)}"${reveal()}>
+        <article class="blog-lead on-dark" data-post data-cat="${catId(p.category)}" data-topics="${postTopics(p)}"${reveal()}>
           <div class="blog-lead__media">${p.cover ? img({ src: p.cover, alt: p.coverAlt || p.title, priority: true, sizes: '(max-width: 900px) 100vw, 58vw', attrs: focus(p) }) : ''}</div>
           <div class="blog-lead__body">
             <div class="blog-lead__top">
@@ -277,6 +279,7 @@ function indexPage(ctx) {
   return {
     url: R.blog,
     type: 'blog',
+    scripts: ['blog'],
     title,
     description,
     h1: 'Блог об импорте автомобилей из Азии',
@@ -305,13 +308,6 @@ function indexPage(ctx) {
       label: 'Блог',
       h1: duo('Блог об импорте', 'автомобилей из Азии'),
       lead: 'Разбираем, из чего складывается цена автомобиля из Японии, Кореи и Китая: пошлина и утильсбор, аукционы и проверка, доставка из Владивостока. С таблицами ставок и расчетами на конкретных машинах.',
-      kv: posts.length
-        ? [
-            { k: 'В блоге', v: count(posts.length, ART) },
-            { k: 'Рубрики', v: String(cats.length) },
-            { k: 'Ставки сверены', v: dateRu(lastUpdate) },
-          ]
-        : null,
     })}
     <section class="section section--sm section--flush-top" id="stati" data-blog>
       <div class="container">
@@ -323,7 +319,15 @@ function indexPage(ctx) {
             <button class="chip" type="button" aria-pressed="true" data-cat="">Все статьи<small>${posts.length}</small></button>
             ${cats.map((c) => `<button class="chip" type="button" aria-pressed="false" data-cat="${c.id}">${esc(c.name)}<small>${c.count}</small></button>`)}
           </div>
-          <span class="label label--plain blog-bar__count" data-blog-count aria-live="polite">${count(posts.length, ART)}</span>
+          <label class="blog-search">
+            ${icon('search')}<span class="sr-only">Поиск по статьям</span>
+            <input type="search" placeholder="Поиск по статьям и темам" data-blog-search>
+          </label>
+          <span class="sr-only" data-blog-count aria-live="polite">${count(posts.length, ART)}</span>
+        </div>
+        <div class="blog-empty" data-blog-empty hidden>
+          <p class="h4">Статей по этому запросу пока нет</p>
+          <button class="btn btn--ghost btn--sm" type="button" data-blog-reset>Сбросить поиск и рубрику</button>
         </div>
         ${leadPost(ctx, first)}
         <div class="blog-grid">
@@ -355,57 +359,9 @@ function indexPage(ctx) {
       </div>
     </section>
     ${telegramBand(ctx)}
-    ${ctaBand(ctx, { subject: 'Заявка из блога', title: duo('Остались вопросы', 'по расчету или выбору?'), text: 'Расскажите, какой автомобиль ищете, и мы посчитаем пошлину, утильсбор и доставку под конкретную машину и пришлем варианты с аукционов и площадок.', bg: 'assets/img/hero/city-towers.webp' })}
-    ${posts.length ? FILTER_SCRIPT : ''}`,
+    ${ctaBand(ctx, { subject: 'Заявка из блога', title: duo('Остались вопросы', 'по расчету или выбору?'), text: 'Расскажите, какой автомобиль ищете, и мы посчитаем пошлину, утильсбор и доставку под конкретную машину и пришлем варианты с аукционов и площадок.', bg: 'assets/img/hero/city-towers.webp' })}`,
   };
 }
-
-// Клиентская фильтрация по рубрикам. Без JS показаны все статьи, чипы скрыты (.no-js).
-// Переход по ссылке /blog/#рубрика (из статьи) включает фильтр и прокручивает к списку.
-const FILTER_SCRIPT = `
-    <script>
-    (function () {
-      var root = document.querySelector('[data-blog]');
-      if (!root) return;
-      var chips = [].slice.call(root.querySelectorAll('.blog-filter [data-cat]'));
-      var posts = [].slice.call(root.querySelectorAll('[data-post]'));
-      var counter = root.querySelector('[data-blog-count]');
-      function forms(n) { var a = n % 10, b = n % 100; return a === 1 && b !== 11 ? 'статья' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'статьи' : 'статей'; }
-      function apply(cat, push) {
-        if (cat && !chips.some(function (c) { return c.dataset.cat === cat; })) cat = '';
-        var n = 0;
-        posts.forEach(function (p) { var on = !cat || p.dataset.cat === cat; p.hidden = !on; if (on) { n++; p.classList.add('is-in'); } });
-        chips.forEach(function (c) {
-          var on = c.dataset.cat === cat;
-          c.setAttribute('aria-pressed', String(on));
-          // на телефоне лента рубрик листается: включенная рубрика должна быть видна
-          if (on) { var f = c.parentNode, d = c.getBoundingClientRect().left - f.getBoundingClientRect().left; if (d < 0 || d + c.offsetWidth > f.clientWidth) f.scrollLeft += d - 16; }
-        });
-        root.classList.toggle('is-filtered', !!cat);
-        if (counter) counter.textContent = n + ' ' + forms(n);
-        if (push && history.replaceState) history.replaceState(null, '', cat ? '#' + cat : location.pathname + location.search);
-      }
-      function isCat(h) { return chips.some(function (c) { return c.dataset.cat === h; }); }
-      function show() { root.scrollIntoView({ block: 'start' }); }
-      chips.forEach(function (c) { c.addEventListener('click', function () { apply(c.dataset.cat, true); }); });
-      var hash = location.hash.slice(1);
-      if (hash && isCat(hash)) {
-        apply(hash, false);
-        show();
-        // после загрузки шрифтов текст над списком может переверстаться — поправляем позицию, пока читатель сам не начал листать
-        var touched = false;
-        ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) { window.addEventListener(ev, function () { touched = true; }, { once: true, passive: true }); });
-        var realign = function () { if (!touched) show(); };
-        window.addEventListener('load', realign);
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(realign);
-      }
-      window.addEventListener('hashchange', function () {
-        var h = location.hash.slice(1);
-        if (!h) apply('', false);
-        else if (isCat(h)) { apply(h, false); show(); }
-      });
-    })();
-    </script>`;
 
 // --- статья ---------------------------------------------------------------------------------------------
 
@@ -418,6 +374,21 @@ function tocBlock(p) {
                 ${p.toc.map((t, i) => `<li><a href="#${esc(t.id)}"><span class="article-toc__num">${String(i + 1).padStart(2, '0')}</span><span>${glue(typo(esc(t.text)))}</span></a></li>`)}
               </ol>
             </details>`;
+}
+
+function articleContact(manager, p) {
+  return html`<details class="article-contact" open data-article-contact>
+    <summary>
+      <span class="article-contact__photo">${img({ src: manager.photo, alt: '', cls: 'sales-portrait', sizes: '48px' })}</span>
+      <span><strong>Рассчитать стоимость авто</strong><span class="article-contact__byline">${esc(manager.name)}<br>${esc(manager.role)}</span></span>
+      <span class="article-contact__toggle" aria-hidden="true">${icon('chevron')}</span>
+    </summary>
+    ${leadForm({ fields: ['phone'], cta: 'Получить расчет', subject: 'Расчет автомобиля по статье «' + shortTitle(p) + '»' })}
+  </details>`;
+}
+
+export function articleSidebar(manager, p) {
+  return html`<aside class="article-aside">${tocBlock(p)}${articleContact(manager, p)}</aside>`;
 }
 
 /** Блок в конце статьи: автор — редакция, вопросы по статье принимает менеджер (общая форма заявки) */
@@ -460,6 +431,7 @@ function postPage(ctx, p) {
   return {
     url: p.url,
     type: 'post',
+    scripts: ['article'],
     title,
     description: p.description,
     h1: p.title,
@@ -504,13 +476,7 @@ function postPage(ctx, p) {
       <section class="section section--white article-body">
         <div class="container">
           <div class="article-layout">
-            <aside class="article-aside">
-              ${tocBlock(p)}
-              <div class="article-aside__cta">
-                <p>${typo('Нужен расчет под конкретный автомобиль?')}</p>
-                ${btn('Калькулятор', R.calculator, { variant: 'dark', size: 'sm' })}
-              </div>
-            </aside>
+            ${articleSidebar(site.salesManager, p)}
             <div class="article-main">
               <div class="prose article-prose">
 ${partA}
@@ -568,72 +534,9 @@ ${partA}
       title: duo('Посчитаем ваш автомобиль', 'по текущим ставкам'),
       text: 'Назовите марку, год и бюджет, и мы подберем варианты в Японии, Корее и Китае и пришлем полный расчет: цена в стране, доставка, пошлина, утильсбор, оформление.',
       bg: 'assets/img/hero/bridge-drive.webp',
-    })}
-    ${ARTICLE_SCRIPT}`,
+    })}`,
   };
 }
-
-// Полоса прогресса чтения, подсветка текущего раздела в оглавлении, сворачивание оглавления на мобайле,
-// режим таблиц из трех-четырех колонок: помещается в экран — остается как есть, не помещается — листается (table-wrap--wide).
-const ARTICLE_SCRIPT = `
-    <script>
-    (function () {
-      var art = document.querySelector('[data-article] .article-main');
-      var bar = document.querySelector('[data-article-progress] i');
-      var toc = document.querySelector('[data-toc]');
-      var mobile = window.matchMedia('(max-width: 900px)');
-      if (toc) {
-        var sum = toc.querySelector('summary');
-        // на десктопе оглавление всегда раскрыто: заголовок не кнопка и не получает фокус
-        var syncToc = function () { toc.open = !mobile.matches; if (mobile.matches) sum.removeAttribute('tabindex'); else sum.setAttribute('tabindex', '-1'); };
-        syncToc();
-        sum.addEventListener('click', function (e) { if (!mobile.matches) e.preventDefault(); });
-        toc.addEventListener('click', function (e) { if (mobile.matches && e.target.closest('a')) toc.open = false; });
-        if (mobile.addEventListener) mobile.addEventListener('change', syncToc);
-      }
-      var fitTables = [].slice.call(document.querySelectorAll('[data-article] .table-wrap[data-table-fit]'));
-      var refit = function () {
-        fitTables.forEach(function (w) {
-          w.classList.remove('table-wrap--wide');
-          if (w.scrollWidth > w.clientWidth) w.classList.add('table-wrap--wide');
-        });
-      };
-      if (fitTables.length) {
-        refit();
-        window.addEventListener('load', refit);
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
-      }
-      var links = {};
-      var heads = [];
-      if (toc && art) {
-        [].forEach.call(toc.querySelectorAll('a[href^="#"]'), function (a) { links[a.getAttribute('href').slice(1)] = a; });
-        heads = [].filter.call(art.querySelectorAll('h2[id]'), function (h) { return links[h.id]; });
-      }
-      var current = null;
-      var tick = false;
-      var paint = function () {
-        tick = false;
-        if (art && bar) {
-          var r = art.getBoundingClientRect();
-          var total = r.height - window.innerHeight * 0.6;
-          var done = Math.min(1, Math.max(0, (window.innerHeight * 0.4 - r.top) / Math.max(1, total)));
-          bar.style.transform = 'scaleX(' + done.toFixed(4) + ')';
-        }
-        var cur = null;
-        for (var i = 0; i < heads.length; i++) { if (heads[i].getBoundingClientRect().top < window.innerHeight * 0.4) cur = heads[i].id; else break; }
-        if (cur !== current) {
-          if (current && links[current]) links[current].removeAttribute('aria-current');
-          if (cur && links[cur]) links[cur].setAttribute('aria-current', 'true');
-          current = cur;
-        }
-      };
-      window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(paint); } }, { passive: true });
-      // режим таблиц пересчитываем только при смене ширины: на телефоне resize приходит и когда прячется адресная строка
-      var lastW = window.innerWidth;
-      window.addEventListener('resize', function () { paint(); if (window.innerWidth !== lastW) { lastW = window.innerWidth; refit(); } });
-      paint();
-    })();
-    </script>`;
 
 export function blogPages(ctx) {
   return [indexPage(ctx), ...ordered(ctx).map((p) => postPage(ctx, p))];

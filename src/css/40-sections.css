@@ -149,31 +149,6 @@
   .hero__meta .label:nth-child(2) { display: none; }
 }
 
-.trust-strip {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: var(--sp-5);
-  padding-block: var(--section-y-sm);
-}
-
-.trust-strip dt {
-  font-size: var(--fs-h4);
-  font-weight: var(--w-medium);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-.trust-strip dd {
-  margin-top: var(--sp-2);
-  max-width: 30ch;
-  color: var(--text-2);
-  font-size: var(--fs-sm);
-}
-
-@media (max-width: 900px) {
-  .trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
 /* --- Лента марок ---------------------------------------------------------------- */
 
 .brands-strip {

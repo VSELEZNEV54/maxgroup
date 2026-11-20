@@ -368,7 +368,6 @@ export function loadContext(build) {
     catalogUrl: R.catalog,
     selectionsUrl: R.selections,
     servicesUrl: R.services,
-    aboutUrl: R.about,
     deliveryUrl: R.delivery,
     countries: countries.map((cn) => ({
       ...cn,
@@ -380,21 +379,27 @@ export function loadContext(build) {
     serviceGroups: serviceGroups.map((g) => ({ ...g, items: g.items.map((slug) => services.find((s) => s.slug === slug)).filter(Boolean).map((s) => ({ name: s.navName || s.name, url: s.url })) })),
     top: [
       { name: 'Калькулятор', url: R.calculator },
-      { name: 'Доставка', url: R.delivery },
+      { name: 'Доставка', url: R.delivery, panel: 'mega-delivery', groups: [
+        { title: 'Доставка по России', items: [
+          { name: 'Все о доставке', url: R.delivery },
+          { name: 'Города и тарифы', url: R.delivery + '#goroda' },
+          { name: 'Способы доставки', url: R.delivery + '#sposoby' },
+          { name: 'Доставка автовозом', url: R.delivery + '#avtovoz' },
+        ] },
+        { title: 'По городам', items: ['novosibirsk', 'krasnoyarsk', 'irkutsk', 'ekaterinburg', 'moskva', 'sankt-peterburg']
+          .map((slug) => cities.find((city) => city.slug === slug)).filter(Boolean).map((city) => ({ name: city.name, url: city.url })) },
+      ] },
       { name: 'Привезенные авто', url: R.cases },
       { name: 'Отзывы', url: R.reviews },
+      { name: 'Полезное', url: R.clients, panel: 'mega-useful', groups: [{ items: [
+        { name: 'Информация для клиентов', url: R.clients }, { name: 'Блог', url: R.blog },
+        { name: 'Вопросы и ответы', url: R.faq }, { name: 'Видео и обзоры', url: R.video },
+      ] }] },
+      { name: 'О компании', url: R.about, panel: 'mega-company', groups: [{ title: 'Компания', items: [
+        { name: 'О компании', url: R.about }, { name: 'Контактные данные', url: R.contacts },
+        { name: 'Реквизиты', url: R.contacts + '#rekvizity' },
+      ] }], promo: { label: 'Офис во Владивостоке', title: site.contacts.street, text: `${site.contacts.office} · ${site.contacts.hours}`, cta: 'Как добраться', url: R.contacts + '#kak-dobratsya' } },
     ],
-    companyGroups: [
-      { title: 'Компания', items: [{ name: 'О компании', url: R.about }, { name: 'Отзывы клиентов', url: R.reviews }, { name: 'Привезенные авто', url: R.cases }, { name: 'Контакты', url: R.contacts }] },
-      { title: 'Полезное', items: [{ name: 'Как заказать автомобиль', url: R.howTo }, { name: 'Блог', url: R.blog }, { name: 'Вопросы и ответы', url: R.faq }, { name: 'Как читать аукционный лист', url: R.auctionSheet }, { name: 'Видео и обзоры', url: R.video }] },
-      { title: 'Доставка', items: [
-        { name: 'Доставка по городам', url: R.delivery + '#goroda' },
-        { name: 'Доставка автовозом', url: R.delivery + '#avtovoz' },
-        ...['novosibirsk', 'krasnoyarsk', 'irkutsk', 'ekaterinburg', 'moskva', 'sankt-peterburg']
-          .map((slug) => cities.find((city) => city.slug === slug)).filter(Boolean).map((city) => ({ name: city.name, url: city.url })),
-      ] },
-    ],
-    companyPromo: { label: 'Офис во Владивостоке', title: site.contacts.street, text: `${site.contacts.office} · ${site.contacts.hours}`, cta: 'Как добраться', url: R.contacts },
     footerCompany: [
       { name: 'О компании', url: R.about },
       { name: 'Привезенные авто', url: R.cases },

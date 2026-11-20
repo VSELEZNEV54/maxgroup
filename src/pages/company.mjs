@@ -926,6 +926,7 @@ function faqPage(ctx) {
         ${linkBlock('Услуги', ctx.services.map((s) => ({ name: s.navName || s.name, url: s.url })), { tag: 'h2' })}
         ${linkBlock('Доставка по городам', ctx.cities.slice(0, 12).map((c) => ({ name: c.name, url: c.url })), { tag: 'h2' })}
         ${linkBlock('Справочные материалы', [
+          { name: 'Информация для клиентов', url: R.clients },
           { name: 'Калькулятор стоимости', url: R.calculator },
           R.howTo ? { name: 'Как заказать автомобиль', url: R.howTo } : null,
           { name: 'Как читать аукционный лист', url: R.auctionSheet },
@@ -1129,14 +1130,13 @@ function sitemapPage(ctx) {
     { name: 'Подборки', url: R.selections },
     { name: 'Услуги', url: R.services },
     { name: 'Калькулятор стоимости', url: R.calculator },
-    R.howTo ? { name: 'Как заказать автомобиль', url: R.howTo } : null,
+    { name: 'Информация для клиентов', url: R.clients },
     { name: 'Доставка по России', url: R.delivery },
     { name: 'Привезенные авто', url: R.cases },
     { name: 'Отзывы клиентов', url: R.reviews },
     { name: 'О компании', url: R.about },
     { name: 'Контакты', url: R.contacts },
     { name: 'Вопросы и ответы', url: R.faq },
-    { name: 'Как читать аукционный лист', url: R.auctionSheet },
     { name: 'Видео', url: R.video },
     { name: 'Блог', url: R.blog },
   ].filter(Boolean);
@@ -1195,7 +1195,12 @@ function sitemapPage(ctx) {
     group('razdely', 'Основные разделы', main.length, list(main)),
     hasCatalog ? group('katalog', 'Каталог: страны, марки, модели', ctx.brands.length + ctx.models.length, catalogBody, 'Марки сгруппированы по стране покупки, под каждой указаны модели из каталога.') : '',
     globalSelections.length + countrySelections.length ? group('podborki', 'Подборки', globalSelections.length + countrySelections.length, selectionsBody, 'Популярные модели по заказам и подборки по бюджету, типу кузова и условиям растаможки.') : '',
-    group('uslugi', 'Услуги и инструменты', ctx.services.length + 3, list([{ name: 'Все услуги', url: R.services }, ...ctx.services.map((s) => ({ name: s.name, url: s.url })), { name: 'Калькулятор стоимости под ключ', url: R.calculator }, { name: 'Как читать аукционный лист', url: R.auctionSheet }])),
+    group('uslugi', 'Услуги и инструменты', ctx.services.length + 2, list([{ name: 'Все услуги', url: R.services }, ...ctx.services.map((s) => ({ name: s.name, url: s.url })), { name: 'Калькулятор стоимости под ключ', url: R.calculator }])),
+    group('klientam', 'Информация для клиентов', 3, list([
+      { name: 'Как заказать автомобиль', url: R.howTo },
+      { name: 'Как читать аукционный лист', url: R.auctionSheet },
+      { name: 'Что происходит после оплаты автомобиля', url: R.afterPayment },
+    ])),
     ctx.cities.length
       ? group(
           'dostavka',
