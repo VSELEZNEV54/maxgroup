@@ -7,6 +7,8 @@
   const question = compose.elements.question;
   const lead = find('[data-chat-lead]');
   const log = find('[data-chat-log]');
+  const scrollArea = find('.chat__scroll');
+  log.tabIndex = -1;
   const toggle = document.querySelector('[data-chat-toggle]');
   const contact = find('[data-chat-contact]');
   const viewport = window.visualViewport;
@@ -32,8 +34,12 @@
     fitKeyboard();
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'Закрыть чат');
-    const field = contact.hidden ? question : lead.elements.name;
-    if (!lead.classList.contains('is-sent')) field.focus({ preventScroll: true });
+    if (!lead.classList.contains('is-sent')) {
+      let target = log;
+      if (!compose.hidden) target = question;
+      else if (!contact.hidden) target = lead.elements.name;
+      target.focus({ preventScroll: true });
+    }
   });
   dialog.addEventListener('close', () => {
     toggle.setAttribute('aria-expanded', 'false');
@@ -47,24 +53,43 @@
     }
   });
 
-  compose.addEventListener('submit', (event) => {
+  function revealInChat(element) {
+    if (!dialog.open) return;
+    const overflow = element.getBoundingClientRect().bottom - scrollArea.getBoundingClientRect().bottom;
+    if (overflow > 0) scrollArea.scrollTop += overflow;
+  }
+  const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
+  compose.addEventListener('submit', async (event) => {
     event.preventDefault();
     const text = question.value.trim();
-    if (!text || !contact.hidden) return;
-    const acknowledgment = 'Мы приняли ваш вопрос. Оставьте свои контакты.';
+    if (!text || compose.hidden) return;
+    compose.hidden = true;
     const customer = document.createElement('p');
     customer.className = 'chat__message chat__message--user';
     customer.textContent = text;
+    const typing = document.createElement('p');
+    typing.className = 'chat__message chat__typing';
+    typing.innerHTML = '<span class="sr-only">Валерий печатает…</span><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>';
+    log.append(customer, typing);
+    log.focus({ preventScroll: true });
+    revealInChat(typing);
+
+    await wait(1500);
+    const acknowledgment = 'Мы приняли ваш вопрос. Оставьте имя и телефон — мы свяжемся с вами и подберём подходящее решение.';
     const reply = document.createElement('p');
-    reply.className = 'chat__message';
+    reply.className = 'chat__message chat__message--reply';
     reply.textContent = acknowledgment;
-    log.append(customer, reply);
+    typing.replaceWith(reply);
     lead.elements.conversation.value = 'Клиент: ' + text + '\nМакс Групп: ' + acknowledgment;
-    compose.hidden = true;
+    revealInChat(reply);
+
+    await wait(750);
     contact.hidden = false;
-    lead.elements.name.focus({ preventScroll: true });
-    // На коротком экране сначала показываем подтверждение и начало формы.
-    reply.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    if (dialog.open) {
+      // Оставляем ответ над формой, прокручивая только переписку.
+      scrollArea.scrollTop = reply.getBoundingClientRect().top - log.getBoundingClientRect().top;
+    }
   });
   lead.addEventListener('lead:sent', () => {
     lead.querySelector('[data-success-title]').textContent = lead.hasAttribute('data-server-lead')

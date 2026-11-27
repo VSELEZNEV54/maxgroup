@@ -82,14 +82,29 @@ body:has(dialog:modal, .drawer.is-open) .chat-launch { visibility: hidden; }
 .chat__scroll { padding: var(--sp-4); overflow-y: auto; overscroll-behavior: contain; }
 .chat__scroll > * + * { margin-top: var(--sp-3); }
 .chat__log { display: grid; gap: var(--sp-2); }
+/* Программный фокус оставляет Tab в переписке, пока появляются поля контактов. */
+.chat__log:focus { outline: none; }
 .chat__message { max-width: 94%; padding: 11px 14px; border-radius: var(--r-md); background: var(--paper); overflow-wrap: anywhere; white-space: pre-line; font-size: .9375rem; }
 .chat__message--user { justify-self: end; background: var(--accent-soft); }
+.chat__typing { display: flex; justify-self: start; align-items: center; gap: 4px; min-height: 42px; color: var(--text-2); }
+.chat__typing i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+@media (prefers-reduced-motion: no-preference) {
+  .chat__scroll { scroll-behavior: smooth; }
+  .chat__typing i { animation: chat-typing-dot var(--dur-scene) var(--ease-inout) infinite; }
+  .chat__typing i:nth-of-type(2) { animation-delay: var(--dur-fast); }
+  .chat__typing i:nth-of-type(3) { animation-delay: calc(2 * var(--dur-fast)); }
+  .chat__message--reply, .chat [data-chat-contact]:not([hidden]) { animation: fade-in var(--dur-fast) var(--ease-out); }
+}
+@keyframes chat-typing-dot {
+  0%, 65%, 100% { opacity: .45; transform: translateY(0); }
+  32% { opacity: 1; transform: translateY(-40%); }
+}
 .chat__compose { display: grid; grid-template-columns: minmax(0, 1fr) 44px; align-items: center; gap: var(--sp-2); padding: var(--sp-3); border-top: 1px solid var(--line); }
 .chat__compose .field__control { height: 44px; padding-inline: 12px; }
 .chat__compose .btn { width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: var(--r-md); }
 .chat__compose .btn svg { width: 20px; height: 20px; }
 @media (min-width: 721px) {
-  .chat:has(.chat__compose:not([hidden])) { --chat-height: 290px; }
+  .chat:has([data-chat-contact][hidden]) { --chat-height: 290px; }
   body:has(.chat-launch) .cookie { left: var(--chat-edge); right: auto; }
 }
 @media (max-width: 720px) {
