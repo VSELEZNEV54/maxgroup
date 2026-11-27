@@ -57,12 +57,8 @@
   "localLogisticsRub": 10000,
   "commissionTiers": [
    {
-    "maxCarPriceRub": 1700000,
-    "commissionRub": 50000
-   },
-   {
     "maxCarPriceRub": 3000000,
-    "commissionRub": 65000
+    "commissionRub": 75000
    },
    {
     "maxCarPriceRub": 4000000,
@@ -88,7 +84,7 @@
   "4b. Электромобили и последовательные гибриды: stp — пошлина 15% ТС + акциз (ставка × л.с. 30-мин) + НДС 22% × (ТС + пошлина + акциз).",
   "5. Таможенный сбор — customsFee.scale по ТС.",
   "6. Утильсбор = 20 000 × коэффициент из utilFee.personal (или utilFee.full, если не выполняются условия личного пользования). Мощность: ДВС — кВт ДВС; параллельный гибрид — ДВС + 30-мин электромотора; электро/последовательный — 30-мин электромоторов. Неизвестна 30-мин мощность → пик × 0,45.",
-  "7. Расходы за рубежом: по умолчанию costs.maxGroupSite (Япония 135 000 ¥; Корея 1 300 000 вон; Китай 12 000 юаней; «санкционная» Япония 400 000 ¥ + 3 000 $); рыночные альтернативы — costs.japan/korea/china. 8. Владивосток: 65 000 + 10 000 ₽ (costs.maxGroupSite) либо рыночные costs.vladivostok. 9. Комиссия: 50 000 ₽ и выше по ступеням. 10. Доставка по РФ (delivery.cities).",
+  "7. Расходы за рубежом: по умолчанию costs.maxGroupSite (Япония 135 000 ¥; Корея 1 300 000 вон; Китай 12 000 юаней; «санкционная» Япония 400 000 ¥ + 3 000 $); рыночные альтернативы — costs.japan/korea/china. 8. Владивосток: 65 000 + 10 000 ₽ (costs.maxGroupSite) либо рыночные costs.vladivostok. 9. Комиссия: от 75 000 ₽ по стоимости автомобиля в рублях. 10. Доставка по РФ (delivery.cities).",
   "Итог «под ключ во Владивостоке» = цена авто + расходы за рубежом (по курсу перевода) + пошлина/СТП + таможенный сбор + утильсбор + услуги во Владивостоке + комиссия. Итог «в городе» = + доставка."
  ],
  "ets": {
@@ -2605,7 +2601,7 @@
     "asiapk",
     "carwin_calc"
    ],
-   "note": "Комиссия самой «Макс Групп» — в costs.maxGroupSite.commission (50 000 ₽ и выше по ступеням). Здесь рыночные ориентиры для сравнения: Asiapk — фикс. 50 000 ₽ (Япония), 100 000 ₽ (Корея), 100 000 ₽ (Китай); Carwin — 40–90 тыс. (Япония), 50–175 тыс. (Корея), 75–200 тыс. (Китай) в зависимости от цены.",
+   "note": "Действующая шкала комиссии «Макс Групп» указана в defaults.commissionTiers. Для сравнения Asiapk указывает 50 000 ₽ для Японии и 100 000 ₽ для Кореи и Китая. Диапазоны Carwin зависят от цены автомобиля и составляют 40–90 тыс. ₽ для Японии, 50–175 тыс. ₽ для Кореи и 75–200 тыс. ₽ для Китая.",
    "asiapkRub": {
     "japan": 50000,
     "korea": 100000,
@@ -2701,12 +2697,8 @@
     ],
     "assumedTiers": [
      {
-      "maxCarPriceRub": 1700000,
-      "commissionRub": 50000
-     },
-     {
       "maxCarPriceRub": 3000000,
-      "commissionRub": 65000
+      "commissionRub": 75000
      },
      {
       "maxCarPriceRub": 4000000,
@@ -2722,7 +2714,7 @@
      }
     ],
     "tiersConfidence": "low",
-    "tiersNote": "Суммы комиссии — фактические с сайта; точные границы ступеней не видны (известно лишь, что 50 000 ₽ действует до цены авто ≈ 1,70 млн ₽, 65 000 ₽ — от ≈ 1,76 млн ₽). Границы в assumedTiers — допущение, уточнить у заказчика. На скриншоте Instagram-профиля, размещённом на сайте (по данным соседнего исследования maxgroup.json), указано «Корея комиссия 0 руб.» — расходится с каталогом."
+    "tiersNote": "Минимальная комиссия по условиям компании — 75 000 ₽. Для сумм выше минимума использованы прежние ориентиры калькулятора. В observed сохранены исторические расчеты каталога."
    },
    "conventions": {
     "customsValue": "цена авто + фиксированные расходы за рубежом (обе суммы по курсу ЦБ); от неё считаются таможенный сбор, 48/54% для авто до 3 лет и 15% + НДС для электромобилей",
@@ -3547,11 +3539,11 @@
      "abroadExpensesRub": 464056,
      "vladivostokRub": 65000,
      "localLogisticsRub": 10000,
-     "commissionRub": 50000,
+     "commissionRub": 75000,
      "deliveryRub": 135000,
-     "totalTurnkeyVladivostokRub": 2038721,
-     "totalTurnkeyCityRub": 2173721,
-     "withTransferMarkup": 2111968
+     "totalTurnkeyVladivostokRub": 2063721,
+     "totalTurnkeyCityRub": 2198721,
+     "withTransferMarkup": 2136968
     }
    },
    {
@@ -3590,11 +3582,11 @@
      "abroadExpensesRub": 464056,
      "vladivostokRub": 65000,
      "localLogisticsRub": 10000,
-     "commissionRub": 50000,
+     "commissionRub": 75000,
      "deliveryRub": 135000,
-     "totalTurnkeyVladivostokRub": 2207703,
-     "totalTurnkeyCityRub": 2342703,
-     "withTransferMarkup": 2280950
+     "totalTurnkeyVladivostokRub": 2232703,
+     "totalTurnkeyCityRub": 2367703,
+     "withTransferMarkup": 2305950
     }
    },
    {
@@ -3634,11 +3626,11 @@
      "abroadExpensesRub": 175608,
      "vladivostokRub": 65000,
      "localLogisticsRub": 10000,
-     "commissionRub": 65000,
+     "commissionRub": 75000,
      "deliveryRub": 220000,
-     "totalTurnkeyVladivostokRub": 6383823,
-     "totalTurnkeyCityRub": 6603823,
-     "withTransferMarkup": 6467362
+     "totalTurnkeyVladivostokRub": 6393823,
+     "totalTurnkeyCityRub": 6613823,
+     "withTransferMarkup": 6477362
     }
    },
    {
@@ -3681,11 +3673,11 @@
      "abroadExpensesRub": 150432,
      "vladivostokRub": 65000,
      "localLogisticsRub": 10000,
-     "commissionRub": 65000,
+     "commissionRub": 75000,
      "deliveryRub": 210000,
-     "totalTurnkeyVladivostokRub": 6404610,
-     "totalTurnkeyCityRub": 6614610,
-     "withTransferMarkup": 6495621
+     "totalTurnkeyVladivostokRub": 6414610,
+     "totalTurnkeyCityRub": 6624610,
+     "withTransferMarkup": 6505621
     }
    },
    {
@@ -3722,11 +3714,11 @@
      "abroadExpensesRub": 71654,
      "vladivostokRub": 65000,
      "localLogisticsRub": 10000,
-     "commissionRub": 50000,
+     "commissionRub": 75000,
      "deliveryRub": 0,
-     "totalTurnkeyVladivostokRub": 1001166,
-     "totalTurnkeyCityRub": 1001166,
-     "withTransferMarkup": 1040496
+     "totalTurnkeyVladivostokRub": 1026166,
+     "totalTurnkeyCityRub": 1026166,
+     "withTransferMarkup": 1065496
     }
    }
   ],

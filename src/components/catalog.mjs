@@ -1,12 +1,38 @@
 // Блоки каталога: панель фильтров, сетка автомобилей, таблица цен, «что входит в цену», сравнение стран.
 import { html, esc, u, price, cardPrice, priceShort, km, num, img, typo, plural, count, cx } from '../lib/core.mjs';
-import { icon, carCard, btn, reveal, duo, sectionHead, specList } from './ui.mjs';
+import { icon, carCard, btn, reveal, duo, sectionHead, specList, pageHead, leadForm } from './ui.mjs';
 import { R } from '../routes.mjs';
-import { filtersBar, filteredEmpty, resultsHead } from './catalog-filters.mjs';
+import { filtersBar, filteredEmpty, resultsHead, includeModelProfiles, inventoryCounts } from './catalog-filters.mjs';
 import { quizSection } from './quiz.mjs';
 
 export const profilePrice = (entry) => entry.priceRub ? 'от ' + cardPrice(entry.priceRub) : 'По запросу';
 export const profilePriceLabel = (entry) => ['Ориентир под ключ', entry.priceDestination].filter(Boolean).join(' ');
+
+export function catalogLandingHead({ crumbs, h1, lead, photo, video, country, requestTitle, actions }) {
+  const title = requestTitle || (country ? `Подберём авто ${country.from}` : 'Подберём авто под ваш бюджет');
+  const subject = ['Подбор автомобиля', ...crumbs.slice(1).map((crumb) => crumb.name)].join(' · ');
+  return pageHead({
+    cls: country && !photo ? 'catalog-landing catalog-landing--country' : 'catalog-landing', lightSide: true, crumbs, h1, lead,
+    photo: photo || country?.landingPhoto || 'img/misc/quiz-port-lineup.webp',
+    video,
+    side: html`<aside class="catalog-landing__request" aria-label="Заявка на подбор">
+      <h2 class="h3">${typo(esc(title))}</h2>
+      <p>Пришлём подходящие варианты с ценами и расчётом доставки в ваш город.</p>
+      ${leadForm({ fields: ['name', 'phone'], nameLabel: 'Имя', subject, cta: 'Получить подборку' })}
+    </aside>`,
+    mainActions: actions,
+  });
+}
+
+// Указатели подборок и топ-30 направляют поиск в каталог автомобилей соответствующего рынка.
+export function directoryFilters(ctx, market) {
+  const cars = market ? ctx.cars.filter((car) => car.country === market) : ctx.cars;
+  const scope = { ...includeModelProfiles(ctx, cars, market), market, facets: inventoryCounts(cars) };
+  const destination = market ? R.country(market) : R.catalog;
+  return html`<div class="catalog-search" data-catalog-search>
+    ${filtersBar(cars, { scope, destination })}
+  </div>`;
+}
 
 export function salesManagerCard(site) {
   const manager = site.salesManager;
@@ -35,7 +61,7 @@ export function popularModelCard(entry, { embedded = false, priority = false } =
               <span class="popular-model__meta">${typo(esc(profilePriceLabel(entry)))}</span>
               <strong>${profilePrice(entry)}</strong>
             </div>
-            <a class="btn btn--primary btn--block popular-model__catalog-link" href="${u(entry.pricesUrl)}" aria-label="${esc('Автомобили и цены — ' + entry.name)}">Автомобили и цены ${icon('arrow')}</a>
+            <a class="btn btn--primary btn--block popular-model__catalog-link" href="${u(entry.pricesUrl)}" aria-label="${esc('Автомобили и цены — ' + entry.name)}">Автомобили и цены</a>
           </div>
         </article>`;
 }
@@ -80,7 +106,7 @@ function priceTable(head, rows, numCols = []) {
  */
 export function carsBlock(ctx, cars, { scope, heading = 'Все автомобили', quizFilters = false, pageSize = 24, country, subject = 'Подбор автомобиля (каталог)', tag = 'h3', priority = true } = {}) {
   return html`
-    <section class="section section--sm section--flush-top" data-catalog-list data-catalog-quiz="podbor">
+    <section class="section section--sm section--flush-top catalog-listing" data-catalog-list data-catalog-quiz="podbor">
         <div class="container">
           <h2 class="sr-only">${esc(heading)}</h2>
           ${filtersBar(cars, { scope, quizFilters })}
@@ -93,7 +119,7 @@ export function carsBlock(ctx, cars, { scope, heading = 'Все автомоби
           <div class="cars-more" hidden><button class="btn btn--ghost" type="button" data-cars-more><span>Показать еще</span></button></div>
         </div>
     </section>
-    ${quizSection(ctx, { white: true, country, brand: scope?.brand, model: scope?.model, subject })}`;
+    ${quizSection(ctx, { cars, country, brand: scope?.brand, model: scope?.model, subject })}`;
 }
 
 /** Заголовок колонки цены: «под ключ» — только если у всех автомобилей таблицы цена полная */

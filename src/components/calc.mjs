@@ -94,17 +94,14 @@ function purchaseField(r, id, unit = 'RUB') {
   const rubles = unit === 'RUB';
   const amount = rubles ? r.carRub : Math.round(r.input.currency === 'RUB' ? r.input.price / r.rates.cur : r.input.price);
   return html`<div class="field calc-field calc-purchase">
-    <div class="calc-purchase__head">
-      <label class="field__label" for="${id}">Цена покупки</label>
-      <div class="opts calc-units" role="radiogroup" aria-label="Валюта цены">
-        <label class="opt"><input type="radio" name="currency" value="RUB"${rubles ? ' checked' : ''}><span>Рубли ₽</span></label>
-        <label class="opt"><input type="radio" name="currency" value="local"${rubles ? '' : ' checked'}><span data-calc-out="local-unit">${view.localUnit(r)}</span></label>
-      </div>
-    </div>
-    <div class="calc-field__box">
+    <label class="field__label" for="${id}">Цена покупки</label>
+    <div class="calc-field__box calc-purchase__box">
       <input class="field__control" id="${id}" name="price" type="text" inputmode="numeric" maxlength="14" autocomplete="off"
         data-calc-group data-price="${r.input.price}" data-currency="${r.input.currency}" value="${amount ? group(amount) : ''}" aria-describedby="${id}-hint">
-      <span class="calc-field__suffix" data-calc-out="cur">${rubles ? '₽' : esc(r.currency.sign)}</span>
+      <div class="calc-units" role="radiogroup" aria-label="Валюта цены покупки">
+        <label class="calc-unit"><input class="sr-only" type="radio" name="currency" value="RUB" aria-label="Российские рубли"${rubles ? ' checked' : ''}><span aria-hidden="true">₽</span></label>
+        <label class="calc-unit"><input class="sr-only" type="radio" name="currency" value="local" data-local-currency aria-label="${esc(view.localUnit(r))}"${rubles ? '' : ' checked'}><span aria-hidden="true" data-calc-out="local-sign">${esc(r.currency.sign)}</span></label>
+      </div>
     </div>
     <span class="calc-hint" id="${id}-hint" data-calc-out="price-rub">${esc(view.priceHint(r, unit))}</span>
   </div>`;
@@ -278,7 +275,7 @@ export function fullCalc(ctx, { state, tips = {}, links = {}, budgets = [], subj
           <div class="calc__detail" id="smeta">
             <div class="calc__detail-head">
               <h3 class="h3">${duo('Расшифровка:', 'из чего складывается сумма')}</h3>
-              ${budgets.length ? `<a class="more" href="${esc(u(budgets[budgets.length - 1].url))}" data-calc-budget="${json(budgets.map((b) => ({ ...b, url: u(b.url) })))}"><span>${esc(budgets[budgets.length - 1].text)}</span> ${icon('arrow')}</a>` : ''}
+              ${budgets.length ? `<a class="more" href="${esc(u(budgets[budgets.length - 1].url))}" data-calc-budget="${json(budgets.map((b) => ({ ...b, url: u(b.url) })))}"><span>${esc(budgets[budgets.length - 1].text)}</span></a>` : ''}
             </div>
             <div class="calc-groups" data-calc-out="breakdown">${view.breakdown(r, mode)}</div>
             <div class="calc-detail-total">

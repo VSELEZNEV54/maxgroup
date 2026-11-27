@@ -1,8 +1,8 @@
 import { html, esc, u, img, typo, slugify } from '../lib/core.mjs';
 import { serviceLd, faqLd } from '../lib/seo.mjs';
 import { R } from '../routes.mjs';
-import { btn, crumbs, duo, faqList, linkBlock, more, pageHead, specList } from '../components/ui.mjs';
-import { profilePrice, profilePriceLabel } from '../components/catalog.mjs';
+import { duo, faqList, linkBlock, more, specList } from '../components/ui.mjs';
+import { catalogLandingHead, profilePrice, profilePriceLabel } from '../components/catalog.mjs';
 import { freshUntil, offerList } from '../components/model-offers.mjs';
 import { quizSection } from '../components/quiz.mjs';
 import { filtersBar, resultsHead, includeModelProfiles } from '../components/catalog-filters.mjs';
@@ -31,7 +31,7 @@ function stockSection(ctx, entry, country, inCatalog = false) {
       return { value: slugify(name), name, url: inCatalog ? p.pricesUrl : p.url };
     }),
   };
-  return html`<section id="avtomobili" class="section section--sm ${inCatalog ? 'section--flush-top' : 'section--white'}"><div class="container">
+  return html`<section id="avtomobili" class="section section--sm catalog-listing ${inCatalog ? 'section--flush-top' : 'section--white'}"><div class="container">
     <h2 class="sr-only">Автомобили для заказа</h2>
     <div data-catalog-list data-model-profile="${esc(entry.url)}">
       ${filtersBar(cars, { scope: includeModelProfiles(ctx, cars, entry.country, scope) })}
@@ -39,7 +39,7 @@ function stockSection(ctx, entry, country, inCatalog = false) {
       <div data-model-offers="${u('/model-inventory/' + entry.key + '.json')}" data-model-photo="${u('/' + entry.photo.src)}" data-model-name="${esc(entry.name)}" data-checked="${esc(snapshot?.checkedAt)}" data-expires="${expires}">${offerList(entry, snapshot)}</div>
     </div>
   </div></section>
-    ${quizSection(ctx, { profile: entry, subject: 'Подбор ' + entry.name + ' ' + country.from, white: true })}`;
+    ${quizSection(ctx, { profile: entry, subject: 'Подбор ' + entry.name + ' ' + country.from })}`;
 }
 
 function detailPage(ctx, entry, country, breadcrumbs, related) {
@@ -52,17 +52,14 @@ function detailPage(ctx, entry, country, breadcrumbs, related) {
   const existing = family?.url === url ? ctx.content.models?.[`${family.country}/${family.brandSlug}/${family.slug}`] : null;
   return {
     url, h1, type: 'model', title: h1 + ' | Макс Групп', description, breadcrumbs,
-    priority: 0.7, images: [photo.src], ogImage: photo.src, scripts: ['catalog', 'model-offers', 'quiz'],
+    priority: 0.7, headerOver: true, images: [photo.src], ogImage: photo.src, scripts: ['catalog', 'model-offers', 'quiz'],
     jsonld: [serviceLd(ctx.site, { name: h1, description, url }), faqLd(existing?.faq || [])].filter(Boolean),
     render: () => html`
-      <section class="page-head catalog-head profile-head"><div class="container">${crumbs(breadcrumbs)}</div>
-        <div class="container profile-head__copy">
-          <p class="profile-head__kicker"><a href="${u(R.topModels(entry.country))}">Топ-30 по заказам ${esc(country.from)}</a></p>
-          <h1>${duo(esc(name), 'под заказ ' + country.from)}</h1>
-          <p class="lead">${typo(esc(intro))}</p>
-          ${btn('О комплектации', '#o-modeli', { variant: 'ghost' })}
-        </div>
-      </section>
+      ${catalogLandingHead({ crumbs: breadcrumbs, country, photo: photo.src,
+        h1: duo(esc(name), 'под заказ ' + country.from), lead: esc(intro),
+        requestTitle: `Подберём ${name}`,
+        actions: more('О комплектации', '#o-modeli') + more('Топ-30 по заказам', R.topModels(entry.country)),
+      })}
       ${stockSection(ctx, entry, country)}
       <section class="section" id="o-modeli"><div class="container profile-info">
         <div><h2>${duo('О модели', esc(name))}</h2>
@@ -106,8 +103,9 @@ function pricesPage(ctx, entry, country, parentCrumbs) {
   return {
     url: entry.pricesUrl, type: 'catalog', h1, breadcrumbs, noindex: true, canonical: entry.url,
     title: h1 + ' | Макс Групп', description: 'Предложения ' + entry.name + ' ' + country.from + ' с фотографиями, пробегом и расчетом стоимости.',
-    ogImage: entry.photo.src, scripts: ['catalog', 'model-offers', 'quiz'],
-    render: () => html`${pageHead({ cls: 'catalog-head', crumbs: breadcrumbs, h1: duo(esc(entry.name) + ' ' + country.from, 'автомобили и цены'), single: true,
+    headerOver: true, ogImage: entry.photo.src, scripts: ['catalog', 'model-offers', 'quiz'],
+    render: () => html`${catalogLandingHead({ crumbs: breadcrumbs, country, photo: entry.photo.src,
+      h1: duo(esc(entry.name) + ' ' + country.from, 'автомобили и цены'), requestTitle: `Подберём ${entry.name}`,
       lead: 'Сравните объявления по году выпуска, пробегу и стоимости.',
     })}${stockSection(ctx, entry, country, true)}`,
   };

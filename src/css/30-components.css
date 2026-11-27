@@ -179,10 +179,10 @@
   border-radius: var(--r-full);
   background: var(--card);
   color: var(--text);
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   white-space: nowrap;
 }
 
@@ -212,10 +212,10 @@
   border-radius: var(--r-xs);
   background: var(--paper);
   color: var(--text-2);
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   white-space: nowrap;
 }
 
@@ -240,10 +240,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-2);
   min-width: 0;
 }
@@ -1125,10 +1125,10 @@ a.card:hover .label {
 }
 
 .step__num {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--on-dark-3);
 }
 
@@ -1173,10 +1173,10 @@ a.card:hover .label {
 .step__pay span {
   display: block;
   margin-bottom: 4px;
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--on-dark-3);
 }
 
@@ -1345,10 +1345,10 @@ a.card:hover .label {
 
 .review__src {
   margin-top: 3px;
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 
@@ -1589,11 +1589,10 @@ a.card:hover .label {
 }
 
 .table thead th {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  font-weight: var(--w-medium);
+  letter-spacing: 0;
   color: var(--text-3);
   white-space: nowrap;
 }
@@ -2080,7 +2079,7 @@ select.field__control {
 }
 
 /* пока открыто модальное окно, страница под ним не прокручивается */
-html:has(dialog[open]) {
+html:has(dialog:modal) {
   overflow: hidden;
   scrollbar-gutter: stable;
 }
@@ -2684,10 +2683,10 @@ html:has(dialog[open]) {
 }
 
 .kv__item dt {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
   margin-bottom: 8px;
 }

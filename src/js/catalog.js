@@ -26,6 +26,7 @@
 
   function listing(root) {
     const server = root.hasAttribute('data-server-catalog');
+    const directory = root.hasAttribute('data-catalog-search');
     const form = root.querySelector('[data-filters]');
     const fields = Array.from(form.querySelectorAll('[data-filter]'));
     const controls = Object.fromEntries(fields.map((f) => [f.dataset.filter, f]));
@@ -36,11 +37,12 @@
     const show = form.querySelector('[data-filter-show]');
     const more = root.querySelector('[data-cars-more]');
     const quiz = document.getElementById(root.dataset.catalogQuiz || '');
-    const extra = form.querySelector('details');
+    const extra = form.querySelector('.filters__extra');
     const toggle = form.querySelector('[data-filter-toggle]');
     const badge = form.querySelector('[data-filter-badge]');
     const panel = form.querySelector('.filters__panel');
     const phone = matchMedia('(max-width: 600px)');
+    const expandOnMobile = Boolean(root.closest('.catalog-landing + .catalog-listing'));
     const base = (field) => field.dataset.default || '';
     const value = (field) => field.tagName === 'INPUT' ? field.value.replace(/\s/g, '') : field.value;
     let grid, cards, limit, shown, matched, previousSort;
@@ -138,10 +140,16 @@
         if (v && v !== base(field)) params.set(key, v);
         else params.delete(key);
       }
-      if (sort.value !== base(sort)) params.set('sort', sort.value);
+      if (sort && sort.value !== base(sort)) params.set('sort', sort.value);
       else params.delete('sort');
       url.search = params.toString();
       return url;
+    }
+
+    function showResults() {
+      const url = paramsFor(new URL(form.action));
+      url.hash = 'catalog-results';
+      location.assign(url);
     }
 
     function render(sync = true) {
@@ -159,7 +167,7 @@
       reset.hidden = !active.length;
       badge.hidden = !active.length;
       badge.textContent = active.length;
-      if (server) return; // Счетчик и пагинация Django относятся ко всей выдаче.
+      if (server || directory) return; // Счётчик относится к выдаче на целевой странице.
       let ordered = cards;
       if (sort.value) {
         const [key, dir] = sorts[sort.value];
@@ -226,9 +234,9 @@
           if (Array.from(field.options).some((o) => o.value === v)) field.value = v;
         }
       }
-      if (Object.hasOwn(sorts, params.get('sort'))) sort.value = params.get('sort');
+      if (sort && Object.hasOwn(sorts, params.get('sort'))) sort.value = params.get('sort');
       dependentChoices(params.get('generation') || '');
-      if (extra && Array.from(extra.querySelectorAll('select')).some((f) => f.value)) extra.open = true;
+      if (extra && fields.some((field) => extra.contains(field) && value(field) !== base(field))) extra.open = true;
     }
 
     form.addEventListener('input', (e) => {
@@ -273,9 +281,9 @@
     });
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (server) { location.assign(paramsFor(new URL(form.action))); return; }
+      if (server || directory) { showResults(); return; }
       if (phone.matches) disclosure(false);
-      (root.querySelector('[data-results-count]') || grid)?.scrollIntoView({ block: 'start' });
+      root.querySelector('#catalog-results').scrollIntoView({ block: 'start' });
     });
     function disclosure(expanded) {
       toggle.hidden = !phone.matches;
@@ -283,10 +291,10 @@
       toggle.setAttribute('aria-expanded', String(!panel.hidden));
     }
     toggle.addEventListener('click', () => disclosure(panel.hidden));
-    phone.addEventListener('change', () => disclosure(false));
-    disclosure(false);
-    sort.addEventListener('change', () => {
-      if (server) { location.assign(paramsFor(new URL(form.action))); return; }
+    phone.addEventListener('change', () => disclosure(expandOnMobile));
+    disclosure(expandOnMobile);
+    sort?.addEventListener('change', () => {
+      if (server) { showResults(); return; }
       shown = limit;
       render();
     });
@@ -310,5 +318,5 @@
     render();
   }
 
-  document.querySelectorAll('[data-catalog-list], [data-server-catalog]').forEach(listing);
+  document.querySelectorAll('[data-catalog-list], [data-server-catalog], [data-catalog-search]').forEach(listing);
 })();

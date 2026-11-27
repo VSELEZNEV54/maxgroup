@@ -11,6 +11,26 @@ x-app: &app
     - static:/srv/static:ro
 
 services:
+  chat-model:
+    image: ghcr.io/ggml-org/llama.cpp:server@sha256:b24873ae66a4732e0b4b66dd7dc658066ccad6e8c63524278e92eebc767aacbe
+    restart: unless-stopped
+    command:
+      - --model-url
+      - https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/91cad51170dc346986eccefdc2dd33a9da36ead9/qwen2.5-1.5b-instruct-q4_k_m.gguf
+      - --model
+      - /models/qwen2.5-1.5b.gguf
+      - --alias
+      - maxgroup
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8080'
+      - --ctx-size
+      - '4096'
+      - --threads
+      - '4'
+    volumes:
+      - chat-models:/models
   db:
     image: postgres:17-alpine
     environment:
@@ -72,6 +92,19 @@ services:
       setup: {condition: service_completed_successfully}
       broker: {condition: service_started}
     command: celery -A backend beat -l INFO --schedule=/tmp/celerybeat
+  frontend:
+    image: maxgroup-next:local
+    build: ./frontend
+    environment:
+      CMS_ORIGIN: http://web:8000
+    depends_on:
+      web: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+    restart: unless-stopped
   nginx:
     image: maxgroup-nginx:local
     build:
@@ -83,10 +116,11 @@ services:
       - static:/srv/static:ro
       - uploads:/srv/media:ro
     depends_on:
-      web: {condition: service_healthy}
+      frontend: {condition: service_healthy}
     restart: unless-stopped
 
 volumes:
+  chat-models:
   postgres:
   uploads:
   static:

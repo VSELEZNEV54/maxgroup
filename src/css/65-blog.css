@@ -178,10 +178,10 @@
 }
 
 .blog-lead__foot time {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   white-space: nowrap;
 }
 
@@ -263,10 +263,10 @@
 }
 
 .blog-card__foot time {
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
   white-space: nowrap;
 }
@@ -535,10 +535,10 @@
 }
 
 .article-dates dt {
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 

@@ -3,6 +3,7 @@ from collections import Counter
 from time import time
 from urllib.parse import urlencode
 
+from django.core.cache import cache
 from django.core.paginator import Paginator, InvalidPage
 from django.db.models import Case, Count, F, FloatField, Q, Value, When
 from django.db.models.fields.json import KT
@@ -11,6 +12,7 @@ from django.http import Http404
 from django.template.loader import render_to_string
 from lxml import etree, html
 
+from backend.website.frontend import add_block, listing_card_data
 from backend.website.markup import first, put_image, replace_content
 from .models import CarLot
 
@@ -23,6 +25,34 @@ SORTS = {"popular": "-popular", "price-asc": "amount", "price-desc": "-amount", 
 
 def published_lots():
     return CarLot.objects.filter(available=True, source_present=True, parent__live=True, parent__source_present=True)
+
+
+def apply_quiz_prices(doc):
+    slides = doc.xpath("//template[@data-quote-key or @data-quote-lot]")
+    if not slides:
+        return
+    keys = {s.get("data-quote-key") for s in slides if s.get("data-quote-key")}
+    quotes = cache.get_many("quiz-quote:" + k for k in keys) if keys else {}
+    ids = {s.get("data-quote-lot") for s in slides if s.get("data-quote-lot")}
+    lots = dict(published_lots().filter(source="snapshot", external_id__in=ids, partial=False).values_list(
+        "external_id", Coalesce("editor_price", "price"))) if ids else {}
+    now = int(time() * 1000)
+    for template in slides:
+        figure = template.find("figure")
+        caption = first(figure, ".//span[@data-quiz-price]")
+        key = template.get("data-quote-key")
+        if key:
+            quote = quotes.get("quiz-quote:" + key)
+            if quote is None and int(figure.get("data-quote-until", "0")) > now:
+                continue  # The verified price from the release is still current.
+            amount = None
+            if quote and quote["expires"] > now:
+                amount = quote["price"]
+                figure.set("data-quote-until", str(quote["expires"]))
+        else:
+            amount = lots.get(template.get("data-quote-lot"))
+        caption.text = (f"от {amount:,} ₽ под ключ во Владивостоке".replace(",", " ")
+                        if amount else "Стоимость под ключ по запросу")
 
 
 def quiz_inventory():
@@ -120,8 +150,71 @@ def rank_vehicle_options(make, model, facets, country, brand):
             select.append(option)
 
 
-def apply_listing(doc, page, request, number):
-    sections = doc.xpath("//*[@data-catalog-list][.//*[@data-cars]/*[@data-car] or @data-catalog-quiz]")
+def prepare_filter_fields(section, form, qs, params):
+    market = form.get("data-facet-market")
+    facet_lots = published_lots().exclude(source="model-offers").filter(country=market) if market else qs
+    facets = list(facet_lots.order_by().values("country", "brand", "model").annotate(count=Count("pk")))
+    form.set("data-facets", json.dumps(facets, separators=(",", ":")))
+    # Подготовить список также для HTML-формы без JavaScript.
+    source = first(form, ".//script[@data-generation-options]")
+    library = json.loads(source.text) if source is not None else {}
+    make = first(form, ".//select[@data-filter='brand']")
+    model = first(form, ".//select[@data-filter='model']")
+    selected_brand = params.get("brand") or make.get("data-default", "")
+    brand_slug = selected_brand
+    model_slug = params.get("model") or model.get("data-default", "")
+    if not brand_slug and model_slug:
+        brands = {f["brand"] for f in facets if f["model"] == model_slug}
+        if len(brands) == 1:
+            brand_slug = brands.pop()
+    generation = first(form, ".//select[@data-filter='generation']")
+    versions = library.get(f"{brand_slug}/{model_slug}", [])
+    if versions:
+        generation.find("option").text = "Все поколения"
+        for row in versions:
+            etree.SubElement(generation, "option", value=row["id"]).text = f"{row['from']} – {row['to'] or 'н. в.'} · {row['label']}"
+    for control in section.xpath(".//*[@data-filter]|.//*[@data-sort]"):
+        key = control.get("data-filter", "sort")
+        control.set("name", key)
+        if key == "sort":
+            control.set("form", form.get("id"))
+        value = params.get(key, control.get("data-default", ""))
+        if control.tag == "select":
+            if value and not any(o.get("value") == value for o in control.findall("option")):
+                etree.SubElement(control, "option", value=value).text = value
+            for option in control.findall("option"):
+                option.attrib.pop("selected", None)
+                if option.get("value") == value:
+                    option.set("selected", "selected")
+        else:
+            control.set("value", value)
+    extra = first(form, ".//details[@class='filters__extra']")
+    if extra is not None and any(params.get(key) for key in extra.xpath(".//@data-filter")):
+        extra.set("open", "")
+    # Preserve dependent model choices when a feed introduces a new make or model.
+    scope_brand = make.get("data-default")
+    for key, select in (("brand", make), ("model", model)):
+        known = {o.get("value") for o in select.findall("option")}
+        for row in facets:
+            val = row[key]
+            if not val or val in known or (key == "model" and scope_brand and row["brand"] != scope_brand):
+                continue
+            option = etree.SubElement(select, "option", value=val)
+            option.text = val
+            known.add(val)
+            if select.get("data-default"):
+                parent_url = make.find("option").get("data-url")
+                if parent_url:
+                    target_params = {"brand": val} if key == "brand" else {"brand": scope_brand, "model": val}
+                    option.set("data-url", parent_url + "?" + urlencode(target_params))
+    rank_vehicle_options(make, model, facets, params.get("country"), selected_brand)
+
+
+def apply_listing(doc, page, request, number, *, content_blocks=None):
+    for search in doc.xpath("//*[@data-catalog-search]"):
+        form = first(search, ".//form[@data-filters]")
+        prepare_filter_fields(search, form, published_lots().exclude(source="model-offers"), request.GET)
+    sections = doc.xpath("//*[@data-catalog-list][.//*[@data-cars]]")
     if not sections:
         if number != 1:
             raise Http404
@@ -141,6 +234,9 @@ def apply_listing(doc, page, request, number):
         for index, lot in enumerate(selected.object_list):
             card = originals.get(lot.external_id) if lot.source_path else None
             if card is None:
+                if content_blocks is not None:
+                    add_block(grid, content_blocks, listing_card_data(lot, lot_url(lot)), index=index)
+                    continue
                 photos = lot.attributes.get("photos") or []
                 fragment = render_to_string("website/car_card.html", {
                     "lot": lot, "url": lot_url(lot), "photo": lot.photo_url(photos[0]) if photos else "",
@@ -155,60 +251,7 @@ def apply_listing(doc, page, request, number):
         base_url = page.get_url(request=request)
         form.set("method", "get")
         form.set("action", base_url)
-        market = form.get("data-facet-market")
-        facet_lots = published_lots().exclude(source="model-offers").filter(country=market) if market else qs
-        facets = list(facet_lots.order_by().values("country", "brand", "model").annotate(count=Count("pk")))
-        form.set("data-facets", json.dumps(facets, separators=(",", ":")))
-        # Подготовить список также для HTML-формы без JavaScript.
-        source = first(form, ".//script[@data-generation-options]")
-        library = json.loads(source.text) if source is not None else {}
-        make = first(form, ".//select[@data-filter='brand']")
-        model = first(form, ".//select[@data-filter='model']")
-        selected_brand = request.GET.get("brand") or make.get("data-default", "")
-        brand_slug = selected_brand
-        model_slug = request.GET.get("model") or model.get("data-default", "")
-        if not brand_slug and model_slug:
-            brands = {f["brand"] for f in facets if f["model"] == model_slug}
-            if len(brands) == 1:
-                brand_slug = brands.pop()
-        generation = first(form, ".//select[@data-filter='generation']")
-        versions = library.get(f"{brand_slug}/{model_slug}", [])
-        if versions:
-            generation.find("option").text = "Все поколения"
-            for row in versions:
-                etree.SubElement(generation, "option", value=row["id"]).text = f"{row['from']} – {row['to'] or 'н. в.'} · {row['label']}"
-        for control in section.xpath(".//*[@data-filter]|.//*[@data-sort]"):
-            key = control.get("data-filter", "sort")
-            control.set("name", key)
-            if key == "sort":
-                control.set("form", form.get("id"))
-            value = request.GET.get(key, control.get("data-default", ""))
-            if control.tag == "select":
-                if value and not any(o.get("value") == value for o in control.findall("option")):
-                    etree.SubElement(control, "option", value=value).text = value
-                for option in control.findall("option"):
-                    option.attrib.pop("selected", None)
-                    if option.get("value") == value:
-                        option.set("selected", "selected")
-            else:
-                control.set("value", value)
-        # Preserve dependent model choices when a feed introduces a new make or model.
-        scope_brand = make.get("data-default")
-        for key, select in (("brand", make), ("model", model)):
-            known = {o.get("value") for o in select.findall("option")}
-            for row in facets:
-                val = row[key]
-                if not val or val in known or (key == "model" and scope_brand and row["brand"] != scope_brand):
-                    continue
-                option = etree.SubElement(select, "option", value=val)
-                option.text = val
-                known.add(val)
-                if select.get("data-default"):
-                    parent_url = make.find("option").get("data-url")
-                    if parent_url:
-                        params = {"brand": val} if key == "brand" else {"brand": scope_brand, "model": val}
-                        option.set("data-url", parent_url + "?" + urlencode(params))
-        rank_vehicle_options(make, model, facets, request.GET.get("country"), selected_brand)
+        prepare_filter_fields(section, form, qs, request.GET)
         for el in section.xpath(".//*[@data-results-count]"):
             el.text = car_count(paginator.count)
         if paginator.count:
@@ -252,6 +295,12 @@ def apply_listing(doc, page, request, number):
                 if n == number:
                     anchor.set("aria-current", "page")
             grid.addnext(nav)
+            if content_blocks is not None:
+                content_blocks[nav] = {
+                    "type": "pagination",
+                    "pages": [{"label": item.text, "url": item.get("href"), "current": item.get("aria-current") == "page"}
+                              for item in nav],
+                }
 
 
 def refresh_card(card, lot):

@@ -168,29 +168,25 @@
   gap: var(--sp-4);
 }
 
-.calc-purchase__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-2);
-  margin-bottom: var(--sp-2);
+/* Сумма и валюта составляют одно поле; его подпись выровнена с соседними. */
+.calc-purchase__box .field__control[name="price"] {
+  padding-right: 100px;
 }
-
-.calc-purchase__head .field__label {
-  margin: 0;
-}
-
 .calc-units {
-  flex-wrap: nowrap;
-  gap: var(--sp-1);
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  border-left: 1px solid var(--line);
+  padding-left: 3px;
 }
-
-.calc-units .opt span {
-  min-height: 36px;
-  padding-inline: var(--sp-3);
-  font-size: var(--fs-sm);
-}
+.calc-unit { position: relative; display: grid; place-items: center; width: 44px; height: 44px; cursor: pointer; }
+.calc-unit span { display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--r-md); color: var(--text-2); font-size: 1rem; font-weight: var(--w-medium); }
+.calc-unit:hover span { background: var(--paper); }
+.calc-unit input:checked + span { color: #fff; background: var(--ink); }
+.calc-unit input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 .calc-field {
   min-width: 0;
@@ -326,10 +322,10 @@
 
 /* пилюли с пояснением (тип двигателя, кузов) */
 .calc-opts .opt span small {
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-2);
 }
 
@@ -552,10 +548,10 @@
   border-radius: var(--r-full);
   background: rgba(255, 255, 255, 0.08);
   color: var(--on-dark);
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   white-space: nowrap;
   transition: background-color var(--dur-fast) var(--ease-out);
 }
@@ -702,11 +698,11 @@ a.calc-chip:hover {
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
+  font-family: var(--font);
+  font-size: var(--fs-xs);
   line-height: 1.35;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-2);
 }
 
@@ -922,17 +918,17 @@ a.calc-chip:hover {
   align-items: center;
   gap: 6px;
   margin-top: var(--sp-3);
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
 }
 
 .calc-formula span {
   padding: 6px 10px;
   border-radius: var(--r-xs);
-  background: var(--ink-3);
-  color: var(--on-dark);
+  background: var(--paper-2);
+  color: var(--text);
 }
 
 .calc-formula span:first-child {
@@ -942,7 +938,7 @@ a.calc-chip:hover {
 
 .calc-formula i {
   font-style: normal;
-  color: var(--on-dark-3);
+  color: var(--text-3);
 }
 
 .calc-how {
@@ -957,11 +953,11 @@ a.calc-chip:hover {
   grid-template-columns: 48px minmax(0, 1fr) minmax(0, 250px);
   gap: 14px clamp(16px, 2vw, 32px);
   padding: clamp(20px, 2.3vw, 34px) 0;
-  border-top: 1px solid var(--ink-line);
+  border-top: 1px solid var(--line);
 }
 
 .calc-how__item:last-child {
-  border-bottom: 1px solid var(--ink-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .calc-how__num {
@@ -969,7 +965,7 @@ a.calc-chip:hover {
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
   letter-spacing: 0.02em;
-  color: var(--on-dark-3);
+  color: var(--text-3);
 }
 
 .calc-how__title {
@@ -981,7 +977,7 @@ a.calc-chip:hover {
 .calc-how__main p {
   max-width: 58ch;
   margin-top: 12px;
-  color: var(--on-dark-2);
+  color: var(--text-2);
   line-height: 1.55;
 }
 
@@ -991,14 +987,14 @@ a.calc-chip:hover {
   margin-top: 0.45em;
   padding: 6px 10px;
   border-radius: var(--r-xs);
-  box-shadow: inset 0 0 0 1px var(--ink-line-2);
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  font-family: var(--font);
+  font-size: var(--fs-xs);
   line-height: 1.4;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   text-align: right;
-  text-transform: uppercase;
-  color: var(--on-dark-2);
+  font-weight: var(--w-medium);
+  color: var(--text-2);
 }
 
 /* --- Таблицы ставок --------------------------------------------------------- */
@@ -1031,11 +1027,11 @@ a.calc-chip:hover {
 
 .calc-sheet__src,
 .calc-sheet__cap {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
+  font-family: var(--font);
+  font-size: var(--fs-xs);
   line-height: 1.45;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
 }
 
 .calc-sheet .table-wrap {
@@ -1082,29 +1078,12 @@ a.calc-chip:hover {
 
 /* --- «Что не входит» и ограничения ------------------------------------------------------ */
 
-.calc-limits {
-  isolation: isolate;
-  overflow: hidden;
-}
-
-.calc-limits__bg {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
-
-.calc-limits__bg img {
+.calc-limits__photo {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 2.4;
   object-fit: cover;
-  opacity: 0.55;
-}
-
-.calc-limits__bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, var(--ink) 0%, rgba(10, 12, 15, 0.7) 34%, rgba(10, 12, 15, 0.82) 70%, var(--ink) 100%);
+  margin-top: var(--sp-5);
+  border-radius: var(--r-sm);
 }
 
 .calc-limits__grid {
@@ -1129,11 +1108,11 @@ a.calc-chip:hover {
   display: grid;
   gap: 6px;
   padding: 16px 0;
-  border-top: 1px solid var(--ink-line-2);
+  border-top: 1px solid var(--line-2);
 }
 
 .calc-out__list li:last-child {
-  border-bottom: 1px solid var(--ink-line-2);
+  border-bottom: 1px solid var(--line-2);
 }
 
 .calc-out__list b {
@@ -1145,7 +1124,7 @@ a.calc-chip:hover {
 .calc-out__list span {
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: var(--on-dark-2);
+  color: var(--text-2);
 }
 
 .calc-rules-grid {
@@ -1162,7 +1141,7 @@ a.calc-chip:hover {
   min-height: clamp(260px, 23vw, 340px);
   padding: clamp(20px, 1.9vw, 28px);
   border-radius: var(--r-sm);
-  background: var(--ink-2);
+  background: var(--paper);
 }
 
 .calc-rule__title {
@@ -1176,7 +1155,7 @@ a.calc-chip:hover {
   padding-top: 20px;
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: var(--on-dark-2);
+  color: var(--text-2);
 }
 
 /* --- Мини-калькулятор (главная, страницы стран) ------------------------------------------ */
@@ -1424,8 +1403,7 @@ a.calc-chip:hover {
 
 /* зоны касания: подсказки и переключатель итога */
 @media (pointer: coarse), (max-width: 900px) {
-  .calc-tip__trigger,
-  .calc-units .opt span {
+  .calc-tip__trigger {
     min-height: 44px;
   }
 

@@ -9,7 +9,7 @@ import { modals } from './modals.mjs';
 export function base(ctx, page, body) {
   const { site, build } = ctx;
   const v = build.version;
-  const scripts = ['main', ...(page.scripts || []), 'catalog-select'];
+  const scripts = ['main', ...(page.scripts || []), 'catalog-select', 'chat'];
   return html`<!doctype html>
 <html lang="ru" class="no-js">
   <head>

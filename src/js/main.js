@@ -13,6 +13,7 @@
   /* ---------------------------------------------------------------------- шапка */
 
   var header = $('[data-header]');
+  var headerSocials = $('.header__social-menu');
   var drawer = $('[data-drawer]');
   var dock = $('[data-dock]');
   var ticking = false;
@@ -31,7 +32,12 @@
       formsInView = hideTargets.filter(function (f) { return f.__inView; }).length;
       onScroll();
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.2 });
-    hideTargets.forEach(function (f) { formIo.observe(f); });
+    hideTargets.forEach(function (target) {
+      if (target.hasAttribute('data-quiz')) {
+        // До старта за обложкой уже зарезервировано место для формы.
+        target.addEventListener('focusin', function () { formIo.observe(target); }, { once: true });
+      } else formIo.observe(target);
+    });
   }
 
   function onScroll() {
@@ -63,6 +69,7 @@
 
   function openMega(item) {
     closeMega(item);
+    if (headerSocials) headerSocials.open = false;
     item.classList.add('is-open');
     var link = $('.nav__link', item);
     if (link) link.setAttribute('aria-expanded', 'true');
@@ -99,6 +106,11 @@
 
   doc.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
+    if (headerSocials?.open) {
+      headerSocials.open = false;
+      headerSocials.querySelector('summary').focus();
+      return;
+    }
     // фокус из закрытого меню возвращается на его пункт, из шторки — на кнопку, которой ее открыли
     var openItem = megaItems.filter(function (it) { return it.classList.contains('is-open') && it.contains(doc.activeElement); })[0];
     if (openItem) { var link = $('.nav__link', openItem); if (link) link.focus(); }
@@ -108,6 +120,7 @@
 
   doc.addEventListener('click', function (e) {
     if (!e.target.closest('[data-mega]')) closeMega();
+    if (headerSocials?.open && !headerSocials.contains(e.target)) headerSocials.open = false;
   });
 
   /* мобильная шторка */
@@ -119,6 +132,7 @@
     var isOpen = drawer.classList.contains('is-open');
     var willOpen = typeof open === 'boolean' ? open : !isOpen;
     if (willOpen === isOpen) return;
+    if (willOpen) doc.getElementById('modal-chat')?.close();
     drawer.classList.toggle('is-open', willOpen);
     drawer.setAttribute('aria-hidden', String(!willOpen));
     header.classList.toggle('is-open', willOpen);
@@ -416,6 +430,8 @@
   function openModal(id, trigger) {
     var dlg = doc.getElementById('modal-' + id);
     if (!dlg || typeof dlg.showModal !== 'function') return false;
+    var chat = doc.getElementById('modal-chat');
+    if (chat && chat.open) chat.close();
     if (trigger) {
       var ds = trigger.dataset;
       var subject = ds.modalSubject;
@@ -577,7 +593,7 @@
     var lines = [];
     var subject = data.get('subject');
     if (subject) lines.push(subject);
-    var map = { name: 'Имя', phone: 'Телефон', car: 'Автомобиль', budget: 'Бюджет', city: 'Город', comment: 'Комментарий', contact: 'Связь', calc: 'Расчет' };
+    var map = { name: 'Имя', phone: 'Телефон', car: 'Автомобиль', budget: 'Бюджет', city: 'Город', comment: 'Комментарий', contact: 'Связь', calc: 'Расчет', conversation: 'Переписка' };
     Object.keys(map).forEach(function (k) {
       var v = data.get(k);
       if (v) lines.push(map[k] + ': ' + v);
@@ -589,7 +605,7 @@
     var previewEndpoint = document.body.dataset.previewLeads;
     var previewSubmission;
     if (previewEndpoint) {
-      form.action = previewEndpoint;
+      form.action = form.hasAttribute('data-chat-lead') ? previewEndpoint.replace(/leads\/$/, 'chat/lead/') : previewEndpoint;
       form.setAttribute('data-server-lead', '');
       var demoNote = form.querySelector('.form__success .form__note');
       if (demoNote) demoNote.remove();
@@ -708,7 +724,10 @@
       e.preventDefault();
       lb.classList.toggle('is-single', lbItems.length < 2); // одно фото — без стрелок и счетчика
       showLb(Math.max(idx, 0));
-      if (typeof lb.showModal === 'function') lb.showModal();
+      if (typeof lb.showModal === 'function') {
+        doc.getElementById('modal-chat')?.close();
+        lb.showModal();
+      }
     });
     // клик по темному полю вокруг фото закрывает просмотр
     lb.addEventListener('click', function (e) {

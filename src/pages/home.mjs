@@ -2,7 +2,7 @@
 import { html, esc, u, a, img, imgSize, typo, price, count } from '../lib/core.mjs';
 import { faqLd, itemListLd } from '../lib/seo.mjs';
 import {
-  icon, stars, label, duo, btn, more, reveal, sectionHead, fact, carCard, caseCard, reviewCard, faqList, rail, railNav, ctaBand, seoText,
+  icon, stars, label, duo, btn, more, reveal, sectionHead, companyFigures, fact, carCard, caseCard, reviewCard, faqList, rail, railNav, ctaBand, seoText,
 } from '../components/ui.mjs';
 import { whyFacts, homeProcess, homeFaq } from '../data/texts.mjs';
 import { quizSection } from '../components/quiz.mjs';
@@ -111,6 +111,23 @@ function whySection(ctx) {
     </section>`;
 }
 
+function aboutSection(ctx) {
+  const figures = [
+    { value: ctx.countries.length, name: 'Рынки закупки автомобилей', url: R.catalog },
+    { value: ctx.cases.length, name: 'Истории заказов клиентов', url: R.cases },
+    { value: ctx.cities.length, name: 'Города в таблице доставки', url: R.delivery },
+    { value: ctx.site.rating.value.toFixed(1).replace('.', ','), name: 'Оценка в опубликованных отзывах клиентов', url: R.reviews },
+  ];
+  return html`<section class="section section--white" id="o-nas">
+    <div class="container">
+      ${sectionHead({ title: duo('О нас', 'в цифрах'), layout: 'stack',
+        lead: 'Мы работаем во Владивостоке. Подбираем автомобиль, организуем покупку и доставку до вашего города.',
+        actions: more('О компании', R.about) })}
+      ${companyFigures(figures)}
+    </div>
+  </section>`;
+}
+
 function catalogSection(ctx) {
   if (!ctx.cars.length) return '';
   const markets = [{ slug: 'all', navTitle: 'Все', url: R.catalog }, ...ctx.nav.countries];
@@ -164,14 +181,14 @@ function stepsSection() {
           lead: 'Что делаете вы и что делает Макс Групп на каждом этапе покупки.',
           actions: more('Подробно о каждом шаге', R.howTo),
         })}
-        <div class="process" aria-label="Этапы сделки">
-          <div class="process__keys" aria-hidden="true"><span></span><b>Вы</b><b>Мы</b></div>
-          ${homeProcess.map((s, i) => html`<article class="process__stage"${reveal(i)}>
-            <header><div class="process__top">${icon(s.icon)}<span class="label label--plain">${String(i + 1).padStart(2, '0')}</span></div><h3>${s.title}</h3></header>
-            <p class="process__cell"><span class="process__role">Вы</span>${typo(s.client)}</p>
-            <p class="process__cell process__cell--team"><span class="process__role">Мы</span>${typo(s.team)}</p>
-          </article>`)}
-        </div>
+        <table class="process" aria-label="Этапы сделки и обязанности сторон">
+          <thead><tr><th scope="col">Этап</th><th scope="col">Что делаете вы</th><th scope="col">Что делает Макс Групп</th></tr></thead>
+          <tbody>${homeProcess.map((s, i) => html`<tr>
+            <th scope="row"><span class="process__number">${String(i + 1).padStart(2, '0')}</span>${esc(s.title)}</th>
+            <td><b class="process__role" aria-hidden="true">Вы</b>${typo(s.client)}</td>
+            <td><b class="process__role" aria-hidden="true">Что делает Макс Групп</b>${typo(s.team)}</td>
+          </tr>`)}</tbody>
+        </table>
       </div>
     </section>`;
 }
@@ -179,7 +196,7 @@ function stepsSection() {
 function casesSection(ctx) {
   const cases = ctx.cases.slice(0, 12);
   return html`
-    <section class="section" id="privezennye-avto">
+    <section class="section section--white" id="privezennye-avto">
       <div class="container">
         ${sectionHead({
           label: 'Привезенные авто',
@@ -211,9 +228,7 @@ function creditPicture(banner) {
 }
 
 function servicesSection(ctx) {
-  const main = ctx.services.filter((s) => ['avto-pod-zakaz', 'aukciony-yaponii', 'tamozhennoe-oformlenie', 'platezhnyj-agent'].includes(s.slug));
-  const order = ['avto-pod-zakaz', 'aukciony-yaponii', 'tamozhennoe-oformlenie', 'platezhnyj-agent'];
-  main.sort((x, y) => order.indexOf(x.slug) - order.indexOf(y.slug));
+  const main = ctx.services.filter((s) => s.slug !== 'avtokredit');
   const credit = ctx.source.credit;
   return html`
     <section class="section section--white" id="uslugi">
@@ -363,7 +378,7 @@ export function postCard(p, { i = 0, tag = 'h3' } = {}) {
               <div class="post__meta"><span>${esc(p.category || 'Блог')}</span>${p.readMin ? `<span>${p.readMin} мин чтения</span>` : ''}</div>
               <${tag} class="post__title"><a href="${u(p.url)}">${typo(esc(p.title))}</a></${tag}>
               <p class="post__text">${typo(esc(p.description || ''))}</p>
-              <span class="post__more">Читать ${icon('arrow')}</span>
+              <span class="post__more">Читать</span>
             </div>
           </article>`;
 }
@@ -439,7 +454,8 @@ export function homePages(ctx) {
         [
           hero(),
           brandsStrip(ctx),
-          quizSection(ctx, { subject: 'Квиз подбора (главная)', white: true }),
+          quizSection(ctx, { subject: 'Квиз подбора (главная)', askDeliveryCity: false }),
+          aboutSection(ctx),
           countriesSection(ctx),
           whySection(ctx),
           catalogSection(ctx),

@@ -84,7 +84,7 @@ export function howToPages(ctx) {
       </div>
     </section>
 
-    <section class="section section--dark">
+    <section class="section section--white">
       <div class="container">
         ${sectionHead({ label: 'Документы', title: duo('Что вы получаете', 'на руки'), lead: 'Комплект, с которым автомобиль ставится на учет в любом регионе России.' })}
         <div class="grid grid--3">

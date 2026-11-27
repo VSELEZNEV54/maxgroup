@@ -2,25 +2,123 @@
 (function () {
   'use strict';
 
+  function startGallery(section, desktop) {
+    const panel = section.querySelector('.quiz-cover__photo');
+    const slides = Array.from(panel.querySelectorAll('[data-quiz-photo]'));
+    const control = panel.querySelector('[data-quiz-rotate]');
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let paused = motion.matches;
+    let visible = false;
+    let active = null;
+    let next = 0;
+    let pending = false;
+    let timer;
+
+    function onScreen() {
+      return visible && !document.hidden && (desktop.matches || !section.classList.contains('is-started'));
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      if (!onScreen() || !slides.length) return;
+      if (!active && !pending) advance();
+      else if (!paused && !pending && slides.length > 1) timer = setTimeout(advance, 6000);
+    }
+
+    function advance() {
+      const template = slides[next];
+      let figure = template.nextElementSibling;
+      if (!figure?.matches('figure')) {
+        figure = template.content.firstElementChild.cloneNode(true);
+        template.after(figure);
+      }
+      const image = figure.querySelector('img');
+      pending = true;
+      function ready() {
+        pending = false;
+        if (image.naturalWidth) {
+          if (figure.dataset.quoteUntil && Date.now() >= Number(figure.dataset.quoteUntil)) {
+            figure.querySelector('[data-quiz-price]').textContent = 'Стоимость под ключ по запросу';
+          }
+          if (active) active.classList.remove('is-current');
+          figure.classList.add('is-current');
+          active = figure;
+          panel.firstElementChild.setAttribute('aria-hidden', 'true');
+          next = (next + 1) % slides.length;
+        } else {
+          slides.splice(next, 1);
+          figure.remove();
+          if (next >= slides.length) next = 0;
+        }
+        control.hidden = slides.length < 2;
+        schedule();
+      }
+      if (image.complete) ready();
+      else {
+        image.onload = image.onerror = () => {
+          image.onload = image.onerror = null;
+          ready();
+        };
+      }
+    }
+
+    function setPaused(value) {
+      paused = value;
+      control.classList.toggle('is-paused', value);
+      control.setAttribute('aria-label', value ? 'Включить смену фото' : 'Приостановить смену фото');
+      schedule();
+    }
+    control.addEventListener('click', () => setPaused(!paused));
+    motion.addEventListener('change', () => setPaused(motion.matches));
+    desktop.addEventListener('change', schedule);
+    document.addEventListener('visibilitychange', schedule);
+    setPaused(paused);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        schedule();
+      }).observe(panel);
+    } else {
+      visible = true;
+      schedule();
+    }
+    return schedule;
+  }
+
   var forms = document.querySelectorAll('[data-quiz]');
   Array.prototype.forEach.call(forms, function (form) {
-    var steps = Array.prototype.slice.call(form.querySelectorAll('[data-quiz-step]'));
+    const allSteps = Array.from(form.querySelectorAll('[data-quiz-step]'));
+    let steps = allSteps;
     var nextBtn = form.querySelector('[data-quiz-next]');
     var backBtn = form.querySelector('[data-quiz-back]');
     var submitBtn = form.querySelector('[data-quiz-submit]');
     var bar = form.querySelector('[data-quiz-bar]');
     var countEl = form.querySelector('[data-quiz-count]');
-    var matchEl = form.querySelector('[data-quiz-match]');
+    var answerList = form.querySelector('[data-quiz-answers]');
     var resultEl = form.querySelector('[data-quiz-result]');
     var catalogLink = form.querySelector('[data-quiz-catalog]');
     var catalogText = form.querySelector('[data-quiz-catalog-text]');
     var comment = form.querySelector('input[name="comment"]');
-    var bubble = (form.closest('.quiz') || document).querySelector('[data-quiz-bubble]');
     var catalogBase = catalogLink ? catalogLink.getAttribute('href') : '';
     var profile = form.dataset.quizProfile;
     var index = [];
     try { index = JSON.parse(form.querySelector('[data-quiz-index]').textContent); } catch (e) { index = []; }
     var current = 0;
+    var section = form.closest('.quiz-section');
+    var start = section.querySelector('[data-quiz-start]');
+    var questions = form.closest('.quiz');
+    var desktop = window.matchMedia('(min-width: 1001px)');
+    var syncGallery = startGallery(section, desktop);
+    questions.inert = true;
+    start.addEventListener('click', function (event) {
+      if (section.classList.contains('is-started')) return;
+      section.classList.toggle('quiz-motion', event.detail > 0);
+      section.classList.add('is-started');
+      syncGallery();
+      start.closest('.quiz-cover').inert = true;
+      questions.inert = false;
+      show(0, true);
+    });
 
     function values(name) {
       return Array.prototype.slice.call(form.querySelectorAll('input[name="' + name + '"]:checked')).map(function (i) { return i.value; });
@@ -46,6 +144,9 @@
     var models = new Map(Object.entries(JSON.parse(form.querySelector('[data-quiz-models]').textContent)));
     var anyModel = profile ? null : modelSelect.options[0];
     var carInput = form.elements.car;
+    const countryStep = form.querySelector('[data-quiz-step="country"]');
+    const countryOptions = Array.from(form.querySelectorAll('input[type="radio"][name="q-country"]'));
+    let preferredMarket = form.elements['q-country'].value;
 
     if (!profile) {
       var makes = new Set(Array.from(brandSelect.options, function (o) { return o.value; }));
@@ -64,10 +165,41 @@
       return values('q-mode')[0] === 'make';
     }
 
-    function updateMode() {
-      var make = byMake();
+    function vehicleMarkets() {
+      const brand = brandSelect.value;
+      const model = modelSelect.value;
+      const makeMarkets = new Set(brandSelect.selectedOptions[0]?.dataset.markets?.split(' '));
+      const entry = models.get(brand)?.find(([slug]) => slug === model);
+      const modelMarkets = new Set(entry?.[2]);
+      for (const car of index) {
+        if (car.brand !== brand || !car.country) continue;
+        makeMarkets.add(car.country);
+        if (model && car.model === model) modelMarkets.add(car.country);
+      }
+      const known = modelMarkets.size ? modelMarkets : makeMarkets;
+      return countryOptions.map(option => option.value).filter(value => value && known.has(value));
+    }
+
+    function updateVehicle() {
+      const make = byMake();
       makePanel.hidden = makePanel.disabled = !make;
       bodyPanel.hidden = bodyPanel.disabled = make;
+      const markets = make && brandSelect.value ? vehicleMarkets() : [];
+      const singleMarket = markets.length === 1;
+      let market = preferredMarket;
+      if (singleMarket) market = markets[0];
+      else if (markets.length && !markets.includes(market)) market = '';
+      for (const option of countryOptions) {
+        const excluded = option.value ? markets.length > 0 && !markets.includes(option.value) : singleMarket;
+        option.parentElement.hidden = option.disabled = excluded;
+        option.checked = option.value === market;
+      }
+      updateCounts(market === preferredMarket ? market : '');
+
+      const active = steps[current];
+      steps = singleMarket ? allSteps.filter(step => step !== countryStep) : allSteps;
+      const position = steps.indexOf(active);
+      show(position < 0 ? current : position);
     }
 
     function selectValue(field, value, label) {
@@ -79,8 +211,7 @@
       field.value = value || '';
     }
 
-    function updateCounts() {
-      var country = values('q-country')[0];
+    function updateCounts(country) {
       var brands = new Map(), modelCounts = new Map();
       index.forEach(function (car) {
         if (country && car.country !== country) return;
@@ -104,7 +235,6 @@
       options.forEach(function (model) { modelSelect.add(new Option(model[1], model[0])); });
       selectValue(modelSelect, selected, label);
       modelSelect.disabled = !brandSelect.value;
-      updateCounts();
     }
 
     function selectedLabel(select) {
@@ -112,6 +242,7 @@
     }
 
     function linkFilter() {
+      var mileage = form.querySelector('[name="q-mileage"]:checked');
       return {
         country: values('q-country')[0],
         brand: byMake() ? brandSelect.value : '',
@@ -119,7 +250,8 @@
         body: byMake() ? '' : values('q-body').filter(Boolean).join('|'),
         'price-max': values('q-budget')[0],
         age: values('q-age')[0],
-        'mileage-max': values('q-mileage')[0],
+        'mileage-min': mileage?.dataset.min,
+        'mileage-max': mileage?.dataset.max || (mileage?.dataset.min ? '' : mileage?.value),
       };
     }
 
@@ -127,6 +259,7 @@
       var f = linkFilter();
       return index.filter(function (car) {
         if (f.body && !f.body.split('|').includes(car.body)) return false;
+        if (f['mileage-min'] && (car.mileage == null || car.mileage < Number(f['mileage-min']))) return false;
         if (f['mileage-max'] && (car.mileage == null || car.mileage > Number(f['mileage-max']))) return false;
         var budget = f['price-max'];
         if (budget && !(car.price > 0)) return false;
@@ -147,21 +280,28 @@
       return n + ' ' + plural(n, ['автомобиль подходит', 'автомобиля подходят', 'автомобилей подходят']) + ' по вашим параметрам';
     }
 
-    function summary() {
-      if (profile) {
+    var answerLabels = { country: 'Рынок', budget: 'Бюджет', age: 'Возраст', mileage: 'Пробег' };
+
+    function stepAnswers(step) {
+      var kind = step.dataset.quizStep;
+      if (kind === 'model') return ['Модель: ' + profile, 'Страна: ' + form.dataset.marketName];
+      if (kind === 'body') {
+        carInput.value = byMake() ? [selectedLabel(brandSelect), selectedLabel(modelSelect)].filter(Boolean).join(' ') : '';
+        if (byMake()) return carInput.value ? ['Автомобиль: ' + carInput.value] : [];
+        var bodies = text('q-body').join(', ');
+        return bodies ? ['Кузов: ' + bodies] : [];
+      }
+      if (kind === 'year') {
         var from = form.elements['q-year-min'].value;
         var to = form.elements['q-year-max'].value;
         var years = from && from === to ? from : [from && 'от ' + from, to && 'до ' + to].filter(Boolean).join(' ');
-        return ['Модель: ' + profile, 'Страна: ' + form.dataset.marketName, 'Бюджет: ' + text('q-budget')[0],
-          'Год выпуска: ' + (years || 'любой'), 'Пробег: ' + text('q-mileage')[0]].join('\n');
+        return ['Год выпуска: ' + (years || 'любой')];
       }
-      carInput.value = byMake() ? [selectedLabel(brandSelect), selectedLabel(modelSelect)].filter(Boolean).join(' ') : '';
-      var parts = [];
-      if (!byMake() && text('q-body').length) parts.push('Кузов: ' + text('q-body').join(', '));
-      [['q-country', 'Рынок'], ['q-budget', 'Бюджет'], ['q-age', 'Возраст'], ['q-mileage', 'Пробег']].forEach(function (field) {
-        parts.push(field[1] + ': ' + text(field[0]).join(', '));
-      });
-      return parts.join('\n');
+      var selected = text('q-' + kind).join(', ');
+      var answers = selected ? [answerLabels[kind] + ': ' + selected] : [];
+      var city = step.elements.namedItem('city')?.value.trim();
+      if (city) answers.push('Город: ' + city);
+      return answers;
     }
 
     function next() {
@@ -176,24 +316,24 @@
 
     function show(i, focus) {
       current = Math.max(0, Math.min(steps.length - 1, i));
-      steps.forEach(function (s, n) { s.hidden = n !== current; });
+      const active = steps[current];
+      allSteps.forEach(function (step) { step.hidden = step !== active; });
       var last = current === steps.length - 1;
       nextBtn.hidden = last;
       submitBtn.hidden = !last;
       backBtn.hidden = current === 0;
-      if (bar) bar.style.width = ((current + 1) / steps.length) * 100 + '%';
+      if (bar) bar.style.transform = 'scaleX(' + (current + 1) / steps.length + ')';
       if (countEl) countEl.textContent = 'Шаг ' + (current + 1) + ' / ' + steps.length;
-      if (bubble && steps[current].dataset.bubble) bubble.textContent = steps[current].dataset.bubble;
-      if (last) {
-        if (comment) comment.value = summary();
-        if (profile && matchEl) matchEl.textContent = comment.value.split('\n').slice(2).join(' · ');
-        else if (matchEl) {
-          var n = matches();
-          matchEl.textContent = n
-            ? 'В каталоге ' + matchText(n) + ': покажем после отправки. Под запрос подберем и другие.'
-            : 'Готовых примеров под такой запрос в каталоге нет. Подберем на аукционах и площадках.';
-        }
-      }
+
+      // Автоматически выбранный рынок тоже входит в ответы и в заявку.
+      var answers = allSteps.slice(0, allSteps.indexOf(active)).flatMap(stepAnswers);
+      answerList.replaceChildren(...answers.map(function (answer) {
+        var item = document.createElement('li');
+        item.textContent = answer;
+        return item;
+      }));
+      answerList.hidden = last || !answers.length;
+      if (last && comment) comment.value = answers.join('\n');
       // при переходе с клавиатуры фокус встает на вопрос нового шага (кнопка «Далее» на последнем шаге исчезает)
       if (focus) {
         var q = steps[current].querySelector('legend');
@@ -207,8 +347,14 @@
     // Одиночный выбор мышью или касанием — сразу переходим дальше (в том числе по уже отмеченному варианту).
     // С клавиатуры стрелки только переключают варианты: дальше ведет кнопка «Далее».
     var byPointer = false;
-    form.addEventListener('pointerdown', function (e) { byPointer = Boolean(e.target.closest('.opt')); });
-    form.addEventListener('keydown', function () { byPointer = false; });
+    form.addEventListener('pointerdown', function (e) {
+      section.classList.add('quiz-motion');
+      byPointer = Boolean(e.target.closest('.opt'));
+    });
+    form.addEventListener('keydown', function () {
+      section.classList.remove('quiz-motion');
+      byPointer = false;
+    });
     form.addEventListener('click', function (e) {
       var t = e.target;
       if (!byPointer || t.type !== 'radio' || !['q-country', 'q-budget', 'q-mileage'].includes(t.name)) return;
@@ -221,9 +367,14 @@
     // «Пока не решил» и конкретные кузова исключают друг друга
     form.addEventListener('change', function (e) {
       var t = e.target;
-      if (t.name === 'q-mode') updateMode();
-      if (t === brandSelect) updateModels();
-      if (t.name === 'q-country' && !profile) updateCounts();
+      if (!profile && (t.name === 'q-mode' || t === brandSelect || t === modelSelect)) {
+        if (t === brandSelect) updateModels();
+        updateVehicle();
+      }
+      if (t.name === 'q-country' && !profile) {
+        preferredMarket = t.value;
+        updateCounts(t.value);
+      }
       if (t.name !== 'q-body' || !t.checked) return;
       Array.prototype.forEach.call(form.querySelectorAll('input[name="q-body"]'), function (o) {
         if (o !== t && Boolean(o.value) !== Boolean(t.value)) o.checked = false;
@@ -239,7 +390,7 @@
 
     form.addEventListener('lead:sent', function () {
       if (profile) {
-        if (resultEl) resultEl.textContent = 'Вы выбрали ' + profile + '. ' + matchEl.textContent;
+        if (resultEl) resultEl.textContent = comment.value.split('\n').join(' · ');
         return;
       }
       var n = matches();
@@ -258,14 +409,15 @@
       show(0);
       return;
     }
-    var section = form.closest('.quiz-section');
     var listing = section && document.querySelector('[data-catalog-quiz="' + section.id + '"]');
     if (listing) {
       var defaultMarket = form.elements['q-country'].value;
       function useCatalogFilters() {
         var makeFilter = listing.querySelector('[data-filter="brand"]');
         var modelFilter = listing.querySelector('[data-filter="model"]');
-        var brand = makeFilter.value, model = modelFilter.value;
+        const selected = modelFilter.selectedOptions[0];
+        var brand = makeFilter.value || selected?.dataset.make;
+        const [model, taggedMarket] = selected?.dataset.profile ? modelFilter.value.split('@') : [modelFilter.value];
         var country = listing.querySelector('[data-filter="country"]');
         if (model && !brand) {
           var makes = Array.from(models.keys()).filter(function (make) {
@@ -275,9 +427,9 @@
         }
         selectValue(brandSelect, brand, makeFilter.value && selectedLabel(makeFilter));
         form.elements['q-mode'].value = brandSelect.value ? 'make' : 'body';
-        form.elements['q-country'].value = country?.value || defaultMarket;
+        preferredMarket = country?.value || taggedMarket || defaultMarket;
         updateModels(model, selectedLabel(modelFilter));
-        updateMode();
+        updateVehicle();
       }
       useCatalogFilters();
       if (listing.hasAttribute('data-catalog-list')) {
@@ -286,7 +438,6 @@
           listing.removeEventListener('catalog:choices', useCatalogFilters);
         }, { once: true });
       }
-      show(0);
       return;
     }
     var query = new URLSearchParams(location.search);
@@ -295,10 +446,9 @@
     if (requestedMarket && requestedMake && Array.from(brandSelect.options).some(function (o) { return o.value === requestedMake; })) {
       form.querySelector('[name="q-mode"][value="make"]').checked = true;
       brandSelect.value = requestedMake;
-      requestedMarket.checked = true;
+      preferredMarket = requestedMarket.value;
     }
     updateModels(modelSelect.value);
-    updateMode();
-    show(0);
+    updateVehicle();
   });
 })();

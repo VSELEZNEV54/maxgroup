@@ -381,8 +381,7 @@ function hubPage(ctx, list) {
 
     ${geo.length
       ? html`
-    <section class="section section--dark cases-geo">
-      <div class="cases-geo__bg">${img({ src: 'assets/img/hero/bridge-drive.webp', alt: '', sizes: '100vw' })}</div>
+    <section class="section section--white cases-geo">
       <div class="container">
         <div class="split">
           <div class="split__sticky"${reveal()}>
@@ -390,6 +389,7 @@ function hubPage(ctx, list) {
             <h2>${duo(t.geo.title[0], t.geo.title[1])}</h2>
             <p class="lead">${typo(t.geo.lead)}</p>
             ${more(t.geo.more, R.delivery)}
+            ${img({ src: 'assets/img/hero/bridge-drive.webp', cls: 'cases-geo__photo', alt: '', sizes: '(max-width: 900px) 100vw, 38vw' })}
           </div>
           <div class="split__body geo-list">
             ${geo.map((c, i) => {
@@ -403,7 +403,7 @@ function hubPage(ctx, list) {
               </div>
               <div class="geo-row__body">
                 ${route([c.countryName, 'Владивосток', far ? c.clientCity : null])}
-                <a class="geo-row__car" href="${u(c.url)}">${esc(c.name)} ${icon('arrow')}</a>
+                <a class="geo-row__car" href="${u(c.url)}">${esc(c.name)}</a>
                 <p>${typo(geoText(c))}</p>
               </div>
               <span class="status ${c.st.cls}">${esc(c.st.label)}</span>
@@ -763,7 +763,7 @@ function casePage(ctx, list, c) {
       </div>
     </section>
 
-    <section class="section section--dark case-now">
+    <section class="section section--white case-now">
       <div class="container">
         ${sectionHead({
           label: t.now.label,

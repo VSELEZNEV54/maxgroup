@@ -15,6 +15,7 @@ from wagtail.models import Site
 from backend.catalog.importer import import_rows
 from backend.catalog.models import CarLot, ImportRun
 from backend.website.models import SitePage
+from backend.website.frontend import CONTENT_TYPE
 
 
 @override_settings(ALLOWED_HOSTS=["testserver", "localhost"], SITE_INDEXABLE=False)
@@ -23,6 +24,35 @@ class SiteTests(TestCase):
     def setUpTestData(cls):
         call_command("sync_site", stdout=StringIO())
         cls.root = Site.objects.get(is_default_site=True).root_page.specific
+
+    def test_next_receives_published_blocks_and_permission_checked_previews(self):
+        page = SitePage(title="Новая страница", slug="next-content-test", body=[
+            ("section", {"heading": "Описание", "text": "<p>Текст редактора</p>"}),
+            ("link", {"label": "К каталогу", "url": "/catalog/"})])
+        self.root.add_child(instance=page)
+        page.save_revision().publish()
+        headers = {"Accept": CONTENT_TYPE}
+        response = self.client.get("/next-content-test/", headers=headers)
+        self.assertEqual(response["Content-Type"], CONTENT_TYPE)
+        content = response.json()
+        self.assertEqual(content["version"], 1)
+        blocks = next(node["blocks"] for node in content["body"] if node["type"] == "main")
+        self.assertEqual([node["type"] for node in blocks], ["heading", "text", "link"])
+        self.assertEqual(blocks[1]["richText"], "<p>Текст редактора</p>")
+        self.assertIn("csrftoken", response.cookies)
+        self.assertIn("no-store", response["Cache-Control"])
+        page.title = "Закрытый черновик"
+        page.save_revision()
+        self.assertNotContains(self.client.get("/next-content-test/", headers=headers), page.title)
+        preview = f"/admin/pages/{page.pk}/view_draft/"
+        self.assertEqual(self.client.get(preview, headers=headers).status_code, 302)
+        from django.contrib.auth import get_user_model
+        self.client.force_login(get_user_model().objects.create_superuser("next-preview-editor"))
+        draft = self.client.get(preview, headers=headers)
+        self.assertEqual(draft["Content-Type"], CONTENT_TYPE)
+        self.assertContains(draft, page.title)
+        self.assertIn("noindex", draft["X-Robots-Tag"])
+        self.assertIn("private", draft["Cache-Control"])
 
     def test_page_registry_and_indexing(self):
         ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
@@ -87,6 +117,11 @@ class SiteTests(TestCase):
         path = "/avto-iz-yaponii/toyota/harrier/"
         single = listing(path)
         self.assertEqual(len(single.xpath(".//*[@data-car]")), 1)
+        form = single.xpath(".//form[@data-filters]")[0]
+        self.assertEqual(form.xpath(".//*[@data-filter and not(ancestor::details)]/@data-filter"),
+                         ["brand", "model", "generation"])
+        self.assertEqual(form.xpath(".//details[not(@open)]//*[@data-range]/@data-range"),
+                         ["price", "year", "mileage"])
         quiz = single.xpath(quiz_after_results)[0]
         self.assertEqual(quiz.get("action"), "/api/leads/")
         self.assertEqual(quiz.xpath(".//select[@name='q-model']/option[@selected]/@value"), ["harrier"])
@@ -98,9 +133,23 @@ class SiteTests(TestCase):
         self.assertTrue(sent.json()["accepted"])
 
         empty = listing(path + "?year-min=2100")
+        self.assertEqual(empty.xpath(".//details[@open]//input[@name='year-min']/@value"), ["2100"])
         self.assertFalse(empty.xpath(".//*[@data-car]"))
         self.assertTrue(empty.xpath(".//*[@data-cars-empty and not(@hidden)]"))
         self.assertTrue(empty.xpath(quiz_after_results))
+
+    def test_directory_search_targets_the_matching_vehicle_catalog(self):
+        for directory, catalog in (("/podborki/", "/catalog/"), ("/avto-iz-korei/top-30/", "/avto-iz-korei/")):
+            with self.subTest(directory=directory):
+                page = html.fromstring(self.client.get(directory).content.decode())
+                form = page.xpath("//*[@data-catalog-search]//form[@data-filters]")[0]
+                results = html.fromstring(self.client.get(catalog).content.decode())
+                catalog_form = results.xpath("//*[@data-server-catalog]//form[@data-filters]")[0]
+                self.assertEqual(form.get("action"), catalog + "#catalog-results")
+                self.assertEqual(form.get("method"), "get")
+                self.assertCountEqual(json.loads(form.get("data-facets")), json.loads(catalog_form.get("data-facets")))
+                self.assertEqual(form.xpath(".//*[@data-filter='price-max']/@name"), ["price-max"])
+                self.assertIsNotNone(results.get_element_by_id("catalog-results", None))
 
     def test_ranked_choices_cover_the_whole_market_and_use_published_stock(self):
         available = CarLot.objects.filter(available=True, source_present=True, parent__live=True,
@@ -153,6 +202,19 @@ class SiteTests(TestCase):
         self.assertContains(detail, "Toyota Prius — тест импорта")
         self.assertContains(detail, "4 200 000")
         self.assertIn("import-001", cards("/catalog/?price-min=4200000&price-max=4200000"))
+        def descendants(blocks):
+            for block in blocks:
+                yield block
+                yield from descendants(block.get("blocks", []))
+
+        headers = {"Accept": CONTENT_TYPE}
+        listing = self.client.get("/catalog/?price-min=4200000&price-max=4200000", headers=headers).json()
+        card = next(b for b in descendants(listing["body"]) if b["type"] == "listingCard" and b["id"] == "import-001")
+        self.assertEqual((card["title"], card["url"], card["price"], card["image"]["url"]),
+                         (lot.title, parent.source_path + "import-001/", lot.price_text, row["photos"][0]))
+        second_page = self.client.get("/catalog/page/2/", headers=headers).json()
+        pagination = next(b for b in descendants(second_page["body"]) if b["type"] == "pagination")
+        self.assertEqual([p["url"] for p in pagination["pages"] if p["current"]], ["/catalog/page/2/"])
         with self.assertRaises(ValueError):
             import_rows("test-feed", [{**row, "price": 1}, {**row, "external_id": "another", "price": "abc"}])
         lot.refresh_from_db()

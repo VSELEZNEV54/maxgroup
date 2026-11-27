@@ -13,6 +13,7 @@ import { join, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { ROOT, setMode, setBase, setCurrent, abs, u } from './src/lib/core.mjs';
 import { site } from './src/data/site.mjs';
+import { chatGuide } from './src/data/chat.mjs';
 import { loadContext } from './src/data/index.mjs';
 import { base } from './src/layout/base.mjs';
 import { collectPages } from './src/pages/index.mjs';
@@ -171,6 +172,8 @@ if (args.has('--django')) {
   }));
 }
 write('assets/css/main.css', cssMin);
+write('quiz-gallery.json', readFileSync(join(ROOT, 'data/quiz-gallery.json')));
+write('assets/chat/guide.json', JSON.stringify(chatGuide(ctx)));
 const mediaDir = join(OUT, 'model-media');
 mkdirSync(mediaDir, { recursive: true });
 for (const entry of ctx.popularModels) {
@@ -194,6 +197,9 @@ for (const dir of ['img', 'video', 'fonts']) {
     try { lstatSync(to); } catch { symlinkSync(from, to); }
   } else copied += copyTree(from, to);
 }
+// Главное и модельные квизы используют одни и те же фотографии в порту.
+const renders = ['assets', 'img', 'renders'];
+copied += copyTree(join(ROOT, 'квизы', ...renders), join(OUT, 'kvizy', ...renders));
 
 // --- служебные файлы -----------------------------------------------------------------------------
 

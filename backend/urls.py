@@ -5,6 +5,7 @@ from wagtail.documents import urls as document_urls
 
 from backend.catalog import views as catalog
 from backend.leads.views import collect, form_context
+from backend.leads.chat import reply
 from backend.web import health
 from backend.website import views
 
@@ -14,6 +15,8 @@ urlpatterns = [
     path("documents/", include(document_urls)),
     path("api/leads/", collect, name="lead-submit"),
     path("api/leads/context/", form_context, name="lead-context"),
+    path("api/chat/", reply, name="chat-reply"),
+    path("api/chat/lead/", collect, {"from_chat": True}, name="chat-lead"),
     path("robots.txt", views.robots),
     path("sitemap.xml", views.sitemap),
     path("404.html", views.not_found),

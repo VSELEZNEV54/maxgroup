@@ -64,8 +64,8 @@
     "--sp-9": "clamp(3.5rem, 2.7857rem + 3.5714vw, 8.5rem)",
     "--sp-10": "clamp(4.5rem, 3.5rem + 5vw, 11.5rem)",
     "--sp-11": "clamp(5.5rem, 4.2143rem + 6.4286vw, 14.5rem)",
-    "--section-y": "clamp(3.5rem, 2.3929rem + 5.5357vw, 11.25rem)",
-    "--section-y-sm": "clamp(2.5rem, 1.8571rem + 3.2143vw, 7rem)",
+    "--section-y": "clamp(64px, 9vw, 112px)",
+    "--section-y-sm": "clamp(40px, 5.5vw, 72px)",
     "--head-gap": "clamp(1.5rem, 0.9286rem + 2.8571vw, 5.5rem)",
     "--gutter": "clamp(16px, 4vw, 64px)",
     "--container": "1920px",
@@ -237,7 +237,7 @@
     "assets/fonts/fonts.css": "d59f070ad02246789ae73ffd61fd969ddf525cf579723ff1974bcd2d817d9ee3"
   },
   "notes": [
-    "Base tokens are copied from the first :root block. Responsive header overrides are separate.",
+    "Base tokens originate from the archived :root block. Section spacing follows the current website guide. Responsive header overrides are separate.",
     "H1 at 320px is min(--fs-h1,9.4vw)=30.08px.",
     "Website guide is normative; component CSS documents implementation exceptions.",
     "Existing business claims are intentionally excluded from illustrative slide layouts."

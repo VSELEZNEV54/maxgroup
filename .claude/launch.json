@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "maxgroup-django",
+      "name": "maxgroup-next",
       "runtimeExecutable": "make",
       "runtimeArgs": ["preview"],
       "port": 8000

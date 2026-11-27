@@ -8,7 +8,7 @@
     subaru: 'субару', suzuki: 'сузуки', mitsubishi: 'митсубиси мицубиси', daihatsu: 'дайхатсу дайхацу',
     lexus: 'лексус', kia: 'киа кия', hyundai: 'хендай хёндай хенде', genesis: 'генезис дженезис',
     bmw: 'бмв', 'mercedes-benz': 'мерседес бенц', volkswagen: 'фольксваген', audi: 'ауди',
-    geely: 'джили', chery: 'чери', haval: 'хавал хавейл', byd: 'бид бивайди',
+    geely: 'джили', chery: 'чери', haval: 'хавал хавейл', byd: 'бид бивайди', 'li-auto': 'lixiang лисян лисянь лиавто',
   };
   const normalize = (s) => s.toLocaleLowerCase('ru').replace(/ё/g, 'е').replace(/[^\p{L}\p{N}]/gu, '');
   const caption = (o) => o.value && o.hasAttribute('data-count')
@@ -273,7 +273,7 @@
     });
     select.closest('form')?.addEventListener('reset', () => setTimeout(sync));
     (select.closest('form') || field).addEventListener('select:sync', sync);
-    field.closest('[data-catalog-list], [data-server-catalog]')?.addEventListener('catalog:choices', sync);
+    field.closest('[data-catalog-list], [data-server-catalog], [data-catalog-search]')?.addEventListener('catalog:choices', sync);
     select.hidden = true;
     label.htmlFor = trigger.id;
     if (select.required) trigger.setAttribute('aria-required', 'true');

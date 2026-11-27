@@ -141,7 +141,7 @@ const same = (a, b) => a[0] === b[0] && a[1] === b[1];
 
 function howSection(c) {
   return html`
-    <section class="section section--dark" id="kak-my-schitaem">
+    <section class="section section--white" id="kak-my-schitaem">
       <div class="container">
         <div class="split">
           <div class="split__sticky"${reveal()}>
@@ -187,6 +187,12 @@ function tablesSection(ctx, c, rules, f) {
   const eur = rules.rates.EUR;
   const base = raw.utilFee.baseRateRub;
   const T = c.tables;
+  const tiers = rules.costs.commission;
+  const commissions = table(['Цена самого автомобиля в рублях', 'Комиссия'], tiers.map(([limit, amount], i) => {
+    const previous = i ? tiers[i - 1][0] : 0;
+    const range = limit == null ? 'Свыше ' + rub(previous) : (i ? 'От ' + rub(previous + 1) + ' до ' : 'До ') + rub(limit);
+    return [range, rub(amount)];
+  }), { numCols: [1] });
 
   // 1. единая ставка для авто старше 3 лет
   const used = table(
@@ -275,6 +281,7 @@ function tablesSection(ctx, c, rules, f) {
           lead: T.lead,
         })}
         <div class="calc-sheets" data-acc-group>
+          ${sheet({ id: 'komissiya', t: { title: 'Комиссия Макс Групп', text: 'Ступень зависит от цены покупки автомобиля до доставки и таможенного оформления.', source: 'Ориентиры для предварительного расчета' }, body: commissions })}
           ${sheet({ id: 'stavki-poshlina', t: T.used, wide: true, body: `<p class="calc-sheet__cap">Единая ставка и пример пошлины по курсу евро ${f.eur} ₽${SWIPE}</p>${used}` })}
           ${sheet({ id: 'stavki-do-3-let', t: T.fresh, body: fresh })}
           ${sheet({ id: 'stavki-utilsbor', t: T.util, wide: true, body: `<p class="calc-sheet__cap">ДВС и обычные гибриды · ${f.year} год · ₽, до 3 лет / старше 3 лет${SWIPE}</p>${util}` })}
@@ -302,8 +309,7 @@ function catalogSection(ctx) {
 
 function limitsSection(c, f) {
   return html`
-    <section class="section section--dark calc-limits" id="ogranicheniya">
-      <div class="calc-limits__bg">${img({ src: 'assets/img/hero/city-towers.webp', alt: '', sizes: '100vw' })}</div>
+    <section class="section section--white calc-limits" id="ogranicheniya">
       <div class="container">
         ${sectionHead({
           label: `Важно знать · ${f.year}`,
@@ -316,6 +322,7 @@ function limitsSection(c, f) {
             <ul class="calc-out__list">
               ${c.notIncluded.map((x) => `<li><b>${typo(x.title)}</b><span>${typo(x.text)}</span></li>`)}
             </ul>
+            ${img({ src: 'assets/img/hero/city-towers.webp', cls: 'calc-limits__photo', alt: '', sizes: '(max-width: 900px) 100vw, 40vw' })}
           </div>
           <div class="calc-rules-grid">
             ${c.limits.map(
@@ -358,7 +365,7 @@ function linksSection(ctx, c) {
     .filter((s) => s && (!ctx.cars.length || (s.count > 0 && s.global !== false)))
     .map((s) => ({ name: s.name, url: s.url }));
   const svc = (slug) => ctx.services.find((s) => s.slug === slug);
-  const services = ['tamozhennoe-oformlenie', 'platezhnyj-agent', 'avto-pod-zakaz', 'avtokredit'].map(svc).filter(Boolean).map((s) => ({ name: s.navName || s.name, url: s.url }));
+  const services = ['tamozhennoe-oformlenie', 'avto-pod-zakaz', 'avtokredit'].map(svc).filter(Boolean).map((s) => ({ name: s.navName || s.name, url: s.url }));
   // статьи блога о том, что считает калькулятор: растаможка, утильсбор, проходной возраст, гибриды; если адрес статьи
   // сменится — добираем из рубрики «Таможня и расчеты»
   const posts = ctx.posts || [];

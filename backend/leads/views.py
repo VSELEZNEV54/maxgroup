@@ -51,7 +51,7 @@ def normalise(payload):
 
 
 @require_POST
-def collect(request):
+def collect(request, from_chat=False):
     wants_json = request.content_type == "application/json" or "application/json" in request.headers.get("Accept", "")
     def error(message, status):
         if wants_json:
@@ -61,15 +61,21 @@ def collect(request):
         return error("Слишком большая заявка.", 413)
     try:
         data = json.loads(request.body) if request.content_type == "application/json" else request.POST.dict()
+        if from_chat and isinstance(data, dict):
+            conversation = data.get("conversation", "")
+            if not isinstance(conversation, str) or len(conversation) > 6000:
+                raise ValueError
+            data.update(subject="Заявка из чата Макс Групп", source="chat")
         key, values = normalise(data)
     except (ValueError, UnicodeDecodeError, RecursionError):
         return error("Проверьте телефон, согласие и поля формы.", 400)
     with transaction.atomic():
         lead, created = Lead.objects.get_or_create(submission_id=key, defaults=values)
         if created:
-            state = Delivery.State.PENDING if settings.CRM_ENABLED else Delivery.State.LOCAL
-            Delivery.objects.bulk_create([Delivery(lead=lead, crm=crm, status=state)
-                                          for crm in dict.fromkeys(settings.CRM_DESTINATIONS)])
+            enabled = settings.CRM_ENABLED and (not from_chat or "bitrix" in settings.CRM_DESTINATIONS)
+            state = Delivery.State.PENDING if enabled else Delivery.State.LOCAL
+            destinations = ("bitrix",) if from_chat else dict.fromkeys(settings.CRM_DESTINATIONS)
+            Delivery.objects.bulk_create([Delivery(lead=lead, crm=crm, status=state) for crm in destinations])
         elif any(getattr(lead, k) != v for k,v in values.items()):
             return error("Эта форма уже отправлена. Для новой заявки обновите страницу.", 409)
     if wants_json:

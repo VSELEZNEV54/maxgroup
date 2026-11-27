@@ -431,7 +431,7 @@ export function loadContext(build) {
     selections,
     slices,
     slicesOf,
-    services,
+    services: services.filter((service) => service.listed !== false),
     serviceGroups,
     cases,
     reviews,

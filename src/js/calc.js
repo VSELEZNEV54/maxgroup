@@ -485,8 +485,8 @@
   }
 
   function updatePriceLabels(r, s, rootEl, defaultPrice) {
-    setText($('[data-calc-out="local-unit"]', rootEl), view.localUnit(r));
-    setText($('[data-calc-out="cur"]', rootEl), s.unit === 'RUB' ? '₽' : r.currency.sign);
+    setText($('[data-calc-out="local-sign"]', rootEl), r.currency.sign);
+    $('[data-local-currency]', rootEl).setAttribute('aria-label', view.localUnit(r));
     var hint = $('[data-calc-out="price-rub"]', rootEl);
     setText(hint, view.priceHint(r, s.unit) + (defaultPrice && s.price ? '. Укажите цену своего автомобиля.' : ''));
   }

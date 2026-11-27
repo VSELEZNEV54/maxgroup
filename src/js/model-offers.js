@@ -29,7 +29,12 @@
       var message = document.createElement('p');
       message.className = 'offer-status';
       message.textContent = 'Сведения о наличии обновляются. Оставьте запрос, чтобы получить предложения по этой модели.';
-      block.replaceChildren(message);
+      var grid = block.querySelector('[data-cars]') || document.createElement('div');
+      grid.className = 'grid grid--4 model-offers';
+      grid.setAttribute('data-cars', '');
+      grid.replaceChildren();
+      message.setAttribute('data-cars-empty', '');
+      block.replaceChildren(grid, message);
       block.dispatchEvent(new Event('catalog:updated', { bubbles: true }));
     }
   }

@@ -35,15 +35,15 @@ export function checkedTime(checkedAt) {
 
 export function offerList(entry, snapshot, photoUrl = stockPhoto) {
   const checked = Date.parse(snapshot?.checkedAt);
-  if (!Number.isFinite(checked) || Date.now() - checked > OFFER_LIFETIME) {
-    return '<p class="offer-status">Сведения о наличии обновляются. Оставьте запрос, чтобы получить предложения по этой модели.</p>';
-  }
+  const fresh = Number.isFinite(checked) && Date.now() - checked <= OFFER_LIFETIME;
+  const cars = fresh ? snapshot.cars : [];
   return html`
-    ${snapshot.cars.length ? html`
-      <div class="grid grid--4 model-offers" data-cars>
-        ${snapshot.cars.map((offer, i) => carCard(offerVehicle(entry, offer), {
-          i, attributes: { 'data-offer-id': offer.id, 'data-popular': 1 }, media: offerPhoto(entry, offer, photoUrl(offer)),
-        }))}
-      </div>${filteredEmpty()}` : `<div class="offer-empty"><p class="h4">Сейчас нет предложений по этой модели</p><p>Оставьте запрос на ${esc(entry.name)}. Менеджер проверит площадки и подберет автомобиль под ваш бюджет.</p></div>`}
-    <p class="offer-status">По данным каталога на ${checkedTime(snapshot.checkedAt)}.</p>`;
+    <div class="grid grid--4 model-offers" data-cars>
+      ${cars.map((offer, i) => carCard(offerVehicle(entry, offer), {
+        i, attributes: { 'data-offer-id': offer.id, 'data-popular': 1 }, media: offerPhoto(entry, offer, photoUrl(offer)),
+      }))}
+    </div>
+    ${!fresh ? '<p class="offer-status" data-cars-empty>Сведения о наличии обновляются. Оставьте запрос, чтобы получить предложения по этой модели.</p>'
+      : cars.length ? filteredEmpty() : `<div class="offer-empty" data-cars-empty><p class="h4">Сейчас нет предложений по этой модели</p><p>Оставьте запрос на ${esc(entry.name)}. Менеджер проверит площадки и подберет автомобиль под ваш бюджет.</p></div>`}
+    ${fresh && html`<p class="offer-status">По данным каталога на ${checkedTime(snapshot.checkedAt)}.</p>`}`;
 }

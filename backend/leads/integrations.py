@@ -56,6 +56,12 @@ def call(method, url, *, creating=False, **kwargs):
 
 
 def note(lead):
+    if lead.details.get("source") == "chat" and isinstance(lead.details.get("conversation", ""), str):
+        rest = {k: v for k, v in lead.details.items() if k not in ("source", "conversation")}
+        lines = [lead.page, lead.name, lead.phone, "Переписка на сайте", lead.details.get("conversation") or ""]
+        if rest:
+            lines.append(json.dumps(rest, ensure_ascii=False))
+        return "\n".join(lines)[:8000]
     return "\n".join([lead.page, lead.name, lead.phone, json.dumps(lead.details, ensure_ascii=False)])[:8000]
 
 

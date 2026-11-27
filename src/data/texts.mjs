@@ -34,7 +34,7 @@ export const whyFacts = (site) => [
     value: 'Легально',
     name: 'платежи за рубеж',
     text: 'Платежный агент проводит оплату официально, с полным комплектом документов и без валютных рисков для вас.',
-    link: { text: 'Как это работает', url: R.service('platezhnyj-agent') },
+    link: { text: 'Как это работает', url: R.afterPayment },
   },
   {
     value: '2-3',

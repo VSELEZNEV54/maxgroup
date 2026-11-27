@@ -20,7 +20,8 @@ export const site = {
 
   salesManager: {
     name: 'Валерий Криницын',
-    role: 'Менеджер по продажам',
+    role: 'Руководитель отдела продаж',
+    experience: 'Более 10 лет привозит автомобили из Азии',
     photo: 'assets/img/team/valeriy-krinitsyn.webp',
   },
 

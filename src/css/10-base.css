@@ -18,7 +18,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--page-bg);
   color: var(--text);
   font-family: var(--font);
   font-size: var(--fs-body);
@@ -274,10 +274,10 @@ small,
 }
 
 .mono {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
 }
 
 /* --- Ссылки ------------------------------------------------------------ */
@@ -301,7 +301,7 @@ small,
   color: #fff;
 }
 
-/* ссылка со стрелкой */
+/* Текстовая ссылка с подчеркиванием. */
 .more {
   display: inline-flex;
   align-items: center;
@@ -310,7 +310,7 @@ small,
   line-height: 1.2;
   padding-block: 6px;
   border-bottom: 1px solid currentColor;
-  transition: gap var(--dur-base) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out);
 }
 
 .more svg {
@@ -322,10 +322,6 @@ small,
 
 .more:hover {
   color: var(--accent);
-}
-
-.more:hover svg {
-  transform: translateX(4px);
 }
 
 .on-dark .more:hover,

@@ -108,6 +108,17 @@ class SitePage(Page):
         from .views import public_page
         return public_page(request, self, lot=lot, number=number)
 
+    def make_preview_request(self, original_request=None, preview_mode=None, extra_request_attrs=None):
+        from .frontend import wants_page
+        if original_request and wants_page(original_request):
+            extra_request_attrs = {**(extra_request_attrs or {}), "maxgroup_frontend_preview": True}
+        return super().make_preview_request(original_request, preview_mode, extra_request_attrs)
+
+    def serve_preview(self, request, mode_name):
+        response = self.serve(request)
+        response["X-Robots-Tag"] = "noindex, nofollow"
+        return response
+
 
 @register_setting(icon="cog")
 class SiteContacts(BaseSiteSetting):

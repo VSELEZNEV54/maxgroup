@@ -101,13 +101,17 @@ def put_image(node, image, spec="width-960"):
             picture.remove(source)
 
 
-def apply_editor_sections(main, page):
+def apply_editor_sections(main, page, content_blocks=None):
     parts = sections(main)
     for node in list(main):
         main.remove(node)
     main.text = None
     for block in page.body:
         if block.block_type != "original":
+            if content_blocks is not None:
+                from .frontend import add_block, editorial_data
+                add_block(main, content_blocks, editorial_data(block))
+                continue
             fragment = str(block.render())
             for node in html.fragments_fromstring(fragment):
                 if isinstance(node, etree._Element):

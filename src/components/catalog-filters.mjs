@@ -86,7 +86,7 @@ export function includeModelProfiles(ctx, cars, country, scope = {}) {
 function selectField(key, title, placeholder, options, current = '', allUrl) {
   const isSort = key === 'sort';
   const vehicle = key === 'brand' || key === 'model';
-  return selectControl({ id: 'catalog-' + key, kind: key, label: title, search: vehicle, custom: vehicle,
+  return selectControl({ id: 'catalog-' + key, kind: key, label: title, name: isSort ? undefined : key, search: vehicle, custom: vehicle,
     attributes: { 'data-sort': isSort, 'data-filter': isSort ? null : key, 'data-default': current },
     options: html`${placeholder ? `<option value=""${attrs({ 'data-url': allUrl && u(allUrl) })}>${esc(placeholder)}</option>` : ''}
       ${options.map(({ value, name, url, make, markets, count, profile, until }) => `<option value="${esc(value)}"${attrs({ selected: value === current,
@@ -101,7 +101,7 @@ function rangeFields(key, label, unit = '') {
     <legend class="field__label">${label}${unit ? ', ' + unit : ''}</legend>
     <div class="filter-range__inputs">${[['min', 'от'], ['max', 'до']].map(([bound, hint]) => html`
       <input class="field__control" type="text" inputmode="numeric" autocomplete="off"
-        data-filter="${key}-${bound}" aria-label="${label} ${hint}${unit ? ', ' + unit : ''}" placeholder="${hint}" maxlength="${key === 'year' ? 4 : 16}">`)}</div>
+        name="${key}-${bound}" data-filter="${key}-${bound}" aria-label="${label} ${hint}${unit ? ', ' + unit : ''}" placeholder="${hint}" maxlength="${key === 'year' ? 4 : 16}">`)}</div>
     <span class="field__error" id="filter-${key}-error">Значение «от» больше «до»</span>
   </fieldset>`;
 }
@@ -119,13 +119,16 @@ function generationOptions(cars, scope) {
   return JSON.stringify(data).replace(/</g, '\\u003c');
 }
 
-export function filtersBar(cars, { scope = {}, quizFilters = false } = {}) {
+export function filtersBar(cars, { scope = {}, quizFilters = false, destination } = {}) {
   const rows = scope.facets || inventoryCounts(cars);
   const brands = ranked(scope.brands || choices(cars, (c) => c.brandSlug, (c) => c.brand), rows, 'brand');
   const models = ranked(scope.models || choices(cars, (c) => c.modelSlug, (c) => c.model),
     scope.brand ? rows.filter((r) => r.brand === scope.brand) : rows, 'model');
   const optional = (key, label, values) => values.length > 1 ? selectField(key, label, 'Все варианты', values) : '';
   const extra = [
+    rangeFields('price', 'Цена', '₽'),
+    rangeFields('year', 'Год выпуска'),
+    rangeFields('mileage', 'Пробег', 'км'),
     optional('country', 'Страна', choices(cars, (c) => c.country, (c) => countryNames[c.country])),
     optional('body', 'Кузов', choices(cars, (c) => c.body)),
     optional('fuel', 'Двигатель', choices(cars, (c) => c.engine?.type || c.fuel)),
@@ -136,7 +139,7 @@ export function filtersBar(cars, { scope = {}, quizFilters = false } = {}) {
     cars.some((c) => c.engine?.powerHp > 160) && cars.some((c) => c.engine?.powerHp <= 160) ? selectField('hp-max', 'Мощность', 'Любая мощность',
       [160, 200, 250].map((n) => ({ value: String(n), name: 'до ' + n + ' л.с.' }))) : '',
   ].filter(Boolean);
-  return html`<form id="catalog-filters" class="filters" data-filters data-images="${u('/assets/img')}" aria-label="Фильтры автомобилей"${attrs({ 'data-facet-market': scope.market, 'data-facets': scope.facets && JSON.stringify(rows) })}>
+  return html`<form id="catalog-filters" class="filters" data-filters data-images="${u('/assets/img')}" aria-label="Фильтры автомобилей"${attrs({ action: destination && u(destination) + '#catalog-results', method: destination && 'get', 'data-facet-market': scope.market, 'data-facets': scope.facets && JSON.stringify(rows) })}>
     <script type="application/json" data-generation-options>${generationOptions(cars, scope)}</script>
     <button class="filters__toggle" type="button" data-filter-toggle aria-expanded="false" aria-controls="catalog-fields" hidden>
       ${icon('filter')}<span>Фильтры</span><span class="filters__badge" data-filter-badge hidden></span>${icon('chevron', 'filters__caret')}
@@ -146,15 +149,14 @@ export function filtersBar(cars, { scope = {}, quizFilters = false } = {}) {
         ${selectField('brand', 'Марка', 'Все марки', brands, scope.brand, scope.countryUrl)}
         ${selectField('model', 'Модель', 'Все модели', models, scope.model, scope.brandUrl)}
         ${selectField('generation', 'Поколение', 'Сначала выберите модель', [])}
-        ${rangeFields('price', 'Цена', '₽')}${rangeFields('year', 'Год выпуска')}${rangeFields('mileage', 'Пробег', 'км')}
       </div>
       <div class="filters__footer">
-        ${extra.length ? html`<details class="filters__extra">
+        <details class="filters__extra">
           <summary>Дополнительные фильтры</summary><div class="filters__grid">${extra}</div>
-        </details>` : ''}
+        </details>
         <div class="filters__actions">
           <button class="filters__reset" type="button" data-filters-reset hidden>Сбросить</button>
-          <button class="btn btn--primary" type="submit" data-filter-show>Показать ${count(cars.length, carsWord)}</button>
+          <button class="btn btn--primary" type="submit" data-filter-show>${destination ? 'Показать автомобили' : 'Показать ' + count(cars.length, carsWord)}</button>
         </div>
       </div>
     </div>
@@ -162,7 +164,7 @@ export function filtersBar(cars, { scope = {}, quizFilters = false } = {}) {
 }
 
 export function resultsHead(total) {
-  return html`<div class="results-head" data-results-head${attrs({ hidden: !total })}>
+  return html`<div id="catalog-results"><div class="results-head" data-results-head${attrs({ hidden: !total })}>
     <p class="results-head__count" data-results-count aria-live="polite">${count(total, carsWord)}</p>
     ${selectField('sort', 'Сортировка', '', [
       { value: 'popular', name: 'По популярности' },
@@ -170,7 +172,7 @@ export function resultsHead(total) {
       { value: 'grade-desc', name: 'Сначала высокая оценка' }, { value: 'grade-asc', name: 'Сначала низкая оценка' },
       { value: 'year-desc', name: 'Сначала новее' }, { value: 'mileage-asc', name: 'Меньше пробег' },
     ], 'popular')}
-  </div>`;
+  </div></div>`;
 }
 
 export function filteredEmpty({ visible = false } = {}) {

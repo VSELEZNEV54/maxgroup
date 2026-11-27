@@ -98,7 +98,7 @@ async function resolve(pathname) {
 function previewLeads(req, res, path) {
   const upstream = httpRequest({
     hostname: '127.0.0.1', port: Number(process.env.SITE_PORT || 8000), path, method: req.method,
-    headers: req.headers, timeout: 10000,
+    headers: req.headers, timeout: path === '/api/chat/' ? 45000 : 10000,
   }, (result) => {
     res.writeHead(result.statusCode, result.headers);
     result.pipe(res);
@@ -126,7 +126,7 @@ createServer(async (req, res) => {
     }
     url.pathname = full.slice(BASE.length) || '';
   }
-  if ((url.pathname === '/api/leads/' && req.method === 'POST') ||
+  if ((['/api/leads/', '/api/chat/', '/api/chat/lead/'].includes(url.pathname) && req.method === 'POST') ||
       (url.pathname === '/api/leads/context/' && req.method === 'GET')) return previewLeads(req, res, url.pathname);
   const stockKey = /^\/model-inventory\/([a-z]+\/[a-z0-9-]+)\.json$/.exec(url.pathname);
   const profile = stockKey && profiles.get(stockKey[1]);

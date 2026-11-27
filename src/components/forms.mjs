@@ -11,9 +11,9 @@ const nextId = (p) => `${p}-${++uid}`;
 export const resetFormIds = () => { uid = 0; };
 
 const FIELD = {
-  name: (id) => html`
+  name: (id, o) => html`
       <label class="field">
-        <span class="field__label">Как к вам обращаться</span>
+        <span class="field__label">${esc(o.nameLabel || 'Как к вам обращаться')}</span>
         <input class="field__control" type="text" name="name" id="${id}-name" autocomplete="given-name" placeholder="Имя">
       </label>`,
   phone: (id) => html`
@@ -63,7 +63,7 @@ export function leadForm(o = {}) {
   const fields = o.fields || ['name', 'phone'];
   const cta = o.cta || 'Отправить заявку';
   return html`
-    <form class="form" id="${id}" method="post" data-lead-form novalidate>
+    <form class="form" id="${id}" method="post" data-lead-form${o.fromChat ? ' data-chat-lead' : ''} novalidate>
       <input type="hidden" name="subject" value="${esc(o.subject || 'Заявка с сайта')}">
       <input type="hidden" name="calc" value="">
       ${o.hidden ? Object.entries(o.hidden).map(([k, v]) => `<input type="hidden" name="${esc(k)}" value="${esc(v)}">`) : ''}

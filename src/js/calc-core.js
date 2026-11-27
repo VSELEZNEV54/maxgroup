@@ -591,7 +591,10 @@
     // 8-9. Владивосток и комиссия
     var vladivostokRub = input.vladivostok !== undefined ? toNum(input.vladivostok) : R.costs.vladivostok;
     var logisticsRub = input.logistics !== undefined ? toNum(input.logistics) : R.costs.logistics;
-    var commissionRub = input.commission !== undefined ? toNum(input.commission) : R.costs.commission[bracket(R.costs.commission, carRub, 0)][1];
+    var tiers = R.costs.commission;
+    var commissionRub = input.commission !== undefined
+      ? Math.max(tiers[0][1], toNum(input.commission))
+      : tiers[bracket(tiers, carRub, 0)][1];
 
     // 10. доставка по России
     var delivery = { rub: 0, city: '', name: 'Владивосток', acc: '', days: null, estimated: false, body: body };
@@ -643,7 +646,7 @@
     var rows3 = [
       { id: 'vladivostok', label: country === 'china' ? 'Оформление в России' : 'Оформление во Владивостоке', rub: vladivostokRub, note: 'склад временного хранения, лаборатория, СБКТС и ЭПТС, ориентир' },
       { id: 'logistics', label: 'Логистика на месте', rub: logisticsRub, note: country === 'china' ? 'доставка из Уссурийска во Владивосток' : 'фотоопись, перегон со склада в лабораторию и на стоянку, трекер' },
-      { id: 'commission', label: 'Комиссия компании', rub: commissionRub, note: 'ориентир по цене автомобиля, точный размер уточняйте у менеджера' }
+      { id: 'commission', label: 'Комиссия компании', rub: commissionRub, note: 'по цене автомобиля в стране покупки, минимум ' + rub(tiers[0][1]) }
     ];
 
     var rows4 = [];

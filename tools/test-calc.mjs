@@ -181,6 +181,13 @@ check('Корея: дороже 50 000 $ — надбавка', kr({ price: 7000
 check('Китай: ограничений нет', core.calc({ country: 'china', price: 200000, year: 2024, cc: 2500, hp: 250, date }, raw).warnings.filter((w) => /^(jp|kr)-/.test(w.code)).length, 0);
 
 // комиссия по ступеням и доставка по типу кузова
+for (const country of ['japan', 'korea', 'china']) {
+  for (const [price, fee] of [[1, 75000], [3000000, 75000], [3000001, 85000], [4000000, 85000],
+    [4000001, 100000], [10000000, 100000], [10000001, 120000]]) {
+    const result = core.calc({ country, currency: 'RUB', price, year: 2022, cc: 1500, hp: 100, date }, raw);
+    check(country + ' / ' + price + ' ₽: комиссия', result.commissionRub, fee);
+  }
+}
 for (const t of raw.defaults.commissionTiers) {
   if (t.maxCarPriceRub === null) continue;
   check(`комиссия: авто до ${t.maxCarPriceRub} ₽`, core.calc({ country: 'china', price: (t.maxCarPriceRub - 1000) / raw.rates.cbr[date].CNY, year: 2022, cc: 1500, hp: 100, date }, raw).commissionRub, t.commissionRub);

@@ -13,8 +13,9 @@ from lxml import etree, html
 from wagtail.models import Site
 
 from backend.catalog.detail import edit_snapshot_detail
-from backend.catalog.listing import apply_listing, lot_url, quiz_inventory, rank_vehicle_options, refresh_card
+from backend.catalog.listing import apply_listing, apply_quiz_prices, lot_url, quiz_inventory, rank_vehicle_options, refresh_card
 from backend.catalog.models import CarLot
+from . import frontend
 from .markup import apply_editor_sections, first, inner, put_image, read_document, release_file, replace_content, valid_link
 from .models import SiteContacts, SitePage
 
@@ -27,10 +28,11 @@ def wire_forms(doc, request):
     forms = doc.xpath("//form[@data-lead-form or contains(concat(' ', @class, ' '), ' q-form ')]")
     if not forms:
         return
+    apply_quiz_prices(doc)
     token = get_token(request)
     for form in forms:
         form.set("data-server-lead", "")
-        form.set("action", "/api/leads/")
+        form.set("action", "/api/chat/lead/" if "data-chat-lead" in form.attrib else "/api/leads/")
         form.set("method", "post")
         for name, value in (("csrfmiddlewaretoken", token), ("submission_id", str(uuid.uuid4())), ("page", request.path)):
             etree.SubElement(form, "input", type="hidden", name=name, value=value)
@@ -174,6 +176,7 @@ def public_page(request, page, *, lot=None, number=1):
     path = lot_url(lot) if lot else (base_url if number == 1 else f"{base_url}page/{number}/")
     original = lot.source_path if lot else page.source_path
     native = not original
+    content_blocks = {} if frontend.wants_page(request) else None
     doc = read_document(original or "/uslugi/")
     main = first(doc, "//main")
     title = description = ""
@@ -187,24 +190,30 @@ def public_page(request, page, *, lot=None, number=1):
             else:
                 for el in list(main):
                     main.remove(el)
-                photos = [lot.photo_url(p) for p in raw.get("photos", [])]
-                main.append(html.fragment_fromstring(render_to_string("website/native_lot.html", {"lot": lot, "photos": photos})))
+                if content_blocks is not None:
+                    frontend.add_block(main, content_blocks, frontend.vehicle_data(lot))
+                else:
+                    photos = [lot.photo_url(p) for p in raw.get("photos", [])]
+                    main.append(html.fragment_fromstring(render_to_string("website/native_lot.html", {"lot": lot, "photos": photos})))
             title = lot.title + " | Макс Групп"
             description = lot.description[:180] or f"{lot.title}. {lot.price_text} {lot.price_label}."
     else:
         if main is not None:
-            apply_editor_sections(main, page)
+            apply_editor_sections(main, page, content_blocks)
         if native and main is not None:
-            header = etree.Element("section", {"class": "section section--sm"})
-            etree.SubElement(etree.SubElement(header, "div", {"class": "container"}), "h1").text = page.title
-            main.insert(0, header)
+            if content_blocks is not None:
+                frontend.add_block(main, content_blocks, {"type": "heading", "title": page.title}, index=0)
+            else:
+                header = etree.Element("section", {"class": "section section--sm"})
+                etree.SubElement(etree.SubElement(header, "div", {"class": "container"}), "h1").text = page.title
+                main.insert(0, header)
         if not native and page.title != page.source_heading:
             heading = first(doc, "//h1")
             if heading is not None:
                 replace_content(heading, page.title)
         title = page.seo_title or (page.title if native or page.title != page.source_heading else "")
         description = page.search_description or (page.title if native else "")
-        apply_listing(doc, page, request, number)
+        apply_listing(doc, page, request, number, content_blocks=content_blocks)
         for inventory in doc.xpath("//*[@data-model-offers]"):
             # Список уже учитывает актуальную публикацию, цены и фильтры Django.
             inventory.set("data-model-offers", "")
@@ -227,10 +236,12 @@ def public_page(request, page, *, lot=None, number=1):
                 native=native, lot=lot)
     update_contacts(doc, SiteContacts.for_request(request))
     wire_forms(doc, request)
-    return document_response(request, doc)
+    return document_response(request, doc, blocks=content_blocks)
 
 
-def document_response(request, doc, status=200):
+def document_response(request, doc, status=200, blocks=None):
+    if frontend.wants_page(request):
+        return frontend.as_json(doc, status, blocks)
     from django.utils.html import format_html_join
     body = doc.find("body")
     attrs = format_html_join("", ' {}="{}"', ((k, v) for k,v in body.attrib.items() if k != "class"))

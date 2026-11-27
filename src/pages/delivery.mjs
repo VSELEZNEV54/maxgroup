@@ -415,7 +415,7 @@ function tariffSection(ctx, city, t, fill, tpl, g) {
                 ${label('Своим ходом')}
                 <h3 class="dmini__title">${show(fill(self.title))}</h3>
                 <p class="dmini__text">${show(fill(self.text))}</p>
-                ${sc && self.caseLink ? `<a class="more" href="${u(sc.url)}">${esc(self.caseLink)} ${icon('arrow')}</a>` : `<a class="more" href="${u(R.delivery)}#sposoby">Сравнить способы доставки ${icon('arrow')}</a>`}
+                ${sc && self.caseLink ? `<a class="more" href="${u(sc.url)}">${esc(self.caseLink)}</a>` : `<a class="more" href="${u(R.delivery)}#sposoby">Сравнить способы доставки</a>`}
               </article>
             </div>
             <div class="dfactors">
@@ -481,7 +481,7 @@ function examplesSection(ctx, city, picks, fill, tpl) {
 function stepsSection(city, fill, tpl) {
   const vars = (s) => ({ ...s, title: fill(s.title), text: wj(fill(s.text)), time: s.time ? plain(fill(s.time)) : null, pay: s.pay ? fill(s.pay) : null });
   return html`
-    <section class="section section--dark" id="kak-prohodit">
+    <section class="section section--white" id="kak-prohodit">
       <div class="container">
         ${head({
           label: 'Как проходит доставка',
@@ -489,7 +489,7 @@ function stepsSection(city, fill, tpl) {
           lead: fill(tpl.stepsLead),
           aside: railNav(),
         })}
-        ${rail(tpl.steps.map((s, i) => step(vars(s), i)), { col: 'minmax(300px, 27%)', colMobile: 'minmax(270px, 82%)' })}
+        ${rail(tpl.steps.map((s, i) => step(vars(s), i, { light: true })), { col: 'minmax(300px, 27%)', colMobile: 'minmax(270px, 82%)' })}
       </div>
     </section>`;
 }
@@ -769,7 +769,7 @@ function hubTableSection(ctx, h, fill, g, groups) {
             ${label('Владивосток')}
             <h3 class="dhub__vl-title">Самовывоз</h3>
             <p>${show(fill(h.vladivostok))}</p>
-            ${local ? `<a class="more" href="${u(local.url)}">${esc(local.name)} для клиента из Большого Камня ${icon('arrow')}</a>` : ''}
+            ${local ? `<a class="more" href="${u(local.url)}">${esc(local.name)} для клиента из Большого Камня</a>` : ''}
           </div>
         </div>
       </div>
@@ -792,7 +792,7 @@ function waysSection(ctx, h, fill) {
               <h3 class="dway__title">${esc(w.title)}</h3>
               <p class="dway__text">${show(fill(w.text))}</p>
               ${w.key === 'self' && (sc.irkutsk || sc.surgut)
-                ? `<div class="dway__links">${sc.irkutsk ? `<a class="more" href="${u(sc.irkutsk.url)}">${esc(sc.irkutsk.name)} для клиента из${NB}Иркутска ${icon('arrow')}</a>` : ''}${sc.surgut ? `<a class="more" href="${u(sc.surgut.url)}">${esc(sc.surgut.name)} для клиента из${NB}Сургута ${icon('arrow')}</a>` : ''}</div>`
+                ? `<div class="dway__links">${sc.irkutsk ? `<a class="more" href="${u(sc.irkutsk.url)}">${esc(sc.irkutsk.name)} для клиента из${NB}Иркутска</a>` : ''}${sc.surgut ? `<a class="more" href="${u(sc.surgut.url)}">${esc(sc.surgut.name)} для клиента из${NB}Сургута</a>` : ''}</div>`
                 : ''}
             </div>
             <dl class="dway__list">
@@ -831,7 +831,7 @@ function factorsSection(ctx, h, fill) {
 function handoverSection(h, fill) {
   const ho = h.handover;
   return html`
-    <section class="section section--dark" id="peredacha">
+    <section class="section section--white" id="peredacha">
       <div class="container">
         <div class="split">
           <div class="split__sticky"${reveal()}>
@@ -900,7 +900,6 @@ function hubPage(ctx, d, g) {
     { name: 'Калькулятор стоимости', url: R.calculator },
     svc('avto-pod-zakaz') && { name: 'Авто под заказ', url: svc('avto-pod-zakaz').url },
     svc('tamozhennoe-oformlenie') && { name: 'Таможенное оформление', url: svc('tamozhennoe-oformlenie').url },
-    svc('platezhnyj-agent') && { name: 'Платежный агент', url: svc('platezhnyj-agent').url },
     svc('avtokredit') && { name: 'Автокредит', url: svc('avtokredit').url },
     { name: 'Отзывы клиентов', url: R.reviews },
     { name: 'Вопросы и ответы', url: R.faq },

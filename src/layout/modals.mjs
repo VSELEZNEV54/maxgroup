@@ -1,11 +1,36 @@
 // Общие модальные окна (нативный <dialog>): заявка/расчет.
-import { html, typo } from '../lib/core.mjs';
+import { html, typo, esc, img } from '../lib/core.mjs';
 import { icon } from '../lib/icons.mjs';
 import { leadForm } from '../components/forms.mjs';
 
 export function modals(ctx) {
   const { site } = ctx;
   return html`
+    <button type="button" class="chat-launch" data-chat-toggle aria-haspopup="dialog" aria-controls="modal-chat" aria-expanded="false" aria-label="Открыть чат">
+      ${icon('message', 'chat-launch__message')}${icon('close', 'chat-launch__close')}
+    </button>
+    <dialog class="chat" id="modal-chat" aria-labelledby="chat-title">
+      <header class="chat__head">
+        ${img({ src: site.salesManager.photo, cls: 'chat__avatar', alt: '', sizes: '46px' })}
+        <div><h2 id="chat-title" class="h4">${esc(site.salesManager.name)}</h2>
+          <p class="chat__role">${esc(site.salesManager.role)}</p>
+          <p class="chat__presence">Онлайн</p></div>
+        <button class="chat__close" type="button" aria-label="Закрыть чат" data-modal-close>${icon('close')}</button>
+      </header>
+      <div class="chat__scroll">
+        <div class="chat__log" role="log" aria-label="Переписка" data-chat-log>
+          <p class="chat__message">Здравствуйте! На связи Валерий, чем могу помочь?</p>
+        </div>
+        <div data-chat-contact hidden>
+          ${leadForm({ fromChat: true, subject: 'Заявка из чата Макс Групп', nameLabel: 'Имя', fields: ['name', 'phone'],
+            hidden: { conversation: '' }, cta: 'Отправить Валерию' })}
+        </div>
+      </div>
+      <form data-chat-question class="chat__compose">
+        <label class="field"><span class="sr-only">Ваш вопрос</span><input class="field__control" name="question" placeholder="Напишите сообщение" maxlength="500" required autocomplete="off"></label>
+        <button class="btn btn--primary" type="submit" aria-label="Отправить вопрос">${icon('send')}</button>
+      </form>
+    </dialog>
     <dialog class="modal" id="modal-request" aria-labelledby="modal-request-title">
       <div class="modal__box">
         <button class="modal__close" type="button" aria-label="Закрыть" data-modal-close>${icon('close')}</button>

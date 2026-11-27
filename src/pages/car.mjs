@@ -226,7 +226,7 @@ function carPage(ctx, car) {
       </div>
     </section>
 
-    <section class="section">
+    <section class="section car-order" id="kak-kupit">
       <div class="container">
         ${sectionHead({ label: 'Как купить', title: duo('Как заказать этот автомобиль', 'или похожий'), lead: 'Лоты на аукционах и площадках уходят быстро. Если этот автомобиль уже продан, подберем такой же по году, пробегу и комплектации.' })}
         <div class="grid grid--3">${steps.slice(0, 6).map((s, i) => step(s, i, { light: true }))}</div>

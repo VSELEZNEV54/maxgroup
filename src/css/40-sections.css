@@ -648,10 +648,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px 12px;
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 

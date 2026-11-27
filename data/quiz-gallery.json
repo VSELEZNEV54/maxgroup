@@ -1,0 +1,74 @@
+[
+  {
+    "key": "mazda-cx-5",
+    "market": "JP",
+    "brand": "Mazda",
+    "model": "CX-5",
+    "name": "Mazda CX-5",
+    "year": 2020,
+    "scene": "scene-cx-5",
+    "price": 2722132,
+    "offerId": 2697326,
+    "expires": 1795879843799
+  },
+  {
+    "key": "kia-sportage",
+    "market": "KR",
+    "brand": "Kia",
+    "model": "Sportage",
+    "name": "Kia Sportage",
+    "year": 2023,
+    "scene": "kia-sportage",
+    "price": 3700610,
+    "offerId": 191097,
+    "expires": 1795879575747
+  },
+  {
+    "key": "geely-monjaro",
+    "market": "CN",
+    "brand": "Geely",
+    "model": "Monjaro",
+    "name": "Geely Monjaro",
+    "year": 2024,
+    "scene": "geely-monjaro",
+    "price": 2817004,
+    "offerId": 1975675,
+    "expires": 1795879575878
+  },
+  {
+    "key": "honda-vezel",
+    "market": "JP",
+    "brand": "Honda",
+    "model": "Vezel",
+    "name": "Honda Vezel",
+    "year": 2021,
+    "scene": "scene-vezel",
+    "price": null,
+    "offerId": null,
+    "expires": 1795879575609
+  },
+  {
+    "key": "kia-k5",
+    "market": "KR",
+    "brand": "Kia",
+    "model": "K5",
+    "name": "Kia K5",
+    "year": 2023,
+    "scene": "kia-k5",
+    "price": 3493444,
+    "offerId": 187627,
+    "expires": 1795879576549
+  },
+  {
+    "key": "chery-tiggo-8-plus",
+    "market": "CN",
+    "brand": "Chery",
+    "model": "8 PLUS",
+    "name": "Chery Tiggo 8 Plus",
+    "year": 2022,
+    "scene": "chery-tiggo-8-plus",
+    "price": 1361776,
+    "offerId": 2009847,
+    "expires": 1795880116912
+  }
+]

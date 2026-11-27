@@ -122,10 +122,10 @@
 
 .droute__km,
 .droute__meta {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   white-space: nowrap;
 }
 
@@ -212,11 +212,11 @@ a.droute__name:hover {
 }
 
 .droute-card__roads {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
+  font-family: var(--font);
+  font-size: var(--fs-xs);
   line-height: 1.7;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--on-dark-3);
 }
 
@@ -346,10 +346,10 @@ a.droute__name:hover {
   padding-top: 0;
   padding-bottom: 12px;
   border-bottom-color: var(--text);
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 
@@ -363,11 +363,10 @@ a.droute__name:hover {
 .tariff tbody th small {
   display: block;
   margin-top: 6px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  font-weight: var(--w-medium);
+  letter-spacing: 0;
   color: var(--text-3);
 }
 
@@ -769,11 +768,10 @@ a.droute__name:hover {
 }
 
 .dhub__meta {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: var(--w-regular);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  font-weight: var(--w-medium);
+  letter-spacing: 0;
   color: var(--text-3);
 }
 
@@ -971,11 +969,11 @@ a.droute__name:hover {
 
 .dway__list dt {
   padding-top: 0.25em;
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
   line-height: 1.4;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 
@@ -1061,7 +1059,7 @@ a.droute__name:hover {
 
 .dsteps {
   display: grid;
-  border-top: 1px solid var(--ink-line-2);
+  border-top: 1px solid var(--line-2);
 }
 
 .dsteps__item {
@@ -1070,25 +1068,25 @@ a.droute__name:hover {
   gap: clamp(12px, 2vw, 28px);
   align-items: start;
   padding: clamp(20px, 2.3vw, 34px) 0;
-  border-bottom: 1px solid var(--ink-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .dsteps__num,
 .dsteps__time {
   padding-top: 0.55em;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   white-space: nowrap;
 }
 
 .dsteps__num {
-  color: var(--on-dark-3);
+  color: var(--text-3);
 }
 
 .dsteps__time {
-  color: var(--on-dark-2);
+  color: var(--text-2);
 }
 
 .dsteps__title {
@@ -1103,7 +1101,7 @@ a.droute__name:hover {
   max-width: 58ch;
   font-size: 0.9375rem;
   line-height: 1.55;
-  color: var(--on-dark-2);
+  color: var(--text-2);
 }
 
 .ddocs {
@@ -1111,7 +1109,7 @@ a.droute__name:hover {
   gap: var(--sp-5);
   padding: clamp(20px, 2.2vw, 36px);
   border-radius: var(--r-sm);
-  background: var(--ink-2);
+  background: var(--paper);
 }
 
 .ddocs__title {
@@ -1138,7 +1136,7 @@ a.droute__name:hover {
   gap: 12px;
   align-items: start;
   padding: 13px 0;
-  border-top: 1px solid var(--ink-line);
+  border-top: 1px solid var(--line);
   font-size: 0.9375rem;
   line-height: 1.45;
 }
@@ -1146,14 +1144,14 @@ a.droute__name:hover {
 .ddocs__list svg {
   width: 20px;
   height: 20px;
-  color: var(--on-dark-2);
+  color: var(--text-2);
 }
 
 .ddocs__note {
   max-width: 66ch;
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: var(--on-dark-2);
+  color: var(--text-2);
 }
 
 @media (max-width: 900px) {

@@ -3,6 +3,7 @@ import { html, esc, u, cx, img } from '../lib/core.mjs';
 import { icon } from '../lib/icons.mjs';
 import { R } from '../routes.mjs';
 import { logo } from './logo.mjs';
+import { socialButtons } from './footer.mjs';
 
 const isCurrent = (page, url) => (page.url === url || (url !== '/' && page.url.startsWith(url)) ? ' aria-current="page"' : '');
 
@@ -51,7 +52,7 @@ function megaCatalog(ctx, page) {
               <ul class="mega__list mega__list--makes" aria-label="Марки ${esc(c.from)}">
                 ${c.brands.map((b) => `<li>${brandLink(b, c.from)}</li>`)}
               </ul>
-              <a class="more mega__all" href="${u(c.url)}">Все авто ${esc(c.from)} ${icon('arrow')}</a>
+              <a class="more mega__all" href="${u(c.url)}">Все авто ${esc(c.from)}</a>
             </div>`
             )}
             <div class="mega__col">
@@ -59,7 +60,7 @@ function megaCatalog(ctx, page) {
               <ul class="mega__list mega__list--1">
                 ${nav.selections.map((s) => `<li><a href="${u(s.url)}">${esc(s.name)}<small>${s.count}</small></a></li>`)}
               </ul>
-              <a class="more mega__all" href="${u(nav.catalogUrl)}">Весь каталог ${icon('arrow')}</a>
+              <a class="more mega__all" href="${u(nav.catalogUrl)}">Весь каталог</a>
             </div>
           </div>
         </div>`;
@@ -97,7 +98,7 @@ function megaList(id, groups, promo) {
 export function header(ctx, page) {
   const { site, nav } = ctx;
   const phone = site.contacts.phones[0];
-  const tg = telegram(site);
+  const socials = socialButtons(site, [site.socials.telegramManager ? 'telegramManager' : 'telegram', 'whatsapp', 'max', 'instagram', 'youtube', 'vk']);
   const catalogCurrent = ['catalog', 'country', 'brand', 'model', 'car', 'selection'].includes(page.type) ? ' aria-current="page"' : '';
   return html`
     <header class="${cx('header', page.headerOver && 'header--over')}" data-header>
@@ -114,12 +115,12 @@ export function header(ctx, page) {
             ${megaList(item.panel, item.groups, item.promo)}
           </div>` : `<div class="nav__item"><a class="nav__link" href="${u(item.url)}"${isCurrent(page, item.url)}>${esc(item.name)}</a></div>`)}
         </nav>
-        <a class="header__catalog-mobile btn btn--primary btn--sm" href="${u(nav.catalogUrl)}"${catalogCurrent}>Каталог</a>
         <div class="header__side">
-          <div class="header__icons">
-            ${site.socials.whatsapp ? `<a class="icon-btn" href="${esc(site.socials.whatsapp.url)}" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="Написать в WhatsApp">${icon('whatsapp')}</a>` : ''}
-            ${tg ? `<a class="icon-btn" href="${esc(tg.url)}" target="_blank" rel="noopener" aria-label="${tg.label}" title="${tg.label}">${icon('telegram')}</a>` : ''}
-          </div>
+          <nav class="header__icons" aria-label="Социальные сети Макс Групп">${socials}</nav>
+          <details class="header__social-menu">
+            <summary class="icon-btn" aria-label="Социальные сети" title="Социальные сети">${icon('share')}</summary>
+            <nav aria-label="Социальные сети Макс Групп">${socials}</nav>
+          </details>
           <div class="header__phone">
             <a href="tel:${phone.tel}" aria-label="Позвонить ${esc(phone.label)}">${icon('phone')}<span>${esc(phone.label)}</span></a>
             <span>${esc(site.contacts.hoursShort)}</span>
@@ -169,7 +170,7 @@ export function drawer(ctx, page) {
               ${item.groups.flatMap((g) => g.items).map((s) => `<a href="${u(s.url)}">${esc(s.name)}</a>`)}
             </div>
           </details>
-        </li>` : `<li><a href="${u(item.url)}">${esc(item.name)} ${icon('arrow')}</a></li>`)}
+        </li>` : `<li><a href="${u(item.url)}">${esc(item.name)}</a></li>`)}
       </ul>
       <div class="drawer__foot">
         <a class="btn btn--primary btn--block" href="${u('/kalkulyator/')}" data-modal="request" data-modal-subject="Расчет стоимости авто">Рассчитать стоимость</a>

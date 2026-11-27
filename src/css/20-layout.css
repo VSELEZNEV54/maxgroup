@@ -23,6 +23,12 @@ main {
 .section {
   position: relative;
   padding-block: var(--section-y);
+  background: var(--page-bg);
+}
+
+/* Между соседними блоками одно поле. У секции без верхнего поля отступ дает предыдущая. */
+.section:not(.section--dark):has(+ .section:not(.section--flush-top, .section--dark)) {
+  padding-bottom: 0;
 }
 
 .section--sm {
@@ -50,14 +56,17 @@ main {
   padding-top: 0;
 }
 
-/* шапка секции: метка слева, заголовок справа (редакционная асимметрия) */
+/* Заголовок и фильтры начинаются на одной линии с карточками. */
 .section-head {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  column-gap: clamp(12px, 1.4vw, 20px);
-  row-gap: var(--sp-5);
-  align-items: start;
-  margin-bottom: clamp(32px, 4.4vw, 72px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sp-5) clamp(32px, 5vw, 88px);
+  align-items: end;
+  margin-bottom: var(--section-head-gap);
+}
+
+.section-head--split {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
 }
 
 .section-head__aside {
@@ -65,44 +74,22 @@ main {
   flex-direction: column;
   align-items: flex-start;
   gap: var(--sp-5);
-  padding-top: 0.6em;
 }
 
 .section-head__main > * + * {
-  margin-top: var(--sp-5);
+  margin-top: var(--sp-4);
 }
 
 .section-head__actions {
+  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: var(--sp-3);
-  margin-top: var(--sp-6);
 }
 
 .section-head--stack {
   grid-template-columns: minmax(0, 1fr);
   max-width: 1100px;
-}
-
-.section-head--stack .section-head__aside {
-  padding-top: 0;
-}
-
-.section-head--center {
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-  text-align: center;
-  max-width: 1080px;
-  margin-inline: auto;
-}
-
-.section-head--center .section-head__aside {
-  align-items: center;
-  padding-top: 0;
-}
-
-.section-head--center .lead {
-  margin-inline: auto;
 }
 
 .section-foot {
@@ -119,9 +106,6 @@ main {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .section-head__aside {
-    padding-top: 0;
-  }
 }
 
 /* --- Сетки --------------------------------------------------------------- */
@@ -292,9 +276,10 @@ main {
 
 .nav {
   display: flex;
+  flex: 1;
   align-items: center;
-  gap: clamp(2px, 0.5vw, 8px);
-  margin-right: auto;
+  justify-content: space-evenly;
+  gap: var(--sp-2);
   height: 100%;
 }
 
@@ -341,7 +326,6 @@ main {
   --btn-bg: var(--accent-press);
 }
 
-.header .header__catalog-mobile,
 .header__phone a svg {
   display: none;
 }
@@ -451,22 +435,36 @@ main {
   transform: translateY(-3.75px) rotate(-45deg);
 }
 
-/* Шапка сжимается ступенями, чтобы на любой ширине все оставалось внутри контейнера:
-   сначала уходят иконки мессенджеров (они есть в «пилюле» и в футере), затем подпись под телефоном,
-   затем уплотняется навигация, в конце кнопка укорачивается до «Рассчитать». */
-@media (max-width: 1599px) {
-  .header__icons {
-    display: none;
-  }
+.header__social-menu { position: relative; display: none; }
+.header__social-menu > summary { cursor: pointer; list-style: none; }
+.header__social-menu > summary::-webkit-details-marker { display: none; }
+.header__social-menu nav {
+  position: absolute;
+  inset: calc(100% + var(--sp-2)) 0 auto auto;
+  display: flex;
+  gap: var(--sp-1);
+  width: max-content;
+  padding: var(--sp-2);
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-pop);
+}
+.header__social-menu nav .icon-btn { width: 44px; height: 44px; }
+@media (min-width: 1101px) and (max-width: 1259px), (max-width: 739px) {
+  .header__icons { display: none; }
+  .header__social-menu { display: block; }
+}
+@media (max-width: 739px) {
+  .header__social-menu { position: static; }
+  .header__social-menu > summary { width: 44px; height: 44px; }
+  .header__social-menu nav { top: 100%; right: var(--gutter); }
 }
 
 @media (max-width: 1499px) {
   .header__phone > span {
     display: none;
-  }
-
-  .nav {
-    gap: 2px;
   }
 
   .nav__link {
@@ -477,10 +475,6 @@ main {
 @media (max-width: 1399px) {
   .header__inner {
     gap: 16px;
-  }
-
-  .nav {
-    gap: 0;
   }
 
   .nav__link {
@@ -503,7 +497,7 @@ main {
   }
 }
 
-@media (max-width: 1299px) {
+@media (max-width: 1519px) {
   /* «Рассчитать стоимость» → «Рассчитать»: хвост остается в разметке для скринридеров */
   .header__cta-rest {
     position: absolute;
@@ -533,11 +527,6 @@ main {
 @media (max-width: 1100px) {
   .nav {
     display: none;
-  }
-
-  .header .header__catalog-mobile {
-    display: inline-flex;
-    min-height: 44px;
   }
 
   .burger {
@@ -573,20 +562,15 @@ main {
   .header__side {
     gap: var(--sp-1);
   }
-
-  .header .header__catalog-mobile {
-    padding-inline: var(--sp-2);
-  }
 }
 
 @media (max-width: 389px) {
   .header__inner,
-  .header__side {
-    gap: var(--sp-2);
-  }
+  .header__side { gap: 2px; }
+  .header .logo svg { height: 24px; }
 }
 
-@media (max-width: 389px), (min-width: 1101px) and (max-width: 1199px) {
+@media (max-width: 559px), (min-width: 1101px) and (max-width: 1199px), (min-width: 1260px) and (max-width: 1379px) {
   .header__phone a {
     display: grid;
     place-items: center;
@@ -606,6 +590,25 @@ main {
   .header__phone a span {
     display: none;
   }
+}
+
+@media (min-width: 1101px) and (max-width: 1800px) {
+  .header__inner, .header__side { gap: var(--sp-2); }
+  .header .nav__link:not(.btn) { padding-inline: 7px; }
+  .header__icons { gap: 4px; }
+  .header__icons .icon-btn { width: 36px; height: 36px; }
+}
+@media (min-width: 1101px) and (max-width: 1599px) {
+  .header .logo svg { height: 28px; }
+  .header .nav { gap: var(--sp-1); }
+  .header .nav__link:not(.btn) { padding-inline: 6px; }
+}
+@media (min-width: 1260px) and (max-width: 1439px) {
+  .header__icons { gap: 2px; }
+  .header__icons .icon-btn { width: 34px; height: 34px; }
+}
+@media (max-width: 359px) {
+  .header .logo svg { height: 21px; }
 }
 
 /* --- Мега-меню ------------------------------------------------------------ */
@@ -1109,11 +1112,10 @@ main {
 
 .footer__col h3 {
   position: relative;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  font-weight: var(--w-medium);
+  letter-spacing: 0;
   color: var(--on-dark-3);
   margin-bottom: 18px;
 }
@@ -1303,10 +1305,10 @@ body:has(.cookie:not([hidden])) .footer__legal {
   flex-wrap: wrap;
   align-items: center;
   gap: 4px 10px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 

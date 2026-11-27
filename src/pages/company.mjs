@@ -3,7 +3,7 @@
 // отраслевые цифры — только из data/source/calc-rules.json (подставляются в тексты через {{переменные}}).
 import { html, esc, u, img, typo, price, num, count, plural, cx, groupBy } from '../lib/core.mjs';
 import { faqLd, reviewsLd } from '../lib/seo.mjs';
-import { icon, stars, label, duo, btn, more, reveal, sectionHead, pageHead, caseCard, reviewCard, faqList, linkBlock, ticks, note, route, rail, railNav, ctaBand, leadForm } from '../components/ui.mjs';
+import { icon, stars, label, duo, btn, more, reveal, sectionHead, companyFigures, pageHead, caseCard, reviewCard, faqList, linkBlock, ticks, note, route, rail, railNav, ctaBand, leadForm } from '../components/ui.mjs';
 import { R } from '../routes.mjs';
 
 const HOME = { name: 'Главная', url: R.home };
@@ -108,7 +108,7 @@ function varResolver(ctx) {
     // собственный профиль расходов заказчика (статьи расчета из карточек каталога maxgroupvl.ru)
     mgVlad: safe(() => price(c.defaults?.vladivostokRub ?? c.costs.maxGroupSite.vladivostokRub)),
     mgLogistics: safe(() => price(c.defaults?.localLogisticsRub ?? c.costs.maxGroupSite.localLogisticsRub)),
-    mgCommMin: safe(() => price(Math.min(...(c.costs.maxGroupSite.commission.observed || c.defaults.commissionTiers).map((x) => x.commissionRub)))),
+    mgCommMin: safe(() => price(Math.min(...c.defaults.commissionTiers.map((x) => x.commissionRub)))),
   };
   const BREAKDOWN = [
     ['carPriceRub', 'автомобиль'],
@@ -427,20 +427,11 @@ function aboutPage(ctx) {
             </div>
           </div>
         </div>
-        <div class="co-ledger"${reveal()}>
-          ${ledger.map(
-            (x) => html`
-          <a class="co-ledger__cell" href="${u(x.url)}">
-            <span class="co-ledger__value">${esc(x.value)}${x.unit ? `<small>${esc(x.unit)}</small>` : ''}</span>
-            <span class="co-ledger__name">${typo(x.name)}</span>
-            ${icon('arrow-up-right', 'co-ledger__go')}
-          </a>`
-          )}
-        </div>
+        ${companyFigures(ledger)}
       </div>
     </section>
 
-    <section class="section section--dark" id="put-avtomobilya">
+    <section class="section section--white" id="put-avtomobilya">
       <div class="container">
         ${sectionHead({ label: t.journey.label, title: duoS(t.journey.titleMain, t.journey.titleMute), lead: t.journey.lead, actions: R.howTo ? more('Как заказать автомобиль', R.howTo) : '' })}
         <div class="co-band"${reveal()}>
@@ -682,7 +673,7 @@ function contactsPage(ctx) {
       </div>
     </section>
 
-    <section class="section section--dark" id="napisat">
+    <section class="section section--white" id="napisat">
       <div class="container">
         <div class="co-ask">
           <div class="co-ask__copy"${reveal()}>
@@ -691,10 +682,10 @@ function contactsPage(ctx) {
             <p class="lead">${typo(t.form.lead)}</p>
             ${ticks(t.form.ticks)}
           </div>
-          <div class="cta__panel"${reveal(1)}>
+          <div class="co-ask__panel"${reveal(1)}>
             <h3>${esc(t.form.panelTitle)}</h3>
             <p>${typo(t.form.panelText)}</p>
-            ${leadForm({ subject: 'Сообщение со страницы «Контакты»', fields: ['name', 'phone', 'comment', 'contact'], cta: t.form.cta, btn: 'btn--light' })}
+            ${leadForm({ subject: 'Сообщение со страницы «Контакты»', fields: ['name', 'phone', 'comment', 'contact'], cta: t.form.cta, btn: 'btn--primary' })}
           </div>
         </div>
       </div>
@@ -776,7 +767,7 @@ function reviewsPage(ctx) {
 
     ${themes.length
       ? html`
-    <section class="section section--dark" id="temy">
+    <section class="section section--white" id="temy">
       <div class="container">
         ${sectionHead({ label: t.themes.label, title: duoS(t.themes.titleMain, t.themes.titleMute), lead: t.themes.lead })}
         <div class="co-pulls">
@@ -976,7 +967,6 @@ function videoPage(ctx) {
     render: () => html`
     ${pageHead({
       crumbs,
-      dark: true,
       label: 'Instagram · Telegram · YouTube',
       h1: duo(t.h1Main, t.h1Mute),
       lead: t.lead,
@@ -987,7 +977,7 @@ function videoPage(ctx) {
       ],
     })}
 
-    <section class="section section--dark section--flush-top" id="roliki">
+    <section class="section section--white section--flush-top" id="roliki">
       <div class="container">
         <h2 class="sr-only">${esc(t.listTitle)}</h2>
         <div class="co-reels">
@@ -1296,7 +1286,7 @@ function notFoundPage(ctx) {
             ${icon(x.icon, 'card__icon')}
             <h3 class="card__title">${esc(x.title)}</h3>
             <p class="card__text">${typo(x.text)}</p>
-            <div class="card__foot"><span class="more">Открыть ${icon('arrow')}</span></div>
+            <div class="card__foot"><span class="more">Открыть</span></div>
           </a>`)}
         </div>
         <div class="u-mt-7">

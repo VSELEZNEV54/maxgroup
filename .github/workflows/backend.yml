@@ -1,4 +1,4 @@
-name: Локальный стек Django
+name: Max Group · Next.js и Django
 on:
   pull_request:
   push:
@@ -13,5 +13,7 @@ jobs:
       - uses: actions/checkout@v5
       - name: Запустить проект с изолированными локальными реквизитами
         run: make up
-      - name: Проверить модели, миграции и пользовательские сценарии
+      - name: Проверить модели, миграции и страницы Next.js
         run: make test
+      - name: Сверить публичные адреса через Nginx
+        run: make check-urls

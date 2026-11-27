@@ -154,9 +154,8 @@ function guidePage(ctx) {
       label: g.label,
       h1: duo('Как читать', 'аукционный лист'),
       lead: g.lead,
-      dark: true,
       single: true,
-      actions: btn('Найти обозначение', '#poisk', { variant: 'light', iconName: 'search' }) + helpBtn('ghost'),
+      actions: btn('Найти обозначение', '#poisk', { variant: 'dark', iconName: 'search' }) + helpBtn('ghost'),
     })}
 
     <section class="section section--white guide-sec">
@@ -374,7 +373,7 @@ function guidePage(ctx) {
 
     ${real.length
       ? html`
-    <section class="section section--dark" id="primery">
+    <section class="section section--white" id="primery">
       <div class="container">
         ${sectionHead({ label: g.real.label, title: duo(g.real.title[0], g.real.title[1]), lead: g.real.lead, actions: more('Все привезенные авто', R.cases) })}
         <div class="real-grid">
@@ -427,7 +426,7 @@ function guidePage(ctx) {
             </div>
           </article>
           <div class="next-grid__side">
-            ${[g.next.cards[0], g.next.cards[2]].map((x, i) => card({ icon: x.icon, label: x.label, title: x.title, text: x.text, href: nextUrl[x.key], tall: true, i: i + 1, foot: `<span class="more">Перейти ${icon('arrow')}</span>` }))}
+            ${[g.next.cards[0], g.next.cards[2]].map((x, i) => card({ icon: x.icon, label: x.label, title: x.title, text: x.text, href: nextUrl[x.key], tall: true, i: i + 1, foot: `<span class="more">Перейти</span>` }))}
           </div>
         </div>
         <div class="u-mt-7">

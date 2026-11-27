@@ -2,8 +2,8 @@ import { includeModelProfiles } from '../components/catalog-filters.mjs';
 // Каталог: хаб, страны, марки, модели, подборки.
 import { html, esc, u, abs, price, priceShort, count, typo, groupBy } from '../lib/core.mjs';
 import { faqLd, itemListLd, aggregateOfferLd } from '../lib/seo.mjs';
-import { icon, label, duo, btn, more, reveal, sectionHead, pageHead, faqList, chips, caseCard, ctaBand, seoText, linkBlock, card, rail, railNav, note } from '../components/ui.mjs';
-import { carsBlock, popularModelCard, modelsPriceTable, yearsPriceTable, priceParts, countryCompare, brandTiles, fromPrice, fromShort } from '../components/catalog.mjs';
+import { icon, label, duo, btn, more, reveal, sectionHead, faqList, chips, caseCard, ctaBand, seoText, linkBlock, card, rail, railNav, note } from '../components/ui.mjs';
+import { carsBlock, catalogLandingHead, directoryFilters, popularModelCard, modelsPriceTable, yearsPriceTable, priceParts, countryCompare, brandTiles, fromPrice, fromShort } from '../components/catalog.mjs';
 import { miniCalcSection } from '../components/calc.mjs';
 import { R } from '../routes.mjs';
 
@@ -237,13 +237,14 @@ function hubPage(ctx) {
     description: `Каталог авто под заказ из Японии, Кореи и Китая: ${count(cars.length, ['пример', 'примера', 'примеров'])}, ${pw.d.replace('цены под ключ', 'цены под ключ во Владивостоке')}. Фильтр по стране, марке, бюджету и мощности.`,
     h1: 'Каталог автомобилей из Азии',
     breadcrumbs: [HOME, CATALOG],
+    headerOver: true,
     scripts: ['catalog', 'quiz'],
     priority: 0.9,
     changefreq: 'daily',
     images: images(cars),
     jsonld: [itemListLd(ctx.site, 'Каталог автомобилей из Азии', cars.slice(0, 24).map((x) => ({ url: x.url, name: x.titleYear }))), faqLd(faq)].filter(Boolean),
     render: () => html`
-    ${pageHead({ cls: 'catalog-head',
+    ${catalogLandingHead({
       crumbs: [HOME, CATALOG],
       h1: duo('Каталог автомобилей', 'из Японии, Кореи и Китая'),
       lead: 'Сравните автомобили по пробегу, состоянию и цене во Владивостоке.',
@@ -293,6 +294,7 @@ function countryPage(ctx, cn) {
   const c = ctx.content.countries?.[cn.slug] || {};
   const faq = c.faq || [];
   const pw = priceWords(ctx.priceStats(cars), ctx.build.year);
+  const headline = `Авто ${cn.from} под заказ с доставкой${cn.slug === 'japan' ? ' за 25 дней' : ''}`;
   const cases = ctx.cases.filter((x) => x.countrySlug === cn.slug);
   const crumbsList = [HOME, CATALOG, { name: `Авто ${cn.from}`, url: R.country(cn.slug) }];
   return {
@@ -300,8 +302,9 @@ function countryPage(ctx, cn) {
     type: 'country',
     title: c.title || fitTitle(`Авто ${cn.from} под заказ | ${pw.t1}`, `Авто ${cn.from} под заказ | ${pw.t2}`),
     description: c.description || `Авто ${cn.from} под заказ с доставкой по России: ${count(cars.length, varWord)} в каталоге, ${pw.dVl}. Таможенное оформление берем на себя.`,
-    h1: c.h1 || `Авто ${cn.from} под заказ`,
+    h1: headline,
     breadcrumbs: crumbsList,
+    headerOver: true,
     scripts: ['catalog', 'quiz', 'calc-core', 'calc'],
     priority: 0.9,
     changefreq: 'daily',
@@ -309,20 +312,19 @@ function countryPage(ctx, cn) {
     ogImage: cn.image,
     jsonld: [itemListLd(ctx.site, `Автомобили ${cn.from}`, cars.slice(0, 24).map((x) => ({ url: x.url, name: x.titleYear }))), faqLd(faq)].filter(Boolean),
     render: () => html`
-    ${pageHead({ cls: 'catalog-head',
-      crumbs: crumbsList,
-      h1: duo(`Авто ${cn.from}`, 'под заказ'),
+    ${catalogLandingHead({
+      crumbs: crumbsList, country: cn, h1: typo(headline), video: cn.landingVideo,
       lead: {
-        japan: 'Автомобили с японских аукционов с проверкой по аукционному листу.',
-        korea: 'Автомобили с корейских площадок с проверкой истории и пробега.',
-        china: 'Автомобили с китайских площадок с проверкой перед покупкой.',
+        japan: 'Подберём авто под ваш бюджет и доставим до Владивостока за 25 дней. Затем отправим в ваш город.',
+        korea: 'Проверим историю и пробег автомобиля в Корее, рассчитаем стоимость под ключ во Владивостоке и доставку в ваш город.',
+        china: 'Подберём автомобиль у китайских дилеров, проверим комплектацию и состояние. Рассчитаем цену под ключ с доставкой в ваш город.',
       }[cn.slug],
     })}
     ${carsBlock(ctx, cars, { scope: includeModelProfiles(ctx, cars, cn.slug), country: cn.slug,
       heading: `Автомобили ${cn.from} в каталоге`, subject: `Подбор авто ${cn.from}` })}
     ${c.advantages?.length
       ? html`
-    <section class="section section--dark">
+    <section class="section section--white">
       <div class="container">
         ${sectionHead({ label: `Почему ${cn.name}`, title: duo(c.advantagesTitle || `Что дает покупка ${cn.inLoc}`, c.advantagesMuted || 'и о чем стоит знать заранее'), lead: c.advantagesLead })}
         <div class="grid grid--3">
@@ -406,14 +408,15 @@ function brandPage(ctx, b) {
     description: descs.find((d) => d.length <= 165) || `${head}: ${count(b.count, varWord)} в каталоге, ${pw.d}. Доставка и растаможка во Владивостоке.`,
     h1: head,
     breadcrumbs: crumbsList,
+    headerOver: true,
     scripts: ['catalog', 'quiz'],
     priority: 0.8,
     images: images(b.cars),
     ogImage: ogOf(b.cars),
     jsonld: [itemListLd(ctx.site, `${b.name} ${cn.from}`, b.cars.map((x) => ({ url: x.url, name: x.titleYear }))), faqLd(faq)].filter(Boolean),
     render: () => html`
-    ${pageHead({ cls: 'catalog-head',
-      crumbs: crumbsList,
+    ${catalogLandingHead({
+      crumbs: crumbsList, country: cn, photo: b.photo, requestTitle: `Подберём ${b.name} ${cn.from}`,
       h1: duo(`${b.name} ${cn.from}`, 'под заказ'),
       lead: `Сравните модели ${esc(b.name)} по году выпуска, пробегу и цене во Владивостоке.`,
     })}
@@ -482,6 +485,7 @@ function modelPage(ctx, m) {
     ].find((d) => d.length <= 165) || `${head} под заказ: ${count(m.count, varWord)} ${yearsOf}, ${pw.dVl}.`,
     h1: head,
     breadcrumbs: crumbsList,
+    headerOver: true,
     scripts: ['catalog', 'quiz'],
     priority: 0.7,
     images: images(m.cars),
@@ -493,8 +497,8 @@ function modelPage(ctx, m) {
       faqLd(faq),
     ].filter(Boolean),
     render: () => html`
-    ${pageHead({ cls: 'catalog-head',
-      crumbs: crumbsList,
+    ${catalogLandingHead({
+      crumbs: crumbsList, country: cn, photo: m.photo, requestTitle: `Подберём ${name}`,
       h1: duo(name, `${cn.from}: ${m.allPartial ? 'цены и расчет' : 'цены под ключ'}`),
       lead: 'Комплектации, пробег и цена во Владивостоке для каждого автомобиля.',
     })}
@@ -555,20 +559,21 @@ function topModelsPage(ctx, cn) {
   const h1 = `Топ-30 автомобилей ${cn.from}`;
   const breadcrumbs = [HOME, CATALOG, { name: `Авто ${cn.from}`, url: R.country(cn.slug) }, { name: 'Топ-30 по заказам', url }];
   return {
-    url, type: 'selection', h1, breadcrumbs,
+    url, type: 'selection', h1, breadcrumbs, headerOver: true, scripts: ['catalog'],
     title: `${h1} по заказам | Макс Групп`,
     description: `30 популярных моделей ${cn.from} по данным Макс Групп. Годы выпуска, двигатели, типовые комплектации и ориентиры цен под ключ и автомобили для заказа.`,
     jsonld: [{ '@type': 'ItemList', name: h1, itemListOrder: 'https://schema.org/ItemListUnordered',
       numberOfItems: entries.length, itemListElement: entries.map((entry) => ({ '@type': 'WebPage', name: entry.name, url: abs(ctx.site, entry.url) })) }],
     render: () => html`
-    ${pageHead({ cls: 'catalog-head',
-      crumbs: breadcrumbs, label: 'Подборка Макс Групп · ноябрь 2026', single: true,
+    ${catalogLandingHead({
+      crumbs: breadcrumbs, country: cn,
       h1: duo('Топ-30 автомобилей', cn.from),
       lead: 'Модели, которые клиенты Макс Групп заказывают чаще всего.',
       actions: chips(ctx.countries.map((country) => ({ name: country.navTitle, url: R.topModels(country.slug) })), { current: url }),
     })}
-    <section class="section section--sm section--flush-top" aria-label="Карточки моделей">
+    <section class="section section--sm section--flush-top catalog-listing" aria-label="Поиск автомобилей и карточки моделей">
       <div class="container">
+        ${directoryFilters(ctx, cn.slug)}
         <div class="grid grid--3">${entries.map((entry, i) => popularModelCard(entry, { priority: i === 0 }))}</div>
       </div>
     </section>`,
@@ -580,16 +585,17 @@ function selectionsHub(ctx) {
   const crumbsList = [HOME, CATALOG, { name: 'Подборки', url: R.selections }];
   return {
     url: R.selections,
-    type: 'catalog',
+    type: 'catalog', headerOver: true, scripts: ['catalog'],
     title: 'Подборки авто из Азии: бюджет, кузов, растаможка | Макс Групп',
     description: 'Подборки авто из Японии, Кореи и Китая: до 160 л.с., проходные 3-5 лет, до 1,5, 2 и 3 млн ₽, кроссоверы, минивэны, гибриды. Цены и расчет по каждой машине.',
     h1: 'Подборки автомобилей из Азии',
     breadcrumbs: crumbsList,
     priority: 0.7,
     render: () => html`
-    ${pageHead({ cls: 'catalog-head', crumbs: crumbsList, h1: duo('Подборки автомобилей', 'под задачу и бюджет'), lead: 'Выберите автомобили по бюджету, типу кузова или условиям растаможки.', single: true })}
-    <section class="section section--sm section--flush-top">
+    ${catalogLandingHead({ crumbs: crumbsList, h1: duo('Подборки автомобилей', 'под задачу и бюджет'), lead: 'Выберите автомобили по бюджету, типу кузова или условиям растаможки.' })}
+    <section class="section section--sm section--flush-top catalog-listing">
       <div class="container">
+        ${directoryFilters(ctx)}
         ${linkBlock('Топ-30 по заказам', topModelLinks(ctx), { tag: 'h2' })}
         ${Object.entries(groups).map(([g, list]) => html`
         <div class="linkblock">
@@ -622,22 +628,22 @@ function selectionPage(ctx, s) {
     description: c.description || selDesc(s.h1, s, s.desc),
     h1: s.h1,
     breadcrumbs: crumbsList,
+    headerOver: true,
     scripts: ['catalog', 'quiz'],
     priority: 0.8,
     images: images(s.cars),
     ogImage: ogOf(s.cars),
     jsonld: [itemListLd(ctx.site, s.h1, s.cars.slice(0, 24).map((x) => ({ url: x.url, name: x.titleYear }))), faqLd(faq)].filter(Boolean),
     render: () => html`
-    ${pageHead({ cls: 'catalog-head',
-      crumbs: crumbsList,
-      label: s.group,
+    ${catalogLandingHead({
+      crumbs: crumbsList, photo: s.cars.find((car) => car.photos.length)?.photos[0],
       h1: typo(s.h1),
       lead: s.catalogLead,
     })}
     ${carsBlock(ctx, s.cars, { heading: 'Автомобили в подборке', subject: `Подбор: ${s.name}` })}
     ${c.blocks?.length
       ? html`
-    <section class="section section--dark">
+    <section class="section section--white">
       <div class="container">
         ${sectionHead({ label: 'Разбираемся', title: duo(c.blocksTitle || s.name, c.blocksMuted || 'что важно знать') })}
         <div class="grid grid--3">${c.blocks.map((x, i) => card({ icon: x.icon || s.icon, title: x.title, text: x.text, tall: true, i: i % 3 }))}</div>
@@ -679,22 +685,22 @@ function slicePage(ctx, sl) {
     description: c.description || selDesc(sl.h1, sl, s.desc),
     h1: sl.h1,
     breadcrumbs: crumbsList,
+    headerOver: true,
     scripts: ['catalog', 'quiz'],
     priority: 0.7,
     images: images(sl.cars),
     ogImage: ogOf(sl.cars),
     jsonld: [itemListLd(ctx.site, sl.h1, sl.cars.map((x) => ({ url: x.url, name: x.titleYear }))), faqLd(faq)].filter(Boolean),
     render: () => html`
-    ${pageHead({ cls: 'catalog-head',
-      crumbs: crumbsList,
-      label: s.group,
+    ${catalogLandingHead({
+      crumbs: crumbsList, country: cn, photo: sl.cars.find((car) => car.photos.length)?.photos[0],
       h1: typo(sl.h1),
       lead: s.catalogLead,
     })}
     ${carsBlock(ctx, sl.cars, { country: cn.slug, heading: 'Автомобили в подборке', subject: `Подбор: ${sl.h1}` })}
     ${blocks.length
       ? html`
-    <section class="section section--dark">
+    <section class="section section--white">
       <div class="container">
         ${sectionHead({ label: 'Разбираемся', title: duo(s.name, `${cn.from}: что важно знать`) })}
         <div class="grid grid--3">${blocks.map((x, i) => card({ icon: x.icon || s.icon, title: x.title, text: x.text, tall: true, i: i % 3 }))}</div>

@@ -31,26 +31,26 @@ export function btn(text, href, { variant = 'primary', size, block, modal, subje
   })}>${iconName ? icon(iconName) : ''}${esc(text)}</a>`;
 }
 
-/** Ссылка со стрелкой и подчеркиванием */
-export const more = (text, href, cls = '') => `<a class="${cx('more', cls)}" href="${u(href)}">${esc(text)} ${icon('arrow')}</a>`;
+/** Подчеркнутая текстовая ссылка. */
+export const more = (text, href, cls = '') => `<a class="${cx('more', cls)}" href="${u(href)}">${esc(text)}</a>`;
 
 /**
- * Шапка секции: метка слева, заголовок и лид справа.
- * @param {object} o {label, title (HTML), lead, actions (HTML), tag='h2', layout: 'split'|'stack'|'center', aside (HTML)}
+ * Заголовок у левого края. В широкой шапке пояснение и управление стоят справа.
+ * @param {object} o {label, title (HTML), lead, actions (HTML), tag='h2', layout: 'split'|'stack', aside (HTML)}
  */
 export function sectionHead({ label: lbl, title, lead, actions, tag = 'h2', layout = 'split', aside, id }) {
-  const mod = layout === 'stack' ? ' section-head--stack' : layout === 'center' ? ' section-head--center' : '';
+  const split = layout === 'split' && (lead || aside);
   return html`
-      <div class="section-head${mod}">
-        <div class="section-head__aside"${reveal()}>
-          ${lbl ? label(lbl) : ''}
-          ${aside || ''}
-        </div>
+      <div class="section-head ${split ? 'section-head--split' : 'section-head--stack'}">
         <div class="section-head__main">
+          ${lbl ? label(lbl) : ''}
           <${tag}${id ? ` id="${id}"` : ''} data-split>${title}</${tag}>
-          ${lead ? `<p class="lead"${reveal(1)}>${typo(lead)}</p>` : ''}
-          ${actions ? `<div class="section-head__actions"${reveal(2)}>${actions}</div>` : ''}
         </div>
+        ${lead || aside ? html`<div class="section-head__aside"${reveal(1)}>
+          ${lead ? `<p class="lead">${typo(lead)}</p>` : ''}
+          ${aside || ''}
+        </div>` : ''}
+        ${actions ? `<div class="section-head__actions"${reveal(2)}>${actions}</div>` : ''}
       </div>`;
 }
 
@@ -68,24 +68,27 @@ export function crumbs(items) {
  * Шапка внутренней страницы: крошки + H1 + лид + действия.
  * @param {object} o {crumbs, label, h1 (HTML), lead, actions (HTML), side (HTML), dark, photo (путь), kv: [{k,v}]}
  */
-export function pageHead({ crumbs: cr, label: lbl, h1, lead, actions, side, dark, photo, photoAlt = '', kv, single, cls }) {
+export function pageHead({ crumbs: cr, label: lbl, h1, lead, actions, side, dark, photo, photoAlt = '', video, kv, single, cls, lightSide = false, mainActions }) {
   const kvHtml = kv?.length
     ? `<dl class="kv">${kv.map((x) => `<div class="kv__item"><dt>${esc(x.k)}</dt><dd>${x.v}</dd></div>`).join('')}</dl>`
     : '';
   const hasSide = Boolean(side || actions || kvHtml) && !single;
   return html`
-    <section class="${cx('page-head', (dark || photo) && 'page-head--dark on-dark', photo && 'page-head--photo', cls)}">
-      ${photo ? `<div class="page-head__bg">${img({ src: photo, alt: photoAlt, priority: true, sizes: '100vw' })}</div>` : ''}
+    <section class="${cx('page-head', (dark || photo) && 'page-head--dark', (dark || photo) && !lightSide && 'on-dark', photo && 'page-head--photo', cls)}">
+      ${photo ? html`<div class="${cx('page-head__bg', video && 'hero__media')}"${video ? ' data-hero-video' : ''}>
+        ${img({ src: photo, alt: photoAlt, priority: true, sizes: '100vw' })}
+        ${video ? `<video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="${a(video.desktop)}" data-src-mobile="${a(video.mobile)}"></video>` : ''}
+      </div>` : ''}
       <div class="container">
         ${cr ? crumbs(cr) : ''}
       </div>
       <div class="container">
         <div class="${cx('page-head__grid', !hasSide && 'page-head__grid--single')}">
-          <div class="page-head__main">
+          <div class="${cx('page-head__main', lightSide && 'on-dark')}">
             ${lbl ? `<div style="margin-bottom:16px">${label(lbl)}</div>` : ''}
             <h1>${h1}</h1>
             ${lead ? `<p class="lead">${typo(lead)}</p>` : ''}
-            ${single && actions ? `<div class="page-head__actions u-mt-6">${actions}</div>` : ''}
+            ${mainActions || (single && actions) ? `<div class="page-head__actions u-mt-6">${mainActions || actions}</div>` : ''}
             ${single && kvHtml ? `<div class="u-mt-7">${kvHtml}</div>` : ''}
           </div>
           ${hasSide
@@ -117,6 +120,16 @@ export function fact({ value, unit, name, text, link, variant, i = 0 }) {
               ${link ? `<a class="link" href="${u(link.url)}"${link.external ? ' target="_blank" rel="noopener"' : ''}>${esc(link.text)}</a>` : ''}
             </div>
           </article>`;
+}
+
+export function companyFigures(figures) {
+  return html`<div class="co-ledger"${reveal()}>
+    ${figures.map((x) => html`<a class="co-ledger__cell" href="${u(x.url)}">
+      <span class="co-ledger__value">${esc(x.value)}${x.unit ? `<small>${esc(x.unit)}</small>` : ''}</span>
+      <span class="co-ledger__name">${typo(x.name)}</span>
+      ${icon('arrow-up-right', 'co-ledger__go')}
+    </a>`)}
+  </div>`;
 }
 
 /** Простая карточка с иконкой. Если есть href — вся карточка ссылка. */

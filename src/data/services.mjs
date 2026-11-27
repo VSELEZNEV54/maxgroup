@@ -35,6 +35,7 @@ export const services = [
   }),
   svc({
     slug: 'platezhnyj-agent',
+    listed: false,
     name: 'Платежный агент',
     navName: 'Платежный агент',
     short: 'Проводим платежи за рубеж легально и прозрачно, с полным комплектом документов и без валютных рисков для вас.',
@@ -55,5 +56,5 @@ export const services = [
 
 export const serviceGroups = [
   { title: 'Покупка', items: ['avto-pod-zakaz', 'aukciony-yaponii', 'avtokredit'] },
-  { title: 'Оформление', items: ['tamozhennoe-oformlenie', 'platezhnyj-agent'] },
+  { title: 'Оформление', items: ['tamozhennoe-oformlenie'] },
 ];

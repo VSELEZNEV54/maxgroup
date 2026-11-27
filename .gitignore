@@ -6,6 +6,8 @@ dist-*
 # служебное
 .DS_Store
 node_modules/
+frontend/.next/
+frontend/tsconfig.tsbuildinfo
 __pycache__/
 .env
 .venv/

@@ -62,10 +62,11 @@
 }
 
 .co-ledger {
+  --ledger-line: var(--text-3);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: clamp(40px, 5.6vw, 96px);
-  border-top: 1px solid var(--text);
+  border-top: 1px solid var(--ledger-line);
 }
 
 .co-ledger__cell {
@@ -80,7 +81,7 @@
 
 .co-ledger__cell + .co-ledger__cell {
   padding-left: 20px;
-  border-left: 1px solid var(--line-2);
+  border-left: 1px solid var(--ledger-line);
 }
 
 .co-ledger__value {
@@ -145,7 +146,7 @@ a.co-ledger__cell:hover .co-ledger__go {
   }
 
   .co-ledger__cell:nth-child(n + 3) {
-    border-top: 1px solid var(--line-2);
+    border-top: 1px solid var(--ledger-line);
   }
 }
 
@@ -246,14 +247,14 @@ a.co-ledger__cell:hover .co-ledger__go {
   min-height: clamp(280px, 24vw, 360px);
   padding: clamp(18px, 1.5vw, 24px);
   border-radius: var(--r-sm);
-  background: var(--ink-2);
+  background: var(--paper);
 }
 
 .co-stop__num {
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
   letter-spacing: 0.02em;
-  color: var(--on-dark-3);
+  color: var(--text-3);
 }
 
 .co-stop__title {
@@ -266,7 +267,7 @@ a.co-ledger__cell:hover .co-ledger__go {
 
 .co-stop__text {
   margin: 12px 0 20px;
-  color: var(--on-dark-2);
+  color: var(--text-2);
   font-size: 0.9375rem;
   line-height: 1.5;
 }
@@ -277,12 +278,12 @@ a.co-ledger__cell:hover .co-ledger__go {
   gap: 8px;
   margin-top: auto;
   padding-top: 14px;
-  border-top: 1px solid var(--ink-line);
-  font-family: var(--font-mono);
+  border-top: 1px solid var(--line);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--on-dark-3);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
+  color: var(--text-3);
 }
 
 .co-stop__who::before {
@@ -294,7 +295,7 @@ a.co-ledger__cell:hover .co-ledger__go {
 }
 
 .co-stop__who.is-own {
-  color: var(--accent-on-dark);
+  color: var(--accent);
 }
 
 .co-stop__who a {
@@ -302,7 +303,7 @@ a.co-ledger__cell:hover .co-ledger__go {
 }
 
 .co-stop__who a:hover {
-  color: #fff;
+  color: var(--accent);
 }
 
 @media (max-width: 1180px) {
@@ -412,10 +413,10 @@ a.co-ledger__cell:hover .co-ledger__go {
   align-items: center;
   justify-content: space-between;
   gap: 6px 12px;
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 
@@ -984,10 +985,10 @@ a.co-info__mid:hover {
 }
 
 .co-tz__diff {
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 
@@ -1185,10 +1186,10 @@ a.co-info__mid:hover {
 
 .co-req__list dt {
   margin-bottom: 8px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 
@@ -1220,6 +1221,9 @@ a.co-info__mid:hover {
   align-items: start;
 }
 
+.co-ask__panel { padding: clamp(20px, 3vw, 40px); background: var(--paper); border-radius: var(--r-md); }
+.co-ask__panel > p { margin-block: var(--sp-2) var(--sp-5); color: var(--text-2); }
+
 .co-ask__copy {
   display: flex;
   flex-direction: column;
@@ -1229,7 +1233,7 @@ a.co-info__mid:hover {
 
 .co-ask__copy .ticks {
   margin-top: var(--sp-4);
-  color: var(--on-dark);
+  color: var(--text);
 }
 
 @media (max-width: 900px) {
@@ -1255,7 +1259,7 @@ a.co-info__mid:hover {
   margin: 0;
   padding: clamp(20px, 2.2vw, 32px);
   border-radius: var(--r-sm);
-  background: var(--ink-2);
+  background: var(--paper);
 }
 
 .co-pull:nth-child(4n + 1),
@@ -1280,8 +1284,8 @@ a.co-info__mid:hover {
   gap: 8px 16px;
   margin-top: auto;
   padding-top: 14px;
-  border-top: 1px solid var(--ink-line);
-  color: var(--on-dark-2);
+  border-top: 1px solid var(--line);
+  color: var(--text-2);
   font-size: 0.875rem;
 }
 
@@ -1507,10 +1511,10 @@ a.co-info__mid:hover {
 
 .co-reel__meta {
   margin-top: -6px;
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 0.6875rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: var(--w-medium);
   color: var(--text-3);
 }
 

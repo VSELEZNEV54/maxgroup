@@ -35,6 +35,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware", "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware", "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "backend.web.RequestLogMiddleware",
+    "backend.website.frontend.PageContentMiddleware",
 ]
 TEMPLATES = [{
     "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -83,12 +84,14 @@ CELERY_TASK_DEFAULT_QUEUE = "imports"
 CELERY_TASK_ROUTES = {"backend.leads.*": {"queue": "crm"}}
 CELERY_BEAT_SCHEDULE = {
     "crm-outbox": {"task": "backend.leads.tasks.dispatch_pending", "schedule": 60.0},
+    "quiz-quotes": {"task": "backend.catalog.tasks.refresh_quiz_quotes", "schedule": 6 * 3600.0},
     "inventory": {"task": "backend.catalog.tasks.refresh_configured_feed", "schedule": 900.0},
 }
 CRM_DESTINATIONS = tuple(filter(None, os.environ.get("CRM_DESTINATIONS", "amo,bitrix").split(",")))
 if set(CRM_DESTINATIONS) - {"amo", "bitrix"}:
     raise ValueError("Незнакомое назначение CRM")
 CRM_ENABLED = os.environ.get("CRM_ENABLED") == "1"
+CHAT_MODEL_URL = os.environ.get("CHAT_MODEL_URL", "http://chat-model:8080")
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = CSRF_COOKIE_SECURE = PUBLIC_ORIGIN.startswith("https://")
 AUTH_PASSWORD_VALIDATORS = [

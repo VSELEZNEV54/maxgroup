@@ -80,7 +80,7 @@ export function lint(ctx, rendered, outDir) {
         if (href !== base && !href.startsWith(base + '/')) { errors.push(`${where}: ссылка мимо базового пути ${base} — ${href}`); continue; }
         href = href.slice(base.length) || '/';
       }
-      if (href.startsWith('/assets/') || href.startsWith('/model-media/') || /\.(xml|txt|webmanifest|ico|png|json)$/.test(href)) {
+      if (href.startsWith('/assets/') || href.startsWith('/kvizy/assets/') || href.startsWith('/model-media/') || /\.(xml|txt|webmanifest|ico|png|json)$/.test(href)) {
         if (!existsSync(join(outDir, href)) && !/main\.css|\/js\//.test(href) && !/sitemap\.xml|robots\.txt|site\.webmanifest/.test(href)) errors.push(`${where}: нет файла ${href}`);
         continue;
       }

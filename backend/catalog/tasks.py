@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from urllib.parse import urlsplit
 
@@ -8,6 +9,7 @@ from django.utils import timezone
 
 from .importer import import_rows
 from .models import ImportRun
+from .quiz_quotes import quiz_models, refresh_quote
 
 
 @shared_task
@@ -33,3 +35,12 @@ def refresh_configured_feed():
         ImportRun.objects.create(source=source, finished_at=timezone.now(), error="Выгрузка недоступна: " + type(exc).__name__)
         return
     import_rows(source, rows)
+
+
+@shared_task
+def refresh_quiz_quotes():
+    for model in quiz_models():
+        try:
+            refresh_quote(model)
+        except (requests.RequestException, ValueError, KeyError, TypeError):
+            logging.getLogger(__name__).warning("Не удалось обновить цену для %s", model["key"], exc_info=True)

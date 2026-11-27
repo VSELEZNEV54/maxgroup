@@ -1,4 +1,4 @@
-// Услуги: хаб /uslugi/ и пять посадочных (авто под заказ, аукционы Японии, таможня, платежный агент, автокредит).
+// Каталог услуг, страницы четырех услуг и справочная страница об оплате автомобиля.
 // Тексты — data/content/services.json. Отраслевые цифры подставляются из data/source/calc-rules.json через плейсхолдеры {…}.
 import { html, esc, u, img, typo, price, priceShort, num, dateRu } from '../lib/core.mjs';
 import { faqLd, serviceLd, howToLd, itemListLd } from '../lib/seo.mjs';
@@ -7,6 +7,7 @@ import {
 } from '../components/ui.mjs';
 import { priceParts } from '../components/catalog.mjs';
 import { R } from '../routes.mjs';
+import { services as servicePages } from '../data/services.mjs';
 
 const HOME = { name: 'Главная', url: R.home };
 const HUB = { name: 'Услуги', url: R.services };
@@ -378,7 +379,7 @@ function includesBento(ctx, s, c) {
 function marketsSection(ctx, c) {
   const b = c.markets;
   return html`
-    <section class="section section--dark" id="strany">
+    <section class="section section--white" id="strany">
       <div class="container">
         ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead, actions: more('Весь каталог', R.catalog) })}
         <div class="grid grid--3">
@@ -459,7 +460,7 @@ function auctionHow(c) {
   const b = c.how;
   const list = (items, name) => `<ul>${items.map((t) => `<li>${icon(name)}<span>${typo(t)}</span></li>`).join('')}</ul>`;
   return html`
-    <section class="section section--dark" id="kak-ustroeny-torgi">
+    <section class="section section--white" id="kak-ustroeny-torgi">
       <div class="container">
         ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead })}
         <div class="grid grid--4 svc-cards">
@@ -640,7 +641,7 @@ function customsIncludes(ctx, s, c) {
 function watchSection(c) {
   const b = c.watch;
   return html`
-    <section class="section section--dark" id="chto-vliyaet">
+    <section class="section section--white" id="chto-vliyaet">
       <div class="container">
         ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead })}
         <div class="grid grid--4">
@@ -762,7 +763,7 @@ function renderCustoms(ctx, s, c, crumbs) {
   ].join('\n');
 }
 
-// --- платежный агент ---------------------------------------------------------------------------------------------------
+// --- оплата автомобиля за рубежом --------------------------------------------------------------------------------------
 
 function payIntro(ctx, c) {
   const b = c.intro;
@@ -783,7 +784,7 @@ function payIntro(ctx, c) {
 function flowSection(c) {
   const b = c.flow;
   return html`
-    <section class="section section--dark" id="marshrut-platezha">
+    <section class="section section--white" id="marshrut-platezha">
       <div class="container">
         ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead })}
         <ol class="svc-flow">
@@ -957,7 +958,7 @@ function banksSection(ctx, c) {
             <div class="bank__body">
               <span class="bank__logo">${img({ src: x.logo, alt: '', sizes: '120px' })}</span>
               <h3 class="bank__name">${esc(name)}</h3>
-              <a class="bank__link" href="${u(R.contacts)}" data-modal="request" data-modal-subject="${esc(m.subject)}" data-modal-title="${esc(m.attrs['data-modal-title'])}" data-modal-text="${esc(m.attrs['data-modal-text'])}" data-modal-label="Автокредит">Заявка в банк ${icon('arrow')}</a>
+              <a class="bank__link" href="${u(R.contacts)}" data-modal="request" data-modal-subject="${esc(m.subject)}" data-modal-title="${esc(m.attrs['data-modal-title'])}" data-modal-text="${esc(m.attrs['data-modal-text'])}" data-modal-label="Автокредит">Заявка в банк</a>
             </div>
           </article>`;
           })}
@@ -970,7 +971,7 @@ function banksSection(ctx, c) {
 function honestSection(c) {
   const b = c.honest;
   return html`
-    <section class="section section--dark" id="usloviya">
+    <section class="section section--white" id="usloviya">
       <div class="container">
         ${sectionHead({ label: b.label, title: duo(b.title[0], b.title[1]), lead: b.lead })}
         <div class="grid grid--3 svc-cards">
@@ -1026,8 +1027,8 @@ function renderCredit(ctx, s, c, crumbs) {
 // --- хаб /uslugi/ ------------------------------------------------------------------------------------------------------------------
 
 // раскладка плиток хаба: ширина в 12-колоночной сетке
-const HUB_SPAN = { 'avto-pod-zakaz': 7, 'aukciony-yaponii': 5, 'tamozhennoe-oformlenie': 5, 'platezhnyj-agent': 7, avtokredit: 12 };
-const HUB_ORDER = ['avto-pod-zakaz', 'aukciony-yaponii', 'tamozhennoe-oformlenie', 'platezhnyj-agent', 'avtokredit'];
+const HUB_SPAN = { 'avto-pod-zakaz': 7, 'aukciony-yaponii': 5, 'tamozhennoe-oformlenie': 5, avtokredit: 7 };
+const HUB_ORDER = ['avto-pod-zakaz', 'aukciony-yaponii', 'tamozhennoe-oformlenie', 'avtokredit'];
 
 function hubGrid(ctx, c) {
   const b = c.grid;
@@ -1091,14 +1092,14 @@ function stagesSection(ctx, c) {
 function calcSection(c) {
   const b = c.calc;
   return html`
-    <section class="section section--dark" id="kalkulyator">
+    <section class="section section--white" id="kalkulyator">
       <div class="container">
         <div class="split">
           <div class="split__sticky"${reveal()}>
             ${label(b.label)}
             <h2>${duo(b.title[0], b.title[1])}</h2>
             <p class="lead">${typo(b.lead)}</p>
-            ${btn(b.cta, R.calculator, { variant: 'light' })}
+            ${btn(b.cta, R.calculator, { variant: 'dark' })}
             <p class="small svc-dim">${typo(b.note)}</p>
           </div>
           <div class="split__body grid grid--2">
@@ -1174,11 +1175,13 @@ function servicePage(ctx, s, vars) {
       { k: 'Страхование', v: 'на всех этапах' },
     ];
   }
-  const crumbs = [HOME, HUB, { name: s.navName || s.name, url: s.url }];
+  const listed = s.listed !== false;
+  const crumbs = [HOME, listed ? HUB : { name: 'Клиентам', url: R.clients },
+    { name: listed ? s.navName || s.name : c.h1, url: s.url }];
   const photo = HEAD[s.slug].photo.replace(/^assets\//, '');
   return {
     url: s.url,
-    type: 'service',
+    type: listed ? 'service' : 'guide',
     title: c.title,
     description: c.description,
     h1: c.h1,
@@ -1187,7 +1190,7 @@ function servicePage(ctx, s, vars) {
     priority: 0.8,
     ogImage: photo,
     jsonld: [
-      serviceLd(ctx.site, { name: c.h1, description: c.description, url: s.url, serviceType: c.serviceType || s.name, areaServed: c.areaServed }),
+      listed && serviceLd(ctx.site, { name: c.h1, description: c.description, url: s.url, serviceType: c.serviceType || s.name, areaServed: c.areaServed }),
       faqLd(c.faq),
       c.steps?.howTo ? howToLd(ctx.site, { name: c.steps.howTo, description: c.steps.lead || c.lead, steps: c.steps.items }) : null,
     ].filter(Boolean),
@@ -1197,5 +1200,5 @@ function servicePage(ctx, s, vars) {
 
 export function servicesPages(ctx) {
   const vars = buildVars(ctx);
-  return [hubPage(ctx, vars), ...ctx.services.map((s) => servicePage(ctx, s, vars))].filter(Boolean);
+  return [hubPage(ctx, vars), ...servicePages.map((s) => servicePage(ctx, s, vars))].filter(Boolean);
 }
